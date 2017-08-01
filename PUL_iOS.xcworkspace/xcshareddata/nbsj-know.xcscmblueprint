@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "96176F7ADF8E62FC1DF6147230BF9B5FB9838649",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "96176F7ADF8E62FC1DF6147230BF9B5FB9838649" : 9223372036854775807,
+    "E683A2B7794305852DAF18E5FD4F184A98314689" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B8E02A85-ADDB-43C9-96FC-0F03BDA1415C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "96176F7ADF8E62FC1DF6147230BF9B5FB9838649" : "KLB_iOS\/",
+    "E683A2B7794305852DAF18E5FD4F184A98314689" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "nbsj-know",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "nbsj-know.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/NCIStenson\/nbsj-know.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "96176F7ADF8E62FC1DF6147230BF9B5FB9838649"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/NCIStenson\/WeiXueTang.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E683A2B7794305852DAF18E5FD4F184A98314689"
+    }
+  ]
+}
