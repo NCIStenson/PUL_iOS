@@ -7,7 +7,7 @@
 //
 
 #import "ZEPULHomeVC.h"
-
+#import "ZEHomeVC.h"
 #import "ZEPULHomeView.h"
 #import "ZEPULWebVC.h"
 #import "ZEShowQuestionVC.h"
@@ -15,10 +15,16 @@
 
 #import "ZEChatVC.h"
 #import "ZEAnswerQuestionsVC.h"
+
+#import "ZEPULMenuVC.h"
+
+#import "ZEQuestionBankVC.h"
 @interface ZEPULHomeVC () <ZEPULHomeViewDelegate>
 {
     ZEPULHomeView * _PULHomeView ;
     NSInteger _currentNewestPage;
+    NSArray * _homeIcoArr;
+    
 }
 @end
 
@@ -26,10 +32,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.    
-    self.leftBtn.hidden = YES;
-    self.title = @"拾学";
-    
+    // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
     [self initView];
     
 }
@@ -38,8 +42,11 @@
     [super viewWillAppear:YES];
     self.navigationController.navigationBar.hidden = YES;
     self.tabBarController.tabBar.hidden = NO;
+    self.tabBarController.tabBar.tintColor = MAIN_NAV_COLOR;
+    
     [self sendNewestQuestionsRequest];
-    [self getCommandStudy];
+    
+    [self getPULHomeIconRequest];
     if(_PULHomeView.bannerTimer){
         dispatch_resume(_PULHomeView.bannerTimer);
     }
@@ -52,16 +59,56 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    dispatch_suspend(_PULHomeView.bannerTimer);
-    dispatch_suspend(_PULHomeView.commandStudyTimer);
+//    dispatch_suspend(_PULHomeView.bannerTimer);
+//    dispatch_suspend(_PULHomeView.commandStudyTimer);
 }
 
 -(void)initView
 {
-    _PULHomeView = [[ZEPULHomeView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - TAB_BAR_HEIGHT)];
+    _PULHomeView = [[ZEPULHomeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - TAB_BAR_HEIGHT)];
     _PULHomeView.delegate = self;
     [self.view addSubview:_PULHomeView];
 }
+
+#pragma mark - 获取首页图标请求
+
+-(void)getPULHomeIconRequest
+{
+    NSDictionary * parametersDic = @{@"MASTERTABLE":V_KLB_FUNCTION_USER_LIST,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"limit":@"20",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"DETAILTABLE":@"",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":HOME_CLASS_METHOD,
+                                     };
+    
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_FUNCTION_USER_LIST]
+                                                                           withFields:nil
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"functionList"];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * arr =[ZEUtil getServerData:data withTabelName:V_KLB_FUNCTION_USER_LIST];
+//                                 if(arr.count > 0){
+                                 _homeIcoArr = arr;
+                                     [_PULHomeView reloadHeaderView:arr];
+//                                 }else{
+//                                     
+//                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+    
+    
+}
+
 
 /************* 查询最新问题 *************/
 -(void)sendNewestQuestionsRequest
@@ -117,20 +164,6 @@
     
 }
 
--(void)getCommandStudy
-{
-    NSDictionary * dic = @{@"impClazz":@"LESSON",
-                           @"actionFlag":@"SearchHotLesson"};
-    [[ZEServerEngine sharedInstance] sendCommonRequestWithJsonDic:dic
-                                                withServerAddress:@"http://117.149.2.229:1624/ecm/service/getDataActionx"
-                                                          success:^(id data) {
-                                                              [_PULHomeView reloadCommandStudy:[data objectForKey:@"DATAS"]];
-                                                          }
-                                                             fail:^(NSError *error) {
-        
-    }];
-}
-
 #pragma mark - 
 -(void)loadNewData
 {
@@ -147,11 +180,13 @@
 {
     switch (tag) {
         case 0:
-            [self goPULWebVC:PULHOME_WEB_MAP];
+            [self goQuesionBank];
+            return;
             break;
             
         case 1:
-            [self goPULWebVC:PULHOME_WEB_PRACTICE];
+            [self goAskHome];
+            return;
             break;
 
         case 2:
@@ -165,6 +200,24 @@
         default:
             break;
     }
+    
+}
+
+#pragma mark - 能力题库
+
+-(void)goQuesionBank
+{
+    ZEQuestionBankVC * bankVC = [[ZEQuestionBankVC alloc]init];
+    [self.navigationController pushViewController:bankVC animated:YES];
+}
+
+#pragma mark - 知道问答
+
+-(void)goAskHome
+{
+    ZEHomeVC * homeVC = [[ZEHomeVC alloc]init];
+    
+    [self.navigationController pushViewController:homeVC animated:YES];
 }
 
 -(void)goPULWebVC:(PULHOME_WEB)tag
@@ -190,17 +243,6 @@
 
 -(void)goAnswerQuestionVC:(ZEQuestionInfoModel *)_questionInfoModel
 {
-    
-    if ([_questionInfoModel.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]) {
-        [self showTips:@"您不能对自己的提问进行回答"];
-        return;
-    }
-    
-    if ([_questionInfoModel.ISSOLVE boolValue]) {
-        [self showTips:@"该问题已有答案被采纳"];
-        return;
-    }
-    
     if (_questionInfoModel.ISANSWER) {
         ZEChatVC * chatVC = [[ZEChatVC alloc]init];
         chatVC.questionInfo = _questionInfoModel;
@@ -212,8 +254,49 @@
         answerQuesVC.questionInfoM = _questionInfoModel;
         [self.navigationController pushViewController:answerQuesVC animated:YES];
     }
-    
 }
+
+#pragma mark - 自选功能区
+
+-(void)goGWCP
+{
+    NSLog(@" ===  岗位测评");
+}
+
+-(void)goZYQ
+{
+    NSLog(@" ===  专业圈");
+}
+-(void)goZYXGCP
+{
+    NSLog(@" ===  专职业性格测");
+}
+
+-(void)goGWTX
+{
+    NSLog(@" ===  岗位体系");
+}
+-(void)goZJZX
+{
+    NSLog(@" === 专家在线");
+}
+
+-(void)goXWGF{
+    NSLog(@" ===  行为规范");
+}
+
+-(void)goZXCS
+{
+    NSLog(@" ===  在线测试");
+}
+
+-(void)goMoreFunction
+{
+    ZEPULMenuVC * menuVC = [[ZEPULMenuVC alloc]init];
+    menuVC.inuseIconArr = _homeIcoArr;
+    [self.navigationController pushViewController:menuVC animated:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

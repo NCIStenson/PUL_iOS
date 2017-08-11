@@ -6,7 +6,8 @@
 //  Copyright © 2016年 Stenson. All rights reserved.
 //
 
-//  测试版     http://117.149.2.229:1622/emarkspg_nbsjzd
+//  测试版     http://117.149.2.229:1630/emark_learn
+//  测试版     https://117.149.2.229:1629/emarkspg_nbsjzd
 
 //  正式测试版本    http://114.55.55.205:8888/emarkspg_nbsjzd
 //  正式版    http://114.55.55.205:8080/emarkspg_nbsjzd

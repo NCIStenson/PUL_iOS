@@ -135,4 +135,17 @@
 //  H绘制虚线视图
 +(void)drawDashLine:(UIView *)lineView lineLength:(int)lineLength lineSpacing:(int)lineSpacing lineColor:(UIColor *)lineColor;
 
+#pragma mark - 添加渐变色
++(void)addGradientLayer:(UIView *)view;
+
+#pragma mark - 添加线条
++(void)addLineLayer:(UIView *)view;
+
++(void)addLineLayerMarginLeft:(CGFloat)left
+                    marginTop:(CGFloat)top
+                        width:(CGFloat)width
+                       height:(CGFloat)height
+                    superView:(UIView *)view;
+
+
 @end

@@ -13,7 +13,6 @@
 
 #import "ZEPULHomeVC.h"
 #import "ZETeamVC.h"
-#import "ZEPULWebVC.h"
 #import "ZEUserCenterVC.h"
 
 #import "ZETeamNotiCenVC.h"
@@ -32,65 +31,7 @@
     application.applicationSupportsShakeToEdit = YES;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reLogin) name:kRelogin object:nil];
-
-    if([[ZESettingLocalData getUSERNAME] length] > 0 && [[ZESettingLocalData getUSERPASSWORD] length] > 0) {
-//        LBTabBarController *tab = [[LBTabBarController alloc] init];
-        
-        UITabBarController *tab = [[UITabBarController alloc]init];
-        
-        //2.创建相应的子控制器（viewcontroller）
-        ZEPULHomeVC *homeVC = [ZEPULHomeVC new];
-        homeVC.navigationItem.title = @"拾学";
-        homeVC.tabBarItem.title = @"首页";
-        homeVC.tabBarItem.image = [UIImage imageNamed:@"icon_home"];
-        UINavigationController *firstNC = [[UINavigationController alloc]initWithRootViewController:homeVC];
-        
-        ZETeamVC *secondVC = [ZETeamVC new];
-        secondVC.navigationItem.title = @"团队";
-        //设置标签名称
-        secondVC.tabBarItem.title = @"团队";
-        //可以根据需求设置标签的的图标
-        secondVC.tabBarItem.image = [UIImage imageNamed:@"icon_team"];
-        UINavigationController *secondNC = [[UINavigationController alloc]initWithRootViewController:secondVC];
-        
-        ZEPULWebVC *thirdVC = [ZEPULWebVC new];
-        thirdVC.enterPULWebVCType = PULHOME_WEB_SCHOOL;
-        thirdVC.navigationItem.title = @"学堂";
-        //设置标签名称
-        thirdVC.tabBarItem.title = @"学堂";
-        //可以根据需求设置标签的的图标
-        thirdVC.tabBarItem.image = [UIImage imageNamed:@"icon_school"];
-        UINavigationController *thidrNC = [[UINavigationController alloc]initWithRootViewController:thirdVC];
-        
-
-        ZEHomeVC *fourthVC = [ZEHomeVC new];
-        fourthVC.navigationItem.title = @"知道";
-        //设置标签名称
-        fourthVC.tabBarItem.title = @"知道";
-        //可以根据需求设置标签的的图标
-        fourthVC.tabBarItem.image = [UIImage imageNamed:@"icon_circle"];
-        UINavigationController *fourthNC = [[UINavigationController alloc]initWithRootViewController:fourthVC];
-        
-
-        ZEUserCenterVC * fifthVC = [ZEUserCenterVC new];
-        fifthVC.navigationItem.title = @"我的";
-        //设置标签名称
-        fifthVC.tabBarItem.title = @"我的";
-        //可以根据需求设置标签的的图标
-        fifthVC.tabBarItem.image = [UIImage imageNamed:@"icon_user"];
-        UINavigationController *fifthNC = [[UINavigationController alloc]initWithRootViewController:fifthVC];
-        
-
-        //3.添加到控制器
-        //特别注意：管理一组的控制器(最多显示五个,多余五个的话,包括第五个全部在更多模块里面,并且可以通过拖拽方式进行顺序编辑);
-        NSArray *array = @[firstNC,secondNC,thidrNC,fourthNC,fifthNC];
-        tab.viewControllers = array;
-
-        self.window.rootViewController = tab;
-    }else{
-        ZELoginViewController * loginVC = [[ZELoginViewController alloc]init];
-        self.window.rootViewController = loginVC;
-    }
+    [self showVC];
     
     NSDictionary *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     
@@ -132,6 +73,68 @@
 //    NSLog(@"%@",Zenith_Server);
     
     return YES;
+}
+
+-(void)showVC
+{
+    if([[ZESettingLocalData getUSERNAME] length] > 0 && [[ZESettingLocalData getUSERPASSWORD] length] > 0) {
+        
+        UITabBarController *tab = [[UITabBarController alloc]init];
+        
+        //2.创建相应的子控制器（viewcontroller）
+        ZEPULHomeVC *homeVC = [ZEPULHomeVC new];
+        homeVC.navigationItem.title = @"拾学";
+        homeVC.tabBarItem.title = @"首页";
+        homeVC.tabBarItem.image = [UIImage imageNamed:@"tabbar_home"];
+        
+        UINavigationController *firstNC = [[UINavigationController alloc]initWithRootViewController:homeVC];
+        
+        ZETeamVC *secondVC = [ZETeamVC new];
+        secondVC.navigationItem.title = @"团队";
+        //设置标签名称
+        secondVC.tabBarItem.title = @"团队";
+        //可以根据需求设置标签的的图标
+        secondVC.tabBarItem.image = [UIImage imageNamed:@"tabbar_team"];
+        UINavigationController *secondNC = [[UINavigationController alloc]initWithRootViewController:secondVC];
+        
+//        ZEPULWebVC *thirdVC = [ZEPULWebVC new];
+//        thirdVC.enterPULWebVCType = PULHOME_WEB_SCHOOL;
+//        thirdVC.navigationItem.title = @"学堂";
+//        //设置标签名称
+//        thirdVC.tabBarItem.title = @"学堂";
+//        //可以根据需求设置标签的的图标
+//        thirdVC.tabBarItem.image = [UIImage imageNamed:@"icon_school"];
+//        UINavigationController *thidrNC = [[UINavigationController alloc]initWithRootViewController:thirdVC];
+        
+        
+        ZEPersonalNotiVC *fourthVC = [ZEPersonalNotiVC new];
+        fourthVC.navigationItem.title = @"消息";
+        //设置标签名称
+        fourthVC.tabBarItem.title = @"消息";
+        //可以根据需求设置标签的的图标
+        fourthVC.tabBarItem.image = [UIImage imageNamed:@"tabbar_noti"];
+        UINavigationController *fourthNC = [[UINavigationController alloc]initWithRootViewController:fourthVC];
+        
+        
+        ZEUserCenterVC * fifthVC = [ZEUserCenterVC new];
+        fifthVC.navigationItem.title = @"我的";
+        //设置标签名称
+        fifthVC.tabBarItem.title = @"我的";
+        //可以根据需求设置标签的的图标
+        fifthVC.tabBarItem.image = [UIImage imageNamed:@"tabbar_my"];
+        UINavigationController *fifthNC = [[UINavigationController alloc]initWithRootViewController:fifthVC];
+        
+        
+        //3.添加到控制器
+        //特别注意：管理一组的控制器(最多显示五个,多余五个的话,包括第五个全部在更多模块里面,并且可以通过拖拽方式进行顺序编辑);
+        NSArray *array = @[firstNC,secondNC,fourthNC,fifthNC];
+        tab.viewControllers = array;
+        
+        self.window.rootViewController = tab;
+    }else{
+        ZELoginViewController * loginVC = [[ZELoginViewController alloc]init];
+        self.window.rootViewController = loginVC;
+    }
 }
 
 - (void)application:(UIApplication *)application

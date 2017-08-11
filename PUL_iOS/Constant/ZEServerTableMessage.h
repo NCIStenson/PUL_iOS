@@ -84,4 +84,10 @@
 #define V_KLB_MESSAGE_REC_Y              @"V_KLB_MESSAGE_REC_Y"               /***   已回执   ***/
 
 
+#define HOME_CLASS_METHOD @"com.nci.klb.app.homePage.FunctionList"
+
+#define V_KLB_FUNCTION_USER_LIST              @"V_KLB_FUNCTION_USER_LIST"               /***   我的功能列表   ***/
+#define KLB_FUNCTION_LIST              @"KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
+
+
 #endif /* ZEServerTableMessage_h */

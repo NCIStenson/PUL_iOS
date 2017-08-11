@@ -12,10 +12,12 @@
 
 #import "ZEUserServer.h"
 
+#import "ZEPULHomeVC.h"
+#import "ZETeamVC.h"
 #import "ZEHomeVC.h"
-#import "ZEQuestionsVC.h"
-#import "ZEGroupVC.h"
 #import "ZEUserCenterVC.h"
+
+#import "ZETeamNotiCenVC.h"
 
 #import "LBTabBarController.h"
 
@@ -30,9 +32,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    self.title  = @"用户登录";
-//    self.navBar.backgroundColor = MAIN_GREEN_COLOR;
-//    [self disableLeftBtn];
+    //    self.title  = @"用户登录";
+    //    self.navBar.backgroundColor = MAIN_GREEN_COLOR;
+    //    [self disableLeftBtn];
     self.navBar.hidden = YES;
     [self initView];
 }
@@ -65,7 +67,7 @@
                        success:^(id data) {
                            [self progressEnd:nil];
                            if ([[data objectForKey:@"RETMSG"] isEqualToString:@"null"]) {
-                                NSLog(@"登陆成功  %@",[data objectForKey:@"RETMSG"]);
+                               NSLog(@"登陆成功  %@",[data objectForKey:@"RETMSG"]);
                                [ZESettingLocalData setUSERNAME:username];
                                [ZESettingLocalData setUSERPASSWORD:pwd];
                                [self commonRequest:username];
@@ -76,7 +78,7 @@
                                NSLog(@"登陆失败   %@",[data objectForKey:@"RETMSG"]);
                                [ZEUtil showAlertView:[data objectForKey:@"RETMSG"] viewController:self];
                            }
-
+                           
                        } fail:^(NSError *errorCode) {
                            [self progressEnd:nil];
                        }];
@@ -115,7 +117,7 @@
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
                                                                        withActionFlag:nil];
-
+    
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
@@ -126,12 +128,12 @@
                                      [ZESettingLocalData setUSERINFODic:userinfoDic];
                                      
                                      [self loginJPushServer:username];
-
+                                     
                                      //  重新注册通知
                                      if ([ZESettingLocalData getUSERCODE] > 0) {
                                          [JPUSHService setAlias:[ZESettingLocalData getUSERCODE] callbackSelector:nil object:nil];
                                      }
-
+                                     
                                      if([ZEUtil isStrNotEmpty:[userinfoDic objectForKey:@"FILEURL"]]){
                                          NSArray * headUrlArr = [[userinfoDic objectForKey:@"FILEURL"] componentsSeparatedByString:@","];
                                          [ZESettingLocalData changeUSERHHEADURL:headUrlArr[1]];
@@ -141,7 +143,7 @@
                              } fail:^(NSError *errorCode) {
                                  NSLog(@">>  %@",errorCode);
                              }];
-
+    
 }
 
 #pragma mark - 登陆极光用户
@@ -180,7 +182,7 @@
 //                                     @"DETAILFIELD":@"",
 //                                     @"CLASSNAME":BASIC_CLASS_NAME,
 //                                     @"DETAILTABLE":@"",};
-//    
+//
 //    NSDictionary * fieldsDic =@{@"USERCODE":[ZESettingLocalData getUSERNAME],
 //                                @"USERNAME":@"",
 //                                @"EXPERTDATE":@"",
@@ -188,12 +190,12 @@
 //                                @"STATUS":@"",
 //                                @"EXPERTFRADE":@"",
 //                                @"SEQKEY":@""};
-//    
+//
 //    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_EXPERT_INFO]
 //                                                                           withFields:@[fieldsDic]
 //                                                                       withPARAMETERS:parametersDic
 //                                                                       withActionFlag:nil];
-//    
+//
 //    [ZEUserServer getDataWithJsonDic:packageDic
 //                       showAlertView:NO
 //                             success:^(id data) {
@@ -203,7 +205,7 @@
 //                                 }else{
 //                                     [ZESettingLocalData setISEXPERT:YES];
 //                                 }
-//                                 
+//
 //                             } fail:^(NSError *errorCode) {
 //                                 NSLog(@">>  %@",errorCode);
 //                             }];
@@ -212,7 +214,7 @@
 
 -(void)showAlertView:(NSString *)alertMes
 {
-   
+    
     if (IS_IOS8) {
         UIAlertController *alertController = [UIAlertController
                                               alertControllerWithTitle:alertMes message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -233,16 +235,60 @@
 
 -(void)goHome
 {
-    LBTabBarController *tab = [[LBTabBarController alloc] init];
     
-    //        CATransition *anim = [[CATransition alloc] init];
-    //        anim.type = @"rippleEffect";
-    //        anim.duration = 1.0;
+    UITabBarController *tab = [[UITabBarController alloc]init];
     
-    //        [self.window.layer addAnimation:anim forKey:nil];
+    //2.创建相应的子控制器（viewcontroller）
+    ZEPULHomeVC *homeVC = [ZEPULHomeVC new];
+    homeVC.navigationItem.title = @"拾学";
+    homeVC.tabBarItem.title = @"首页";
+    homeVC.tabBarItem.image = [UIImage imageNamed:@"icon_home"];
+    UINavigationController *firstNC = [[UINavigationController alloc]initWithRootViewController:homeVC];
     
-    UIWindow * keyWindow = [UIApplication sharedApplication].keyWindow;
-    keyWindow.rootViewController = tab;
+    ZETeamVC *secondVC = [ZETeamVC new];
+    secondVC.navigationItem.title = @"团队";
+    //设置标签名称
+    secondVC.tabBarItem.title = @"团队";
+    //可以根据需求设置标签的的图标
+    secondVC.tabBarItem.image = [UIImage imageNamed:@"icon_team"];
+    UINavigationController *secondNC = [[UINavigationController alloc]initWithRootViewController:secondVC];
+    
+    //        ZEPULWebVC *thirdVC = [ZEPULWebVC new];
+    //        thirdVC.enterPULWebVCType = PULHOME_WEB_SCHOOL;
+    //        thirdVC.navigationItem.title = @"学堂";
+    //        //设置标签名称
+    //        thirdVC.tabBarItem.title = @"学堂";
+    //        //可以根据需求设置标签的的图标
+    //        thirdVC.tabBarItem.image = [UIImage imageNamed:@"icon_school"];
+    //        UINavigationController *thidrNC = [[UINavigationController alloc]initWithRootViewController:thirdVC];
+    
+    
+    ZEHomeVC *fourthVC = [ZEHomeVC new];
+    fourthVC.navigationItem.title = @"知道";
+    //设置标签名称
+    fourthVC.tabBarItem.title = @"知道";
+    //可以根据需求设置标签的的图标
+    fourthVC.tabBarItem.image = [UIImage imageNamed:@"icon_circle"];
+    UINavigationController *fourthNC = [[UINavigationController alloc]initWithRootViewController:fourthVC];
+    
+    
+    ZEUserCenterVC * fifthVC = [ZEUserCenterVC new];
+    fifthVC.navigationItem.title = @"我的";
+    //设置标签名称
+    fifthVC.tabBarItem.title = @"我的";
+    //可以根据需求设置标签的的图标
+    fifthVC.tabBarItem.image = [UIImage imageNamed:@"icon_user"];
+    UINavigationController *fifthNC = [[UINavigationController alloc]initWithRootViewController:fifthVC];
+    
+    
+    //3.添加到控制器
+    //特别注意：管理一组的控制器(最多显示五个,多余五个的话,包括第五个全部在更多模块里面,并且可以通过拖拽方式进行顺序编辑);
+    NSArray *array = @[firstNC,secondNC,fourthNC,fifthNC];
+    tab.viewControllers = array;
+    
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    
+    window.rootViewController = tab;
 }
 
 
@@ -252,13 +298,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

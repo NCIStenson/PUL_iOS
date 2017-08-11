@@ -29,6 +29,50 @@
 -(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel;
 
 -(void)goAnswerQuestionVC:(ZEQuestionInfoModel *)_questionInfoModel;
+
+#pragma mark - 自定义功能区跳转页面
+
+/**
+ 跳转专业圈
+ */
+-(void)goZYQ;
+
+/**
+ 跳转专业圈
+ */
+-(void)goGWCP;
+
+/**
+ 职业性格测评
+ */
+-(void)goZYXGCP;
+
+/**
+ 岗位体系
+ */
+-(void)goGWTX;
+
+/**
+ 专家在线
+ */
+-(void)goZJZX;
+
+/**
+ 行为规范
+ */
+-(void)goXWGF;
+
+
+/**
+ 在线测试
+ */
+-(void)goZXCS;
+
+/**
+ 更多功能
+ */
+-(void)goMoreFunction;
+
 @end
 
 @interface ZEPULHomeView : UIView
@@ -40,8 +84,6 @@
 
 
 -(id)initWithFrame:(CGRect)frame;
-
--(void)reloadCommandStudy:(NSArray *)arr;
 
 // 刷新 第一页 最新的问题数据
 -(void)reloadFirstView:(NSArray *)dataArr;
@@ -62,6 +104,9 @@
 -(void)endRefreshing;
 
 -(void)reloadContentViewWithNoMoreData:(NSArray *)dataArr;
+
+
+-(void)reloadHeaderView:(NSArray *)arr;
 
 
 @end

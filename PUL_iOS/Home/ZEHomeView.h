@@ -85,6 +85,11 @@
 
 
 /**
+ 返回上级界面
+ */
+-(void)goBack;
+
+/**
  提问按钮被点击
  */
 -(void)askQuestion;

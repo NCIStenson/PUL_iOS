@@ -24,6 +24,11 @@
 #define kLeftButtonMarginLeft 15.0f
 #define kLeftButtonMarginTop 20.0f + 2.0f
 
+#define kNavTitleLabelWidth (SCREEN_WIDTH - 110.0f)
+#define kNavTitleLabelHeight 44.0f
+#define kNavTitleLabelMarginLeft (kNavBarWidth - kNavTitleLabelWidth) / 2.0f
+#define kNavTitleLabelMarginTop 20.0f
+
 #define kSearchTFMarginLeft   70.0f
 #define kSearchTFMarginTop    27.0f
 #define kSearchTFWidth        SCREEN_WIDTH - 120.0f
@@ -37,7 +42,7 @@
 #define kContentTableMarginLeft  0.0f
 #define kContentTableMarginTop   ( kNavBarHeight + 35.0f )
 #define kContentTableWidth       SCREEN_WIDTH
-#define kContentTableHeight      SCREEN_HEIGHT - kContentTableMarginTop - 49.0f
+#define kContentTableHeight      SCREEN_HEIGHT - kContentTableMarginTop
 
 #import "ZEHomeView.h"
 #import "PYPhotoBrowser.h"
@@ -113,36 +118,37 @@
     _typeBtn.imageEdgeInsets = UIEdgeInsetsMake(0.0f, 0, 0.0f, 0.0f);
     _typeBtn.contentMode = UIViewContentModeScaleAspectFill;
     _typeBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    [_typeBtn setImage:[UIImage imageNamed:@"type" tintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [_typeBtn addTarget:self action:@selector(typeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_typeBtn setImage:[UIImage imageNamed:@"icon_back" tintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [_typeBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:_typeBtn];
     
-    _notiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _notiBtn.backgroundColor = [UIColor clearColor];
-    _notiBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [_notiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_notiBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-    [_notiBtn setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
-    [navView addSubview:_notiBtn];
-    _notiBtn.frame = CGRectMake(SCREEN_WIDTH - 50 , 27.0f , 40, 40);
-    [navView addSubview:_notiBtn];
-    [_notiBtn setImage:[UIImage imageNamed:@"icon_noti" color:[UIColor whiteColor]] forState:UIControlStateNormal];
-    _notiBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [_notiBtn addTarget:self action:@selector(goNotiVC) forControlEvents:UIControlEventTouchUpInside];
+    UILabel * _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(kNavTitleLabelMarginLeft, kNavTitleLabelMarginTop, kNavTitleLabelWidth, kNavTitleLabelHeight)];
+    _titleLabel.backgroundColor = [UIColor clearColor];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.textColor = [UIColor whiteColor];
+    _titleLabel.font = [UIFont systemFontOfSize:22.0f];
+    _titleLabel.text = @"知道问答";
+    _titleLabel.numberOfLines = 0;
+    _titleLabel.adjustsFontSizeToFitWidth = YES;
+    
+    [navView addSubview:_titleLabel];
 
     
-    UIView * searchView = [self searchTextfieldView:IPHONE6_MORE ? 35 : 30];
-   
-    [navView addSubview:searchView];
-    [searchView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(kSearchTFMarginTop);
-        make.left.mas_equalTo(kSearchTFMarginLeft);
-        if(IPHONE6_MORE){
-            make.size.mas_equalTo(CGSizeMake(kSearchTFWidth, 35));
-        }else{
-            make.size.mas_equalTo(CGSizeMake(kSearchTFWidth, kSearchTFHeight));
+    for (int i = 1; i < 3; i ++) {
+        UIButton * _typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _typeBtn.frame = CGRectMake(SCREEN_WIDTH - 105 + 33 * i, 27, 30.0, 30.0);
+        _typeBtn.contentMode = UIViewContentModeScaleAspectFit;
+        _typeBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [navView addSubview:_typeBtn];
+        _typeBtn.tag = i + 100;
+        if (i == 1){
+            [_typeBtn setImage:[UIImage imageNamed:@"yy_nav_search" ] forState:UIControlStateNormal];
+            [_typeBtn addTarget:self action:@selector(goSearchView) forControlEvents:UIControlEventTouchUpInside];
+        }else if (i == 2){
+            [_typeBtn setImage:[UIImage imageNamed:@"yy_nav_why" ] forState:UIControlStateNormal];
+            [_typeBtn addTarget:self action:@selector(plusBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
         }
-    }];
+    }
 }
 #pragma mark - 导航栏搜索界面
 
@@ -150,7 +156,6 @@
 {
     UIView * searchTFView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 50, height)];
     searchTFView.backgroundColor = [UIColor whiteColor];
-    
     
     UIImageView * searchTFImg = [[UIImageView alloc]initWithFrame:CGRectMake(5, ( height - height * 0.6 ) / 2, height * 0.6, height * 0.6)];
     searchTFImg.image = [UIImage imageNamed:@"search_icon"];
@@ -290,14 +295,6 @@
         contentTableView.mj_header = header;
     }
     
-    UIButton *plusBtn = [[UIButton alloc] init];
-    plusBtn.frame = CGRectMake(SCREEN_WIDTH * 0.8, _contentScrollView.bottom - SCREEN_WIDTH/5, SCREEN_WIDTH/5, SCREEN_WIDTH/5);
-    [plusBtn setBackgroundImage:[UIImage imageNamed:@"post_normal"] forState:UIControlStateNormal];
-    [plusBtn setBackgroundImage:[UIImage imageNamed:@"post_normal"] forState:UIControlStateHighlighted];
-    
-    [plusBtn addTarget:self action:@selector(plusBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self addSubview:plusBtn];
 }
 -(void)plusBtnDidClick{
     if ([self.delegate respondsToSelector:@selector(askQuestion)]) {
@@ -896,6 +893,13 @@
     return YES;
 }
 
+-(void)goSearchView
+{
+    if ([self.delegate respondsToSelector:@selector(goSearch:)]) {
+        [self.delegate goSearch:@""];
+    }
+}
+
 
 #pragma mark - ZEHomeViewDelegate
 
@@ -936,10 +940,10 @@
 
 //  分类图标点击
 
--(void)typeBtnClick
+-(void)goBack
 {
-    if ([self.delegate respondsToSelector:@selector(goTypeQuestionVC)]) {
-        [self.delegate goTypeQuestionVC];
+    if ([self.delegate respondsToSelector:@selector(goBack)]) {
+        [self.delegate goBack];
     }
 }
 

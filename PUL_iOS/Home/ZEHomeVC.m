@@ -80,7 +80,7 @@
 - (void)verifyLogin:(NSNotification *)noti
 {
     // Refresh...
-    [self checkUpdate];
+//    [self checkUpdate];
 //    [self sendIsSigninToday];
 //    [self sendSigninViewMessage];
     _currentNewestPage = 0;
@@ -112,8 +112,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    self.tabBarController.tabBar.hidden = NO;
-    [self checkUpdate];
+    self.tabBarController.tabBar.hidden = YES;
+//    [self checkUpdate];
     
     [[NSNotificationCenter defaultCenter]postNotificationName:kNOTI_ASK_QUESTION object:nil];
     [self isHaveNewMessage];
@@ -763,6 +763,11 @@
     showQuestionsList.showQuestionListType = QUESTION_LIST_NEW;
     showQuestionsList.currentInputStr = str;
     [self.navigationController pushViewController:showQuestionsList animated:YES];
+}
+
+-(void)goBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)goTypeQuestionVC

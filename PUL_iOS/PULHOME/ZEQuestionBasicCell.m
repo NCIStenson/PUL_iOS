@@ -117,9 +117,7 @@
     circleLab.textColor = MAIN_SUBTITLE_COLOR;
     [self.contentView addSubview:circleLab];
     circleLab.numberOfLines = 0;
-    [circleLab sizeToFit];
-    
-    
+    [circleLab sizeToFit];    
     
     
     if (circleLab.height == 0) {

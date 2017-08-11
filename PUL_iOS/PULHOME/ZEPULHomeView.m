@@ -6,25 +6,43 @@
 //  Copyright © 2017年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
+#define kNavBarMarginLeft   0.0f
+#define kNavBarMarginTop    0.0f
+#define kNavBarWidth        SCREEN_WIDTH
+#define kNavBarHeight       (43 + (IPHONE6_MORE ? 35 : 30))
+// 导航栏内左侧按钮
+#define kLeftButtonWidth 40.0f
+#define kLeftButtonHeight 40.0f
+#define kLeftButtonMarginLeft 15.0f
+#define kLeftButtonMarginTop 20.0f + 2.0f
+
+#define kSearchTFMarginLeft   25.0f
+#define kSearchTFMarginTop    27.0f
+#define kSearchTFWidth        SCREEN_WIDTH - 50.0f
+#define kSearchTFHeight       (IPHONE6_MORE ? 35 : 30)
+
+
 #define kServerBtnWidth (SCREEN_WIDTH - 40 ) / 4
+
+#define kCustomBtnWidth (SCREEN_WIDTH - 40 ) / 4
 
 #import "ZEPULHomeView.h"
 #import "ZEButton.h"
-#import "ZEQuestionBasicCell.h"
+#import "ZEPULHomeDynamicCell.h"
 
 @interface ZEPULHomeView()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 {
     CGRect _PULHomeViewFrame;
     
-    UIPageControl * _pageControl;
     UITableView * _contentTableView;
-    UIScrollView * bannerScrollView;
     
-    UIScrollView * commandStudyScrollView;
+    UITextField * searchTF;
 }
 
 @property (nonatomic,retain) NSMutableArray * PULHomeRequestionData;
 @property (nonatomic,retain) NSMutableArray * commandStudyDataArr;
+
+@property (nonatomic,retain) NSMutableArray * homeBtnArr;
 
 @end
 
@@ -35,19 +53,74 @@
     self = [super initWithFrame:frame];
     if (self) {
         _PULHomeViewFrame = frame;
+        [self initNavBar];
+        
+        self.homeBtnArr = [NSMutableArray array];
+                
         [self initPULHomeView];
     }
     return self;
 }
 
+-(void)initNavBar
+{
+    UIView * navView = [[UIView alloc] initWithFrame:CGRectZero];
+    //    navView.backgroundColor = MAIN_NAV_COLOR;
+    [self addSubview:navView];
+    navView.frame = CGRectMake(kNavBarMarginLeft, kNavBarMarginTop, kNavBarWidth, kNavBarHeight);
+    
+    //  添加渐变色
+    [ZEUtil addGradientLayer:navView];
+    
+    UIView * searchView = [self searchTextfieldView:kSearchTFHeight];
+    [navView addSubview:searchView];
+    searchView.frame = CGRectMake(kSearchTFMarginLeft, kSearchTFMarginTop, kSearchTFWidth, kSearchTFHeight);
+    
+    CALayer * lineLayer = [CALayer layer];
+    lineLayer.frame = CGRectMake(0, searchView.bottom + 15.0f, SCREEN_WIDTH, 1);
+    lineLayer.backgroundColor = [[UIColor lightGrayColor] CGColor];
+    [navView.layer addSublayer:lineLayer];
+    
+    
+}
+
+#pragma mark - 导航栏搜索界面
+
+-(UIView *)searchTextfieldView:(float)height
+{
+    UIView * searchTFView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 50, height)];
+    searchTFView.backgroundColor = [UIColor whiteColor];
+    searchTFView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.3];
+    
+    UIImageView * searchTFImg = [[UIImageView alloc]initWithFrame:CGRectMake(5, ( height - height * 0.6 ) / 2, height * 0.6, height * 0.6)];
+    searchTFImg.image = [UIImage imageNamed:@"search_icon"];
+    [searchTFView addSubview:searchTFImg];
+    searchTFImg.contentMode = UIViewContentModeScaleAspectFill;
+    
+    searchTF =[[UITextField alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 50, height)];
+    [searchTFView addSubview:searchTF];
+    searchTF.placeholder = @"搜索你想知道的问题";
+    [searchTF setReturnKeyType:UIReturnKeySearch];
+    searchTF.font = [UIFont systemFontOfSize:IPHONE6P ? 16 : 14];
+    searchTF.leftViewMode = UITextFieldViewModeAlways;
+    searchTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, height * 0.6 + 20, height)];
+    searchTF.delegate=self;
+    
+    searchTFView.clipsToBounds = YES;
+    searchTFView.layer.cornerRadius = 2;
+    
+    return searchTFView;
+}
+
+
 -(void)initPULHomeView
 {
-    _contentTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, _PULHomeViewFrame.size.height) style:UITableViewStyleGrouped];
+    _contentTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, SCREEN_WIDTH, _PULHomeViewFrame.size.height - kNavBarHeight) style:UITableViewStyleGrouped];
     _contentTableView.delegate =self;
     _contentTableView.dataSource = self;
     [self addSubview:_contentTableView];
     _contentTableView.backgroundColor = [UIColor whiteColor];
-    [_contentTableView registerClass:[ZEQuestionBasicCell class] forCellReuseIdentifier:@"cell"];
+    [_contentTableView registerClass:[ZEPULHomeDynamicCell class] forCellReuseIdentifier:@"cell"];
     MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData:)];
     _contentTableView.mj_header = header;
     _contentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -78,7 +151,7 @@
 
 -(void)reloadContentViewWithArr:(NSArray *)dataArr;
 {
-
+    
     [self.PULHomeRequestionData addObjectsFromArray:dataArr];
     
     [_contentTableView.mj_header endRefreshing];
@@ -111,9 +184,9 @@
     [_contentTableView.mj_header endRefreshing];
 }
 
--(void)reloadCommandStudy:(NSArray *)arr
+-(void)reloadHeaderView:(NSArray *)arr
 {
-    self.commandStudyDataArr = [NSMutableArray arrayWithArray:arr];
+    self.homeBtnArr = [NSMutableArray arrayWithArray:arr];
     [_contentTableView reloadData];
 }
 
@@ -125,63 +198,16 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary * datasDic = self.PULHomeRequestionData[indexPath.row];
-        
-    ZEQuestionInfoModel * quesInfoM = [ZEQuestionInfoModel getDetailWithDic:datasDic];
-    NSString * QUESTIONEXPLAINStr = quesInfoM.QUESTIONEXPLAIN;
-    if ([quesInfoM.BONUSPOINTS integerValue] > 0) {
-        if (quesInfoM.BONUSPOINTS.length == 1) {
-            QUESTIONEXPLAINStr = [NSString stringWithFormat:@"          %@",QUESTIONEXPLAINStr];
-        }else if (quesInfoM.BONUSPOINTS.length == 2){
-            QUESTIONEXPLAINStr = [NSString stringWithFormat:@"            %@",QUESTIONEXPLAINStr];
-        }else if (quesInfoM.BONUSPOINTS.length == 3){
-            QUESTIONEXPLAINStr = [NSString stringWithFormat:@"              %@",QUESTIONEXPLAINStr];
-        }
-    }
-    
-    float questionHeight =[ZEUtil heightForString:QUESTIONEXPLAINStr font:[UIFont boldSystemFontOfSize:kTiltlFontSize] andWidth:SCREEN_WIDTH - 40];
-    
-    NSArray * typeCodeArr = [quesInfoM.QUESTIONTYPECODE componentsSeparatedByString:@","];
-    
-    NSString * typeNameContent = @"";
-    
-    for (NSDictionary * dic in [[ZEQuestionTypeCache instance] getQuestionTypeCaches]) {
-        ZEQuestionTypeModel * questionTypeM = nil;
-        ZEQuestionTypeModel * typeM = [ZEQuestionTypeModel getDetailWithDic:dic];
-        for (int i = 0; i < typeCodeArr.count; i ++) {
-            if ([typeM.CODE isEqualToString:typeCodeArr[i]]) {
-                questionTypeM = typeM;
-                if (![ZEUtil isStrNotEmpty:typeNameContent]) {
-                    typeNameContent = questionTypeM.NAME;
-                }else{
-                    typeNameContent = [NSString stringWithFormat:@"%@,%@",typeNameContent,questionTypeM.NAME];
-                }
-                break;
-            }
-        }
-    }
-    // 标签文字过多时会出现两行标签 动态计算标签高度
-    float tagHeight = [ZEUtil heightForString:typeNameContent font:[UIFont systemFontOfSize:kSubTiltlFontSize] andWidth:SCREEN_WIDTH - 70];
-    
-    if(quesInfoM.FILEURLARR.count > 0){
-        return questionHeight + kCellImgaeHeight + tagHeight + 70.0f;
-        
-    }
-    
-    return questionHeight + tagHeight + 60.0f;
+{    
+    return 135;
 }
 
 -(UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * cellID = @"cell";
     
-    ZEQuestionBasicCell * cell  = [[ZEQuestionBasicCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    
-    cell.answerBtn.tag = indexPath.row;
-    [cell.answerBtn addTarget:self action:@selector(answerQuestion:) forControlEvents:UIControlEventTouchUpInside];
-    [cell reloadCellView:self.PULHomeRequestionData[indexPath.row]];
-    
+    ZEPULHomeDynamicCell * cell  = [[ZEPULHomeDynamicCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    [cell reloadCellView:[ZEQuestionInfoModel getDetailWithDic:self.PULHomeRequestionData[indexPath.row]]];
     return cell;
 }
 
@@ -192,161 +218,63 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return kCURRENTASPECT * 120 + kServerBtnWidth + 30 + kCURRENTASPECT * 150 + 30;
+    if ((self.homeBtnArr.count + 1 ) % 4 == 0) {
+        return ((self.homeBtnArr.count + 1) / 4 + 1) * kCustomBtnWidth ;
+    }
+    
+    return ((self.homeBtnArr.count + 1) / 4 + 2) * kCustomBtnWidth;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView * headerView = [UIView new];
-    headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
+    headerView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 300);
     
-    bannerScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kCURRENTASPECT * 120)];
-    [headerView addSubview:bannerScrollView];
-    bannerScrollView.pagingEnabled = YES;
-    bannerScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * 4, bannerScrollView.height);
-    bannerScrollView.showsVerticalScrollIndicator = NO;
-    bannerScrollView.showsHorizontalScrollIndicator = NO;
-    bannerScrollView.delegate = self;
+    UIView * bigIconView = [UIView new];
+    bigIconView.frame = CGRectMake(0, 0, SCREEN_WIDTH, kServerBtnWidth);
+    [headerView addSubview:bigIconView];
+    [ZEUtil addGradientLayer:bigIconView];
+    [self initBigIconView:bigIconView];
     
-    for (int i = 0; i < 3; i ++) {
-        UIButton * bannerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        bannerBtn.frame = CGRectMake(SCREEN_WIDTH * i, 0, SCREEN_WIDTH , bannerScrollView.height);
-        [bannerScrollView addSubview:bannerBtn];
-        [bannerBtn setImage:[UIImage imageNamed:[NSString stringWithFormat:@"banner%d.jpg",i+1]] forState:UIControlStateNormal];
-        if (i == 2) {
-            [bannerBtn setImage:[UIImage imageNamed:[NSString stringWithFormat:@"banner1.jpg"]] forState:UIControlStateNormal];
-        }
-    }
+    UIView * customIconView = [UIView new];
+    [headerView addSubview:customIconView];
+    customIconView.frame = CGRectMake(0, bigIconView.bottom, SCREEN_WIDTH, kCustomBtnWidth);
+    [self initCustomIconView:customIconView];
     
-    _pageControl = [[UIPageControl alloc]init];
-    _pageControl.numberOfPages = 2;
-    [headerView addSubview:_pageControl];
-    _pageControl.currentPage = 0;
-    _pageControl.frame = CGRectMake(0, bannerScrollView.height - 20, SCREEN_WIDTH, 20);
-    
-    // 获得队列
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    
-    // 创建一个定时器(dispatch_source_t本质还是个OC对象)
-    self.bannerTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    
-    // 设置定时器的各种属性（几时开始任务，每隔多长时间执行一次）
-    // GCD的时间参数，一般是纳秒（1秒 == 10的9次方纳秒）
-    // 何时开始执行第一个任务
-    // dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC) 比当前时间晚3秒
-    dispatch_time_t start = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC));
-    uint64_t interval = (uint64_t)(3.0 * NSEC_PER_SEC);
-    dispatch_source_set_timer(self.bannerTimer, start, interval, 0);
-    
-    __block int count = 0;
-    // 设置回调
-    dispatch_source_set_event_handler(self.bannerTimer, ^{
-        
-        count ++;
-
-        if (count % 4 == 3) {
-            bannerScrollView.contentOffset = CGPointMake(0,0);
-            count = 0;
-        }else{
-            [bannerScrollView scrollRectToVisible:CGRectMake(SCREEN_WIDTH * (count%4), 0, SCREEN_WIDTH, bannerScrollView.height) animated:YES];
-        }
-        _pageControl.currentPage = count;
-//         取消定时器
-//        dispatch_cancel(self.bannerTimer);
-//        self.bannerTimer = nil;
-        
-    });
-    
-    // 启动定时器
-    dispatch_resume(self.bannerTimer);
-    
-    UIView * iconView = [UIView new];
-    iconView.frame = CGRectMake(0, bannerScrollView.height, SCREEN_WIDTH, kServerBtnWidth + 30);
-    [headerView addSubview:iconView];
-    [self initIconView:iconView];
-    
-    UIView * commandStudyView = [UIView new];
-    commandStudyView.frame = CGRectMake(0, iconView.bottom, SCREEN_WIDTH, kCURRENTASPECT * 150);
-    [headerView addSubview:commandStudyView];
-    [self initCommandStudyView:commandStudyView];
-    
-    
-    UILabel * hotRequestLab = [UILabel new];
-    hotRequestLab.frame = CGRectMake(0, commandStudyView.bottom, SCREEN_WIDTH, 30);
-    hotRequestLab.text = @"   热门问题";
-    hotRequestLab.textColor = kTextColor;
-    [headerView addSubview:hotRequestLab];
-    hotRequestLab.backgroundColor = MAIN_LINE_COLOR;
-    
-    headerView.height = hotRequestLab.bottom;
-    
+    [ZEUtil addLineLayerMarginLeft:0 marginTop:customIconView.bottom width:SCREEN_WIDTH height:5 superView:headerView];
     return headerView;
 }
--(void)initIconView:(UIView *)superView
+
+-(void)initBigIconView:(UIView *)superView
 {
-    UILabel * serverLab = [UILabel new];
-    serverLab.frame = CGRectMake(0, 0, SCREEN_WIDTH, 30);
-    serverLab.text = @"   快捷服务";
-    serverLab.textColor = kTextColor;
-    [superView addSubview:serverLab];
-    serverLab.backgroundColor = MAIN_LINE_COLOR;
-    
     for (int i = 0 ; i < 4; i ++) {
         ZEButton * optionBtn = [ZEButton buttonWithType:UIButtonTypeCustom];
         [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
-        optionBtn.frame = CGRectMake(20 + kServerBtnWidth * i, 30, kServerBtnWidth, kServerBtnWidth);
-        if (i >= 4 ) {
-            optionBtn.frame = CGRectMake(20 + kServerBtnWidth* (i - 4), 30 + kServerBtnWidth, kServerBtnWidth, kServerBtnWidth);
-        }
+        optionBtn.frame = CGRectMake(20 + kServerBtnWidth * i, 0, kServerBtnWidth, kServerBtnWidth);
         [superView addSubview:optionBtn];
-        optionBtn.backgroundColor = [UIColor whiteColor];
+        optionBtn.backgroundColor = [UIColor clearColor];
         optionBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         optionBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
         [optionBtn addTarget:self action:@selector(didSelectMyOption:) forControlEvents:UIControlEventTouchUpInside];
         optionBtn.tag = i + 200;
-        [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
-        [optionBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateSelected];
+        [optionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         switch (i) {
-            case 0:
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_wyw"] forState:UIControlStateNormal];
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_wyw-_click"] forState:UIControlStateSelected];
-                [optionBtn setTitle:@"能力地图" forState:UIControlStateNormal];
+                case 0:
+                [optionBtn setImage:[UIImage imageNamed:@"home_btn_bank"] forState:UIControlStateNormal];
+                [optionBtn setTitle:@"能力题库" forState:UIControlStateNormal];
                 break;
-            case 1:
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_lyl" ] forState:UIControlStateNormal];
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_lyl_click"] forState:UIControlStateSelected];
-                [optionBtn setTitle:@"每日一练" forState:UIControlStateNormal];
+                case 1:
+                [optionBtn setImage:[UIImage imageNamed:@"home_btn_ask" ] forState:UIControlStateNormal];
+                [optionBtn setTitle:@"知道问答" forState:UIControlStateNormal];
                 break;
-            case 2:
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_byb" ] forState:UIControlStateNormal];
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_byb_click"] forState:UIControlStateSelected];
-                [optionBtn setTitle:@"必修课" forState:UIControlStateNormal];
+                case 2:
+                [optionBtn setImage:[UIImage imageNamed:@"home_btn_school_white" ] forState:UIControlStateNormal];
+                [optionBtn setTitle:@"能力学堂" forState:UIControlStateNormal];
                 break;
-            case 3:
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_nn" ] forState:UIControlStateNormal];
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_nn1_click"] forState:UIControlStateSelected];
-                [optionBtn setTitle:@"我的问答" forState:UIControlStateNormal];
-                break;
-            case 4:
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_wyw"] forState:UIControlStateNormal];
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_wyw-_click"] forState:UIControlStateSelected];
-                [optionBtn setTitle:@"问一问" forState:UIControlStateNormal];
-                break;
-            case 5:
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_lyl" ] forState:UIControlStateNormal];
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_lyl_click"] forState:UIControlStateSelected];
-                [optionBtn setTitle:@"练一练" forState:UIControlStateNormal];
-                break;
-            case 6:
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_byb" ] forState:UIControlStateNormal];
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_byb_click"] forState:UIControlStateSelected];
-                [optionBtn setTitle:@"比一比" forState:UIControlStateNormal];
-                break;
-            case 7:
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_nn" ] forState:UIControlStateNormal];
-                [optionBtn setImage:[UIImage imageNamed:@"yy_head_nn1_click"] forState:UIControlStateSelected];
-                [optionBtn setTitle:@"聊一聊" forState:UIControlStateNormal];
+                case 3:
+                [optionBtn setImage:[UIImage imageNamed:@"home_btn_dev" ] forState:UIControlStateNormal];
+                [optionBtn setTitle:@"员工发展" forState:UIControlStateNormal];
                 break;
                 
             default:
@@ -358,70 +286,76 @@
     }
 }
 
--(void)initCommandStudyView:( UIView *)superView
+-(void)initCustomIconView:(UIView *)superView
 {
-    UILabel * commandStudyLab = [UILabel new];
-    commandStudyLab.frame = CGRectMake(0, 0, SCREEN_WIDTH, 30);
-    commandStudyLab.text = @"   推荐学习";
-    commandStudyLab.textColor = kTextColor;
-    [superView addSubview:commandStudyLab];
-    commandStudyLab.backgroundColor = MAIN_LINE_COLOR;
-    
-    commandStudyScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 30, SCREEN_WIDTH, superView.height - 30)];
-    [superView addSubview:commandStudyScrollView];
-    commandStudyScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * 3, bannerScrollView.height);
-    commandStudyScrollView.showsVerticalScrollIndicator = NO;
-    commandStudyScrollView.showsHorizontalScrollIndicator = NO;
-    commandStudyScrollView.delegate = self;
-    
-    for (int i = 0; i < self.commandStudyDataArr.count; i ++) {
+    for (int i = 0 ; i < self.homeBtnArr.count + 1; i ++) {
+        ZEButton * optionBtn = [ZEButton buttonWithType:UIButtonTypeCustom];
+        [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
+        optionBtn.frame = CGRectMake(20 + kCustomBtnWidth * (i % 4),  kCustomBtnWidth * (i / 4), kCustomBtnWidth, kCustomBtnWidth );
+        [superView addSubview:optionBtn];
+        optionBtn.backgroundColor = [UIColor clearColor];
+        optionBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        optionBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
+        optionBtn.tag = i + 200;
+        [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
         
-        NSDictionary * dic = self.commandStudyDataArr[i];
-        NSString * NAME = [dic objectForKey:@"NAME"];
-        NSString * IMAGE_URL = [[dic objectForKey:@"IMAGE_URL"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        
-        UIButton * studyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        studyBtn.frame = CGRectMake(10 + (SCREEN_WIDTH / 3 + 20) * i , 0, SCREEN_WIDTH / 3, commandStudyScrollView.height - 30 );
-        [studyBtn sd_setImageWithURL:[NSURL URLWithString:IMAGE_URL] forState:UIControlStateNormal placeholderImage:ZENITH_PLACEHODLER_IMAGE];
-        [commandStudyScrollView addSubview:studyBtn];
-        
-        UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(studyBtn.left, studyBtn.bottom, studyBtn.width, 30)];
-        nameLab.numberOfLines = 2;
-        [nameLab setTextColor:kTextColor];
-        nameLab.textAlignment = NSTextAlignmentCenter;
-        [commandStudyScrollView addSubview:nameLab];
-        nameLab.text = NAME;
-        nameLab.font = [UIFont systemFontOfSize:12];
-    }
-    
-    [commandStudyScrollView setContentSize:CGSizeMake(20 + (SCREEN_WIDTH / 3 + 20) * self.commandStudyDataArr.count, commandStudyScrollView.height)];
-    
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    
-    // 创建一个定时器(dispatch_source_t本质还是个OC对象)
-    self.commandStudyTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 1, queue);
-    
-    // 设置定时器的各种属性（几时开始任务，每隔多长时间执行一次）
-    // GCD的时间参数，一般是纳秒（1秒 == 10的9次方纳秒）
-    // 何时开始执行第一个任务
-    // dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC) 比当前时间晚3秒
-    dispatch_time_t start = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC));
-    uint64_t interval = (uint64_t)(0.01 * NSEC_PER_SEC);
-    dispatch_source_set_timer(self.commandStudyTimer, start, interval, 0);
-    
-    // 设置回调
-    dispatch_source_set_event_handler(self.commandStudyTimer, ^{
-        __block  float offsetX = commandStudyScrollView.contentOffset.x;
-        if (offsetX >= commandStudyScrollView.contentSize.width - SCREEN_WIDTH / 2) {
-            commandStudyScrollView.contentOffset = CGPointMake(0, 0);
+        if (i == self.homeBtnArr.count) {
+            [optionBtn setImage:[UIImage imageNamed:@"home_btn_more"] forState:UIControlStateNormal];
+            [optionBtn setTitle:@"更多" forState:UIControlStateNormal];
+            [optionBtn addTarget:self action:@selector(goMoreFunction) forControlEvents:UIControlEventTouchUpInside];
+            superView.height = kCustomBtnWidth * (i / 4) + kCustomBtnWidth;
+            return;
         }else{
-            commandStudyScrollView.contentOffset  = CGPointMake(offsetX += 0.5, 0);
+            NSDictionary *dic = self.homeBtnArr[i];
+            [optionBtn setTitle:[dic objectForKey:@"FUNCTIONNAME"] forState:UIControlStateNormal];
+            [optionBtn sd_setImageWithURL:ZENITH_IMAGEURL([[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""]) forState:UIControlStateNormal];
+            [self addBtnSelector:[dic objectForKey:@"FUNCTIONCODE"] withButton:optionBtn];
         }
-    });
-    
-    // 启动定时器
-    dispatch_resume(self.commandStudyTimer);
+
+    }
 }
+
+-(void)addBtnSelector:(NSString *)functionCode withButton:(UIButton *)button
+{
+    if ([functionCode isEqualToString:@"zjzx"]) {
+        /**
+         专家在线 专业圈
+         */
+        [button addTarget:self action:@selector(goZJZX) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"zyq"]){
+        /**
+         专家在线 专业圈
+         */
+        [button addTarget:self action:@selector(goZYQ) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"zyxgcp"]){
+        /**
+         职业性格测评
+         */
+        [button addTarget:self action:@selector(goZYXGCP) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"gwtx"]){
+        /**
+         岗位体系
+         */
+        [button addTarget:self action:@selector(goGWTX) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"gwcp"]){
+        /**
+         岗位测评
+         */
+        [button addTarget:self action:@selector(goGWCP) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"xwgf"]){
+        /**
+         行为规范
+         */
+        [button addTarget:self action:@selector(goXWGF) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"zxcs"]){
+        /**
+         在线测试
+         */
+        [button addTarget:self action:@selector(goZXCS) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -430,7 +364,7 @@
     datasDic = self.PULHomeRequestionData[indexPath.row];
     
     ZEQuestionInfoModel * quesInfoM = [ZEQuestionInfoModel getDetailWithDic:datasDic];
-
+    
     if ([self.delegate respondsToSelector:@selector(goQuestionDetailVCWithQuestionInfo:)]) {
         [self.delegate goQuestionDetailVCWithQuestionInfo:quesInfoM ];
     }
@@ -469,24 +403,95 @@
     }
 }
 
-#pragma mark - UIScrollViewDelegate
+#pragma mark - 自定义功能区页面跳转
 
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+
+/**
+ 跳转专业圈
+ */
+-(void)goZYQ
 {
-    if ([scrollView isEqual:bannerScrollView]) {
-        _pageControl.currentPage = scrollView.contentOffset.x / SCREEN_WIDTH > 2 ? 2 : scrollView.contentOffset.x / SCREEN_WIDTH;
+    if ([self.delegate respondsToSelector:@selector(goZYQ)]) {
+        [self.delegate goZYQ];
+    }
+}
+/**
+ 跳转专业圈
+ */
+-(void)goGWCP
+{
+    if ([self.delegate respondsToSelector:@selector(goGWCP)]) {
+        [self.delegate goGWCP];
+    }
+}
+
+/**
+ 职业性格测评
+ */
+-(void)goZYXGCP
+{
+    if ([self.delegate respondsToSelector:@selector(goZYXGCP)]) {
+        [self.delegate goZYXGCP];
+    }
+}
+/**
+ 岗位体系
+ */
+-(void)goGWTX
+{
+    if ([self.delegate respondsToSelector:@selector(goGWTX)]) {
+        [self.delegate goGWTX];
+    }
+}
+
+/**
+ 专家在线
+ */
+-(void)goZJZX{
+    if ([self.delegate respondsToSelector:@selector(goZJZX)]) {
+        [self.delegate goZJZX];
+    }
+}
+
+/**
+ 行为规范
+ */
+-(void)goXWGF{
+    if ([self.delegate respondsToSelector:@selector(goXWGF)]) {
+        [self.delegate goXWGF];
     }
 }
 
 
+/**
+ 在线测试
+ */
+-(void)goZXCS{
+    if ([self.delegate respondsToSelector:@selector(goZXCS)]) {
+        [self.delegate goZXCS];
+    }
+}
+
+
+/**
+ 更多功能
+ */
+-(void)goMoreFunction
+{
+    if ([self.delegate respondsToSelector:@selector(goMoreFunction)]) {
+        [self.delegate goMoreFunction];
+    }
+
+}
+
 
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end

@@ -651,5 +651,47 @@
     [lineView.layer addSublayer:shapeLayer];
 }
 
+#pragma mark - 添加渐变色
+
++(void)addGradientLayer:(UIView *)view
+{
+
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.colors = @[(__bridge id)RGBA(93, 175, 111, 1).CGColor,  (__bridge id)RGBA(73, 145, 125, 1).CGColor];
+    gradientLayer.startPoint = CGPointMake(0.0, 0.0);
+    gradientLayer.endPoint = CGPointMake(1.0, 0.0);
+    gradientLayer.frame = view.frame;
+    [view.layer addSublayer:gradientLayer];
+}
+
+#pragma mark - 添加线条
+
++(void)addLineLayer:(UIView *)view{
+    CALayer * lineLayer = [CALayer layer];
+    lineLayer.frame = CGRectMake(0, view.bottom - 5 , SCREEN_WIDTH  , 5);
+    lineLayer.backgroundColor = [[UIColor lightGrayColor] CGColor];
+    [view.layer addSublayer:lineLayer];
+}
+
+/**
+ 添加隔断条
+
+ @param left 左
+ @param top 上
+ @param width 宽
+ @param height 高
+ @param view 视图
+ */
++(void)addLineLayerMarginLeft:(CGFloat)left
+                  marginTop:(CGFloat)top
+                        width:(CGFloat)width
+                       height:(CGFloat)height
+                    superView:(UIView *)view
+{
+    CALayer * lineLayer = [CALayer layer];
+    lineLayer.frame = CGRectMake(left, top, width, height);
+    lineLayer.backgroundColor = [MAIN_LINE_COLOR CGColor];
+    [view.layer addSublayer:lineLayer];
+}
 
 @end
