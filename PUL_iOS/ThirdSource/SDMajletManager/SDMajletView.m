@@ -237,7 +237,23 @@ static CGFloat columnNumber = 4.0f;// cell 列数
     return indexPahtTemp;
 }
 
+#pragma mark - 刷新未使用的按钮
 
+-(void)reloadUnuseArr:(NSArray *)arr
+{
+    self.unUseTitles = [NSMutableArray array];
+    for (int i = 0 ; i < arr.count; i ++) {
+        NSDictionary * dic = arr[i];
+        NSDictionary * arrDic = @{@"iconName":[[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""],
+                                  @"title":[dic objectForKey:@"FUNCTIONNAME"],
+                                  @"seqkey":@"",
+                                  @"FUNCTIONCODE":[dic objectForKey:@"FUNCTIONCODE"]};
+    
+        [self.unUseTitles addObject:arrDic];
+    }
+    NSLog(@" ===   %@",self.unUseTitles);
+    [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
+}
 
 
 
@@ -281,10 +297,10 @@ static CGFloat columnNumber = 4.0f;// cell 列数
     if (indexPath.section == 0) {
         
         //只剩一个的时候不可删除
-        if ([_collectionView numberOfItemsInSection:0] == 1)
-        {
-            return;
-        }
+//        if ([_collectionView numberOfItemsInSection:0] == 1)
+//        {
+//            return;
+//        }
         id obj = [_inUseTitles objectAtIndex:indexPath.row];
         [_inUseTitles removeObject:obj];
         [_unUseTitles insertObject:obj atIndex:0];
@@ -301,11 +317,9 @@ static CGFloat columnNumber = 4.0f;// cell 列数
 
 #pragma mark - 交换数组中的数据
 -(void)uplogadInusesTitles{
-    
     id obj = [_inUseTitles objectAtIndex:_dragingFromindexPath.row];
     [_inUseTitles removeObject:obj];
     [_inUseTitles insertObject:obj atIndex:_dragingToindexPaht.row];
-    
 }
 
 

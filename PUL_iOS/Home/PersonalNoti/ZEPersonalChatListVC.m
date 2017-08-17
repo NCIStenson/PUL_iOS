@@ -122,7 +122,7 @@
 
 -(void)initView
 {
-    _chatTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAV_HEIGHT + 60.0f, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 35.0f) style:UITableViewStylePlain];
+    _chatTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAV_HEIGHT + 60.0f, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 84.0f) style:UITableViewStylePlain];
     [_chatTableView setBackgroundColor:[UIColor whiteColor]];
     _chatTableView.dataSource=self;
     _chatTableView.delegate=self;

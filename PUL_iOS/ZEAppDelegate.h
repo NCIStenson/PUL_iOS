@@ -13,7 +13,7 @@
 //  正式版    http://114.55.55.205:8080/emarkspg_nbsjzd
 
 //  King 机器版     http://192.168.1.175:8080/nbsjzd
-//  Juan 机器版     http://192.168.1.189:8080/nbsjzd
+//  Juan 机器版     http://192.168.1.189:8080/emark_learn
 
 #import <UIKit/UIKit.h>
 #import "JPUSHService.h"

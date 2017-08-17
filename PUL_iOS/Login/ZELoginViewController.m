@@ -14,7 +14,7 @@
 
 #import "ZEPULHomeVC.h"
 #import "ZETeamVC.h"
-#import "ZEHomeVC.h"
+#import "ZEPersonalNotiVC.h"
 #import "ZEUserCenterVC.h"
 
 #import "ZETeamNotiCenVC.h"
@@ -263,12 +263,12 @@
     //        UINavigationController *thidrNC = [[UINavigationController alloc]initWithRootViewController:thirdVC];
     
     
-    ZEHomeVC *fourthVC = [ZEHomeVC new];
-    fourthVC.navigationItem.title = @"知道";
+    ZEPersonalNotiVC *fourthVC = [ZEPersonalNotiVC new];
+    fourthVC.navigationItem.title = @"消息";
     //设置标签名称
-    fourthVC.tabBarItem.title = @"知道";
+    fourthVC.tabBarItem.title = @"消息";
     //可以根据需求设置标签的的图标
-    fourthVC.tabBarItem.image = [UIImage imageNamed:@"icon_circle"];
+    fourthVC.tabBarItem.image = [UIImage imageNamed:@"tabbar_noti"];
     UINavigationController *fourthNC = [[UINavigationController alloc]initWithRootViewController:fourthVC];
     
     

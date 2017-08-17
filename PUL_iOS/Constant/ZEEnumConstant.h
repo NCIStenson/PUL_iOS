@@ -28,6 +28,7 @@ typedef enum:NSInteger{
 typedef enum :NSInteger{
     QUESTIONDETAIL_TYPE_DEFAULT,
     QUESTIONDETAIL_TYPE_NOTI,
+    QUESTIONDETAIL_TYPE_HOMEDYNAMIC,
 }QUESTIONDETAIL_TYPE;
 
 typedef enum :NSInteger{
@@ -135,6 +136,26 @@ typedef enum : NSUInteger{
     PULHOME_WEB_Course,   // 我的必修课
     PULHOME_WEB_SCHOOL,   // 学堂
 }PULHOME_WEB;
+
+typedef enum : NSUInteger{
+    ENTER_FINDTEAM_DEFAULT,
+    ENTER_FINDTEAM_HOMEDYNAMIC,
+} ENTER_FINDTEAM;
+
+typedef enum : NSUInteger{
+    ENTER_QUESTIONBANK_TYPE_EXAM = 100,  /***** 章节练习 *****/
+    ENTER_QUESTIONBANK_TYPE_RANDOM,  /**** 随机练习 ****/
+    ENTER_QUESTIONBANK_TYPE_TEST,  /**** 模拟考试 ****/
+    ENTER_QUESTIONBANK_TYPE_DIFFCULT,  /**** 难题攻克 ****/
+    ENTER_QUESTIONBANK_TYPE_DAILY,  /**** 每日一练 ****/
+    ENTER_QUESTIONBANK_TYPE_MYERROR,  /**** 我的错题 ****/
+    ENTER_QUESTIONBANK_TYPE_MYCOLL,  /**** 我的收藏 ****/
+    ENTER_QUESTIONBANK_TYPE_RECORD,  /**** 练习记录 ****/
+    ENTER_QUESTIONBANK_TYPE_NOTE,  /**** 我的笔记 ****/
+    
+    ENTER_QUESTIONBANK_TYPE_ABISCHOOL, /****** 能力学堂 *****/
+    ENTER_QUESTIONBANK_TYPE_STAFFDEV,  /****** 员工发展 *****/
+} ENTER_QUESTIONBANK_TYPE;
 
 
 

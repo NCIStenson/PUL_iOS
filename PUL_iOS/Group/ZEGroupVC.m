@@ -34,9 +34,7 @@
     self.navigationController.navigationBarHidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     if (_enter_group_type == ENTER_GROUP_TYPE_DEFAULT) {
-        self.title = @"圈子";
-        [self disableLeftBtn];
-        
+        self.title = @"圈子";        
     }else if (_enter_group_type == ENTER_GROUP_TYPE_SETTING){
         self.title = @"我的圈子";
     }
@@ -51,7 +49,6 @@
     [self.view addSubview:profCirVC.view];
     [self.view sendSubviewToBack:profCirVC.view];
     
-    [self.rightBtn setImage:[UIImage imageNamed:@"icon_noti"] forState:UIControlStateNormal];
 
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -59,12 +56,13 @@
     [super viewWillAppear:YES];
     [[NSNotificationCenter defaultCenter]postNotificationName:kNOTI_ASK_QUESTION object:nil];
 
-    if (_enter_group_type == ENTER_GROUP_TYPE_DEFAULT) {
-        self.tabBarController.tabBar.hidden = NO;
-    }else if (_enter_group_type == ENTER_GROUP_TYPE_SETTING){
-        self.tabBarController.tabBar.hidden = YES;
-    }
-    [self isHaveNewMessage];
+//    if (_enter_group_type == ENTER_GROUP_TYPE_DEFAULT) {
+//        self.tabBarController.tabBar.hidden = NO;
+//    }else if (_enter_group_type == ENTER_GROUP_TYPE_SETTING){
+//        self.tabBarController.tabBar.hidden = YES;
+//    }
+//    [self isHaveNewMessage];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 #pragma mark - 是否有新消息提醒

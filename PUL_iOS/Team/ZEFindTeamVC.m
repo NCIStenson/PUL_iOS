@@ -29,6 +29,11 @@
     
 }
 
+-(void)goBackTeamVC{
+    self.tabBarController.selectedIndex = 1;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(void)initView{
     findTeamView = [[ZEFindTeamView alloc]initWithFrame:CGRectZero];
     findTeamView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -41,14 +46,23 @@
 {
     [super viewWillAppear:YES];
     [self findTeamRequest];
+    self.tabBarController.tabBar.hidden = YES;
+    if (_enterType == ENTER_FINDTEAM_HOMEDYNAMIC) {
+        [self.leftBtn addTarget:self action:@selector(goBackTeamVC) forControlEvents:UIControlEventTouchUpInside];
+    }
 }
 
 -(void)findTeamRequest
 {
+    NSString * whereSQL =@"TEAMMEMBERS desc ";
+    if (_enterType == ENTER_FINDTEAM_HOMEDYNAMIC) {
+        whereSQL =@"SYSCREATEDATE desc ";
+    }
+    
     NSDictionary * parametersDic = @{@"limit":@"-1",
                                      @"MASTERTABLE":V_KLB_TEAMCIRCLE_INFO,
                                      @"MENUAPP":@"EMARK_APP",
-                                     @"ORDERSQL":@"TEAMMEMBERS desc ",
+                                     @"ORDERSQL":whereSQL,
                                      @"WHERESQL":@"",
                                      @"start":@"0",
                                      @"METHOD":METHOD_SEARCH,

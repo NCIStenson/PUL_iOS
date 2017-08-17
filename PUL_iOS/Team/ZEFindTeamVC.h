@@ -10,4 +10,6 @@
 #import "ZEFindTeamView.h"
 @interface ZEFindTeamVC : ZESettingRootVC<ZEFindTeamViewDelegate>
 
+@property(nonatomic,assign) ENTER_FINDTEAM enterType;
+
 @end

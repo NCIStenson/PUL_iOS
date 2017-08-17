@@ -45,7 +45,7 @@
     _timeLab.textColor = kSubTitleColor;
 
     self.contentLab = [UILabel new];
-    _contentLab.text = @"每日签到每日签到每日签到";
+    _contentLab.text = @"每日签到";
     _contentLab.frame = CGRectMake(self.textLab.left, self.timeLab.bottom, SCREEN_WIDTH - self.textLab.left - 20, 35);
     [self.contentView addSubview:_contentLab];
     _contentLab.font = [UIFont systemFontOfSize:20];
@@ -71,23 +71,30 @@
     
 }
 
--(void)reloadCellView:(ZEQuestionInfoModel *)model;
+-(void)reloadCellView:(ZEPULHomeModel *)model;
 {
-    if ([model.ANSWERSUM integerValue]% 2 == 0) {
+    if ([model.MES_TYPE integerValue] == 4) {
         [_dynamicImageView setImage:[UIImage imageNamed:@"home_icon_signin"]];
         _textLab.text = @"签到";
         _timeLab.text = @"刚刚";
         _contentLab.text = @"每日签到，奖励多多";
         _contentLab.height = 45;
         _subContentLab.hidden = YES;
-        _tipsLab.text = @"立即签到";
-    }else{
+        _tipsLab.text = model.EXTRASPARAM;
+    }else if ([model.MES_TYPE integerValue] == 2){
         [_dynamicImageView setImage:[UIImage imageNamed:@"home_icon_team"]];
         _textLab.text = @"团队";
         _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
-        _contentLab.text = model.QUESTIONEXPLAIN;
-        _subContentLab.text = model.QUESTIONEXPLAIN;
+        _contentLab.text = model.MSG_TITLE;
+        _subContentLab.text = model.MSG_CONTENT;
         _tipsLab.text = @"立即查看";
+    }else if ([model.MES_TYPE integerValue] == 1){
+        [_dynamicImageView setImage:[UIImage imageNamed:@"home_icon_question"]];
+        _textLab.text = @"问答";
+        _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
+        _contentLab.text = model.MSG_TITLE;
+        _subContentLab.text = model.MSG_CONTENT;
+        _tipsLab.text = model.EXTRASPARAM;
     }
     
 }

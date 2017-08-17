@@ -20,7 +20,7 @@
     
     YYImage *image = [YYImage imageNamed:@"building.gif"];
     YYAnimatedImageView *imageView = [[YYAnimatedImageView alloc] initWithImage:image];
-    imageView.frame = CGRectMake(0, NAV_HEIGHT + 60.0f, SCREEN_WIDTH, SCREEN_HEIGHT -NAV_HEIGHT - 35.0f );
+    imageView.frame = CGRectMake(0, NAV_HEIGHT + 60.0f, SCREEN_WIDTH, SCREEN_HEIGHT -NAV_HEIGHT - 84.0f );
     [self.view addSubview:imageView];
     imageView.contentMode = UIViewContentModeScaleAspectFit;
 }

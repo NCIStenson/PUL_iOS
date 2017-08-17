@@ -18,5 +18,6 @@
 @property (nonatomic,assign) QUESTIONDETAIL_TYPE enterDetailIsFromNoti; // 是否从通知进入的详情页面
 
 @property (nonatomic,strong) ZETeamNotiCenModel * notiCenM;
+@property (nonatomic,copy) NSString * QUESTIONID;
 
 @end

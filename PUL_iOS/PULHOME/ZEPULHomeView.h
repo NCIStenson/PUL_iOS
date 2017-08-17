@@ -73,14 +73,34 @@
  */
 -(void)goMoreFunction;
 
+
+/**
+ 签到
+ */
+-(void)goSinginView;
+
+/**
+ 发现团队
+ */
+-(void)goFindTeamView;
+/**
+ 主页问题动态点击
+ */
+-(void)goQuestionView:(NSString *)QUESTIONID;
+
+
+/**
+ 首页搜索
+
+ @param searchStr <#searchStr description#>
+ */
+-(void)goQuestionSearchView:(NSString *)searchStr;
+
 @end
 
 @interface ZEPULHomeView : UIView
 
 @property(nonatomic,weak) id <ZEPULHomeViewDelegate> delegate;
-
-@property (nonatomic, strong) dispatch_source_t bannerTimer;
-@property (nonatomic, strong) dispatch_source_t commandStudyTimer;
 
 
 -(id)initWithFrame:(CGRect)frame;

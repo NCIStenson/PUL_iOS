@@ -35,17 +35,15 @@
     iconImageView = [[UIImageView alloc] init];
     [self addSubview:iconImageView];
     iconImageView.contentMode = UIViewContentModeScaleAspectFit;
-    
+    iconImageView.frame = CGRectMake(0, .1* self.size.height, self.size.width, .6 * self.size.height);
     
     titleLab = [[UILabel alloc] init];
     titleLab.textAlignment = NSTextAlignmentCenter;
     titleLab.textColor = [UIColor darkTextColor];
     [self addSubview:titleLab];
-    
-    
+    titleLab.frame = CGRectMake(0, .8 * self.size.height, self.size.width, 0.2 * self.size.height);
     
     [self addBorderLayer];
-    
     
 }
 
@@ -63,8 +61,6 @@
 }
 
 
-
-
 -(void) setFont:(CGFloat)font{
     _font = font;
     titleLab.font = [UIFont systemFontOfSize:_font];
@@ -76,32 +72,19 @@
 -(void)setIconName:(NSString *)iconName{
     _iconName = iconName;
     
-//    UIImage *image = [UIImage imageNamed:_iconName];
-//    iconImageView.image = [UIImage imageNamed:_iconName];
-    
 //    网络图标调取
     [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL(_iconName)];
-    UIImage *thumbnailImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:ZENITH_IMAGEURL(_iconName).absoluteString];
-    UIImage *image = thumbnailImage;
-
-    
-    CGSize size = self.bounds.size;
-    iconImageView.frame = CGRectMake(0, 0, image.size.width,image.size.height);
-    iconImageView.center = CGPointMake(self.bounds.size.width/2, image.size.height/2);
-    titleLab.frame = CGRectMake(0, iconImageView.frame.size.height, size.width, size.height-image.size.height);
 }
-
-
 
 -(void)setIsMoving:(BOOL)isMoving{
     _isMoving = isMoving;
     if (_isMoving) {
         titleLab.textColor = [UIColor lightGrayColor];
-        iconImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@Gray",_iconName]];
+        [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL(_iconName)];
         _borderLayer.hidden = false;
     }else{
         titleLab.textColor = [UIColor darkTextColor];
-        iconImageView.image = [UIImage imageNamed:_iconName];
+        [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL(_iconName)];
         _borderLayer.hidden = true;
     }
     

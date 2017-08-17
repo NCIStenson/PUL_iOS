@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface ZEPULMenuView : UIView
+
 -(id)initWithFrame:(CGRect)frame withInUseArr:(NSArray *)inuseArr;
+
+-(void)reloadUnuseArr:(NSArray *)arr;
+
 @end

@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
 
     if (_enterDetailIsFromNoti == QUESTIONDETAIL_TYPE_DEFAULT) {
@@ -50,23 +50,22 @@
         if(![_notiCenM.ISREAD boolValue] ){
             [self clearPersonalNotiUnreadCount];
         }
+    }else if (_enterDetailIsFromNoti == QUESTIONDETAIL_TYPE_HOMEDYNAMIC){
+        [self enterFromNotiSendRequest];
     }
+    
+    self.view.backgroundColor = [UIColor whiteColor];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(acceptSuccess) name:kNOTI_ACCEPT_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSearchAnswerRequestWithoutOperateType) name:kNOTI_BACK_QUEANSVIEW object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSearchAnswerRequestWithoutOperateType) name:kNOTI_ANSWER_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeQuestionInfoBack) name:kNOTI_CHANGE_ASK_SUCCESS object:nil];
-    
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = YES;
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:YES];
 }
 
 -(void)dealloc{
@@ -83,6 +82,10 @@
 -(void)enterFromNotiSendRequest
 {
     NSString * WHERESQL = [NSString stringWithFormat:@"SEQKEY = '%@'",_notiCenM.QUESTIONID];
+    if (_enterDetailIsFromNoti == QUESTIONDETAIL_TYPE_HOMEDYNAMIC) {
+        WHERESQL = [NSString stringWithFormat:@"SEQKEY = '%@'",_QUESTIONID];
+
+    }
     NSDictionary * parametersDic = @{@"limit":@"1",
                                      @"MASTERTABLE":V_KLB_QUESTION_INFO,
                                      @"MENUAPP":@"EMARK_APP",

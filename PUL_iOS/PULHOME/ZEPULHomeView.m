@@ -29,8 +29,9 @@
 #import "ZEPULHomeView.h"
 #import "ZEButton.h"
 #import "ZEPULHomeDynamicCell.h"
+#import "ZEPULHomeModel.h"
 
-@interface ZEPULHomeView()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+@interface ZEPULHomeView()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,UITextFieldDelegate>
 {
     CGRect _PULHomeViewFrame;
     
@@ -80,8 +81,6 @@
     lineLayer.frame = CGRectMake(0, searchView.bottom + 15.0f, SCREEN_WIDTH, 1);
     lineLayer.backgroundColor = [[UIColor lightGrayColor] CGColor];
     [navView.layer addSublayer:lineLayer];
-    
-    
 }
 
 #pragma mark - 导航栏搜索界面
@@ -207,7 +206,8 @@
     static NSString * cellID = @"cell";
     
     ZEPULHomeDynamicCell * cell  = [[ZEPULHomeDynamicCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    [cell reloadCellView:[ZEQuestionInfoModel getDetailWithDic:self.PULHomeRequestionData[indexPath.row]]];
+    [cell reloadCellView:[ZEPULHomeModel getDetailWithDic:self.PULHomeRequestionData[indexPath.row]]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -311,7 +311,6 @@
             [optionBtn sd_setImageWithURL:ZENITH_IMAGEURL([[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""]) forState:UIControlStateNormal];
             [self addBtnSelector:[dic objectForKey:@"FUNCTIONCODE"] withButton:optionBtn];
         }
-
     }
 }
 
@@ -355,18 +354,16 @@
     }
 }
 
-
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary * datasDic = nil;
+    ZEPULHomeModel * model = [ZEPULHomeModel getDetailWithDic:self.PULHomeRequestionData[indexPath.row]];
     
-    datasDic = self.PULHomeRequestionData[indexPath.row];
-    
-    ZEQuestionInfoModel * quesInfoM = [ZEQuestionInfoModel getDetailWithDic:datasDic];
-    
-    if ([self.delegate respondsToSelector:@selector(goQuestionDetailVCWithQuestionInfo:)]) {
-        [self.delegate goQuestionDetailVCWithQuestionInfo:quesInfoM ];
+    if ([model.MES_TYPE integerValue] == 4) {
+        [self goSinginView];
+    }else if ([model.MES_TYPE integerValue] == 2){
+        [self goTeamView];
+    }else if ([model.MES_TYPE integerValue] == 1){
+        [self goQuestionView:model.FORKEY];
     }
 }
 
@@ -384,6 +381,8 @@
 
 -(void)didSelectMyOption:(UIButton *)btn
 {
+    [self endEditing:YES];
+    
     if([self.delegate respondsToSelector:@selector(serverBtnClick:)]){
         [self.delegate serverBtnClick:btn.tag - 200];
     }
@@ -404,7 +403,6 @@
 }
 
 #pragma mark - 自定义功能区页面跳转
-
 
 /**
  跳转专业圈
@@ -484,7 +482,47 @@
 
 }
 
+/**
+ 签到
+ */
+-(void)goSinginView{
+    if ([self.delegate respondsToSelector:@selector(goSinginView)]) {
+        [self.delegate goSinginView];
+    }
+}
 
+/**
+ 团队动态
+ */
+-(void)goTeamView{
+    if ([self.delegate respondsToSelector:@selector(goFindTeamView)]) {
+        [self.delegate goFindTeamView];
+    }
+}
+
+/**
+ 主页问题动态点击
+ */
+-(void)goQuestionView:(NSString *)QUESTIONID{
+    if ([self.delegate respondsToSelector:@selector(goQuestionView:)]) {
+        [self.delegate goQuestionView:QUESTIONID];
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self endEditing:YES];
+    if(textField.text.length > 0){
+        if ([self.delegate respondsToSelector:@selector(goQuestionSearchView:)]) {
+            [self.delegate goQuestionSearchView:textField.text];
+            textField.text = @"";
+        }
+    }
+    
+    return YES;
+}
 
 /*
  // Only override drawRect: if you perform custom drawing.

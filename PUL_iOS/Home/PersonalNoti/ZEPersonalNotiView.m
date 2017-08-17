@@ -35,7 +35,7 @@
 
 -(void)setUI{
     
-    _notiContentView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 60.0f) style:UITableViewStylePlain];
+    _notiContentView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 109.0f) style:UITableViewStylePlain];
     _notiContentView.dataSource = self;
     _notiContentView.delegate =self;
     [self addSubview:_notiContentView];
@@ -53,8 +53,8 @@
 {
     _editingView = [[UIView alloc] init];
     [self addSubview:_editingView];
-    _editingView.frame = CGRectMake(0,SCREEN_HEIGHT - NAV_HEIGHT - 60.0f, SCREEN_WIDTH, 60);
-
+    _editingView.frame = CGRectMake(0,SCREEN_HEIGHT - NAV_HEIGHT - 60.0f - TAB_BAR_HEIGHT, SCREEN_WIDTH, 60);
+    
     CALayer * lineLayer = [CALayer layer];
     lineLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 10);
     [_editingView.layer addSublayer:lineLayer];
@@ -66,7 +66,6 @@
         [button setTitleColor:kTextColor forState:UIControlStateNormal];
         [button addTarget:self action:@selector(editingViewBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [_editingView addSubview:button];
-//        button.backgroundColor = MAIN_ARM_COLOR;
         button.frame = CGRectMake(0 + _editingView.width / 3 * i, 10, _editingView.width / 3, _editingView.height - 10);
         [_editingView addSubview:button];
         button.tag = 100 + i;
@@ -228,10 +227,10 @@
     }
     
     if (isShow) {
-        _editingView.top = SCREEN_HEIGHT - NAV_HEIGHT - 60 - 60;
+        _editingView.top = SCREEN_HEIGHT - NAV_HEIGHT - 60 - 60 - TAB_BAR_HEIGHT;
         _notiContentView.height = _notiContentView.height - 60;
     }else{
-        _editingView.frame = CGRectMake(0,SCREEN_HEIGHT - NAV_HEIGHT - 60.0f, SCREEN_WIDTH, 60);
+        _editingView.frame = CGRectMake(0,SCREEN_HEIGHT - NAV_HEIGHT - 60.0f - TAB_BAR_HEIGHT, SCREEN_WIDTH, 60);
         _notiContentView.height = _notiContentView.height + 60;
     }
 }

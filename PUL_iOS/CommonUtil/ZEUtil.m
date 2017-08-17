@@ -657,7 +657,7 @@
 {
 
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.colors = @[(__bridge id)RGBA(93, 175, 111, 1).CGColor,  (__bridge id)RGBA(73, 145, 125, 1).CGColor];
+    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#41b76a"].CGColor,  (__bridge id)[UIColor colorWithHexString:@"#218488"].CGColor];
     gradientLayer.startPoint = CGPointMake(0.0, 0.0);
     gradientLayer.endPoint = CGPointMake(1.0, 0.0);
     gradientLayer.frame = view.frame;
@@ -692,6 +692,67 @@
     lineLayer.frame = CGRectMake(left, top, width, height);
     lineLayer.backgroundColor = [MAIN_LINE_COLOR CGColor];
     [view.layer addSublayer:lineLayer];
+}
+
+
+/**
+ 获取题库首页文字标题
+
+ @param type 获取类型
+ @return 中文字符
+ */
++(NSString *)getQuestionBankWebVCTitle:(ENTER_QUESTIONBANK_TYPE)type
+{
+    switch (type) {
+            case ENTER_QUESTIONBANK_TYPE_EXAM:
+                return @"章节练习";
+            break;
+            
+            case ENTER_QUESTIONBANK_TYPE_RANDOM:
+            return @"随机练习";
+            break;
+
+            case ENTER_QUESTIONBANK_TYPE_TEST:
+            return @"模拟考试";
+            break;
+
+            case ENTER_QUESTIONBANK_TYPE_DIFFCULT:
+            return @"难题攻克";
+            break;
+
+            case ENTER_QUESTIONBANK_TYPE_DAILY:
+            return @"每日一练";
+            break;
+
+            case ENTER_QUESTIONBANK_TYPE_MYERROR:
+            return @"我的错题";
+            break;
+
+            case ENTER_QUESTIONBANK_TYPE_MYCOLL:
+            return @"我的收藏";
+            break;
+
+            case ENTER_QUESTIONBANK_TYPE_NOTE:
+            return @"我的笔记";
+            break;
+
+            case ENTER_QUESTIONBANK_TYPE_RECORD:
+            return @"练习记录";
+            break;
+            
+            case ENTER_QUESTIONBANK_TYPE_ABISCHOOL:
+            return @"能力学堂";
+            break;
+            
+            case ENTER_QUESTIONBANK_TYPE_STAFFDEV:
+            return @"员工发展";
+            break;
+
+            
+        default:
+            return @"";
+            break;
+    }
 }
 
 @end

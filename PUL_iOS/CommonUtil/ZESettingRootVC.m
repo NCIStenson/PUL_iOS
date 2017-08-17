@@ -101,6 +101,8 @@
     _navBar.backgroundColor = MAIN_NAV_COLOR;
     _navBar.clipsToBounds = YES;
     
+    [ZEUtil addGradientLayer:_navBar];
+
     _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _leftBtn.frame = CGRectMake(kLeftButtonMarginLeft, kLeftButtonMarginTop, kLeftButtonWidth, kLeftButtonHeight);
     _leftBtn.backgroundColor = [UIColor clearColor];

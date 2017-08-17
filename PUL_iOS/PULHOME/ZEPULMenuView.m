@@ -12,6 +12,7 @@
 @interface ZEPULMenuView()
 {
     NSArray * inuseIconArr;
+    SDMajletView * menuView;
 }
 
 @end
@@ -29,24 +30,24 @@
 }
 
 -(void)initView{
-   SDMajletView * menuView = [[SDMajletView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    menuView = [[SDMajletView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
     menuView.inUseTitles = [NSMutableArray array];
+    menuView.unUseTitles = [NSMutableArray array];
     for (int i = 0 ; i < inuseIconArr.count; i ++) {
         NSDictionary * dic = inuseIconArr [i];
         
         NSDictionary * arrDic = @{@"iconName":[[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""],@"title":[dic objectForKey:@"FUNCTIONNAME"]};
+        
         [menuView.inUseTitles addObject:arrDic];
     }
-    
-    NSArray *arrUnuses = @[@{@"iconName":@"game",@"title":@"游戏中心"},
-                           @{@"iconName":@"jd",@"title":@"京东特卖"},
-                           @{@"iconName":@"life",@"title":@"生活缴费"},
-                           @{@"iconName":@"shanghu",@"title":@"商户通"}
-                           ];
-    menuView.unUseTitles = [NSMutableArray arrayWithArray:@[]];
-    
+        
     [self addSubview:menuView];
 
+}
+
+-(void)reloadUnuseArr:(NSArray *)arr
+{
+    [menuView reloadUnuseArr:arr];
 }
 
 

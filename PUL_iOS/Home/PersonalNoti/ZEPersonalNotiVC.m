@@ -42,6 +42,7 @@
     [self initVC];
 
     self.title = @"消息盒子";
+    self.leftBtn.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
 
@@ -60,6 +61,7 @@
 {
     [super viewWillAppear:YES];
     self.navigationController.navigationBar.hidden = YES;
+    self.tabBarController.tabBar.hidden = NO;
     if([[JMSGConversation getAllUnreadCount] integerValue] > 0){
         chatUnreadTipsLab.hidden = NO;
         [chatUnreadTipsLab setText:[NSString stringWithFormat:@"%@",[JMSGConversation getAllUnreadCount]]];
@@ -72,7 +74,6 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
-    self.navigationController.navigationBar.hidden = NO;
 }
 
 -(void)reduceUnreadCount:(NSNotification *)noti
@@ -123,9 +124,9 @@
     if (_enterPerNotiType == ENTER_PERSONALNOTICENTER_TYPE_DEFAULT) {
         [self.navigationController popViewControllerAnimated:YES];
     }else if (_enterPerNotiType == ENTER_PERSONALNOTICENTER_TYPE_NOTI || _enterPerNotiType == ENTER_PERSONALNOTICENTER_TYPE_NOTI_CHAT){
-        LBTabBarController *tab = [[LBTabBarController alloc] init];
-        UIWindow * window = [UIApplication sharedApplication].keyWindow;
-        window.rootViewController = tab;
+//        LBTabBarController *tab = [[LBTabBarController alloc] init];
+//        UIWindow * window = [UIApplication sharedApplication].keyWindow;
+//        window.rootViewController = tab;
     }
 }
 

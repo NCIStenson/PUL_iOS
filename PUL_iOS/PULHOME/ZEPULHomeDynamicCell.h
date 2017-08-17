@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZEQuestionInfoModel.h"
+#import "ZEPULHomeModel.h"
 @interface ZEPULHomeDynamicCell : UITableViewCell
 
 @property (nonatomic,strong) UIImageView * dynamicImageView;  // 动态类型图片
@@ -18,6 +18,6 @@
 @property (nonatomic,strong) UILabel * tipsLab;          // 立即查看按钮
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
--(void)reloadCellView:(ZEQuestionInfoModel *)model;
+-(void)reloadCellView:(ZEPULHomeModel *)model;
 
 @end

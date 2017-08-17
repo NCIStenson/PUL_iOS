@@ -134,9 +134,9 @@
     [navView addSubview:_titleLabel];
 
     
-    for (int i = 1; i < 3; i ++) {
+    for (int i = 1; i < 4; i ++) {
         UIButton * _typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _typeBtn.frame = CGRectMake(SCREEN_WIDTH - 105 + 33 * i, 27, 30.0, 30.0);
+        _typeBtn.frame = CGRectMake(SCREEN_WIDTH - 140 + 33 * i, 27, 30.0, 30.0);
         _typeBtn.contentMode = UIViewContentModeScaleAspectFit;
         _typeBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [navView addSubview:_typeBtn];
@@ -145,6 +145,9 @@
             [_typeBtn setImage:[UIImage imageNamed:@"yy_nav_search" ] forState:UIControlStateNormal];
             [_typeBtn addTarget:self action:@selector(goSearchView) forControlEvents:UIControlEventTouchUpInside];
         }else if (i == 2){
+            [_typeBtn setImage:[UIImage imageNamed:@"type" tintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+            [_typeBtn addTarget:self action:@selector(typeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        }else if (i == 3){
             [_typeBtn setImage:[UIImage imageNamed:@"yy_nav_why" ] forState:UIControlStateNormal];
             [_typeBtn addTarget:self action:@selector(plusBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
         }
@@ -939,6 +942,14 @@
 }
 
 //  分类图标点击
+
+-(void)typeBtnClick
+{
+    if ([self.delegate respondsToSelector:@selector(goTypeQuestionVC)]) {
+        [self.delegate goTypeQuestionVC];
+    }
+}
+
 
 -(void)goBack
 {

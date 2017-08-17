@@ -147,5 +147,8 @@
                        height:(CGFloat)height
                     superView:(UIView *)view;
 
+#pragma mark - 获取题库首页中文
++(NSString *)getQuestionBankWebVCTitle:(ENTER_QUESTIONBANK_TYPE)type;
+
 
 @end

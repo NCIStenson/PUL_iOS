@@ -58,6 +58,7 @@
     [[ZEServerEngine sharedInstance]requestWithJsonDic:dic
                                      withServerAddress:commonServer
                                                success:^(id data) {
+                                                                                                      
                                                    if ([ZEUtil isSuccess:[data objectForKey:@"RETMSG"]]) {
                                                        successBlock(data);
                                                    }else{

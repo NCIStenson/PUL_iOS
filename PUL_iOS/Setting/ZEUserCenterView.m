@@ -270,7 +270,8 @@
     [_notiBtn setImage:[UIImage imageNamed:@"icon_noti" color:[UIColor whiteColor]] forState:UIControlStateNormal];
     _notiBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [_notiBtn addTarget:self action:@selector(goNotiVC) forControlEvents:UIControlEventTouchUpInside];
-
+    _notiBtn.hidden = YES;
+    
     UIButton * setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     setBtn.frame = CGRectMake(15, 27, 40,40);
     [_userMessage addSubview:setBtn];

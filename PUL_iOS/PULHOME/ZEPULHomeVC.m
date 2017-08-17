@@ -13,12 +13,17 @@
 #import "ZEShowQuestionVC.h"
 #import "ZEQuestionsDetailVC.h"
 
+#import "ZEQuestionBankWebVC.h"
 #import "ZEChatVC.h"
 #import "ZEAnswerQuestionsVC.h"
 
 #import "ZEPULMenuVC.h"
 
 #import "ZEQuestionBankVC.h"
+
+#import "ZEGroupVC.h"
+#import "ZESinginVC.h"
+#import "ZEFindTeamVC.h"
 @interface ZEPULHomeVC () <ZEPULHomeViewDelegate>
 {
     ZEPULHomeView * _PULHomeView ;
@@ -44,23 +49,14 @@
     self.tabBarController.tabBar.hidden = NO;
     self.tabBarController.tabBar.tintColor = MAIN_NAV_COLOR;
     
-    [self sendNewestQuestionsRequest];
-    
+    [self geMyMessageList];
     [self getPULHomeIconRequest];
-    if(_PULHomeView.bannerTimer){
-        dispatch_resume(_PULHomeView.bannerTimer);
-    }
-    if(_PULHomeView.commandStudyTimer){
-        dispatch_resume(_PULHomeView.commandStudyTimer);
-    }
-
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-//    dispatch_suspend(_PULHomeView.bannerTimer);
-//    dispatch_suspend(_PULHomeView.commandStudyTimer);
+
 }
 
 -(void)initView
@@ -69,6 +65,8 @@
     _PULHomeView.delegate = self;
     [self.view addSubview:_PULHomeView];
 }
+
+
 
 #pragma mark - 获取首页图标请求
 
@@ -96,47 +94,39 @@
                        showAlertView:NO
                              success:^(id data) {
                                  NSArray * arr =[ZEUtil getServerData:data withTabelName:V_KLB_FUNCTION_USER_LIST];
-//                                 if(arr.count > 0){
                                  _homeIcoArr = arr;
-                                     [_PULHomeView reloadHeaderView:arr];
-//                                 }else{
-//                                     
-//                                 }
+                                 [_PULHomeView reloadHeaderView:arr];
                              } fail:^(NSError *errorCode) {
                                  
                              }];
-    
     
 }
 
 
 /************* 查询最新问题 *************/
--(void)sendNewestQuestionsRequest
+-(void)geMyMessageList
 {
-    NSString * WHERESQL = [NSString stringWithFormat:@"ISLOSE = 0 and ISSOLVE = 0"];
-    NSDictionary * parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long) MAX_PAGE_COUNT],
-                                     @"MASTERTABLE":V_KLB_QUESTION_INFO,
+    NSDictionary * parametersDic = @{@"limit":@"10",
+                                     @"MASTERTABLE":KLB_DYNAMIC_HOME_INFO,
                                      @"MENUAPP":@"EMARK_APP",
                                      @"ORDERSQL":@"SYSCREATEDATE desc",
-                                     @"WHERESQL":WHERESQL,
-                                     @"start":[NSString stringWithFormat:@"%ld",(long)_currentNewestPage * MAX_PAGE_COUNT],
-                                     @"METHOD":@"search",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_SEARCH,
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
-                                     @"CLASSNAME":@"com.nci.klb.app.question.QuestionPoints",
+                                     @"CLASSNAME":HOME_MY_MESSAGE,
                                      @"DETAILTABLE":@"",};
     
-    NSDictionary * fieldsDic =@{};
-    
-    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_QUESTION_INFO]
-                                                                           withFields:@[fieldsDic]
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_DYNAMIC_HOME_INFO]
+                                                                           withFields:nil
                                                                        withPARAMETERS:parametersDic
-                                                                       withActionFlag:nil];
+                                                                       withActionFlag:@"messageList"];
     
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
-                                 NSArray * dataArr = [ZEUtil getServerData:data withTabelName:V_KLB_QUESTION_INFO];
+                                 NSArray * dataArr = [ZEUtil getServerData:data withTabelName:KLB_DYNAMIC_HOME_INFO];
                                  if (dataArr.count > 0) {
                                      if (_currentNewestPage == 0) {
                                          [_PULHomeView reloadFirstView:dataArr];
@@ -168,12 +158,13 @@
 -(void)loadNewData
 {
     _currentNewestPage = 0;
-    [self sendNewestQuestionsRequest];
+    [self geMyMessageList];
+    [self getPULHomeIconRequest];
 }
 
 -(void)loadMoreData
 {
-    [self sendNewestQuestionsRequest];
+    [self geMyMessageList];
 }
 
 -(void)serverBtnClick:(NSInteger)tag
@@ -190,11 +181,11 @@
             break;
 
         case 2:
-            [self goPULWebVC:PULHOME_WEB_Course];
+            [self goSchool];
             break;
 
         case 3:
-            [self goMyQuestionVC];
+            [self goStaffDevelopment];
             break;
             
         default:
@@ -220,18 +211,18 @@
     [self.navigationController pushViewController:homeVC animated:YES];
 }
 
--(void)goPULWebVC:(PULHOME_WEB)tag
+-(void)goSchool
 {
-    ZEPULWebVC * webVC = [[ZEPULWebVC alloc]init];
-    webVC.enterPULWebVCType = tag;
+    ZEQuestionBankWebVC * webVC = [[ZEQuestionBankWebVC alloc]init];
+    webVC.enterType = ENTER_QUESTIONBANK_TYPE_ABISCHOOL;
     [self.navigationController pushViewController:webVC animated:YES];
 }
 
--(void)goMyQuestionVC
+-(void)goStaffDevelopment
 {
-    ZEShowQuestionVC * showQuesVC = [[ZEShowQuestionVC alloc]init];
-    showQuesVC.showQuestionListType = QUESTION_LIST_MY_QUESTION;
-    [self.navigationController pushViewController:showQuesVC animated:YES];
+    ZEQuestionBankWebVC * webVC = [[ZEQuestionBankWebVC alloc]init];
+    webVC.enterType = ENTER_QUESTIONBANK_TYPE_STAFFDEV;
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 -(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
@@ -266,6 +257,8 @@
 -(void)goZYQ
 {
     NSLog(@" ===  专业圈");
+    ZEGroupVC *FishVC = [[ZEGroupVC alloc] init];
+    [self.navigationController pushViewController:FishVC animated:YES];
 }
 -(void)goZYXGCP
 {
@@ -279,6 +272,8 @@
 -(void)goZJZX
 {
     NSLog(@" === 专家在线");
+    ZEGroupVC *FishVC = [[ZEGroupVC alloc] init];
+    [self.navigationController pushViewController:FishVC animated:YES];
 }
 
 -(void)goXWGF{
@@ -295,6 +290,35 @@
     ZEPULMenuVC * menuVC = [[ZEPULMenuVC alloc]init];
     menuVC.inuseIconArr = _homeIcoArr;
     [self.navigationController pushViewController:menuVC animated:YES];
+}
+
+-(void)goSinginView
+{
+    ZESinginVC * singVC = [[ZESinginVC alloc]init];
+    [self.navigationController pushViewController:singVC animated:YES];
+}
+
+-(void)goFindTeamView
+{
+    ZEFindTeamVC * fineTeamVC = [[ZEFindTeamVC alloc]init];
+    fineTeamVC.enterType = ENTER_FINDTEAM_HOMEDYNAMIC;
+    [self.navigationController pushViewController:fineTeamVC animated:YES];
+}
+
+-(void)goQuestionView:(NSString *)QUESTIONID
+{
+    ZEQuestionsDetailVC * detailVC = [[ZEQuestionsDetailVC alloc]init];
+    detailVC.enterDetailIsFromNoti = QUESTIONDETAIL_TYPE_HOMEDYNAMIC;
+    detailVC.QUESTIONID = QUESTIONID;
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
+
+-(void)goQuestionSearchView:(NSString *)searchStr
+{
+    ZEShowQuestionVC * showQuestionsList = [[ZEShowQuestionVC alloc]init];
+    showQuestionsList.showQuestionListType = QUESTION_LIST_NEW;
+    showQuestionsList.currentInputStr = searchStr;
+    [self.navigationController pushViewController:showQuestionsList animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

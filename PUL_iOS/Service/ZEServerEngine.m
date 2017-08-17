@@ -143,8 +143,10 @@ static ZEServerEngine *serverEngine = nil;
 //                     if(![cookiesdata length]) {
                          [ZESettingLocalData setCookie:data];
 //                     }
+                     
                      NSError * err = nil;
                      NSDictionary * responseDic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:&err];
+                                          
                      if ([ZEUtil isNotNull:responseObject]) {
                          successBlock(responseDic);
                      }

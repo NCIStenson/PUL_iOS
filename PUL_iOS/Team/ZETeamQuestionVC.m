@@ -206,8 +206,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-//    [[NSNotificationCenter defaultCenter]postNotificationName:kNOTI_ASK_QUESTION object:nil];
+    self.tabBarController.tabBar.hidden = YES;
     [self isHaveNewMessage];
 }
 

@@ -9,8 +9,12 @@
 #import "ZEPULMenuVC.h"
 #import "ZEPULMenuView.h"
 
-@interface ZEPULMenuVC ()
+#import "SDMajletView.h"
 
+@interface ZEPULMenuVC ()
+{
+    SDMajletView * menuView;
+}
 @end
 
 @implementation ZEPULMenuVC
@@ -20,6 +24,8 @@
     // Do any additional setup after loading the view.
     [self initView];
     self.title = @"应用编辑";
+    [self.rightBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [self.rightBtn addTarget:self action:@selector(finishSelectFunction) forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -27,6 +33,38 @@
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden =YES;
     
+    [self getFunctionListRequest];
+}
+
+-(void)getFunctionListRequest
+{
+    NSDictionary * parametersDic = @{@"MASTERTABLE":KLB_FUNCTION_LIST,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"limit":@"-1",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"DETAILTABLE":@"",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":HOME_CLASS_METHOD,
+                                     };
+    
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_FUNCTION_LIST]
+                                                                           withFields:nil
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"funselect"];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * arr =[ZEUtil getServerData:data withTabelName:KLB_FUNCTION_LIST];
+                                 [menuView reloadUnuseArr:arr];
+                                 
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,9 +73,80 @@
 }
 
 -(void)initView{
-    ZEPULMenuView * menuView = [[ZEPULMenuView alloc]initWithFrame:CGRectZero withInUseArr:self.inuseIconArr];
-    menuView.frame = CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
+//    _menuView = [[ZEPULMenuView alloc]initWithFrame:CGRectZero withInUseArr:self.inuseIconArr];
+//    _menuView.frame = CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT);
+//    [self.view addSubview:_menuView];
+    
+    menuView = [[SDMajletView alloc] initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    menuView.inUseTitles = [NSMutableArray array];
+    menuView.unUseTitles = [NSMutableArray array];
+    for (int i = 0 ; i < self.inuseIconArr.count; i ++) {
+        NSDictionary * dic =  self.inuseIconArr [i];
+        
+        NSDictionary * arrDic = @{@"iconName":[[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""],
+                                  @"title":[dic objectForKey:@"FUNCTIONNAME"],
+                                  @"seqkey":[dic objectForKey:@"SEQKEY"],
+                                  @"FUNCTIONCODE":[dic objectForKey:@"FUNCTIONCODE"]};
+        
+        [menuView.inUseTitles addObject:arrDic];
+    }
+    
     [self.view addSubview:menuView];
+
+}
+
+#pragma mark - 完成选择图标
+-(void)finishSelectFunction
+{
+    [menuView callBacktitlesBlock:^(NSMutableArray *inusesTitles, NSMutableArray *unusesTitles) {
+        NSLog(@"inusesTitles ==  %@",inusesTitles);
+        NSLog(@"unusesTitles == %@",unusesTitles);
+        
+        for (int i = 0; i < inusesTitles.count; i ++) {
+            NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:inusesTitles[i]];
+            [dic setValue:[NSString stringWithFormat:@"%d",i + 1] forKey:@"SORT"];\
+            [dic removeObjectForKey:@"iconName"];
+            [dic removeObjectForKey:@"title"];
+            [inusesTitles replaceObjectAtIndex:i withObject:dic];
+        }
+        NSLog(@" ==  %@",inusesTitles);
+        
+        [self saveFunction:inusesTitles];
+        
+    }];
+}
+
+-(void)saveFunction:(NSArray *)arr
+{
+    NSDictionary * parametersDic = @{@"MASTERTABLE":KLB_FUNCTION_USER_LIST,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"limit":@"-1",
+                                     @"METHOD":METHOD_UPDATE,
+                                     @"DETAILTABLE":@"",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":HOME_CLASS_METHOD,
+                                     };
+    NSMutableArray * tableArr = [NSMutableArray array];
+    for (int i = 0; i < arr.count; i ++) {
+        [tableArr addObject:KLB_FUNCTION_USER_LIST];
+    }
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:tableArr
+                                                                           withFields:arr
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"functionSave"];
+    NSLog(@" ==  %@",packageDic);
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 [self showTips:@"保存成功"];
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
 }
 
 /*

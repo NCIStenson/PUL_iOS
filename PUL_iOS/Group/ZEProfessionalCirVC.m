@@ -171,17 +171,12 @@
 }
 
 -(void)initView{
-    float cellHeight = SCREEN_HEIGHT - NAV_HEIGHT - 49.0f;
-    if (_enter_group_type == ENTER_GROUP_TYPE_SETTING) {
-        cellHeight = SCREEN_HEIGHT - NAV_HEIGHT - 49.0f;
-    }
-    contentView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 49.0f) style:UITableViewStylePlain];
+    contentView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT) style:UITableViewStylePlain];
     contentView.delegate = self;
     contentView.dataSource = self;
     [self.view addSubview:contentView];
     contentView.showsVerticalScrollIndicator = NO;
     contentView.separatorStyle  = UITableViewCellSeparatorStyleNone;
-    
 }
 
 #pragma mark - UITableViewDelegate

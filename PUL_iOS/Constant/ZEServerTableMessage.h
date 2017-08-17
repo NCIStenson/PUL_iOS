@@ -83,11 +83,18 @@
 #define V_KLB_MESSAGE_REC_N              @"V_KLB_MESSAGE_REC_N"               /***   未回执   ***/
 #define V_KLB_MESSAGE_REC_Y              @"V_KLB_MESSAGE_REC_Y"               /***   已回执   ***/
 
-
-#define HOME_CLASS_METHOD @"com.nci.klb.app.homePage.FunctionList"
+#define HOME_URL_CLASS @"com.nci.klb.app.zct.ZctHttpClient"          /***   首页链接跳转链接获取  ***/
+#define HOME_CLASS_METHOD @"com.nci.klb.app.homePage.FunctionList"          /***   自定义功能区  ***/
+#define HOME_MY_MESSAGE @"com.nci.klb.app.homePage.MessageList"          /***   我的动态消息列表  ***/
+#define QUESTION_BANK @"com.nci.klb.app.exam.QuestionBank"          /***   题库列表  ***/
 
 #define V_KLB_FUNCTION_USER_LIST              @"V_KLB_FUNCTION_USER_LIST"               /***   我的功能列表   ***/
+#define KLB_FUNCTION_USER_LIST              @"KLB_FUNCTION_USER_LIST"               /***   我的功能列表   ***/
 #define KLB_FUNCTION_LIST              @"KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
+
+#define KLB_DYNAMIC_HOME_INFO              @"KLB_DYNAMIC_HOME_INFO"               /***   首页动态列表     ***/
+
+//#define KLB_DYNAMIC_HOME_INFO              @"KLB_DYNAMIC_HOME_INFO"               /***   题库列表     ***/
 
 
 #endif /* ZEServerTableMessage_h */

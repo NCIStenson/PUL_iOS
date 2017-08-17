@@ -42,14 +42,14 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeAskState:) name:kNOTI_ASK_TEAM_QUESTION object:nil];;
 
     [self.rightBtn setImage:[UIImage imageNamed:@"icon_noti"] forState:UIControlStateNormal];
-    
+    self.rightBtn.hidden = YES;
     [self initView];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
+    self.tabBarController.tabBar.hidden = NO;
     [self teamHomeRequest];
     [self isHaveNewMessage];
 }

@@ -27,6 +27,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    NSLog(@"  \n\n\n\n\n\n\n\n  %@  \n\n\n\n\n\n\n\n ",Zenith_Server);
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     application.applicationSupportsShakeToEdit = YES;
 
@@ -129,8 +132,8 @@
         //特别注意：管理一组的控制器(最多显示五个,多余五个的话,包括第五个全部在更多模块里面,并且可以通过拖拽方式进行顺序编辑);
         NSArray *array = @[firstNC,secondNC,fourthNC,fifthNC];
         tab.viewControllers = array;
-        
         self.window.rootViewController = tab;
+    
     }else{
         ZELoginViewController * loginVC = [[ZELoginViewController alloc]init];
         self.window.rootViewController = loginVC;

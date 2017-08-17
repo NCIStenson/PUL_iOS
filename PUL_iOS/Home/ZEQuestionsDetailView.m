@@ -14,7 +14,7 @@
 #define kContentTableViewMarginLeft 0.0f
 #define kContentTableViewMarginTop  NAV_HEIGHT
 #define kContentTableViewWidth      SCREEN_WIDTH
-#define kContentTableViewHeight     SCREEN_HEIGHT - NAV_HEIGHT
+#define kContentTableViewHeight     SCREEN_HEIGHT - NAV_HEIGHT 
 
 #import "ZEQuestionsDetailView.h"
 #import "ZEAnswerInfoModel.h"
@@ -38,6 +38,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         _questionInfoModel = infoModel;
         _isTeam = isTeam;
         [self initView];

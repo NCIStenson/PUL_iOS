@@ -52,4 +52,6 @@ typedef void(^SDMajletBlock)(NSMutableArray *inusesTitles , NSMutableArray *unus
 
 
 
+-(void)reloadUnuseArr:(NSArray *)arr;
+
 @end

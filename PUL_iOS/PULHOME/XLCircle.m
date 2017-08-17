@@ -10,7 +10,7 @@
 
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
 
-static CGFloat endPointMargin = -3.0f;
+static CGFloat endPointMargin = -5.0f;
 
 @interface XLCircle ()
 {
@@ -52,12 +52,12 @@ static CGFloat endPointMargin = -3.0f;
     numberLab.font = [UIFont systemFontOfSize:20];
     numberLab.textColor = [UIColor whiteColor];
     numberLab.textAlignment = NSTextAlignmentCenter;
-
+    
     UILabel * textLab = [UILabel new];
     textLab.frame = CGRectMake(0, numberLab.bottom, self.frame.size.width, 20);
     [self addSubview:textLab];
     textLab.text = @"正答率";
-    textLab.font = [UIFont systemFontOfSize:14  ];
+    textLab.font = [UIFont systemFontOfSize:14];
     textLab.textAlignment = NSTextAlignmentCenter;
     numberLab.textColor = MAIN_SUBTITLE_COLOR;
 }
@@ -88,7 +88,7 @@ static CGFloat endPointMargin = -3.0f;
     _progressLayer.frame = self.bounds;
     _progressLayer.fillColor =  [[UIColor clearColor] CGColor];
     //指定path的渲染颜色
-    _progressLayer.strokeColor  = [[UIColor blueColor] CGColor];
+    _progressLayer.strokeColor  = [RGB(72, 103, 139) CGColor];
     _progressLayer.lineCap = kCALineCapRound;
     _progressLayer.lineWidth = _lineWidth;
     _progressLayer.path = [path CGPath];
@@ -106,13 +106,18 @@ static CGFloat endPointMargin = -3.0f;
     
     //用于显示结束位置的小点
     _endPoint = [[UIImageView alloc] init];
-    _endPoint.frame = CGRectMake(0, 0, 10,10);
+    _endPoint.frame = CGRectMake(0, 0, 14,14);
     _endPoint.hidden = true;
-    _endPoint.backgroundColor = [UIColor redColor];
+    _endPoint.backgroundColor = RGBA(72, 103, 139,1);
+//    _endPoint.backgroundColor = [UIColor redColor];
     _endPoint.image = [UIImage imageNamed:@"endPoint"];
     _endPoint.layer.masksToBounds = true;
     _endPoint.layer.cornerRadius = _endPoint.bounds.size.width/2;
     [self addSubview:_endPoint];
+    _endPoint.layer.borderWidth = 4;
+    _endPoint.layer.borderColor = [[UIColor colorWithWhite:1 alpha:0.5] CGColor];
+//    _endPoint.layer.borderColor = [[UIColor redColor] CGColor];
+    
 }
 
 -(void)setProgress:(float)progress
@@ -123,6 +128,7 @@ static CGFloat endPointMargin = -3.0f;
     [_progressLayer removeAllAnimations];
     numberLab.text = [NSString  stringWithFormat:@"%.0f%%",_progress * 100];
     numberLab.textColor = [UIColor whiteColor];
+    numberLab.font = [UIFont systemFontOfSize:20];
 }
 
 //更新小点的位置
