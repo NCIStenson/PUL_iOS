@@ -103,7 +103,8 @@
     UIView * navView = [[UIView alloc] initWithFrame:CGRectZero];
     navView.backgroundColor = MAIN_NAV_COLOR;
     [self addSubview:navView];
-    
+    [ZEUtil addGradientLayer:navView];
+
     [navView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(kNavBarMarginTop);
         make.left.mas_equalTo(kNavBarMarginLeft);

@@ -655,9 +655,8 @@
 
 +(void)addGradientLayer:(UIView *)view
 {
-
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#41b76a"].CGColor,  (__bridge id)[UIColor colorWithHexString:@"#218488"].CGColor];
+    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#41b76a"].CGColor,  (__bridge id)RGBA(33, 132, 136, 0.8).CGColor];
     gradientLayer.startPoint = CGPointMake(0.0, 0.0);
     gradientLayer.endPoint = CGPointMake(1.0, 0.0);
     gradientLayer.frame = view.frame;

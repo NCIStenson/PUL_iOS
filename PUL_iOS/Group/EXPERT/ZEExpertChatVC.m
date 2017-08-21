@@ -23,6 +23,13 @@
     
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#41b76a"].CGColor,  (__bridge id)RGBA(33, 132, 136, 0.8).CGColor];
+    gradientLayer.startPoint = CGPointMake(0.0, 0.0);
+    gradientLayer.endPoint = CGPointMake(1.0, 0.0);
+    gradientLayer.frame = CGRectMake(0, -20, SCREEN_WIDTH, 64);
+    [self.navigationController.navigationBar.layer addSublayer:gradientLayer];
+    
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     if([ZEUtil isNotNull:_expertModel]){
         self.title = _expertModel.USERNAME;
@@ -38,6 +45,7 @@
 {
     [super viewWillAppear:YES];
     [self.navigationController setNavigationBarHidden:NO];
+    self.tabBarController.tabBar.hidden = YES;
 }
 -(void)viewWillDisappear:(BOOL)animated
 {

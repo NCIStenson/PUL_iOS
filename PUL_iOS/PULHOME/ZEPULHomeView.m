@@ -22,22 +22,23 @@
 #define kSearchTFHeight       (IPHONE6_MORE ? 35 : 30)
 
 
-#define kServerBtnWidth (SCREEN_WIDTH - 40 ) / 4
+#define kServerBtnWidth (SCREEN_WIDTH - 10 ) / 4
 
-#define kCustomBtnWidth (SCREEN_WIDTH - 40 ) / 4
+#define kCustomBtnWidth (SCREEN_WIDTH - 10 ) / 4
 
 #import "ZEPULHomeView.h"
 #import "ZEButton.h"
 #import "ZEPULHomeDynamicCell.h"
-#import "ZEPULHomeModel.h"
 
-@interface ZEPULHomeView()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,UITextFieldDelegate>
+@interface ZEPULHomeView()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,UITextFieldDelegate,ZEHomeOptionViewDelegate,UIGestureRecognizerDelegate>
 {
     CGRect _PULHomeViewFrame;
     
     UITableView * _contentTableView;
     
     UITextField * searchTF;
+    
+    ZEPULHomeModel * _currentSelectHomeModel; // 当前选择的忽略动态
 }
 
 @property (nonatomic,retain) NSMutableArray * PULHomeRequestionData;
@@ -78,9 +79,34 @@
     searchView.frame = CGRectMake(kSearchTFMarginLeft, kSearchTFMarginTop, kSearchTFWidth, kSearchTFHeight);
     
     CALayer * lineLayer = [CALayer layer];
-    lineLayer.frame = CGRectMake(0, searchView.bottom + 15.0f, SCREEN_WIDTH, 1);
-    lineLayer.backgroundColor = [[UIColor lightGrayColor] CGColor];
+    lineLayer.frame = CGRectMake(0, searchView.bottom + 15.0f, SCREEN_WIDTH, 0.5);
+    lineLayer.backgroundColor = [[UIColor whiteColor] CGColor];
     [navView.layer addSublayer:lineLayer];
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithActionBlock:^(id  _Nonnull sender) {
+        [self downTheKeyboard];
+    }];
+    tap.delegate = self;
+    [self addGestureRecognizer:tap];
+}
+#pragma mark - UITapGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件(只解除的是cell与手势间的冲突，cell以外仍然响应手势)
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]){
+        return NO;
+    }
+    
+    // 若为UITableView（即点击了tableView任意区域），则不截获Touch事件(完全解除tableView与手势间的冲突，cell以外也不会再响应手势)
+    if ([touch.view isKindOfClass:[UITableView class]]){
+        return NO;
+    }
+    return YES;
+}
+
+-(void)downTheKeyboard
+{
+    [self endEditing:YES];
 }
 
 #pragma mark - 导航栏搜索界面
@@ -92,7 +118,7 @@
     searchTFView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.3];
     
     UIImageView * searchTFImg = [[UIImageView alloc]initWithFrame:CGRectMake(5, ( height - height * 0.6 ) / 2, height * 0.6, height * 0.6)];
-    searchTFImg.image = [UIImage imageNamed:@"search_icon"];
+    searchTFImg.image = [UIImage imageNamed:@"search_icon" color:[UIColor whiteColor]];
     [searchTFView addSubview:searchTFImg];
     searchTFImg.contentMode = UIViewContentModeScaleAspectFill;
     
@@ -104,7 +130,8 @@
     searchTF.leftViewMode = UITextFieldViewModeAlways;
     searchTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, height * 0.6 + 20, height)];
     searchTF.delegate=self;
-    
+    searchTF.textColor = [UIColor whiteColor];
+    searchTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     searchTFView.clipsToBounds = YES;
     searchTFView.layer.cornerRadius = 2;
     
@@ -208,6 +235,9 @@
     ZEPULHomeDynamicCell * cell  = [[ZEPULHomeDynamicCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     [cell reloadCellView:[ZEPULHomeModel getDetailWithDic:self.PULHomeRequestionData[indexPath.row]]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.optionBtn.tag = indexPath.row + 100;
+    [cell.optionBtn addTarget:self action:@selector(showOptionView:) forControlEvents:UIControlEventTouchUpInside];
+
     return cell;
 }
 
@@ -250,7 +280,7 @@
     for (int i = 0 ; i < 4; i ++) {
         ZEButton * optionBtn = [ZEButton buttonWithType:UIButtonTypeCustom];
         [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
-        optionBtn.frame = CGRectMake(20 + kServerBtnWidth * i, 0, kServerBtnWidth, kServerBtnWidth);
+        optionBtn.frame = CGRectMake(5 + kServerBtnWidth * i, 0, kServerBtnWidth, kServerBtnWidth);
         [superView addSubview:optionBtn];
         optionBtn.backgroundColor = [UIColor clearColor];
         optionBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -258,7 +288,7 @@
         [optionBtn addTarget:self action:@selector(didSelectMyOption:) forControlEvents:UIControlEventTouchUpInside];
         optionBtn.tag = i + 200;
         [optionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
+        optionBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         switch (i) {
                 case 0:
                 [optionBtn setImage:[UIImage imageNamed:@"home_btn_bank"] forState:UIControlStateNormal];
@@ -291,14 +321,14 @@
     for (int i = 0 ; i < self.homeBtnArr.count + 1; i ++) {
         ZEButton * optionBtn = [ZEButton buttonWithType:UIButtonTypeCustom];
         [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
-        optionBtn.frame = CGRectMake(20 + kCustomBtnWidth * (i % 4),  kCustomBtnWidth * (i / 4), kCustomBtnWidth, kCustomBtnWidth );
+        optionBtn.frame = CGRectMake(5 + kCustomBtnWidth * (i % 4),  kCustomBtnWidth * (i / 4), kCustomBtnWidth, kCustomBtnWidth );
         [superView addSubview:optionBtn];
         optionBtn.backgroundColor = [UIColor clearColor];
         optionBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         optionBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
         optionBtn.tag = i + 200;
         [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
-        
+       
         if (i == self.homeBtnArr.count) {
             [optionBtn setImage:[UIImage imageNamed:@"home_btn_more"] forState:UIControlStateNormal];
             [optionBtn setTitle:@"更多" forState:UIControlStateNormal];
@@ -307,9 +337,22 @@
             return;
         }else{
             NSDictionary *dic = self.homeBtnArr[i];
-            [optionBtn setTitle:[dic objectForKey:@"FUNCTIONNAME"] forState:UIControlStateNormal];
+            NSString * titleStr =[dic objectForKey:@"FUNCTIONNAME"];
+            [optionBtn setTitle:titleStr forState:UIControlStateNormal];
             [optionBtn sd_setImageWithURL:ZENITH_IMAGEURL([[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""]) forState:UIControlStateNormal];
             [self addBtnSelector:[dic objectForKey:@"FUNCTIONCODE"] withButton:optionBtn];
+            if (IPHONE5 && titleStr.length > 5) {
+                optionBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+            }
+            if([[dic objectForKey:@"IS_SPREAD"] boolValue]){
+                UIImageView * newImageView = [[UIImageView alloc]init];
+                newImageView.frame = CGRectMake(0, 0, 25, 16);
+                [optionBtn addSubview:newImageView];
+                newImageView.userInteractionEnabled = YES;
+                [newImageView setImage:[UIImage imageNamed:@"home_icon_new"]];
+                newImageView.left = optionBtn.imageView.centerX * .1 * kCURRENTASPECT;
+                newImageView.top = (optionBtn.imageView.centerY - 30 )* kCURRENTASPECT;
+            }
         }
     }
 }
@@ -365,6 +408,28 @@
     }else if ([model.MES_TYPE integerValue] == 1){
         [self goQuestionView:model.FORKEY];
     }
+}
+
+-(void)showOptionView:(UIButton *)btn{
+    
+    _currentSelectHomeModel = [ZEPULHomeModel getDetailWithDic:self.PULHomeRequestionData[btn.tag - 100]];
+    
+    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
+    CGRect rect=[btn convertRect: btn.bounds toView:window];
+    
+    ZEHomeOptionView * homeOptionView = [[ZEHomeOptionView alloc]initWithFrame:CGRectZero];
+    homeOptionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    homeOptionView.delegate =self;
+    homeOptionView.rect = rect;
+    [window addSubview:homeOptionView];
+    
+}
+
+-(void)ignoreDynamic{
+    if ([self.delegate respondsToSelector:@selector(ignoreHomeDynamic:)]) {
+        [self.delegate ignoreHomeDynamic:_currentSelectHomeModel];
+    }
+    
 }
 
 -(void)answerQuestion:(UIButton *)btn
@@ -533,3 +598,137 @@
  */
 
 @end
+#pragma mark - 忽略动态
+@interface ZEHomeOptionView()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
+{
+    UITableView * contentTab;
+    UIImageView * backImageView;
+}
+@end
+
+@implementation ZEHomeOptionView
+
+-(id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if(self){
+        self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
+        [self initUIView];
+    }
+    return self;
+}
+
+-(void)initUIView{
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithActionBlock:^(id  _Nonnull sender) {
+        [self removeAllSubviews];
+        [self removeFromSuperview];
+    }];
+    tap.delegate = self;
+    [self addGestureRecognizer:tap];
+    
+    backImageView = [[UIImageView alloc]init];
+    backImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH - 30, 50);
+    [self addSubview:backImageView];
+    backImageView.userInteractionEnabled = YES;
+//    backImageView.backgroundColor = MAIN_ARM_COLOR;
+    
+    contentTab = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, backImageView.width , 44) style:UITableViewStylePlain];
+    contentTab.delegate = self;
+    contentTab.dataSource  = self;
+    [backImageView addSubview:contentTab];
+    contentTab.backgroundColor = [UIColor clearColor];
+    contentTab.clipsToBounds = YES;
+    contentTab.layer.cornerRadius = 5;
+    contentTab.userInteractionEnabled = YES;
+    contentTab.separatorStyle = UITableViewCellSeparatorStyleNone;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    // 若为UITableViewCellContentView（即点击了tableViewCell），则不截获Touch事件(只解除的是cell与手势间的冲突，cell以外仍然响应手势)
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]){
+        return NO;
+    }
+    
+    // 若为UITableView（即点击了tableView任意区域），则不截获Touch事件(完全解除tableView与手势间的冲突，cell以外也不会再响应手势)
+    if ([touch.view isKindOfClass:[UITableView class]]){
+        return NO;
+    }
+    return YES;
+}
+
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * cellID = @"cell";
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    }
+    
+    UIImageView * eyeImage = [[UIImageView alloc]init];
+    [eyeImage setImage:[UIImage imageNamed:@"home_icon_ignoreEye.png"]];
+    [cell.contentView addSubview:eyeImage];
+    eyeImage.left = 10.0f;
+    eyeImage.top = 11.0f;
+    eyeImage.width = 30.0f;
+    eyeImage.height = 20.0f;
+    eyeImage.contentMode = UIViewContentModeScaleAspectFit;
+    
+    UILabel * textLab = [[UILabel alloc]initWithFrame:CGRectMake(eyeImage.right + 8.0f, 0 , SCREEN_WIDTH - 200, 44)];
+    textLab.textColor = MAIN_SUBTITLE_COLOR;
+    textLab.font = [UIFont systemFontOfSize:15];
+    textLab.text = @"忽略此条动态";
+    [cell.contentView addSubview:textLab];
+        
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"======================didSelectRowAtIndexPath==============================");
+    
+    if ([self.delegate respondsToSelector:@selector(ignoreDynamic)]) {
+        [self.delegate ignoreDynamic];
+    }
+    
+    [self removeAllSubviews];
+    [self removeFromSuperview];
+}
+
+-(void)setRect:(CGRect)rect
+{
+    _rect = rect;
+    backImageView.alpha = 0.5;
+    if (rect.origin.y < SCREEN_HEIGHT / 2) {
+        backImageView.frame = CGRectMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height , 0, 0);
+    }else{
+        backImageView.frame = CGRectMake(rect.origin.x, rect.origin.y , 0, 0);
+    }
+    [UIView animateWithDuration:.29 animations:^{
+//        contentTab.alpha =1;
+        backImageView.alpha = 1;
+        if (rect.origin.y < SCREEN_HEIGHT / 2) {
+            backImageView.frame = CGRectMake(20, rect.origin.y + rect.size.height - 10, SCREEN_WIDTH - 30, 49);
+            UIImage *image = [UIImage imageNamed:@"question_bank_change_bottom"];
+            UIImage *newImage = [image stretchableImageWithLeftCapWidth:20 topCapHeight:20];
+            [backImageView setImage:newImage];
+        }else{
+            backImageView.frame = CGRectMake(20, rect.origin.y - 40, SCREEN_WIDTH - 30, 49);
+            UIImage *image = [UIImage imageNamed:@"question_bank_change_top"];
+            UIImage *newImage = [image stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+            [backImageView setImage:newImage];
+            contentTab.top = 0;
+        }
+    }];
+}
+
+@end
+
+

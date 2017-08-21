@@ -64,6 +64,7 @@
     UIView * navView = [[UIView alloc]initWithFrame:CGRectMake(kNavViewMarginLeft, kNavViewMarginTop, kNavViewWidth, kNavViewHeight)];
     navView.backgroundColor = MAIN_LINE_COLOR;
     [self addSubview:navView];
+    [ZEUtil addGradientLayer:navView];
     
     UILabel * screenLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 30, kNavViewHeight)];
     screenLab.text = @"筛选";
@@ -134,6 +135,7 @@
         UIView * navView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kNavViewWidth, kNavViewHeight)];
         navView.backgroundColor = [UIColor whiteColor];
         [_optionView addSubview:navView];
+        [ZEUtil addGradientLayer:navView];
         
         NSArray * typeArr = @[@"类型",@"全部",@"视频",@"图片",@"文档",@"其他"];
         

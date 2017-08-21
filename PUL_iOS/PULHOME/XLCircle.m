@@ -40,13 +40,12 @@ static CGFloat endPointMargin = -5.0f;
     gradientLayer.colors = @[(__bridge id)RGBA(156, 209, 169, 1).CGColor,  (__bridge id)RGBA(135, 181, 183, 1).CGColor];
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(0, 1.0);
-    gradientLayer.frame = CGRectMake(0, 0, 100, 100);
+    gradientLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     [self.layer addSublayer:gradientLayer];
-    gradientLayer.cornerRadius = 50;
-
+    gradientLayer.cornerRadius = self.frame.size.height / 2;
     
     numberLab = [UILabel new];
-    numberLab.frame = CGRectMake(0, 20, self.frame.size.width, 40);
+    numberLab.frame = CGRectMake(0, (IPHONE5 ? 15 :20), self.frame.size.width,  (IPHONE5 ? 25 :40));
     [self addSubview:numberLab];
     numberLab.text = [NSString  stringWithFormat:@"%.2f%%",_progress * 100];
     numberLab.font = [UIFont systemFontOfSize:20];

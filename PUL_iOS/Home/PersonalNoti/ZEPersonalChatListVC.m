@@ -130,8 +130,9 @@
     [self.view addSubview:_chatTableView];
     
     [_chatTableView registerNib:[UINib nibWithNibName:@"JCHATConversationListCell" bundle:nil] forCellReuseIdentifier:@"JCHATConversationListCell"];
-    
 }
+
+
 
 #pragma mark - UITableViewDelegate
 
@@ -190,7 +191,7 @@
     
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.selected = NO;
-    
+    self.navigationController.navigationBar.hidden = NO;
     ZEExpertChatVC *sendMessageCtl =[[ZEExpertChatVC alloc] init];
     JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
     sendMessageCtl.conversation = conversation;

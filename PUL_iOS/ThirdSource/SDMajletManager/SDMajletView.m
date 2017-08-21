@@ -58,7 +58,7 @@ static CGFloat columnNumber = 4.0f;// cell 列数
     //cell size
     UIImage *iconImag = [UIImage imageNamed:@"more"];
     //布局item大小
-    flowLayout.itemSize = CGSizeMake(cellWith, iconImag.size.height*2);
+    flowLayout.itemSize = CGSizeMake(cellWith, 80);
     //布局边距
     flowLayout.sectionInset = UIEdgeInsetsMake(margSpaceY, margSpaceX, margSpaceY, margSpaceX);
     //布局最小行间距
@@ -274,7 +274,7 @@ static CGFloat columnNumber = 4.0f;// cell 列数
         headView.subTitle = @"长按并拖拽调整";
     }else{
         headView.title = @"未选择的应用";
-        headView.subTitle = @"点击添加或删除应用";
+//        headView.subTitle = @"点击添加或删除应用";
     }
     return headView;
     
@@ -287,7 +287,7 @@ static CGFloat columnNumber = 4.0f;// cell 列数
     cell.font = 13;
     cell.iconName = indexPath.section == 0? [_inUseTitles[indexPath.row] objectForKey:@"iconName"]: [_unUseTitles[indexPath.row] objectForKey:@"iconName"];
     cell.title = indexPath.section == 0? [_inUseTitles[indexPath.row] objectForKey:@"title"] : [_unUseTitles[indexPath.row] objectForKey:@"title"];
-    
+    cell.contentView.backgroundColor = MAIN_ARM_COLOR;
     return cell;
     
 }

@@ -25,12 +25,10 @@
     }return self;
 }
 
-
 -(void)buidUI{
     
     self.layer.cornerRadius = 5.0f;
     self.layer.masksToBounds = YES;
-    
     
     iconImageView = [[UIImageView alloc] init];
     [self addSubview:iconImageView];
@@ -41,10 +39,15 @@
     titleLab.textAlignment = NSTextAlignmentCenter;
     titleLab.textColor = [UIColor darkTextColor];
     [self addSubview:titleLab];
-    titleLab.frame = CGRectMake(0, .8 * self.size.height, self.size.width, 0.2 * self.size.height);
+    titleLab.frame = CGRectMake(0, .8 * self.size.height, self.size.width, 0.15 * self.size.height);
+    
+    _cornerImage = [[UIImageView alloc] init];
+    [self addSubview:_cornerImage];
+    _cornerImage.contentMode = UIViewContentModeScaleAspectFit;
+    _cornerImage.frame = CGRectMake(self.size.width - 10, 0, 10, 10);
+    _cornerImage.backgroundColor = MAIN_ARM_COLOR;
     
     [self addBorderLayer];
-    
 }
 
 -(void)addBorderLayer{
@@ -71,23 +74,21 @@
 }
 -(void)setIconName:(NSString *)iconName{
     _iconName = iconName;
-    
 //    网络图标调取
-    [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL(_iconName)];
+    [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL(_iconName) placeholderImage:ZENITH_PLACEHODLER_IMAGE];
 }
 
 -(void)setIsMoving:(BOOL)isMoving{
     _isMoving = isMoving;
     if (_isMoving) {
         titleLab.textColor = [UIColor lightGrayColor];
-        [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL(_iconName)];
+        [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL(_iconName) placeholderImage:ZENITH_PLACEHODLER_IMAGE];
         _borderLayer.hidden = false;
     }else{
         titleLab.textColor = [UIColor darkTextColor];
-        [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL(_iconName)];
+        [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL(_iconName) placeholderImage:ZENITH_PLACEHODLER_IMAGE];
         _borderLayer.hidden = true;
     }
-    
 }
 
 

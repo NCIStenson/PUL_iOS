@@ -27,6 +27,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    self.tabBarController.tabBar.hidden = YES;
     if(_enterTeamNotiType == ENTER_TEAMNOTI_TYPE_DEFAULT){
         if ([_notiCenModel.ISRECEIPT boolValue]) {
             [self getYesReceiptMemberList];

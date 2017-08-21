@@ -387,13 +387,14 @@
     praiseNumBtn.titleLabel.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
     [praiseNumBtn setTitleColor:MAIN_SUBTITLE_COLOR forState:UIControlStateNormal];
     [cellContentView addSubview:praiseNumBtn];
-    [praiseNumBtn setImage:[UIImage imageNamed:@"qb_praiseBtn_hand.png"] forState:UIControlStateNormal];
-    [praiseNumBtn addTarget:self action:@selector(giveLikes:) forControlEvents:UIControlEventTouchUpInside];
     praiseNumBtn.tag = indexPath.row;
     if([answerInfoM.ISGOOD boolValue]){
-        praiseNumBtn.enabled = NO;
-        [praiseNumBtn setTitleColor:RGBA(253, 179, 43, 1) forState:UIControlStateNormal];
-        [praiseNumBtn setImage:[UIImage imageNamed:@"qb_praiseBtn_hand.png" color:RGBA(253, 179, 43, 1)] forState:UIControlStateNormal];
+        [praiseNumBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [praiseNumBtn setImage:[UIImage imageNamed:@"qb_praiseBtn_hand.png" color:[UIColor redColor]] forState:UIControlStateNormal];
+        [praiseNumBtn addTarget:self action:@selector(havenGiveLikes) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        [praiseNumBtn setImage:[UIImage imageNamed:@"qb_praiseBtn_hand.png"] forState:UIControlStateNormal];
+        [praiseNumBtn addTarget:self action:@selector(giveLikes:) forControlEvents:UIControlEventTouchUpInside];
     }
     UILabel * que_ans_lab = nil;
     if ([answerInfoM.QACOUNT integerValue] > 0) {
@@ -488,6 +489,13 @@
         [self.delegate giveLikes:answerInfoM.SEQKEY];
     }
     
+}
+
+-(void)havenGiveLikes{
+    MBProgressHUD *hud2 = [MBProgressHUD showHUDAddedTo:self animated:YES];
+    hud2.labelText = @"已经点赞过了";
+    hud2.mode = MBProgressHUDModeText;
+    [hud2 hide:YES afterDelay:1.0f];
 }
 
 

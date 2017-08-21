@@ -62,7 +62,24 @@
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
+
+                                 NSArray * arr = [ZEUtil getServerData:data withTabelName:KLB_SIGNIN_INFO];
                                  [calendarPicker reloadDateData:[ZEUtil getServerData:data withTabelName:KLB_SIGNIN_INFO]];
+                                 
+                                 NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                                 [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+                                 NSString *todayString = [dateFormatter stringFromDate:[NSDate date]];
+                                 
+                                 BOOL todayIsSignin = NO;
+                                 for (int j = 0; j < arr.count; j ++) {
+                                     NSDictionary * dic = arr[j];
+                                     if([todayString isEqualToString:[[dic objectForKey:@"SIGNINDATE"] substringToIndex:10]]){
+                                         todayIsSignin = YES;
+                                     }
+                                 }
+                                 if (!todayIsSignin) {
+                                     [self goSignin];
+                                 }
                              } fail:^(NSError *errorCode) {
 
                              }];

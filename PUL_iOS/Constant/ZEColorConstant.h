@@ -17,7 +17,7 @@
 #define MAIN_ARM_COLOR [UIColor colorWithRed:(arc4random()%255)/255.0 green:(arc4random()%255)/255.0 blue:(arc4random()%255)/255.0 alpha:1]
 #define MAIN_SUBTITLE_COLOR      RGBA(127,127,127,1)
 #define MAIN_GREEN_COLOR      RGBA(40,165,101,1)
-//#define MAIN_NAV_COLOR [UIColor colorWithRed:0/255.0 green:84/255.0 blue:74/255.0 alpha:1]
+#define MAIN_TITLEBLACK_COLOR [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1]
 //#define MAIN_NAV_COLOR [UIColor colorWithRed:40/255.0 green:165/255.0 blue:101/255.0 alpha:1]
 #define MAIN_NAV_COLOR [ZEUtil colorWithHexString:@"#28a564"]
 #define MAIN_SUBBTN_COLOR [ZEUtil colorWithHexString:@"#999999"]

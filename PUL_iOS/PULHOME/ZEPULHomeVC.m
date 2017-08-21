@@ -51,6 +51,7 @@
     
     [self geMyMessageList];
     [self getPULHomeIconRequest];
+
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -65,8 +66,6 @@
     _PULHomeView.delegate = self;
     [self.view addSubview:_PULHomeView];
 }
-
-
 
 #pragma mark - 获取首页图标请求
 
@@ -153,6 +152,40 @@
                              }];
     
 }
+
+/************* 查询最新问题 *************/
+-(void)ignoreHomeDynamicWithSeqkey:(NSString *)seqkey
+{
+    NSDictionary * parametersDic = @{@"limit":@"10",
+                                     @"MASTERTABLE":KLB_DYNAMIC_HOME_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"SYSCREATEDATE desc",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_UPDATE,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":HOME_MY_MESSAGE,
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * dic = @{@"SEQKEY":seqkey,
+                           @"MES_STATE":@"0"};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_DYNAMIC_HOME_INFO]
+                                                                           withFields:@[dic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@""];
+    
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 [self geMyMessageList];
+                             } fail:^(NSError *errorCode) {
+                                 [_PULHomeView endRefreshing];
+                             }];
+}
+
 
 #pragma mark - 
 -(void)loadNewData
@@ -319,6 +352,11 @@
     showQuestionsList.showQuestionListType = QUESTION_LIST_NEW;
     showQuestionsList.currentInputStr = searchStr;
     [self.navigationController pushViewController:showQuestionsList animated:YES];
+}
+
+-(void)ignoreHomeDynamic:(ZEPULHomeModel *)model
+{
+    [self ignoreHomeDynamicWithSeqkey:model.SEQKEY];
 }
 
 - (void)didReceiveMemoryWarning {

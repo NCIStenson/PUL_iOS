@@ -58,7 +58,7 @@
     UIView * navView = [[UIView alloc]initWithFrame:CGRectMake(kNavViewMarginLeft, kNavViewMarginTop, kNavViewWidth, kNavViewHeight)];
     navView.backgroundColor = MAIN_LINE_COLOR;
     [self addSubview:navView];
-    
+
     UILabel * screenLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 30, kNavViewHeight)];
     screenLab.text = @"筛选";
     screenLab.font = [UIFont systemFontOfSize:12];

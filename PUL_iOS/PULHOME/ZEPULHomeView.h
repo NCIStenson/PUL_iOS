@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZEPULHomeModel.h"
 
 @class ZEPULHomeView;
+@class ZEHomeOptionView;
 
 @protocol ZEPULHomeViewDelegate <NSObject>
 
@@ -96,6 +98,8 @@
  */
 -(void)goQuestionSearchView:(NSString *)searchStr;
 
+-(void)ignoreHomeDynamic:(ZEPULHomeModel *)model;
+
 @end
 
 @interface ZEPULHomeView : UIView
@@ -130,3 +134,18 @@
 
 
 @end
+
+@protocol ZEHomeOptionViewDelegate <NSObject>
+
+-(void)ignoreDynamic;
+
+@end
+
+@interface ZEHomeOptionView : UIView
+
+@property(nonatomic,weak) id <ZEHomeOptionViewDelegate> delegate;
+
+@property (nonatomic,assign) CGRect rect;
+
+@end
+

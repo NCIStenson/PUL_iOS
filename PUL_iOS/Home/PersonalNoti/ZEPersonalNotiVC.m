@@ -41,7 +41,7 @@
     [self initView];
     [self initVC];
 
-    self.title = @"消息盒子";
+    self.title = @"消息";
     self.leftBtn.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     

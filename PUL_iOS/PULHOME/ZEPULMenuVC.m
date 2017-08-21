@@ -24,7 +24,7 @@
     // Do any additional setup after loading the view.
     [self initView];
     self.title = @"应用编辑";
-    [self.rightBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [self.rightBtn setTitle:@"管理" forState:UIControlStateNormal];
     [self.rightBtn addTarget:self action:@selector(finishSelectFunction) forControlEvents:UIControlEventTouchUpInside];
 }
 

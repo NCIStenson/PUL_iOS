@@ -48,7 +48,7 @@
     _contentLab.text = @"每日签到";
     _contentLab.frame = CGRectMake(self.textLab.left, self.timeLab.bottom, SCREEN_WIDTH - self.textLab.left - 20, 35);
     [self.contentView addSubview:_contentLab];
-    _contentLab.font = [UIFont systemFontOfSize:20];
+    _contentLab.font = [UIFont systemFontOfSize:18];
     _contentLab.textColor = kTitleColor;
     
     self.subContentLab = [UILabel new];
@@ -67,8 +67,17 @@
     _tipsLab.textAlignment = NSTextAlignmentCenter;
     _tipsLab.font = [UIFont systemFontOfSize:14];
     
-    [ZEUtil addLineLayerMarginLeft:0 marginTop:130 width:SCREEN_WIDTH height:5 superView:self.contentView];
+    _optionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
+    _optionBtn.frame = CGRectMake(SCREEN_WIDTH - 50, 0, 40, 40);
+    _optionBtn.backgroundColor = [UIColor clearColor];
+//    optionBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+//    [_optionBtn addTarget:self action:@selector(didSelectOptionBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    optionBtn.backgroundColor = MAIN_ARM_ COLOR;
+    [_optionBtn setImage:[UIImage imageNamed:@"home_dynamic_more" color:kTextColor] forState:UIControlStateNormal];
+    [self.contentView addSubview:_optionBtn];
     
+    [ZEUtil addLineLayerMarginLeft:0 marginTop:130 width:SCREEN_WIDTH height:5 superView:self.contentView];
 }
 
 -(void)reloadCellView:(ZEPULHomeModel *)model;

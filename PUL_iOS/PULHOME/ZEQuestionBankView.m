@@ -6,7 +6,7 @@
 //  Copyright © 2017年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
-#define kMyAchievementViewHeight 140.0f
+#define kMyAchievementViewHeight  (IPHONE5 ? 110 : 140)
 
 #define kMyBankBtnViewHeight (SCREEN_HEIGHT - kMyBankViewHeight - kMyAchievementViewHeight - NAV_HEIGHT)
 #define kMyBankViewHeight 80.0f
@@ -15,6 +15,9 @@
 #define endPointMargin 4
 
 #define kServerBtnWidth (SCREEN_WIDTH - 40 ) / 4
+
+#define kBankFlowerWidth (SCREEN_WIDTH - 60)
+
 
 #import "ZEQuestionBankView.h"
 #import "XLCircle.h"
@@ -48,7 +51,6 @@
 -(void)initView{
     [self  initMyAchievementView];
     [self initBankBtn];
-    
 }
 
 -(void)initMyAchievementView
@@ -61,19 +63,19 @@
     [achiView.layer addSublayer:lineLayer];
     lineLayer.backgroundColor = [MAIN_LINE_COLOR CGColor];
     
-    UILabel * textLab = [[UILabel alloc]initWithFrame:CGRectMake(40, 10, 100, 20)];
-    textLab.textColor = MAIN_SUBTITLE_COLOR;
+    UILabel * textLab = [[UILabel alloc]initWithFrame:CGRectMake((IPHONE5 ? 20 : 40), 10, 100, 20)];
+    textLab.textColor = MAIN_TITLEBLACK_COLOR;
     textLab.font = [UIFont systemFontOfSize:14];
     textLab.text = @"我的成就";
     [achiView addSubview:textLab];
     
-    _circle = [[XLCircle alloc] initWithFrame:CGRectMake(50, 35, 100, 100) lineWidth:4];
-    _circle.progress = 0.0;
+    _circle = [[XLCircle alloc] initWithFrame:CGRectMake((IPHONE5 ? 30 : 50), 35, (IPHONE5 ? 70 : 100), (IPHONE5 ? 70 : 100)) lineWidth:(IPHONE5 ? 3 : 4)];
+    _circle.progress = 0.2;
     [achiView addSubview:_circle];
     
     for (int i = 0; i < 2; i ++) {
         UIImageView * imageView = [UIImageView new];
-        imageView.frame = CGRectMake(SCREEN_WIDTH - 170, _circle.top + 15 + 45 * i, 25, 25);
+        imageView.frame = CGRectMake(SCREEN_WIDTH - 170, (IPHONE5 ? (_circle.top + 5 + 40 * i): (_circle.top + 15 + 45 * i)), 25, 25);
         [achiView addSubview:imageView];
         
         UILabel * textLab = [UILabel new];
@@ -112,7 +114,7 @@
     lineLayer.backgroundColor = [MAIN_LINE_COLOR CGColor];
 
     changeBankLab = [UILabel new];
-    changeBankLab.frame = CGRectMake(20, 5, SCREEN_WIDTH - 90, 35);
+    changeBankLab.frame = CGRectMake(20, 5, SCREEN_WIDTH - 90, 45);
     changeBankLab.text = @"切换题库";
     [bankBtnView addSubview:changeBankLab];
     changeBankLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
@@ -121,8 +123,8 @@
     changeImage.frame = CGRectMake(0, 0, 15, 15);
     [bankBtnView addSubview:changeImage];
     [changeImage setImage:[UIImage imageNamed:@"change"]];
-    changeImage.right = SCREEN_WIDTH - 20;
-    changeImage.top = 10;
+    changeImage.right = SCREEN_WIDTH - 30;
+    changeImage.top = 20;
     
     UIButton * changeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     changeBtn.frame = CGRectMake(0, 0, 50, 50);
@@ -132,7 +134,7 @@
     
     UIImageView * flowerImageView = [UIImageView new];
     flowerImageView.userInteractionEnabled = YES;
-    flowerImageView.frame = CGRectMake(20, 40, SCREEN_WIDTH - 40, SCREEN_WIDTH - 40);
+    flowerImageView.frame = CGRectMake(30, 50, kBankFlowerWidth, kBankFlowerWidth);
     [flowerImageView setImage:[UIImage imageNamed:@"complete"]];
     [bankBtnView addSubview:flowerImageView];
     [self initFlowerView:flowerImageView];
@@ -143,7 +145,7 @@
     for (int i = 0 ; i < 4; i ++) {
         ZEButton * optionBtn = [ZEButton buttonWithType:UIButtonTypeCustom];
         [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
-        optionBtn.frame = CGRectMake(0, 0, (SCREEN_WIDTH - 40 ) / 2 * 0.75 , (SCREEN_WIDTH - 40 ) / 2 * 0.75 );
+        optionBtn.frame = CGRectMake(0, 0, kBankFlowerWidth/ 2 * 0.65 , kBankFlowerWidth/ 2 * 0.65 );
         [flowerImageView addSubview:optionBtn];
         optionBtn.backgroundColor = [UIColor clearColor];
         optionBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -183,9 +185,12 @@
     [flowerImageView addSubview:dailyPracticeView];
     dailyPracticeView.frame = CGRectMake(0, 0, flowerImageView.width / 2 * 0.8, flowerImageView.width / 2 * 0.8);
     dailyPracticeView.center = CGPointMake(flowerImageView.width / 2, flowerImageView.width / 2);
+    dailyPracticeView.backgroundColor = [UIColor whiteColor];
+    dailyPracticeView.clipsToBounds = YES;
+    dailyPracticeView.layer.cornerRadius = dailyPracticeView.height / 2;
     
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.colors = @[(__bridge id)RGBA(156, 209, 169, 1).CGColor,  (__bridge id)RGBA(135, 181, 183, 1).CGColor];
+    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#41b76a"].CGColor,  (__bridge id)RGBA(33, 132, 136, .8).CGColor];
     gradientLayer.startPoint = CGPointMake(0, 0);
     gradientLayer.endPoint = CGPointMake(0, 1.0);
     gradientLayer.frame = CGRectMake(0, 0, dailyPracticeView.width, dailyPracticeView.height);
@@ -208,7 +213,7 @@
 {
     UIView * tabBarView = [UIView new];
     [self addSubview:tabBarView];
-    tabBarView.frame = CGRectMake(0, kMyBankBtnViewHeight + kMyAchievementViewHeight + NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - kMyBankBtnViewHeight - kMyAchievementViewHeight - NAV_HEIGHT);
+    tabBarView.frame = CGRectMake(0, SCREEN_HEIGHT - kServerBtnWidth, SCREEN_WIDTH, kServerBtnWidth);
     
     CALayer * lineLayer = [CALayer layer];
     lineLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 5);
@@ -257,8 +262,8 @@
     _bankModel = bankModel;
     _timeLab.text = [NSString stringWithFormat:@"总时长     %.2fh",[_bankModel.time_pass floatValue] / 100];
     _numLab.text = [NSString stringWithFormat:@"刷题数     %lld",[_bankModel.done_num longLongValue]];
-    _circle.progress = [_bankModel.right_rate floatValue];
-    
+    _circle.progress = [_bankModel.right_rate floatValue] / 100;
+    _circle.progress = 0.2;
     if (_bankModel.module_list.count > 0) {
         NSDictionary * dic = _bankModel.module_list[0];
         changeBankLab.text = [dic objectForKey:@"MODULE_NAME"];
@@ -282,7 +287,6 @@
     changeQuestionBank.delegate =self;
     changeQuestionBank.banksArr = self.bankModel.module_list;
     [self addSubview:changeQuestionBank];
-    
 }
 
 -(void)goQuestionBankWebView:(UIButton*)button
@@ -320,6 +324,7 @@
 @interface ZEChangeQuestionBankView()<UITableViewDelegate,UITableViewDataSource,UIGestureRecognizerDelegate>
 {
     UITableView * contentTab;
+    UIImageView * backImageView;
 }
 @end
 
@@ -344,13 +349,13 @@
     tap.delegate = self;
     [self addGestureRecognizer:tap];
     
-    UIImageView * backImageView = [[UIImageView alloc]init];
-    backImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH / 2, 132);
-    backImageView.right = SCREEN_WIDTH - 20;
-    backImageView.top = kMyAchievementViewHeight + NAV_HEIGHT + 30.0f;
+    backImageView = [[UIImageView alloc]init];
+    backImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH - 40 , 138);
+    backImageView.right = SCREEN_WIDTH - 10;
+    backImageView.top = kMyAchievementViewHeight + NAV_HEIGHT + 40.0f;
     [self addSubview:backImageView];
     
-    UIImage *image = [UIImage imageNamed:@"question_bank_change"];
+    UIImage *image = [UIImage imageNamed:@"question_bank_change_bottom"];
     UIImage *newImage = [image stretchableImageWithLeftCapWidth:20 topCapHeight:20];
     [backImageView setImage:newImage];
     backImageView.userInteractionEnabled = YES;
@@ -404,13 +409,17 @@
 -(void)setBanksArr:(NSArray *)banksArr
 {
     _banksArr = banksArr;
+    if (_banksArr.count == 0) {
+        backImageView.hidden = YES;
+    }else if (_banksArr.count < 3) {
+        backImageView.height = _banksArr.count * 44 + 6;
+        contentTab.height = _banksArr.count * 44;
+    }
     [contentTab reloadData];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"======================didSelectRowAtIndexPath==============================");
-    
     if ([self.delegate respondsToSelector:@selector(finshChooseBank:)]) {
         [self.delegate finshChooseBank:self.banksArr[indexPath.row]];
     }

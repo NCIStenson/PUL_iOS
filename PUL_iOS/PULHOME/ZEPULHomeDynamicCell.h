@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "ZEPULHomeModel.h"
+
 @interface ZEPULHomeDynamicCell : UITableViewCell
 
 @property (nonatomic,strong) UIImageView * dynamicImageView;  // 动态类型图片
+@property (nonatomic,strong) UIButton * optionBtn;
 @property (nonatomic,strong) UILabel * textLab;         // 动态名称 ： 签到 能力学堂
 @property (nonatomic,strong) UILabel * timeLab;         // 动态时间
 @property (nonatomic,strong) UILabel * contentLab;      // 动态内容

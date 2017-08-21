@@ -23,6 +23,12 @@
 @property (nonatomic, strong) NSString *iconName;
 
 
+
+/**
+ 右上角添加删除按钮
+ */
+@property (nonatomic,strong) UIImageView * cornerImage;
+
 /**
  标题
  */

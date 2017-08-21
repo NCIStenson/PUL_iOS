@@ -108,7 +108,6 @@
         [typicalScrollView addSubview:typicalImageBtn];
         [typicalImageBtn addTarget:self action:@selector(goExpertDetail:) forControlEvents:UIControlEventTouchUpInside];
         typicalImageBtn.tag = i;
-//        [typicalImageBtn setImage:[UIImage imageNamed:@"jdbh_zjjd_bg"] forState:UIControlStateNormal];
         typicalImageBtn.imageView.contentMode = UIViewContentModeScaleToFill;
         [typicalImageBtn setBackgroundImage:[UIImage imageNamed:@"jdbh_zjjd_bg"] forState:UIControlStateNormal];
         if (i > 2) {
@@ -294,7 +293,7 @@
         [standardTitle setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
         standardTitle.frame = CGRectMake(30 , 50 + kWorkStandardRowHeight * i, SCREEN_WIDTH - 90, kWorkStandardRowHeight);
         standardTitle.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
-        [standardTitle setTitle:[dic objectForKey:@"STANDARDEXPLAIN"] forState:UIControlStateNormal];
+        [standardTitle setTitle:[dic objectForKey:@"STANDARDNAME"] forState:UIControlStateNormal];
         [standardTitle setTitleColor:kTextColor forState:UIControlStateNormal];
         standardTitle.contentHorizontalAlignment =  UIControlContentHorizontalAlignmentLeft;
         [workStandardView addSubview:standardTitle];
