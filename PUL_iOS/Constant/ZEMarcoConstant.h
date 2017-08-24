@@ -69,7 +69,7 @@
 #define ZENITH_IMAGE_FILESTR(fileStr) [NSString stringWithFormat:@"%@/file/%@",Zenith_Server,fileStr]
 #define ZENITH_PLACEHODLER_IMAGE [UIImage imageNamed:@"placeholder.png"]
 #define ZENITH_PLACEHODLER_USERHEAD_IMAGE [UIImage imageNamed:@"avatar_default.jpg"]
-#define ZENITH_PLACEHODLER_TEAM_IMAGE [UIImage imageNamed:@"icon_team_headimage.jpg"]
+#define ZENITH_PLACEHODLER_TEAM_IMAGE [UIImage imageNamed:@"icon_team_headimage"]
 
 #define kCellImgaeHeight (SCREEN_WIDTH - 60)/3
 

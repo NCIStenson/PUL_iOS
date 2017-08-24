@@ -70,7 +70,6 @@
     [achiView addSubview:textLab];
     
     _circle = [[XLCircle alloc] initWithFrame:CGRectMake((IPHONE5 ? 30 : 50), 35, (IPHONE5 ? 70 : 100), (IPHONE5 ? 70 : 100)) lineWidth:(IPHONE5 ? 3 : 4)];
-    _circle.progress = 0.2;
     [achiView addSubview:_circle];
     
     for (int i = 0; i < 2; i ++) {
@@ -243,7 +242,7 @@
                 break;
                 case 2:
                 [optionBtn setImage:[UIImage imageNamed:@"Exercise record" ] forState:UIControlStateNormal];
-                [optionBtn setTitle:@"练习记录" forState:UIControlStateNormal];
+                [optionBtn setTitle:@"我的练习" forState:UIControlStateNormal];
                 break;
                 case 3:
                 [optionBtn setImage:[UIImage imageNamed:@"note" ] forState:UIControlStateNormal];
@@ -263,7 +262,6 @@
     _timeLab.text = [NSString stringWithFormat:@"总时长     %.2fh",[_bankModel.time_pass floatValue] / 100];
     _numLab.text = [NSString stringWithFormat:@"刷题数     %lld",[_bankModel.done_num longLongValue]];
     _circle.progress = [_bankModel.right_rate floatValue] / 100;
-    _circle.progress = 0.2;
     if (_bankModel.module_list.count > 0) {
         NSDictionary * dic = _bankModel.module_list[0];
         changeBankLab.text = [dic objectForKey:@"MODULE_NAME"];
@@ -403,6 +401,9 @@
     cell.textLabel.text = [dic objectForKey:@"MODULE_NAME"];
     cell.textLabel.textAlignment = NSTextAlignmentCenter;
     [cell.textLabel  sizeToFit];
+    cell.textLabel.textColor = kTextColor;
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
+
     return cell;
 }
 

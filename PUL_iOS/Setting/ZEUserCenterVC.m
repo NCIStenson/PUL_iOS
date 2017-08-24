@@ -20,6 +20,8 @@
 #import "ZEPersonalNotiVC.h"
 #import "ZESchoolWebVC.h"
 
+#import "ZEQuestionBankWebVC.h"
+
 #define kTipsImageTag 1234
 
 @interface ZEUserCenterVC ()<ZEUserCenterViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
@@ -47,7 +49,79 @@
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = NO;
     [[NSNotificationCenter defaultCenter]postNotificationName:kNOTI_ASK_QUESTION object:nil];
+    
+    [self getCurrentUserLevel];
+    [self sendMyBONUSPOINTSRequest];
 }
+
+-(void)getCurrentUserLevel
+{
+    NSDictionary * parametersDic = @{@"limit":@"20",
+                                     @"stary":@"0",
+                                     @"MASTERTABLE":V_KLB_USER_BASE_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":[NSString stringWithFormat:@"USERCODE = '%@'",[ZESettingLocalData getUSERCODE]],
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.userinfo.UserInfo",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_USER_BASE_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:YES
+                             success:^(id data) {
+                                 NSArray * arr = [ZEUtil getServerData:data withTabelName:V_KLB_USER_BASE_INFO];
+                                 if(arr.count > 0){
+                                     NSDictionary * dic = arr[0];
+                                     usView.levelTitle = [dic objectForKey:@"LEVELCODE"];
+                                 }
+                             }
+                                fail:^(NSError *error) {
+                                }];
+}
+
+-(void)sendMyBONUSPOINTSRequest
+{
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":KLB_USER_BASE_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":[NSString stringWithFormat:@"USERCODE = '%@'",[ZESettingLocalData getUSERCODE]],
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_USER_BASE_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * infoArr = [ZEUtil getServerData:data withTabelName:KLB_USER_BASE_INFO];
+                                 if (infoArr.count > 0) {
+                                     NSDictionary * dic = infoArr[0];
+                                     usView.pointNum = [NSString stringWithFormat:@"%@",[dic objectForKey:@"SUMPOINTS"]];
+//                                     [personalMsgView reloadPersonalScore:[NSString stringWithFormat:@"%@",[dic objectForKey:@"SUMPOINTS"]]];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+
+
 
 -(void)initView
 {
@@ -255,6 +329,12 @@
     [self.navigationController pushViewController:personalNotiVC animated:YES];
 }
 
+-(void)goWebVCWithType:(ENTER_QUESTIONBANK_TYPE)type
+{
+    ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];
+    bankVC.enterType = type;
+    [self.navigationController pushViewController:bankVC animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

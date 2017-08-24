@@ -98,20 +98,29 @@
 #pragma mark - 完成选择图标
 -(void)finishSelectFunction
 {
+    if (!menuView.viewEditing) {
+        [self.rightBtn setTitle:@"完成" forState:UIControlStateNormal];
+        menuView.viewEditing = YES;
+        return;
+    }else{
+        [self.rightBtn setTitle:@"管理" forState:UIControlStateNormal];
+        menuView.viewEditing = NO;
+    }
+    
     [menuView callBacktitlesBlock:^(NSMutableArray *inusesTitles, NSMutableArray *unusesTitles) {
         NSLog(@"inusesTitles ==  %@",inusesTitles);
         NSLog(@"unusesTitles == %@",unusesTitles);
-        
-        for (int i = 0; i < inusesTitles.count; i ++) {
+        NSMutableArray * arr = [NSMutableArray arrayWithArray:inusesTitles];
+        for (int i = 0; i < arr.count; i ++) {
             NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:inusesTitles[i]];
             [dic setValue:[NSString stringWithFormat:@"%d",i + 1] forKey:@"SORT"];\
             [dic removeObjectForKey:@"iconName"];
             [dic removeObjectForKey:@"title"];
-            [inusesTitles replaceObjectAtIndex:i withObject:dic];
+            [arr replaceObjectAtIndex:i withObject:dic];
         }
         NSLog(@" ==  %@",inusesTitles);
         
-        [self saveFunction:inusesTitles];
+        [self saveFunction:arr];
         
     }];
 }

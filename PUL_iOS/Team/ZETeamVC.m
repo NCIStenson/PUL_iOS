@@ -51,6 +51,7 @@
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = NO;
     [self teamHomeRequest];
+    [ZEUtil cacheQuestionType];
 }
 
 -(void)changeAskState:(NSNotification *)noti

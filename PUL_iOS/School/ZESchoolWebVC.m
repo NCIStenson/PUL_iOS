@@ -1,6 +1,6 @@
 //
 //  ZESchoolWebVC.m
-//  PUL_iOS
+//  nbsj-know
 //
 //  Created by Stenson on 17/2/10.
 //  Copyright © 2017年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
@@ -50,10 +50,17 @@
         self.title = @"操作手册";
     }else if (_enterType == ENTER_WEBVC_MY_PRACTICE){
         self.title = @"我的练习";
+    }else if (_enterType == ENTER_WEBVC_SYSTEMNOTI){
+        self.title = @"系统通知";
     }
     
     [self initWebView];
     
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -110,6 +117,12 @@
         }else{
             [self showTips:@"文件路径错误，请联系管理员" afterDelay:1.5];
             [self performSelector:@selector(leftBtnClick) withObject:nil afterDelay:1.5];
+        }
+    }else if (_enterType == ENTER_WEBVC_SYSTEMNOTI){
+        if(self.webURL.length > 0){
+            [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webURL]]];
+        }else if (self.htmlStr.length > 0){
+            [webView loadHTMLString:self.htmlStr baseURL:nil];
         }
     }
 }

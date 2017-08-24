@@ -20,6 +20,7 @@
 #import "ZEPULMenuVC.h"
 
 #import "ZEQuestionBankVC.h"
+#import "ZEQuestionBankWebVC.h"
 
 #import "ZEGroupVC.h"
 #import "ZESinginVC.h"
@@ -51,7 +52,7 @@
     
     [self geMyMessageList];
     [self getPULHomeIconRequest];
-
+    [ZEUtil cacheQuestionType];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -67,6 +68,7 @@
     [self.view addSubview:_PULHomeView];
 }
 
+#pragma mark - Request
 #pragma mark - 获取首页图标请求
 
 -(void)getPULHomeIconRequest
@@ -316,6 +318,10 @@
 -(void)goZXCS
 {
     NSLog(@" ===  在线测试");
+    
+    ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];
+    bankVC.enterType = ENTER_QUESTIONBANK_TYPE_ONLINEEXAM;
+    [self.navigationController pushViewController:bankVC animated:YES];
 }
 
 -(void)goMoreFunction

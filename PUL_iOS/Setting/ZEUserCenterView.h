@@ -36,6 +36,11 @@
 
 -(void)goSchollVC:(ENTER_WEBVC)type;
 
+#pragma mark - 新功能
+
+-(void)goWebVCWithType:(ENTER_QUESTIONBANK_TYPE)type;
+
+
 @end
 
 @interface ZEUserCenterView : UIView<UITableViewDelegate,UITableViewDataSource>
@@ -45,8 +50,9 @@
 @property(nonatomic,strong)UIButton * notiBtn;
 @property(nonatomic,strong)UIView * userMessage;
 
--(void)reloadHeaderB;
+@property (nonatomic,copy) NSString * levelTitle;
+@property (nonatomic,copy) NSString * pointNum;
 
--(void)reloadHeaderMessage:(NSString *)questionCount answerCount:(NSString *)answerCount;
+-(void)reloadHeaderB;
 
 @end

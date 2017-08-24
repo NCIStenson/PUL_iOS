@@ -26,7 +26,7 @@
 
 #define MAIN_BACKGROUND_COLOR [ZEUtil colorWithHexString:@"#efefef"]
 
-#define kTextColor [ZEUtil colorWithHexString:@"#4f4f4f"]
-
+#define kTextColor [ZEUtil colorWithHexString:@"#333333"]
+#define kSubTitleColor         [UIColor colorWithHexString:@"#828282"]
 
 #endif /* ZEColorConstant_h */

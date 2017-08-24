@@ -51,6 +51,7 @@
 #define V_KLB_STANDARD_INFO             @"V_KLB_STANDARD_INFO"            /***   行业规范列表   ***/
 
 #define V_KLB_DYNAMIC_INFO_TEAM             @"V_KLB_DYNAMIC_INFO_TEAM"            /***   圈子动态表   ***/
+#define KLB_SYSTEM_NOTICE             @"KLB_SYSTEM_NOTICE"            /***   系统通知表   ***/
 
 
 #define KLB_PROCIRCLE_REL_USER         @"KLB_PROCIRCLE_REL_USER"        /***   专业圈人员关系表   ***/
@@ -84,6 +85,7 @@
 #define V_KLB_MESSAGE_REC_Y              @"V_KLB_MESSAGE_REC_Y"               /***   已回执   ***/
 
 #define HOME_URL_CLASS @"com.nci.klb.app.zct.ZctHttpClient"          /***   首页链接跳转链接获取  ***/
+#define HOME_ONLINEEXAM_CLASS @"com.nci.klb.app.exam.examCaseTeam"          /***  在线考试链接  ***/
 #define HOME_CLASS_METHOD @"com.nci.klb.app.homePage.FunctionList"          /***   自定义功能区  ***/
 #define HOME_MY_MESSAGE @"com.nci.klb.app.homePage.MessageList"          /***   我的动态消息列表  ***/
 #define QUESTION_BANK @"com.nci.klb.app.exam.QuestionBank"          /***   题库列表  ***/

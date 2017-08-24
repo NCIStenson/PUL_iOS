@@ -80,6 +80,7 @@ typedef enum : NSUInteger {
     ENTER_WEBVC_ABOUT, // 关于知道
     ENTER_WEBVC_WORK_STANDARD, // 关于知道
     ENTER_WEBVC_MY_PRACTICE,
+    ENTER_WEBVC_SYSTEMNOTI,
 } ENTER_WEBVC;   // 进入团队问题搜索页面
 
 typedef enum : NSUInteger {
@@ -155,6 +156,13 @@ typedef enum : NSUInteger{
     
     ENTER_QUESTIONBANK_TYPE_ABISCHOOL, /****** 能力学堂 *****/
     ENTER_QUESTIONBANK_TYPE_STAFFDEV,  /****** 员工发展 *****/
+    ENTER_QUESTIONBANK_TYPE_ONLINEEXAM,  /****** 在线测试 *****/
+    
+    ENTER_QUESTIONBANK_TYPE_MYRECORD,  /****** 我的履历 *****/
+    ENTER_QUESTIONBANK_TYPE_MYTRAIN,  /****** 我的培训 *****/
+    ENTER_QUESTIONBANK_TYPE_DEVPOINT,  /****** 发展积分 *****/
+    ENTER_QUESTIONBANK_TYPE_MYAWARDS,  /****** 我的荣誉 *****/
+
 } ENTER_QUESTIONBANK_TYPE;
 
 

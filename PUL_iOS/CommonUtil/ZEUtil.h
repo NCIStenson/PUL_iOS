@@ -151,4 +151,7 @@
 +(NSString *)getQuestionBankWebVCTitle:(ENTER_QUESTIONBANK_TYPE)type;
 
 
+#pragma mark - 缓存分类列表
++(void)cacheQuestionType;
+
 @end

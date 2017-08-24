@@ -277,12 +277,16 @@
 -(void)showQuestionTypeView
 {
     [self endEditing:YES];
-    _teamTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    _teamTypeView.delegate = self;
-    [_createTeamView addSubview:_teamTypeView];
+    
     NSArray * typeArr = [[ZEQuestionTypeCache instance] getQuestionTypeCaches];
     if (typeArr.count > 0) {
+        _teamTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _teamTypeView.delegate = self;
+        [_createTeamView addSubview:_teamTypeView];
+
         [_teamTypeView reloadTypeData];
+    }else{
+        [ZEUtil cacheQuestionType];
     }
 }
 

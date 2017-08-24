@@ -23,12 +23,12 @@
     // Do any additional setup after loading the view.
     self.title = @"能力题库";
     [self initView];
-    [self getMyReflectionAndBankList];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden =YES;
+    [self getMyReflectionAndBankList];
 }
 -(void)initView{
     bankView = [[ZEQuestionBankView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
@@ -40,7 +40,7 @@
 #pragma mark - Request
 
 -(void)getMyReflectionAndBankList{
-    [self progressBegin:@"正在加载"];
+    [self progressBegin:@""];
     NSDictionary * parametersDic = @{@"MASTERTABLE":KLB_FUNCTION_LIST,
                                      @"MENUAPP":@"EMARK_APP",
                                      @"ORDERSQL":@"",
@@ -62,7 +62,7 @@
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
-                                 [self progressEnd:nil];
+                                 [self progressEnd:@""];
                                  NSDictionary * dic = [ZEUtil getCOMMANDDATA:data];
                                  
                                  NSString * targetStr = [dic objectForKey:@"target"];

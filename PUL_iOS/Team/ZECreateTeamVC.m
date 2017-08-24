@@ -64,6 +64,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [ZEUtil cacheQuestionType];
 }
 
 -(void)dealloc

@@ -56,7 +56,7 @@ static CGFloat columnNumber = 4.0f;// cell 列数
     CGFloat spaceCount = columnNumber + 1 ; //(间隙count永远比列数多1)
     CGFloat cellWith = (self.bounds.size.width - spaceCount*margSpaceX)/columnNumber;
     //cell size
-    UIImage *iconImag = [UIImage imageNamed:@"more"];
+//    UIImage *iconImag = [UIImage imageNamed:@"more"];
     //布局item大小
     flowLayout.itemSize = CGSizeMake(cellWith, 80);
     //布局边距
@@ -90,11 +90,13 @@ static CGFloat columnNumber = 4.0f;// cell 列数
     longPressGesture.minimumPressDuration = 0.3f;
     [_collectionView addGestureRecognizer:longPressGesture];
     
-    
-    
 }
 #pragma mark - 长按手势方法
 -(void)longPressMethod:(UILongPressGestureRecognizer*)gesture{
+    
+    if(!_viewEditing){
+        return;
+    }
     
     //1 获取手势触发点Point
     CGPoint point = [gesture locationInView:_collectionView];
@@ -255,7 +257,12 @@ static CGFloat columnNumber = 4.0f;// cell 列数
     [_collectionView reloadSections:[NSIndexSet indexSetWithIndex:1]];
 }
 
-
+-(void)setViewEditing:(BOOL)viewEditing
+{
+    _viewEditing = viewEditing;
+    NSLog(@" ===   %@",self.inUseTitles);
+    [_collectionView reloadData];
+}
 
 #pragma mark - collectionViewDelegate/DataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -271,10 +278,18 @@ static CGFloat columnNumber = 4.0f;// cell 列数
     SDMajletCellHead *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headID forIndexPath:indexPath];
     if (indexPath.section == 0) {
         headView.title = @"我的应用";
-        headView.subTitle = @"长按并拖拽调整";
+        if(_viewEditing){
+            headView.subTitle = @"长按并拖拽调整";
+        }else{
+            headView.subTitle = @"";
+        }
     }else{
         headView.title = @"未选择的应用";
-//        headView.subTitle = @"点击添加或删除应用";
+        if(_viewEditing){
+            headView.subTitle = @"点击添加或删除应用";
+        }else{
+            headView.subTitle = @"";
+        }
     }
     return headView;
     
@@ -287,12 +302,27 @@ static CGFloat columnNumber = 4.0f;// cell 列数
     cell.font = 13;
     cell.iconName = indexPath.section == 0? [_inUseTitles[indexPath.row] objectForKey:@"iconName"]: [_unUseTitles[indexPath.row] objectForKey:@"iconName"];
     cell.title = indexPath.section == 0? [_inUseTitles[indexPath.row] objectForKey:@"title"] : [_unUseTitles[indexPath.row] objectForKey:@"title"];
-    cell.contentView.backgroundColor = MAIN_ARM_COLOR;
+
+    if (_viewEditing) {
+        cell.cornerImage.hidden = NO;
+        if (indexPath.section == 0) {
+            [cell.cornerImage setImage:[UIImage imageNamed:@"menu_del.png"]];
+        }else{
+            [cell.cornerImage setImage:[UIImage imageNamed:@"menu_add.png"]];
+        }
+        cell.contentView.backgroundColor = MAIN_BACKGROUND_COLOR;
+    }else{
+        cell.cornerImage.hidden = YES;
+        cell.contentView.backgroundColor = [UIColor whiteColor];
+    }
     return cell;
-    
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (!_viewEditing) {
+        return;
+    }
     
     if (indexPath.section == 0) {
         
@@ -301,12 +331,17 @@ static CGFloat columnNumber = 4.0f;// cell 列数
 //        {
 //            return;
 //        }
+        SDMajletCell * cell = (SDMajletCell *)[_collectionView cellForItemAtIndexPath:indexPath];
+        [cell.cornerImage setImage:[UIImage imageNamed:@"menu_add"]];
+
         id obj = [_inUseTitles objectAtIndex:indexPath.row];
         [_inUseTitles removeObject:obj];
         [_unUseTitles insertObject:obj atIndex:0];
         [_collectionView moveItemAtIndexPath:indexPath toIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-        
     }else{
+        SDMajletCell * cell = (SDMajletCell *)[_collectionView cellForItemAtIndexPath:indexPath];
+        [cell.cornerImage setImage:[UIImage imageNamed:@"menu_del"]];
+        
         id obj = [_unUseTitles objectAtIndex:indexPath.row];
         [_unUseTitles removeObject:obj];
         [_inUseTitles addObject:obj];

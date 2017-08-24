@@ -106,6 +106,8 @@
         heroImageVIew.center = CGPointMake( (SCREEN_WIDTH / 3 - 30 ) / 2 , SCREEN_WIDTH / 8);
         heroImageVIew.layer.cornerRadius = SCREEN_WIDTH / 12;
         heroImageVIew.layer.masksToBounds = YES;
+        heroImageVIew.backgroundColor = [UIColor whiteColor];
+        heroImageVIew.contentMode = UIViewContentModeCenter;
         
         UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_WIDTH / 4 - 10, SCREEN_WIDTH / 3 - 30, 30)];
         nameLab.text = teaminfo.TEAMCIRCLENAME;
@@ -116,18 +118,12 @@
         nameLab.textColor = kTextColor;
 
     }else{
-        
         UIImageView * heroImageVIew = [[UIImageView alloc]initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH / 3 - 30, SCREEN_WIDTH / 3 )];
         [cell.contentView addSubview:heroImageVIew];
         heroImageVIew.contentMode = UIViewContentModeScaleAspectFit;
         heroImageVIew.layer.cornerRadius = 5.0f;
         heroImageVIew.layer.masksToBounds = YES;
-        
-        if(indexPath.row == 0){
-            heroImageVIew.image = [UIImage imageNamed:@"icon_addTeam_1"];
-        }else{
-            heroImageVIew.image = [UIImage imageNamed:@"icon_addTeam_2"];
-        }
+        heroImageVIew.image = [UIImage imageNamed:@"icon_addTeam"];
     }
     
     return cell;
@@ -242,22 +238,38 @@
     NSDictionary * dynamicDic = self.dynamicDatasArr[indexPath.row];
     NSString * fileUrl = [[[dynamicDic objectForKey:@"FILEURL"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"] stringByReplacingOccurrencesOfString:@"," withString:@""];
 
-    UIImageView * headeImage = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 80, 80)];
-    [headeImage setImage:ZENITH_PLACEHODLER_TEAM_IMAGE];
-    [headeImage sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:ZENITH_PLACEHODLER_TEAM_IMAGE];
+    UIImageView * headeImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 50, 50)];
     [cell.contentView addSubview:headeImage];
-    [headeImage setContentMode:UIViewContentModeScaleAspectFit];
+    headeImage.clipsToBounds = YES;
+    headeImage.layer.cornerRadius = headeImage.height / 2;
+    headeImage.backgroundColor = [self getBackgroundColor:indexPath withAlpha:.4];
     
-    UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(100, 10, SCREEN_WIDTH - 120, 40)];
+    UIImageView * headerImage  =[[UIImageView alloc]init];
+    [cell.contentView addSubview:headerImage];
+    headerImage.frame = CGRectMake(0, 0, 42, 42);
+    headerImage.center = headeImage.center;
+    headerImage.clipsToBounds = YES;
+    headerImage.layer.cornerRadius = headerImage.height / 2;
+    headerImage.backgroundColor = [self getBackgroundColor:indexPath withAlpha:1];
+    
+    UIImageView * showImageView  =[[UIImageView alloc]init];
+    [cell.contentView addSubview:showImageView];
+    showImageView.frame = CGRectMake(0, 0, 30, 30);
+    showImageView.center = headeImage.center;
+    [showImageView sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"icon_team_headimage" color:[UIColor whiteColor]]];
+    showImageView.layer.cornerRadius = showImageView.height / 2;
+    showImageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(80, 10, SCREEN_WIDTH - 150, 30)];
     nameLab.text = @"市区二站";
     nameLab.text = [dynamicDic objectForKey:@"TEAMCIRCLENAME"];
     nameLab.numberOfLines = 0;
     nameLab.textAlignment = NSTextAlignmentLeft;
-    nameLab.font = [UIFont systemFontOfSize:18];
+    nameLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
     [cell.contentView addSubview:nameLab];
     nameLab.textColor = kTextColor;
     
-    UILabel * dynamiLab = [[UILabel alloc]initWithFrame:CGRectMake(100, 50, SCREEN_WIDTH - 120, 40)];
+    UILabel * dynamiLab = [[UILabel alloc]initWithFrame:CGRectMake(80, 40, SCREEN_WIDTH - 120, 40)];
     dynamiLab.numberOfLines = 0;
     dynamiLab.textAlignment = NSTextAlignmentLeft;
     dynamiLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
@@ -274,13 +286,12 @@
         dynamiLab.text = @"您的回答被采纳了，快去看看吧！";
     }
 
-    
-    UILabel * SYSCREATEDATE = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 90,10,70,20.0f)];
+    UILabel * SYSCREATEDATE = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 90,10,70,30.0f)];
     SYSCREATEDATE.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@.0", [dynamicDic objectForKey:@"SYSCREATEDATE"]]];
     SYSCREATEDATE.userInteractionEnabled = NO;
     SYSCREATEDATE.textAlignment = NSTextAlignmentRight;
     SYSCREATEDATE.textColor = MAIN_SUBTITLE_COLOR;
-    SYSCREATEDATE.font = [UIFont systemFontOfSize:kTiltlFontSize];
+    SYSCREATEDATE.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
     [cell.contentView addSubview:SYSCREATEDATE];
     SYSCREATEDATE.userInteractionEnabled = YES;
 
@@ -291,12 +302,40 @@
         [cell.contentView addSubview:lineView];
     }
     
-    UIView * lineView = [UIView new];
-    lineView.frame = CGRectMake(0, 99.5f, SCREEN_WIDTH, 0.5);
-    lineView.backgroundColor = MAIN_LINE_COLOR;
-    [cell.contentView addSubview:lineView];
+    UILabel * tipsLab = [UILabel new];
+    tipsLab.frame = CGRectMake(0, 90, SCREEN_WIDTH, 25);
+    [cell.contentView addSubview:tipsLab];
+    tipsLab.text = @"立即查看";
+    tipsLab.backgroundColor = RGBA(244, 248, 251, 1);
+    tipsLab.textColor = kSubTitleColor;
+    tipsLab.textAlignment = NSTextAlignmentCenter;
+    tipsLab.font = [UIFont systemFontOfSize:14];
     
     return cell;
+}
+
+-(UIColor *)getBackgroundColor:(NSIndexPath *)indexPath withAlpha:(float)alp
+{
+    UIColor * color = RGBA(40,165,100, alp);
+    
+    switch (indexPath.row % 4) {
+        case 1:
+            color = RGBA(235,155,57, alp);
+            break;
+
+        case 2:
+            color = RGBA(170,113,208, alp);
+            break;
+
+        case 3:
+            color = RGBA(230,81,141, alp);
+            break;
+
+        default:
+            break;
+    }
+    
+    return color;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -306,7 +345,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 100;
+    return 115;
 }
 
 #pragma mark -UITableViewDelegate

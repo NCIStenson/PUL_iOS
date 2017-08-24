@@ -133,7 +133,6 @@
     _titleLabel.adjustsFontSizeToFitWidth = YES;
     
     [navView addSubview:_titleLabel];
-
     
     for (int i = 1; i < 4; i ++) {
         UIButton * _typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];

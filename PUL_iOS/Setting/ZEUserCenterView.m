@@ -20,8 +20,9 @@
     UITableView * userCenterTable;
     UIButton * userHEAD;
     
-    UILabel * questionBadgeLab;
-    UILabel * answerBadgeLab;
+    UILabel * pointLabel;
+    UILabel * levelLab;
+    UILabel * usernameLabel;
 }
 
 @end
@@ -68,49 +69,26 @@
     [userHEAD sd_setImageWithURL:ZENITH_IMAGEURL([ZESettingLocalData getUSERHHEADURL]) forState:UIControlStateNormal placeholderImage:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
 }
 
+-(void)setPointNum:(NSString *)pointNum
+{
+    _pointNum = pointNum;
+    pointLabel.text = [NSString stringWithFormat:@"%@积分",pointNum];
+}
+
+-(void)setLevelTitle:(NSString *)levelTitle
+{
+    _levelTitle = levelTitle;
+    levelLab.text = _levelTitle;
+    [levelLab sizeToFit];
+}
+
 #pragma mark - 新消息提醒图标
 
--(void)reloadHeaderMessage:(NSString *)questionCount answerCount:(NSString *)answerCount;
-{
-    questionBadgeLab.text = questionCount;
-    answerBadgeLab.text = answerCount;
-    
-    if ([questionCount integerValue ] <= 0) {
-        questionBadgeLab.hidden = YES;
-    }else if ([questionCount integerValue] < 100){
-        questionBadgeLab.size = CGSizeMake(20.0f, 20.0f);
-        questionBadgeLab.hidden = NO;
-    }else if ([questionCount integerValue] > 99){
-        questionBadgeLab.hidden = NO;
-        questionBadgeLab.width = 30.0f;
-        questionBadgeLab.center = CGPointMake(questionBadgeLab.superview.size.width - 25, 20);
-    }
-    
-    if ([answerCount integerValue] <= 0) {
-        answerBadgeLab.hidden = YES;
-    }else if ([answerCount integerValue] < 100){
-        answerBadgeLab.hidden = NO;
-        answerBadgeLab.size = CGSizeMake(20.0f, 20.0f);
-    }else if ([answerCount integerValue] > 99){
-        answerBadgeLab.hidden = NO;
-        answerBadgeLab.width = 30.0f;
-        answerBadgeLab.center = CGPointMake(answerBadgeLab.superview.size.width - 25, 20);
-    }
-    
-    answerBadgeLab.clipsToBounds = YES;
-    answerBadgeLab.layer.cornerRadius = answerBadgeLab.height / 2;
-    questionBadgeLab.clipsToBounds = YES;
-    questionBadgeLab.layer.cornerRadius = questionBadgeLab.height / 2;
-
-}
 #pragma mark - UITableViewDataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return 5;
-    }
-    return 4;
+    return 7;
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -137,53 +115,48 @@
     return cell;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
 -(void)initCellContentViewWithIndexPath:(NSIndexPath *)indexPath withCell:(UITableViewCell *)cell
 {
-    UIImageView * logoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 12, 20, 20)];
+    UIImageView * logoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 40, 40)];
     [cell.contentView addSubview:logoImageView];
     logoImageView.contentMode = UIViewContentModeScaleAspectFit;
     
-    UILabel * contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(45.0f, 0.0f, SCREEN_WIDTH - 65.0f, 44.0f)];
+    UILabel * contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(60.0f, 0.0f, SCREEN_WIDTH - 80.0f, 60.0f)];
     [cell.contentView addSubview:contentLabel];
     contentLabel.userInteractionEnabled = YES;
     contentLabel.textColor = kTextColor;
+    
     CALayer * lineLayer = [CALayer layer];
-    lineLayer.frame = CGRectMake(45, 43.5f, SCREEN_WIDTH - 45.0f, 0.5f);
+    lineLayer.frame = CGRectMake(45, 59.5f, SCREEN_WIDTH - 45.0f, 0.5f);
     [cell.contentView.layer addSublayer:lineLayer];
     lineLayer.backgroundColor = [MAIN_LINE_COLOR CGColor];
     
-    if (indexPath.section == 1) {
-        if (indexPath.row == 0) {
-            logoImageView.image = [UIImage imageNamed:@"question_icon" color:MAIN_NAV_COLOR];
-            contentLabel.text = @"我的提问";
-        }else if(indexPath.row == 1){
-            logoImageView.image = [UIImage imageNamed:@"askTa.png" color:MAIN_NAV_COLOR];
-            contentLabel.text = @"我的回答";
-        }else if(indexPath.row == 2){
-            logoImageView.image = [UIImage imageNamed:@"tab_circle.png" color:MAIN_NAV_COLOR];
-            contentLabel.text = @"我的圈子";
-        }else if(indexPath.row == 3){
-            logoImageView.image = [UIImage imageNamed:@"detail_nav_star.png" color:MAIN_NAV_COLOR];
-            contentLabel.text = @"我的收藏";
-        }
-    }else if (indexPath.section == 0){
-        
-        if (indexPath.row == 0) {
-            logoImageView.image = [UIImage imageNamed:@"icon_school.png" color:MAIN_NAV_COLOR];
-            contentLabel.text = @"学堂";
-        }else if (indexPath.row == 3) {
-            logoImageView.image = [UIImage imageNamed:@"icon_record.png" color:MAIN_NAV_COLOR];
-            contentLabel.text = @"意见反馈";
-        }else if(indexPath.row == 4){
-            logoImageView.image = [UIImage imageNamed:@"icon_setting.png" color:MAIN_NAV_COLOR];
-            contentLabel.text = @"设置";
-        }else if (indexPath.row == 1){
-            logoImageView.image = [UIImage imageNamed:@"icon_setting_operation.png" color:MAIN_NAV_COLOR];
-            contentLabel.text = @"操作手册";
-        }else if (indexPath.row == 2){
-            logoImageView.image = [UIImage imageNamed:@"icon_setting_about.png" color:MAIN_NAV_COLOR];
-            contentLabel.text = @"关于电知道";
-        }
+    if (indexPath.row == 0) {
+        logoImageView.image = [UIImage imageNamed:@"icon_setting_personal data" ];
+        contentLabel.text = @"个人资料";
+    }else if (indexPath.row == 1) {
+        logoImageView.image = [UIImage imageNamed:@"icon_setting_question" ];
+        contentLabel.text = @"我的提问";
+    }else if(indexPath.row == 2){
+        logoImageView.image = [UIImage imageNamed:@"icon_setting_answer" ];
+        contentLabel.text = @"我的回答";
+    }else if (indexPath.row == 3){
+        logoImageView.image = [UIImage imageNamed:@"icon_setting_resume" ];
+        contentLabel.text = @"我的履历";
+    }else if (indexPath.row == 4){
+        logoImageView.image = [UIImage imageNamed:@"icon_setting_Train" ];
+        contentLabel.text = @"我的培训";
+    }else if (indexPath.row == 5){
+        logoImageView.image = [UIImage imageNamed:@"icon_setting_integration" ];
+        contentLabel.text = @"我的发展积分";
+    }else if (indexPath.row == 6){
+        logoImageView.image = [UIImage imageNamed:@"icon_setting_honor" ];
+        contentLabel.text = @"我的获奖及荣誉";
     }
 }
 
@@ -192,7 +165,7 @@
     if (section == 1) {
         return 10.0f;
     }
-    return 300.0f + 100.0f;
+    return 240;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
@@ -208,20 +181,22 @@
     }
     
     _userMessage = [[UIView alloc]init];
-    _userMessage.backgroundColor = MAIN_NAV_COLOR;
+    _userMessage.frame = CGRectMake(0, 0, SCREEN_WIDTH, 240);
+    [ZEUtil addGradientLayer:_userMessage];
+
+    [ZEUtil addLineLayer:_userMessage];
     
     userHEAD = [UIButton buttonWithType:UIButtonTypeCustom];
     userHEAD.frame =CGRectMake(0, 0, 100, 100);
-    userHEAD.center = CGPointMake(SCREEN_WIDTH / 2, 150.0f);
+    userHEAD.center = CGPointMake(SCREEN_WIDTH / 2, 110.0f);
     [userHEAD sd_setImageWithURL:ZENITH_IMAGEURL([ZESettingLocalData getUSERHHEADURL]) forState:UIControlStateNormal placeholderImage:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
     [_userMessage addSubview:userHEAD];
     [userHEAD addTarget:self action:@selector(goChooseImage) forControlEvents:UIControlEventTouchUpInside];
     _userMessage.contentMode = UIViewContentModeScaleAspectFit;
-    userHEAD.backgroundColor =[UIColor redColor];
     userHEAD.clipsToBounds = YES;
     userHEAD.layer.cornerRadius = userHEAD.frame.size.height / 2;
-    userHEAD.layer.borderColor = [MAIN_LINE_COLOR CGColor];
-    userHEAD.layer.borderWidth = 2;
+    userHEAD.layer.borderColor = [[UIColor colorWithWhite:1 alpha:0.2] CGColor];
+    userHEAD.layer.borderWidth = 8;
     
     NSString * username = [ZESettingLocalData getNICKNAME];
     if (![ZEUtil isStrNotEmpty:username]) {
@@ -229,122 +204,51 @@
     }
     float usernameWidth = [ZEUtil widthForString:username font:[UIFont boldSystemFontOfSize:18] maxSize:CGSizeMake(SCREEN_WIDTH - 60, 20)];
     
-    UILabel * usernameLabel = [[UILabel alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - usernameWidth ) / 2, 60, usernameWidth, 20.0f)];
+    usernameLabel = [[UILabel alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - usernameWidth ) / 2, 60, usernameWidth, 20.0f)];
     usernameLabel.text = username;
     usernameLabel.font = [UIFont boldSystemFontOfSize:18];
     usernameLabel.textColor = [UIColor whiteColor];
     usernameLabel.textAlignment = NSTextAlignmentCenter;
+    usernameLabel.top = userHEAD.bottom + 10;
     [_userMessage addSubview:usernameLabel];
     
+    levelLab = [[UILabel alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - usernameWidth ) / 2, 60, usernameWidth, 20.0f)];
+    levelLab.text = username;
+    levelLab.font = [UIFont systemFontOfSize:12];
+    levelLab.textColor = [UIColor orangeColor];
+    levelLab.textAlignment = NSTextAlignmentCenter;
+    [_userMessage addSubview:levelLab];
+    [levelLab sizeToFit];
+    levelLab.left = usernameLabel.right + 10;
+    levelLab.bottom = usernameLabel.bottom;
+
+    pointLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 60, SCREEN_WIDTH - 40, 20.0f)];
+    pointLabel.text = username;
+    pointLabel.font = [UIFont systemFontOfSize:14];
+    pointLabel.textColor = [UIColor whiteColor];
+    pointLabel.textAlignment = NSTextAlignmentCenter;
+    pointLabel.top = usernameLabel.bottom + 10;
+    [_userMessage addSubview:pointLabel];
+
     UIImageView * sexImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 12, 12)];
     sexImage.center = CGPointMake(usernameLabel.center.x + usernameWidth / 2 + 10.0f, usernameLabel.center.y );
     sexImage.image = [UIImage imageNamed:@"boy"];
     [_userMessage addSubview:sexImage];
     
-    grayView.frame = CGRectMake(0, 244, SCREEN_WIDTH, 10);
-    [_userMessage addSubview:grayView];
-    
-    ZEButton * personalMsgBtn = [ZEButton buttonWithType:UIButtonTypeCustom];
-    personalMsgBtn.frame = CGRectMake(0, 220, SCREEN_WIDTH / 2, 60.0f);
-    personalMsgBtn.backgroundColor = MAIN_NAV_COLOR;
-    [_userMessage addSubview:personalMsgBtn];
-    [personalMsgBtn setTitle:@"个人信息" forState:UIControlStateNormal];
-    [personalMsgBtn setImage:[UIImage imageNamed:@"icon_person_msg"] forState:UIControlStateNormal];
-    personalMsgBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [personalMsgBtn addTarget:self action:@selector(goPersonalVC) forControlEvents:UIControlEventTouchUpInside];
-    personalMsgBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
-    ZEButton * signInBtn = [ZEButton buttonWithType:UIButtonTypeCustom];
-    signInBtn.frame = CGRectMake(SCREEN_WIDTH / 2, 220, SCREEN_WIDTH / 2, 60.0f);
-    [_userMessage addSubview:signInBtn];
-    signInBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [signInBtn setTitle:@"签到" forState:UIControlStateNormal];
-    [signInBtn setImage:[UIImage imageNamed:@"icon_signin"] forState:UIControlStateNormal];
-    signInBtn.backgroundColor = MAIN_NAV_COLOR;
-    [signInBtn addTarget:self action:@selector(goSinginVC) forControlEvents:UIControlEventTouchUpInside];
-    signInBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-
-    _notiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _notiBtn.frame = CGRectMake(SCREEN_WIDTH - 50 , 27.0f , 40, 40);
-    [_userMessage addSubview:_notiBtn];
-    [_notiBtn setImage:[UIImage imageNamed:@"icon_noti" color:[UIColor whiteColor]] forState:UIControlStateNormal];
-    _notiBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [_notiBtn addTarget:self action:@selector(goNotiVC) forControlEvents:UIControlEventTouchUpInside];
-    _notiBtn.hidden = YES;
+    UIButton * signinBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    signinBtn.frame = CGRectMake(SCREEN_WIDTH - 50 , 27.0f , 40, 40);
+    [_userMessage addSubview:signinBtn];
+    [signinBtn setImage:[UIImage imageNamed:@"icon_signin" color:[UIColor whiteColor]] forState:UIControlStateNormal];
+    signinBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [signinBtn addTarget:self action:@selector(goSinginVC) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton * setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     setBtn.frame = CGRectMake(15, 27, 40,40);
     [_userMessage addSubview:setBtn];
     [setBtn setImage:[UIImage imageNamed:@"icon_setting_up" color:[UIColor whiteColor]] forState:UIControlStateNormal];
     setBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
-//    setBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentFill;
-//    setBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentFill;
     [setBtn addTarget:self action:@selector(goSettingVC) forControlEvents:UIControlEventTouchUpInside];
 
-    UIView * _dashView= [[UIView alloc]initWithFrame:CGRectMake( SCREEN_WIDTH / 2, 220, 1, 40.0f)];
-    [_userMessage addSubview:_dashView];
-    
-    [ZEUtil drawDashLine:_dashView lineLength:3 lineSpacing:2 lineColor:[UIColor whiteColor]];
-
-    for (int i = 0; i < 3; i ++) {
-        ZEButton * optionBtn = [ZEButton buttonWithType:UIButtonTypeCustom];
-        [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
-        optionBtn.frame = CGRectMake(0 + SCREEN_WIDTH / 3 * i, 290, SCREEN_WIDTH / 3, 100);
-        [_userMessage addSubview:optionBtn];
-        optionBtn.backgroundColor = [UIColor whiteColor];
-        optionBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        optionBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
-        [optionBtn addTarget:self action:@selector(didSelectMyOption:) forControlEvents:UIControlEventTouchUpInside];
-        optionBtn.tag = 100 + i;
-        
-        UIView * lineLayer = [UIView new];
-        lineLayer.frame = CGRectMake( optionBtn.frame.size.width - 1, 0, 1.0f, 100);
-        [optionBtn addSubview:lineLayer];
-        lineLayer.backgroundColor = MAIN_LINE_COLOR;
-        
-        
-        UILabel * badgeLab = [[UILabel alloc]initWithFrame:CGRectZero];
-        badgeLab.backgroundColor = [UIColor redColor];
-        badgeLab.tag = 100;
-        badgeLab.center = CGPointMake(optionBtn.size.width - 20, 20);
-        badgeLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-        badgeLab.textColor = [UIColor whiteColor];
-        badgeLab.textAlignment = NSTextAlignmentCenter;
-        [optionBtn addSubview:badgeLab];
-        badgeLab.clipsToBounds = YES;
-        badgeLab.layer.cornerRadius = badgeLab.height / 2;
-
-        switch (i) {
-            case 0:
-                questionBadgeLab = badgeLab;
-                [optionBtn setImage:[UIImage imageNamed:@"icon_my_question"] forState:UIControlStateNormal];
-                [optionBtn setTitle:@"我的问题" forState:UIControlStateNormal];
-                break;
-            case 1:
-                answerBadgeLab = badgeLab;
-                [optionBtn setImage:[UIImage imageNamed:@"icon_my_answer"] forState:UIControlStateNormal];
-                [optionBtn setTitle:@"我的回答" forState:UIControlStateNormal];
-                break;
-            case 2:
-                badgeLab.hidden = YES;
-//                [optionBtn setImage:[UIImage imageNamed:@"icon_my_circle"] forState:UIControlStateNormal];
-//                [optionBtn setTitle:@"我的圈子" forState:UIControlStateNormal];
-                [optionBtn setImage:[UIImage imageNamed:@"icon_my_practice.png"] forState:UIControlStateNormal];
-                [optionBtn setTitle:@"我的练习" forState:UIControlStateNormal];
-//                logoImageView.image = [UIImage imageNamed:@"icon_my_practice.png" color:MAIN_NAV_COLOR];
-//                contentLabel.text = @"我的练习";
-                break;
-
-            default:
-                break;
-        }
-    }
-    
-    
-    UIView * spaceView = [[UIView alloc]initWithFrame:CGRectMake(0, 290 + 100.0f, SCREEN_WIDTH , 10)];
-    spaceView.backgroundColor = MAIN_LINE_COLOR ;
-    [_userMessage addSubview: spaceView];
-    
     return _userMessage;
 }
 
@@ -380,87 +284,66 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    switch (indexPath.section) {
-        case 1:
+    switch (indexPath.row) {
+        case 0:
         {
-            switch (indexPath.row) {
-                case 0:
-                    if ([self.delegate respondsToSelector:@selector(goMyQuestionList)]) {
-                        [self.delegate goMyQuestionList];
-                    }
-                    break;
-                case 1:
-                    if ([self.delegate respondsToSelector:@selector(goMyAnswerList)]) {
-                        [self.delegate goMyAnswerList];
-                    }
-                    break;
-                case 2:
-                    if ([self.delegate respondsToSelector:@selector(goMyGroup)]) {
-                        [self.delegate goMyGroup];
-                    }
-                    break;
-                case 3:
-                    if ([self.delegate respondsToSelector:@selector(goMyCollect)]) {
-                        [self.delegate goMyCollect];
-                    }
-                    break;
-                default:
-                    break;
+            if ([self.delegate respondsToSelector:@selector(goSettingVC:)]) {
+                [self.delegate goSettingVC:ENTER_SETTING_TYPE_SETTING];
             }
         }
             break;
             
-        case 0:
+        case 1:
         {
-            switch (indexPath.row) {
-                case 0:
-                {
-                    if ([self.delegate respondsToSelector:@selector(goSchollVC:)]) {
-                        [self.delegate goSchollVC:ENTER_WEBVC_SCHOOL];
-                    }
-                }
-                    break;
-
-                case 3:
-                {
-                    if ([self.delegate respondsToSelector:@selector(changePersonalMsg:)]) {
-                        [self.delegate changePersonalMsg:CHANGE_PERSONALMSG_ADVICE];
-                    }
-                }
-                    break;
-                case 4:
-                {
-                    if ([self.delegate respondsToSelector:@selector(goSettingVC:)]) {
-                        [self.delegate goSettingVC:ENTER_SETTING_TYPE_SETTING];
-                    }
-                }
-                    break;
-                case 1:
-                {
-                    if ([self.delegate respondsToSelector:@selector(goSchollVC:)]) {
-                        [self.delegate goSchollVC:ENTER_WEBVC_OPERATION];
-                    }
-                }
-                    break;
-                case 2:
-                {
-                    if ([self.delegate respondsToSelector:@selector(goSchollVC:)]) {
-                        [self.delegate goSchollVC:ENTER_WEBVC_ABOUT];
-                    }
-                }
-                    break;
-
-                    
-                default:
-                    break;
+            if ([self.delegate respondsToSelector:@selector(goMyQuestionList)]) {
+                [self.delegate goMyQuestionList];
             }
         }
             break;
+        case 2:
+        {
+            if ([self.delegate respondsToSelector:@selector(goMyAnswerList)]) {
+                [self.delegate goMyAnswerList];
+            }
+        }
+            break;
+        case 3:
+        {
+            if ([self.delegate respondsToSelector:@selector(goWebVCWithType:)]) {
+                [self.delegate goWebVCWithType:ENTER_QUESTIONBANK_TYPE_MYRECORD];
+            }
+        }
+            break;
+        case 4:
+        {
+            if ([self.delegate respondsToSelector:@selector(goWebVCWithType:)]) {
+                [self.delegate goWebVCWithType:ENTER_QUESTIONBANK_TYPE_MYTRAIN];
+            }
+        }
+            break;
+
+        case 5:
+        {
+            if ([self.delegate respondsToSelector:@selector(goWebVCWithType:)]) {
+                [self.delegate goWebVCWithType:ENTER_QUESTIONBANK_TYPE_DEVPOINT];
+            }
+        }
+            break;
+
+        case 6:
+        {
+            if ([self.delegate respondsToSelector:@selector(goWebVCWithType:)]) {
+                [self.delegate goWebVCWithType:ENTER_QUESTIONBANK_TYPE_MYAWARDS];
+            }
+        }
+            break;
+
             
         default:
             break;
     }
 }
+
 
 -(void)goSinginVC
 {

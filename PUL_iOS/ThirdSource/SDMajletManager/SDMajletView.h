@@ -13,7 +13,7 @@ typedef void(^SDMajletBlock)(NSMutableArray *inusesTitles , NSMutableArray *unus
 
 @interface SDMajletView : UIView
 
-
+@property (nonatomic, assign) BOOL viewEditing;
 
 /**
  上半部分数组

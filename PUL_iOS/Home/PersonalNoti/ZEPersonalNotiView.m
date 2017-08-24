@@ -398,9 +398,9 @@
         lastName.textColor = [UIColor whiteColor];
     }
     
-    UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(100, 10, SCREEN_WIDTH - 120, 20)];
+    UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(100, 10, SCREEN_WIDTH - 160, 20)];
     nameLab.text = notiM.TIPS;
-    nameLab.numberOfLines = 0;
+    nameLab.numberOfLines = 1;
     nameLab.textAlignment = NSTextAlignmentLeft;
     nameLab.font = [UIFont systemFontOfSize:18];
     [cell.contentView addSubview:nameLab];
@@ -441,18 +441,6 @@
         redImage.clipsToBounds = YES;
         redImage.layer.cornerRadius = redImage.height / 2;
     }
-    
-    //    UILabel * _dateLab = [UILabel new];
-    ////    _dateLab.top = _disUsername.top;
-    //    _dateLab.left = 10;
-    //    [cell.contentView addSubview:_dateLab];
-    //    _dateLab.size = CGSizeMake(SCREEN_WIDTH - 20, 20);
-    //    _dateLab.textAlignment = NSTextAlignmentRight;
-    //    _dateLab.textColor = [UIColor lightGrayColor];
-    //    _dateLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-    //    _dateLab.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@",notiM.SYSCREATEDATE]];
-    //    NSLog(@">>>  %@",notiM.SYSCREATEDATE);
-    
     if (indexPath.row == 0) {
         UIView * lineView = [UIView new];
         lineView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
@@ -464,68 +452,6 @@
     lineView.frame = CGRectMake(0, 79.5, SCREEN_WIDTH, 0.5);
     lineView.backgroundColor = MAIN_LINE_COLOR;
     [cell.contentView addSubview:lineView];
-    
-    return;
-    
-//    NSDictionary * dynamicDic =self.personalNotiArr[indexPath.row];
-//    ZETeamNotiCenModel * notiM = [ZETeamNotiCenModel getDetailWithDic:dynamicDic];
-
-    UILabel * tipsLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH - 120, 20)];
-    tipsLab.text = notiM.TIPS;
-    tipsLab.numberOfLines = 0;
-    tipsLab.textAlignment = NSTextAlignmentLeft;
-    tipsLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-    [cell.contentView addSubview:tipsLab];
-    tipsLab.textColor = [UIColor lightGrayColor];
-    
-    UILabel * questionLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, SCREEN_WIDTH - 20, 40)];
-    questionLab.numberOfLines = 0;
-    questionLab.textAlignment = NSTextAlignmentLeft;
-    questionLab.font = [UIFont systemFontOfSize:18];
-    [cell.contentView addSubview:questionLab];
-    questionLab.textColor = kTextColor;
-    questionLab.top = tipsLab.bottom + 5;
-    questionLab.text = notiM.QUESTIONEXPLAIN;
-    float questionHeight = [ZEUtil heightForString:notiM.QUESTIONEXPLAIN font:questionLab.font andWidth:SCREEN_WIDTH - 20];
-    questionLab.height = questionHeight;
-    
-    UILabel * answerLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 50, SCREEN_WIDTH - 20, 20)];
-    answerLab.textAlignment = NSTextAlignmentLeft;
-    answerLab.numberOfLines = 1;
-    answerLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-    [cell.contentView addSubview:answerLab];
-    answerLab.textColor = [UIColor lightGrayColor];
-    answerLab.top = questionLab.bottom + 5;
-    answerLab.text = notiM.ANSWEREXPLAIN;
-//    float answerHeight = [ZEUtil heightForString:notiM.ANSWEREXPLAIN font:answerLab.font andWidth:SCREEN_WIDTH - 20];
-//    answerLab.height = answerHeight;
-    
-    UILabel * SYSCREATEDATE = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 90,10,70,20.0f)];
-    SYSCREATEDATE.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@", [dynamicDic objectForKey:@"SYSCREATEDATE"]]];
-    SYSCREATEDATE.userInteractionEnabled = NO;
-    SYSCREATEDATE.textAlignment = NSTextAlignmentRight;
-    SYSCREATEDATE.textColor = MAIN_SUBTITLE_COLOR;
-    SYSCREATEDATE.font = [UIFont systemFontOfSize:kTiltlFontSize];
-    [cell.contentView addSubview:SYSCREATEDATE];
-    SYSCREATEDATE.userInteractionEnabled = YES;
-    
-    if (indexPath.row == 0) {
-        UIView * lineView = [UIView new];
-        lineView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
-        lineView.backgroundColor = MAIN_LINE_COLOR;
-        [cell.contentView addSubview:lineView];
-    }
-    
-    if (![notiM.ISREAD boolValue]) {
-        UIImageView * redImage = [[UIImageView alloc]init];
-        redImage.backgroundColor = [UIColor redColor];
-        [cell.contentView addSubview:redImage];
-        redImage.bounds = CGRectMake(0, 0, 8, 8);
-        redImage.centerX = tipsLab.left;
-        redImage.centerY = tipsLab.top;
-        redImage.clipsToBounds = YES;
-        redImage.layer.cornerRadius = redImage.height / 2;
-    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{

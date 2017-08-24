@@ -130,7 +130,9 @@ static ZEServerEngine *serverEngine = nil;
         NSHTTPCookie *cookie;
         for (cookie in cookies) {
             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-        }  
+            NSLog(@" REQUEST  ====================   %@",[cookie value]);
+
+        }
     }
 
     NSURLSessionDataTask *task = [manager POST:serverAddress

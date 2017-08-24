@@ -44,8 +44,9 @@
     _cornerImage = [[UIImageView alloc] init];
     [self addSubview:_cornerImage];
     _cornerImage.contentMode = UIViewContentModeScaleAspectFit;
-    _cornerImage.frame = CGRectMake(self.size.width - 10, 0, 10, 10);
-    _cornerImage.backgroundColor = MAIN_ARM_COLOR;
+    _cornerImage.frame = CGRectMake(self.size.width - 18, 5, 15, 15);
+//    _cornerImage.backgroundColor = MAIN_ARM_COLOR;
+    [_cornerImage setImage:[UIImage imageNamed:@"menu_add.png"]];
     
     [self addBorderLayer];
 }
@@ -90,9 +91,6 @@
         _borderLayer.hidden = true;
     }
 }
-
-
-
 
 
 @end

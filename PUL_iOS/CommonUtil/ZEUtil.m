@@ -668,7 +668,7 @@
 +(void)addLineLayer:(UIView *)view{
     CALayer * lineLayer = [CALayer layer];
     lineLayer.frame = CGRectMake(0, view.bottom - 5 , SCREEN_WIDTH  , 5);
-    lineLayer.backgroundColor = [[UIColor lightGrayColor] CGColor];
+    lineLayer.backgroundColor = [MAIN_LINE_COLOR CGColor];
     [view.layer addSublayer:lineLayer];
 }
 
@@ -753,5 +753,40 @@
             break;
     }
 }
+
++(void)cacheQuestionType
+{
+    NSArray * typeArr = [[ZEQuestionTypeCache instance] getQuestionTypeCaches];
+    if (typeArr.count > 0) {
+        return;
+    }
+    
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":V_KLB_QUESTION_TYPE,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_QUESTION_TYPE]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 [[ZEQuestionTypeCache instance]setQuestionTypeCaches:[ZEUtil getServerData:data withTabelName:V_KLB_QUESTION_TYPE]];
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+
 
 @end

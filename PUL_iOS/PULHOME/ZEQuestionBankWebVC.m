@@ -13,6 +13,7 @@
 @interface ZEQuestionBankWebVC ()<WKNavigationDelegate>
 {
     WKWebView * wkWebView;
+    NSString * webUrl;
 }
 @end
 
@@ -39,6 +40,7 @@
 
 -(void)getHomeUrl:(ENTER_QUESTIONBANK_TYPE)type{
     NSString * actionFlag = @"";
+    NSString * className = HOME_URL_CLASS;
     switch (type) {
             case ENTER_QUESTIONBANK_TYPE_ABISCHOOL:
             actionFlag = @"CourseHome";
@@ -48,9 +50,30 @@
             actionFlag = @"DevelopNavigation";
             break;
             
+        case ENTER_QUESTIONBANK_TYPE_ONLINEEXAM:
+            actionFlag = @"onlineExam";
+            className = HOME_ONLINEEXAM_CLASS;
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_MYRECORD:
+            actionFlag = @"myRecord";
+            break;
+        case ENTER_QUESTIONBANK_TYPE_MYTRAIN:
+            actionFlag = @"myTrain";
+            break;
+        case ENTER_QUESTIONBANK_TYPE_DEVPOINT:
+            actionFlag = @"developIntegral";
+            break;
+        case ENTER_QUESTIONBANK_TYPE_MYAWARDS:
+            actionFlag = @"myAwards";
+            break;            
+            
         default:
             break;
     }
+    
+    
+    
     NSDictionary * parametersDic = @{@"limit":@"-1",
                                      @"MASTERTABLE":KLB_FUNCTION_LIST,
                                      @"MENUAPP":@"EMARK_APP",
@@ -60,7 +83,7 @@
                                      @"METHOD":actionFlag,
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
-                                     @"CLASSNAME":HOME_URL_CLASS,
+                                     @"CLASSNAME":className,
                                      @"DETAILTABLE":@"",};
     
     NSDictionary * fieldsDic =@{};
@@ -82,7 +105,6 @@
                                      wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20)];
                                      wkWebView.top = 20;
                                      wkWebView.height = SCREEN_HEIGHT - 20;
-                                     
                                      UIView * statusBackgroundView = [UIView new];
                                      statusBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
                                      [self.view addSubview:statusBackgroundView];
@@ -90,8 +112,11 @@
                                      
                                      [self.view addSubview:wkWebView];
                                      wkWebView.navigationDelegate = self;
-                                     [wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:targetURL]]];
-//                                     [wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
+                                     
+                                     NSMutableURLRequest * reuqest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:targetURL]];
+                                     webUrl = targetURL;
+                                     
+                                     [wkWebView loadRequest:reuqest];
                                  }
                              } fail:^(NSError *errorCode) {
                                  
@@ -201,6 +226,28 @@
     }
     
     decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
+    NSHTTPURLResponse *response = (NSHTTPURLResponse *)navigationResponse.response;
+    NSArray *cookies =[NSHTTPCookie cookiesWithResponseHeaderFields:[response allHeaderFields] forURL:response.URL];
+    //读取wkwebview中的cookie 方法1
+    for (NSHTTPCookie *cookie in cookies) {
+        //        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        NSLog(@"wkwebview中的cookie:%@", cookie);
+        
+    }
+    //读取wkwebview中的cookie 方法2 读取Set-Cookie字段
+    NSString *cookieString = [[response allHeaderFields] valueForKey:@"Set-Cookie"];
+    NSLog(@"wkwebview中的cookie:%@", cookieString);
+    
+    //看看存入到了NSHTTPCookieStorage了没有
+    NSHTTPCookieStorage *cookieJar2 = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in cookieJar2.cookies) {
+        NSLog(@"NSHTTPCookieStorage中的cookie%@", cookie);
+    }
+    decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
 -(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error

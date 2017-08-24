@@ -692,8 +692,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"======================didSelectRowAtIndexPath==============================");
-    
     if ([self.delegate respondsToSelector:@selector(ignoreDynamic)]) {
         [self.delegate ignoreDynamic];
     }

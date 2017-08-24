@@ -69,9 +69,6 @@
 {
     switch (section) {
         case 0:
-            if(_enterType == ENTER_SETTING_TYPE_SETTING){
-                return 0;
-            }
             return 3;
             break;
         case 1:
@@ -87,9 +84,6 @@
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (_enterType == ENTER_SETTING_TYPE_PERSONAL) {
-        return 1;
-    }
     return 3;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
