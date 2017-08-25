@@ -167,6 +167,7 @@
                                      while ([_quesDetailView.subviews lastObject]) {
                                          [_quesDetailView.subviews.lastObject removeFromSuperview];
                                      }
+                                     [_quesDetailView removeFromSuperview];
                                      _quesDetailView = nil;
                                      
                                      [self initView];

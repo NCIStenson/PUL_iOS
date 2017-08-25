@@ -28,7 +28,7 @@
 @interface ZEPULHomeVC () <ZEPULHomeViewDelegate>
 {
     ZEPULHomeView * _PULHomeView ;
-    NSInteger _currentNewestPage;
+
     NSArray * _homeIcoArr;
     
 }
@@ -41,7 +41,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self initView];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(verifyLogin:) name:kVerifyLogin object:nil];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -68,8 +68,22 @@
     [self.view addSubview:_PULHomeView];
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:kVerifyLogin object:nil];
+}
+
 #pragma mark - Request
 #pragma mark - 获取首页图标请求
+
+- (void)verifyLogin:(NSNotification *)noti
+{
+    [[ZEServerEngine sharedInstance] cancelAllTask];
+
+    [self geMyMessageList];
+    [self getPULHomeIconRequest];
+    [ZEUtil cacheQuestionType];
+}
 
 -(void)getPULHomeIconRequest
 {
@@ -128,26 +142,9 @@
                        showAlertView:NO
                              success:^(id data) {
                                  NSArray * dataArr = [ZEUtil getServerData:data withTabelName:KLB_DYNAMIC_HOME_INFO];
-                                 if (dataArr.count > 0) {
-                                     if (_currentNewestPage == 0) {
-                                         [_PULHomeView reloadFirstView:dataArr];
-                                     }else{
-                                         [_PULHomeView reloadContentViewWithArr:dataArr];
-                                     }
-                                     if (dataArr.count % MAX_PAGE_COUNT == 0) {
-                                         _currentNewestPage += 1;
-                                     }else{
-                                         [_PULHomeView loadNoMoreData];
-                                     }
-                                 }else{
-                                     if (_currentNewestPage > 0) {
-                                         [_PULHomeView loadNoMoreData];
-                                         return ;
-                                     }
-                                     [_PULHomeView reloadFirstView:dataArr ];
-                                     [_PULHomeView headerEndRefreshing];
-                                     [_PULHomeView loadNoMoreData];
-                                 }
+                                [_PULHomeView reloadFirstView:dataArr];
+                                [_PULHomeView headerEndRefreshing];
+//                                     [_PULHomeView loadNoMoreData];
                                  
                              } fail:^(NSError *errorCode) {
                                  [_PULHomeView endRefreshing];
@@ -192,7 +189,6 @@
 #pragma mark - 
 -(void)loadNewData
 {
-    _currentNewestPage = 0;
     [self geMyMessageList];
     [self getPULHomeIconRequest];
 }

@@ -163,8 +163,8 @@
 -(void)reloadFirstView:(NSArray *)dataArr;
 {
     self.PULHomeRequestionData = [NSMutableArray arrayWithArray:dataArr];
-    MJRefreshFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData:)];
-    _contentTableView.mj_footer = footer;
+//    MJRefreshFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData:)];
+//    _contentTableView.mj_footer = footer;
     
     [_contentTableView.mj_header endRefreshingWithCompletionBlock:nil];
     [_contentTableView reloadData];

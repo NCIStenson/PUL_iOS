@@ -70,8 +70,6 @@
     //kvc实质是修改了系统的_tabBar
     [self setValue:tabbar forKeyPath:@"tabBar"];
 
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeAskStateNO) name:kNOTI_ASK_QUESTION object:nil];;
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeAskState:) name:kNOTI_ASK_TEAM_QUESTION object:nil];;
 }
 
 -(void)changeAskStateNO
@@ -93,7 +91,6 @@
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNOTI_ASK_QUESTION object:nil];
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNOTI_ASK_TEAM_QUESTION object:nil];
 }
 
 #pragma mark - ------------------------------------------------------------------

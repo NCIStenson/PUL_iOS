@@ -49,7 +49,6 @@
     [self initView];
     [self cacheQuestionType];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(verifyLogin:) name:kVerifyLogin object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendHomeDataRequest) name:kNOTI_ASK_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendHomeDataRequest) name:kNOTI_ACCEPT_SUCCESS object:nil];
@@ -71,28 +70,9 @@
 
 -(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kVerifyLogin object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNOTI_ASK_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNOTI_ANSWER_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNOTI_ACCEPT_SUCCESS object:nil];
-}
-
-- (void)verifyLogin:(NSNotification *)noti
-{
-    // Refresh...
-//    [self checkUpdate];
-//    [self sendIsSigninToday];
-//    [self sendSigninViewMessage];
-    _currentNewestPage = 0;
-    _currentRecommandPage = 0;
-    _currentBounsPage = 0;
-    
-    [[ZEServerEngine sharedInstance] cancelAllTask];
-    [self isHaveNewMessage];
-    [self cacheQuestionType];
-    [self sendNewestQuestionsRequest:@""];
-    [self sendRecommandQuestionsRequest:@""];
-    [self sendBounsQuestionsRequest:@""];
 }
 
 -(void)sendHomeDataRequest

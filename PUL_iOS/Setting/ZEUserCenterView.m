@@ -213,7 +213,7 @@
     [_userMessage addSubview:usernameLabel];
     
     levelLab = [[UILabel alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - usernameWidth ) / 2, 60, usernameWidth, 20.0f)];
-    levelLab.text = username;
+    levelLab.text = @"";
     levelLab.font = [UIFont systemFontOfSize:12];
     levelLab.textColor = [UIColor orangeColor];
     levelLab.textAlignment = NSTextAlignmentCenter;
@@ -223,7 +223,7 @@
     levelLab.bottom = usernameLabel.bottom;
 
     pointLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 60, SCREEN_WIDTH - 40, 20.0f)];
-    pointLabel.text = username;
+    pointLabel.text = @"";
     pointLabel.font = [UIFont systemFontOfSize:14];
     pointLabel.textColor = [UIColor whiteColor];
     pointLabel.textAlignment = NSTextAlignmentCenter;

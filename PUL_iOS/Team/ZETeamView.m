@@ -68,8 +68,6 @@
     headerLab.text = @"团队动态";
     headerLab.textColor = kTextColor;
     headerLab.font = [UIFont boldSystemFontOfSize:18];
-    
-    [[NSNotificationCenter defaultCenter]postNotificationName:kNOTI_ASK_TEAM_QUESTION object:@""];
 }
 
 #pragma makr - collectionView delegate
@@ -113,9 +111,9 @@
         nameLab.text = teaminfo.TEAMCIRCLENAME;
         nameLab.numberOfLines = 0;
         nameLab.textAlignment = NSTextAlignmentCenter;
-        nameLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
+        nameLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
+        nameLab.textColor = [UIColor whiteColor];
         [bacgroundView addSubview:nameLab];
-        nameLab.textColor = kTextColor;
 
     }else{
         UIImageView * heroImageVIew = [[UIImageView alloc]initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH / 3 - 30, SCREEN_WIDTH / 3 )];
@@ -156,24 +154,6 @@
         }
     }
 }
-
-#pragma mark - 滑动结束后 获取当前cell的indexpath
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    CGPoint pInView = [self convertPoint:_collectionView.center toView:_collectionView];
-
-    NSIndexPath * indexpath = [_collectionView indexPathForItemAtPoint:pInView];
-    
-    if(_joinTeam.count > 0 && indexpath.row > 0 && indexpath.row < _joinTeam.count + 1){
-        ZETeamCircleModel * teaminfo = [ZETeamCircleModel getDetailWithDic:_joinTeam[indexpath.row - 1]];
-
-        [[NSNotificationCenter defaultCenter]postNotificationName:kNOTI_ASK_TEAM_QUESTION object:teaminfo];
-    }else{
-        [[NSNotificationCenter defaultCenter]postNotificationName:kNOTI_ASK_TEAM_QUESTION object:nil];
-    }
-    
-}
-
 
 
 @end
@@ -287,7 +267,7 @@
     }
 
     UILabel * SYSCREATEDATE = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 90,10,70,30.0f)];
-    SYSCREATEDATE.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@.0", [dynamicDic objectForKey:@"SYSCREATEDATE"]]];
+    SYSCREATEDATE.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@", [dynamicDic objectForKey:@"SYSCREATEDATE"]]];
     SYSCREATEDATE.userInteractionEnabled = NO;
     SYSCREATEDATE.textAlignment = NSTextAlignmentRight;
     SYSCREATEDATE.textColor = MAIN_SUBTITLE_COLOR;

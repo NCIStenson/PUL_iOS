@@ -39,8 +39,6 @@
     self.title = @"团队";
     self.leftBtn.hidden = YES;
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeAskState:) name:kNOTI_ASK_TEAM_QUESTION object:nil];;
-
     [self.rightBtn setImage:[UIImage imageNamed:@"icon_noti"] forState:UIControlStateNormal];
     self.rightBtn.hidden = YES;
     [self initView];
@@ -52,24 +50,6 @@
     self.tabBarController.tabBar.hidden = NO;
     [self teamHomeRequest];
     [ZEUtil cacheQuestionType];
-}
-
--(void)changeAskState:(NSNotification *)noti
-{
-    
-    if ([ZEUtil isNotNull:noti] && [noti.object isKindOfClass:[ZETeamCircleModel class]]) {
-        _teamCircleInfo = noti.object;
-        for (int i = 0 ; i < alreadyJoinTeam.count ; i ++) {
-            ZETeamCircleModel * teaminfo = [ZETeamCircleModel getDetailWithDic:alreadyJoinTeam[i]];
-            if ([teaminfo.SEQKEY isEqualToString:_teamCircleInfo.SEQKEY]) {
-                _currentSelectTeam = i;
-                break;
-            }
-        }
-    }else{
-        _currentSelectTeam = 0;
-        _teamCircleInfo = NULL;
-    }
 }
 
 -(void)teamHomeRequest
@@ -100,8 +80,6 @@
                                      alreadyJoinTeam = dataArr;
                                      [teamView reloadHeaderView:dataArr];
                                      [self teamDynamics];
-//                                     _teamCircleInfo = [ZETeamCircleModel getDetailWithDic:dataArr[0]];
-//                                     [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_ASK_TEAM_QUESTION object:_teamCircleInfo];
                                  }else{
                                      [teamView reloadHeaderView:dataArr];
                                      [self showTips:@"您还没有加入任何团队，快去加一个吧"];
