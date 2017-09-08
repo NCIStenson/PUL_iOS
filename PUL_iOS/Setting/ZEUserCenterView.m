@@ -79,7 +79,9 @@
 {
     _levelTitle = levelTitle;
     levelLab.text = _levelTitle;
-    [levelLab sizeToFit];
+    levelLab.width = [ZEUtil widthForString:_levelTitle font:levelLab.font maxSize:CGSizeMake(100, 20)];
+    levelLab.left = usernameLabel.right + 10;
+
 }
 
 #pragma mark - 新消息提醒图标
@@ -218,9 +220,7 @@
     levelLab.textColor = [UIColor orangeColor];
     levelLab.textAlignment = NSTextAlignmentCenter;
     [_userMessage addSubview:levelLab];
-    [levelLab sizeToFit];
-    levelLab.left = usernameLabel.right + 10;
-    levelLab.bottom = usernameLabel.bottom;
+    levelLab.top = usernameLabel.top;
 
     pointLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 60, SCREEN_WIDTH - 40, 20.0f)];
     pointLabel.text = @"";

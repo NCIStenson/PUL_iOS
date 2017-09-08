@@ -225,7 +225,7 @@
                                      @"CLASSNAME":@"com.nci.klb.app.userinfo.UserInfo",
                                      @"DETAILTABLE":@"",};
     
-    NSDictionary * fieldsDic =@{@"SEQKEY":[ZESettingLocalData getUSERCODE],
+    NSDictionary * fieldsDic =@{@"SEQKEY":[ZESettingLocalData getUSERSEQKEY],
                                 @"USERCODE":[ZESettingLocalData getUSERCODE],
                                 @"FILEURL":@""};
     
@@ -233,6 +233,7 @@
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
                                                                        withActionFlag:nil];
+    NSLog(@" ===  %@",packageDic);
     [ZEUserServer uploadImageWithJsonDic:packageDic
                             withImageArr:@[_choosedImage]
                            showAlertView:YES
@@ -242,6 +243,7 @@
                                          [self getHeadImgUrl];
                                      }
                                  } fail:^(NSError *error) {
+                                     
                                      }];
 }
 

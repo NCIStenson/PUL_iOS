@@ -21,7 +21,7 @@
 // 导航栏内左侧按钮
 #define kLeftButtonWidth 40.0f
 #define kLeftButtonHeight 40.0f
-#define kLeftButtonMarginLeft 15.0f
+#define kLeftButtonMarginLeft 10.0f
 #define kLeftButtonMarginTop 20.0f + 2.0f
 
 #define kNavTitleLabelWidth (SCREEN_WIDTH - 110.0f)
@@ -103,13 +103,9 @@
     UIView * navView = [[UIView alloc] initWithFrame:CGRectZero];
     navView.backgroundColor = MAIN_NAV_COLOR;
     [self addSubview:navView];
-    [ZEUtil addGradientLayer:navView];
+    navView.frame = CGRectMake(kNavBarMarginLeft, kNavBarMarginTop, kNavBarWidth, kNavBarHeight);
 
-    [navView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(kNavBarMarginTop);
-        make.left.mas_equalTo(kNavBarMarginLeft);
-        make.size.mas_equalTo(CGSizeMake(kNavBarWidth, kNavBarHeight));
-    }];
+    [ZEUtil addGradientLayer:navView];
     
     UIButton * _typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _typeBtn.frame = CGRectMake(kLeftButtonMarginLeft, kLeftButtonMarginTop, kLeftButtonWidth, kLeftButtonHeight);

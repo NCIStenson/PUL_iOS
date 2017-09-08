@@ -105,7 +105,11 @@
         heroImageVIew.layer.cornerRadius = SCREEN_WIDTH / 12;
         heroImageVIew.layer.masksToBounds = YES;
         heroImageVIew.backgroundColor = [UIColor whiteColor];
-        heroImageVIew.contentMode = UIViewContentModeCenter;
+        if (teaminfo.FILEURL.length > 0) {
+            heroImageVIew.contentMode = UIViewContentModeScaleAspectFit;
+        }else{
+            heroImageVIew.contentMode = UIViewContentModeCenter;
+        }
         
         UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_WIDTH / 4 - 10, SCREEN_WIDTH / 3 - 30, 30)];
         nameLab.text = teaminfo.TEAMCIRCLENAME;
@@ -232,13 +236,19 @@
     headerImage.layer.cornerRadius = headerImage.height / 2;
     headerImage.backgroundColor = [self getBackgroundColor:indexPath withAlpha:1];
     
-    UIImageView * showImageView  =[[UIImageView alloc]init];
-    [cell.contentView addSubview:showImageView];
-    showImageView.frame = CGRectMake(0, 0, 30, 30);
-    showImageView.center = headeImage.center;
-    [showImageView sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"icon_team_headimage" color:[UIColor whiteColor]]];
-    showImageView.layer.cornerRadius = showImageView.height / 2;
-    showImageView.contentMode = UIViewContentModeScaleAspectFit;
+    if (fileUrl.length > 0) {
+        headerImage.contentMode = UIViewContentModeScaleAspectFit;
+        [headerImage sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"icon_team_headimage" color:[UIColor whiteColor]]];
+    }else{
+        UIImageView * showImageView  =[[UIImageView alloc]init];
+        [cell.contentView addSubview:showImageView];
+        showImageView.frame = CGRectMake(0, 0, 30, 30);
+        showImageView.center = headeImage.center;
+        [showImageView sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"icon_team_headimage" color:[UIColor whiteColor]]];
+        showImageView.layer.cornerRadius = showImageView.height / 2;
+        showImageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    
     
     UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(80, 10, SCREEN_WIDTH - 150, 30)];
     nameLab.text = @"市区二站";

@@ -365,6 +365,10 @@
     
     UILabel * QUESTIONUSERNAME = [[UILabel alloc]initWithFrame:CGRectMake(45,userY,200.0f,20.0f)];
     QUESTIONUSERNAME.text = quesInfoM.NICKNAME;
+    if(quesInfoM.ISANONYMITY){
+        [userImg setImage:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
+        QUESTIONUSERNAME.text = @"匿名提问";
+    }
     QUESTIONUSERNAME.textColor = MAIN_SUBTITLE_COLOR;
     QUESTIONUSERNAME.font = [UIFont systemFontOfSize:kQuestionTitleFontSize];
     [questionsView addSubview:QUESTIONUSERNAME];

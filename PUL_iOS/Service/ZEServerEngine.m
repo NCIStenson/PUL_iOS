@@ -111,7 +111,6 @@ static ZEServerEngine *serverEngine = nil;
 }
 
 
-
 -(void)requestWithJsonDic:(NSDictionary *)jsonDic
         withServerAddress:(NSString *)serverAddress
                   success:(ServerResponseSuccessBlock)successBlock
@@ -129,9 +128,7 @@ static ZEServerEngine *serverEngine = nil;
         NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
         NSHTTPCookie *cookie;
         for (cookie in cookies) {
-            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-            NSLog(@" REQUEST  ====================   %@",[cookie value]);
-
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];   
         }
     }
 

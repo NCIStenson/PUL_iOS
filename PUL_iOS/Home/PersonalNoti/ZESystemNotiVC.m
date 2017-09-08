@@ -65,6 +65,7 @@
                                  
                                  systemNotiDataArr = [NSMutableArray arrayWithArray:dataArr];
                                  [contentTableView reloadData];
+                                 [contentTableView.mj_header endRefreshing];
                              } fail:^(NSError *errorCode) {
                                  
                              }];
@@ -77,8 +78,15 @@
     contentTableView.dataSource = self;
     [self.view addSubview:contentTableView];
     contentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    MJRefreshGifHeader *header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    contentTableView.mj_header = header;
 }
 
+-(void)loadNewData
+{
+    [self getSystemNotiList];
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -102,7 +110,7 @@
     NSString * FILEURL = [[[dataDic objectForKey:@"FILEURL"] stringByReplacingOccurrencesOfString:@"," withString:@""] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
     NSString * TITLE = [dataDic objectForKey:@"TITLE"];
     NSString * REMARK = [dataDic objectForKey:@"REMARK"];
-    NSString * RELEASEDATE = [dataDic objectForKey:@"SYSUPDATEDATE"];
+    NSString * RELEASEDATE = [dataDic objectForKey:@"RELEASEDATE"];
     
     UIImageView * typicalImageView = [[UIImageView alloc]init];
     [cell addSubview:typicalImageView];

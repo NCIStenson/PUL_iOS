@@ -207,7 +207,7 @@
 {
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = YES;
-    [self isHaveNewMessage];
+//    [self isHaveNewMessage];
 }
 
 -(void)viewWillDisappear:(BOOL)animated

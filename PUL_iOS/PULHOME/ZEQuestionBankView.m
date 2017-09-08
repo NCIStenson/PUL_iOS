@@ -259,7 +259,7 @@
 
 -(void)setBankModel:(ZEPULHomeQuestionBankModel *)bankModel{
     _bankModel = bankModel;
-    _timeLab.text = [NSString stringWithFormat:@"总时长     %.2fh",[_bankModel.time_pass floatValue] / 100];
+    _timeLab.text = [NSString stringWithFormat:@"总时长     %.2fh",[_bankModel.time_pass floatValue] / 3600];
     _numLab.text = [NSString stringWithFormat:@"刷题数     %lld",[_bankModel.done_num longLongValue]];
     _circle.progress = [_bankModel.right_rate floatValue] / 100;
     if (_bankModel.module_list.count > 0) {
@@ -363,6 +363,7 @@
     contentTab.dataSource  = self;
     [backImageView addSubview:contentTab];
     contentTab.backgroundColor = [UIColor clearColor];
+    contentTab.separatorStyle = UITableViewCellSeparatorStyleNone;
     contentTab.clipsToBounds = YES;
     contentTab.layer.cornerRadius = 5;
     contentTab.userInteractionEnabled = YES;
@@ -403,6 +404,11 @@
     [cell.textLabel  sizeToFit];
     cell.textLabel.textColor = kTextColor;
     cell.textLabel.font = [UIFont systemFontOfSize:15];
+    
+    if (indexPath.row == self.banksArr.count) {
+    }else{
+        [ZEUtil addLineLayerMarginLeft:0 marginTop:43.5f width:contentTab.width height:.5f superView:cell.contentView];
+    }
 
     return cell;
 }

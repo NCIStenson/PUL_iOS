@@ -106,7 +106,7 @@
     _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _leftBtn.frame = CGRectMake(kLeftButtonMarginLeft, kLeftButtonMarginTop, kLeftButtonWidth, kLeftButtonHeight);
     _leftBtn.backgroundColor = [UIColor clearColor];
-    _leftBtn.imageEdgeInsets = UIEdgeInsetsMake(0.0f, 16.0f, 0.0f, 0.0f);
+    _leftBtn.imageEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
     _leftBtn.contentMode = UIViewContentModeScaleAspectFit;
     [_leftBtn setImage:[UIImage imageNamed:@"icon_back" tintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
     [_leftBtn setImage:[UIImage imageNamed:@"icon_back" tintColor:[UIColor whiteColor]] forState:UIControlStateHighlighted];
@@ -132,7 +132,7 @@
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.font = [UIFont systemFontOfSize:22.0f];
-    _titleLabel.text = [ZEUtil isStrNotEmpty:_titleStr] ? _titleStr : @"标题";
+    _titleLabel.text = [ZEUtil isStrNotEmpty:_titleStr] ? _titleStr : @"";
     _titleLabel.numberOfLines = 0;
     _titleLabel.adjustsFontSizeToFitWidth = YES;
     

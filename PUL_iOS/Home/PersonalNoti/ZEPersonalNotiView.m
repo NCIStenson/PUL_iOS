@@ -393,7 +393,9 @@
         lastName.frame = CGRectMake(20, 10, 60, 60);
         lastName.clipsToBounds = YES;
         lastName.layer.cornerRadius = lastName.height / 2;
-        lastName.text = [notiM.USERNAME substringToIndex:1];
+        if(notiM.USERNAME.length > 1){
+            lastName.text = [notiM.USERNAME substringToIndex:1];
+        }
         lastName.textAlignment = NSTextAlignmentCenter;
         lastName.textColor = [UIColor whiteColor];
     }

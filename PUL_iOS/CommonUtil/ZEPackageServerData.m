@@ -51,7 +51,10 @@
 
 -(NSDictionary *)PARAMETERS
 {
-    NSDictionary * dic =@{@"PARA":@[@{@"name":@"NOSUITUNIT",@"value":@"true"}]};
+    NSDictionary * dic =@{@"PARA":@[@{@"name":@"NOSUITUNIT",@"value":@"true"},
+                                    @{@"name":@"appId",@"value":APPID},
+                                    @{@"name":@"appKey",@"value":JMESSAGE_APPKEY},
+                                    @{@"name":@"masterSecret",@"value":JMESSAGE_MasterSecret}]};
     return dic;
 }
 

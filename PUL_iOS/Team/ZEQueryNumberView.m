@@ -42,13 +42,8 @@
     UIView * navView = [[UIView alloc] initWithFrame:CGRectZero];
     navView.backgroundColor = MAIN_NAV_COLOR;
     [self addSubview:navView];
+    navView.frame = CGRectMake(kNavBarMarginLeft, kNavBarMarginTop, kNavBarWidth, kNavBarHeight);
     [ZEUtil addGradientLayer:navView];
-    
-    [navView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(kNavBarMarginTop);
-        make.left.mas_equalTo(kNavBarMarginLeft);
-        make.size.mas_equalTo(CGSizeMake(kNavBarWidth, kNavBarHeight));
-    }];
     
     UIButton * _leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _leftBtn.frame = CGRectMake(kLeftButtonMarginLeft, kLeftButtonMarginTop, kLeftButtonWidth, kLeftButtonHeight);
@@ -197,6 +192,7 @@
 
 -(void)inviteNumber:(UIButton *)btn
 {
+    btn.enabled = NO;
     btn.backgroundColor = [UIColor lightGrayColor];
     [btn setTitleColor:kTextColor forState:UIControlStateNormal];
     [btn setTitle:@"已邀请" forState:UIControlStateNormal];

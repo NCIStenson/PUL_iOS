@@ -101,14 +101,12 @@
 		980378C81F09DE4D0085FAD9 /* icon_expert_history@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9803779F1F09DE4D0085FAD9 /* icon_expert_history@2x.png */; };
 		980378C91F09DE4D0085FAD9 /* icon_expert_history@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377A01F09DE4D0085FAD9 /* icon_expert_history@3x.png */; };
 		980378CA1F09DE4D0085FAD9 /* avatar_default.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 980377A21F09DE4D0085FAD9 /* avatar_default.jpg */; };
-		980378CB1F09DE4D0085FAD9 /* banner.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 980377A31F09DE4D0085FAD9 /* banner.jpg */; };
 		980378CC1F09DE4D0085FAD9 /* forum_list_post@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377A41F09DE4D0085FAD9 /* forum_list_post@2x.png */; };
 		980378CD1F09DE4D0085FAD9 /* ic_titlebar_home_normal_flat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377A51F09DE4D0085FAD9 /* ic_titlebar_home_normal_flat@2x.png */; };
 		980378CE1F09DE4D0085FAD9 /* icon_my_practice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377A61F09DE4D0085FAD9 /* icon_my_practice@2x.png */; };
 		980378CF1F09DE4D0085FAD9 /* qb_praiseBtn_hand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377A71F09DE4D0085FAD9 /* qb_praiseBtn_hand@2x.png */; };
 		980378D01F09DE4D0085FAD9 /* rateTa@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377A81F09DE4D0085FAD9 /* rateTa@2x.png */; };
 		980378D11F09DE4D0085FAD9 /* search_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377A91F09DE4D0085FAD9 /* search_icon@2x.png */; };
-		980378D21F09DE4D0085FAD9 /* tab_circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377AA1F09DE4D0085FAD9 /* tab_circle@2x.png */; };
 		980378D31F09DE4D0085FAD9 /* icon_personal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377AB1F09DE4D0085FAD9 /* icon_personal@2x.png */; };
 		980378D41F09DE4D0085FAD9 /* icon_personal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377AC1F09DE4D0085FAD9 /* icon_personal@3x.png */; };
 		980378D51F09DE4D0085FAD9 /* addImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980377AE1F09DE4D0085FAD9 /* addImage@2x.png */; };
@@ -267,10 +265,6 @@
 		980379791F09DE4E0085FAD9 /* 运输调度@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980378561F09DE4D0085FAD9 /* 运输调度@3x.png */; };
 		9803797A1F09DE4E0085FAD9 /* icon_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980378571F09DE4D0085FAD9 /* icon_up@2x.png */; };
 		9803797B1F09DE4E0085FAD9 /* icon_up@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980378581F09DE4D0085FAD9 /* icon_up@3x.png */; };
-		9803797C1F09DE4E0085FAD9 /* icon修改1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9803785A1F09DE4D0085FAD9 /* icon修改1@2x.png */; };
-		9803797D1F09DE4E0085FAD9 /* icon修改1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9803785B1F09DE4D0085FAD9 /* icon修改1@3x.png */; };
-		9803797E1F09DE4E0085FAD9 /* Layer-14@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9803785C1F09DE4D0085FAD9 /* Layer-14@2x.png */; };
-		9803797F1F09DE4E0085FAD9 /* Layer-14@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9803785D1F09DE4D0085FAD9 /* Layer-14@3x.png */; };
 		980379801F09DE4E0085FAD9 /* login_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9803785E1F09DE4D0085FAD9 /* login_background@2x.png */; };
 		980379811F09DE4E0085FAD9 /* login_background@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9803785F1F09DE4D0085FAD9 /* login_background@3x.png */; };
 		980379821F09DE4E0085FAD9 /* login_password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 980378601F09DE4D0085FAD9 /* login_password@2x.png */; };
@@ -384,8 +378,6 @@
 		985A9AFE1F4C0AF900D0E3B5 /* yy_nav_search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 985A9AFA1F4C0AF800D0E3B5 /* yy_nav_search@3x.png */; };
 		985A9B011F4C0B1300D0E3B5 /* yy_nav_why@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 985A9AFF1F4C0B1300D0E3B5 /* yy_nav_why@2x.png */; };
 		985A9B021F4C0B1300D0E3B5 /* yy_nav_why@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 985A9B001F4C0B1300D0E3B5 /* yy_nav_why@3x.png */; };
-		985A9B051F4C119900D0E3B5 /* menu_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 985A9B031F4C119900D0E3B5 /* menu_add.png */; };
-		985A9B061F4C119900D0E3B5 /* menu_del.png in Resources */ = {isa = PBXBuildFile; fileRef = 985A9B041F4C119900D0E3B5 /* menu_del.png */; };
 		98618D661F4AC868004CFFA9 /* home_btn_ask.png in Resources */ = {isa = PBXBuildFile; fileRef = 98618D621F4AC868004CFFA9 /* home_btn_ask.png */; };
 		98618D671F4AC868004CFFA9 /* home_btn_bank.png in Resources */ = {isa = PBXBuildFile; fileRef = 98618D631F4AC868004CFFA9 /* home_btn_bank.png */; };
 		98618D681F4AC868004CFFA9 /* home_btn_dev.png in Resources */ = {isa = PBXBuildFile; fileRef = 98618D641F4AC868004CFFA9 /* home_btn_dev.png */; };
@@ -576,6 +568,8 @@
 		98F471981D5434CF0016CD5A /* ZEAnswerQuestionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F471971D5434CF0016CD5A /* ZEAnswerQuestionsVC.m */; };
 		98F4719E1D5434F70016CD5A /* ZEAnswerQuestionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F4719D1D5434F70016CD5A /* ZEAnswerQuestionsView.m */; };
 		98FA64801ECD71C6000F2133 /* ZESystemNotiVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FA647F1ECD71C6000F2133 /* ZESystemNotiVC.m */; };
+		98FBDB7C1F5FEA3C00AD0D4B /* menu_add.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FBDB7A1F5FEA3C00AD0D4B /* menu_add.png */; };
+		98FBDB7D1F5FEA3C00AD0D4B /* menu_del.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FBDB7B1F5FEA3C00AD0D4B /* menu_del.png */; };
 		98FEF2581EB1859E00A0CB17 /* ZETeamWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FEF2571EB1859E00A0CB17 /* ZETeamWebVC.m */; };
 		98FEF2621EBAF64200A0CB17 /* ZETeamNotiCenVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FEF2611EBAF64200A0CB17 /* ZETeamNotiCenVC.m */; };
 		98FEF2651EBAF66C00A0CB17 /* ZETeamNotiCenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98FEF2641EBAF66C00A0CB17 /* ZETeamNotiCenView.m */; };
@@ -610,7 +604,9 @@
 
 /* Begin PBXFileReference section */
 		4F1B9A6806FFAD33EFC978B9 /* libPods-PUL_iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PUL_iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		68B2B751561D4B6A8171829D /* Pods-PUL_iOS.totestserver.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PUL_iOS.totestserver.xcconfig"; path = "Pods/Target Support Files/Pods-PUL_iOS/Pods-PUL_iOS.totestserver.xcconfig"; sourceTree = "<group>"; };
 		7EF64F73ABC42A2CC3AC9B45 /* libPods-nbsj-know.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-nbsj-know.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B86BFFC9F2793E8B8F40026 /* Pods-PUL_iOS.topersonalserver.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PUL_iOS.topersonalserver.xcconfig"; path = "Pods/Target Support Files/Pods-PUL_iOS/Pods-PUL_iOS.topersonalserver.xcconfig"; sourceTree = "<group>"; };
 		9801DAFD1D5DCD95008B1676 /* ZEServerTableMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEServerTableMessage.h; path = Constant/ZEServerTableMessage.h; sourceTree = "<group>"; };
 		9801DAFE1D6153EE008B1676 /* ZEChangePersonalMsgVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEChangePersonalMsgVC.h; path = Setting/ZEChangePersonalMsgVC.h; sourceTree = "<group>"; };
 		9801DAFF1D6153EE008B1676 /* ZEChangePersonalMsgVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEChangePersonalMsgVC.m; path = Setting/ZEChangePersonalMsgVC.m; sourceTree = "<group>"; };
@@ -711,14 +707,12 @@
 		9803779F1F09DE4D0085FAD9 /* icon_expert_history@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_expert_history@2x.png"; sourceTree = "<group>"; };
 		980377A01F09DE4D0085FAD9 /* icon_expert_history@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_expert_history@3x.png"; sourceTree = "<group>"; };
 		980377A21F09DE4D0085FAD9 /* avatar_default.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar_default.jpg; sourceTree = "<group>"; };
-		980377A31F09DE4D0085FAD9 /* banner.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = banner.jpg; sourceTree = "<group>"; };
 		980377A41F09DE4D0085FAD9 /* forum_list_post@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forum_list_post@2x.png"; sourceTree = "<group>"; };
 		980377A51F09DE4D0085FAD9 /* ic_titlebar_home_normal_flat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_titlebar_home_normal_flat@2x.png"; sourceTree = "<group>"; };
 		980377A61F09DE4D0085FAD9 /* icon_my_practice@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_my_practice@2x.png"; sourceTree = "<group>"; };
 		980377A71F09DE4D0085FAD9 /* qb_praiseBtn_hand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qb_praiseBtn_hand@2x.png"; sourceTree = "<group>"; };
 		980377A81F09DE4D0085FAD9 /* rateTa@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rateTa@2x.png"; sourceTree = "<group>"; };
 		980377A91F09DE4D0085FAD9 /* search_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_icon@2x.png"; sourceTree = "<group>"; };
-		980377AA1F09DE4D0085FAD9 /* tab_circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_circle@2x.png"; sourceTree = "<group>"; };
 		980377AB1F09DE4D0085FAD9 /* icon_personal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_personal@2x.png"; sourceTree = "<group>"; };
 		980377AC1F09DE4D0085FAD9 /* icon_personal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_personal@3x.png"; sourceTree = "<group>"; };
 		980377AE1F09DE4D0085FAD9 /* addImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "addImage@2x.png"; sourceTree = "<group>"; };
@@ -877,10 +871,6 @@
 		980378561F09DE4D0085FAD9 /* 运输调度@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "运输调度@3x.png"; sourceTree = "<group>"; };
 		980378571F09DE4D0085FAD9 /* icon_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_up@2x.png"; sourceTree = "<group>"; };
 		980378581F09DE4D0085FAD9 /* icon_up@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_up@3x.png"; sourceTree = "<group>"; };
-		9803785A1F09DE4D0085FAD9 /* icon修改1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon修改1@2x.png"; sourceTree = "<group>"; };
-		9803785B1F09DE4D0085FAD9 /* icon修改1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon修改1@3x.png"; sourceTree = "<group>"; };
-		9803785C1F09DE4D0085FAD9 /* Layer-14@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Layer-14@2x.png"; sourceTree = "<group>"; };
-		9803785D1F09DE4D0085FAD9 /* Layer-14@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Layer-14@3x.png"; sourceTree = "<group>"; };
 		9803785E1F09DE4D0085FAD9 /* login_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_background@2x.png"; sourceTree = "<group>"; };
 		9803785F1F09DE4D0085FAD9 /* login_background@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_background@3x.png"; sourceTree = "<group>"; };
 		980378601F09DE4D0085FAD9 /* login_password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_password@2x.png"; sourceTree = "<group>"; };
@@ -1073,8 +1063,6 @@
 		985A9AFA1F4C0AF800D0E3B5 /* yy_nav_search@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yy_nav_search@3x.png"; sourceTree = "<group>"; };
 		985A9AFF1F4C0B1300D0E3B5 /* yy_nav_why@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yy_nav_why@2x.png"; sourceTree = "<group>"; };
 		985A9B001F4C0B1300D0E3B5 /* yy_nav_why@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yy_nav_why@3x.png"; sourceTree = "<group>"; };
-		985A9B031F4C119900D0E3B5 /* menu_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_add.png; path = ../../../../Downloads/menu_add.png; sourceTree = "<group>"; };
-		985A9B041F4C119900D0E3B5 /* menu_del.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_del.png; path = ../../../../Downloads/menu_del.png; sourceTree = "<group>"; };
 		98618D621F4AC868004CFFA9 /* home_btn_ask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_btn_ask.png; path = PUL_HOME/home_btn_ask.png; sourceTree = "<group>"; };
 		98618D631F4AC868004CFFA9 /* home_btn_bank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_btn_bank.png; path = PUL_HOME/home_btn_bank.png; sourceTree = "<group>"; };
 		98618D641F4AC868004CFFA9 /* home_btn_dev.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_btn_dev.png; path = PUL_HOME/home_btn_dev.png; sourceTree = "<group>"; };
@@ -1351,6 +1339,8 @@
 		98F4719D1D5434F70016CD5A /* ZEAnswerQuestionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEAnswerQuestionsView.m; path = Questions/ZEAnswerQuestionsView.m; sourceTree = "<group>"; };
 		98FA647E1ECD71C6000F2133 /* ZESystemNotiVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZESystemNotiVC.h; path = Home/PersonalNoti/ZESystemNotiVC.h; sourceTree = "<group>"; };
 		98FA647F1ECD71C6000F2133 /* ZESystemNotiVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZESystemNotiVC.m; path = Home/PersonalNoti/ZESystemNotiVC.m; sourceTree = "<group>"; };
+		98FBDB7A1F5FEA3C00AD0D4B /* menu_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_add.png; path = PUL_HOME/menu_add.png; sourceTree = "<group>"; };
+		98FBDB7B1F5FEA3C00AD0D4B /* menu_del.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu_del.png; path = PUL_HOME/menu_del.png; sourceTree = "<group>"; };
 		98FEF2561EB1859E00A0CB17 /* ZETeamWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZETeamWebVC.h; path = Team/ZETeamWebVC.h; sourceTree = "<group>"; };
 		98FEF2571EB1859E00A0CB17 /* ZETeamWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZETeamWebVC.m; path = Team/ZETeamWebVC.m; sourceTree = "<group>"; };
 		98FEF2601EBAF64200A0CB17 /* ZETeamNotiCenVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZETeamNotiCenVC.h; path = Team/TeamNoti/ZETeamNotiCenVC.h; sourceTree = "<group>"; };
@@ -1416,6 +1406,8 @@
 			children = (
 				B69C5C556A55F90084C1B864 /* Pods-PUL_iOS.debug.xcconfig */,
 				FF68753D2064CEFD49B4F1E6 /* Pods-PUL_iOS.release.xcconfig */,
+				8B86BFFC9F2793E8B8F40026 /* Pods-PUL_iOS.topersonalserver.xcconfig */,
+				68B2B751561D4B6A8171829D /* Pods-PUL_iOS.totestserver.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1562,14 +1554,12 @@
 			isa = PBXGroup;
 			children = (
 				980377A21F09DE4D0085FAD9 /* avatar_default.jpg */,
-				980377A31F09DE4D0085FAD9 /* banner.jpg */,
 				980377A41F09DE4D0085FAD9 /* forum_list_post@2x.png */,
 				980377A51F09DE4D0085FAD9 /* ic_titlebar_home_normal_flat@2x.png */,
 				980377A61F09DE4D0085FAD9 /* icon_my_practice@2x.png */,
 				980377A71F09DE4D0085FAD9 /* qb_praiseBtn_hand@2x.png */,
 				980377A81F09DE4D0085FAD9 /* rateTa@2x.png */,
 				980377A91F09DE4D0085FAD9 /* search_icon@2x.png */,
-				980377AA1F09DE4D0085FAD9 /* tab_circle@2x.png */,
 			);
 			path = icon_home;
 			sourceTree = "<group>";
@@ -1775,10 +1765,6 @@
 		980378591F09DE4D0085FAD9 /* loginVC */ = {
 			isa = PBXGroup;
 			children = (
-				9803785A1F09DE4D0085FAD9 /* icon修改1@2x.png */,
-				9803785B1F09DE4D0085FAD9 /* icon修改1@3x.png */,
-				9803785C1F09DE4D0085FAD9 /* Layer-14@2x.png */,
-				9803785D1F09DE4D0085FAD9 /* Layer-14@3x.png */,
 				9803785E1F09DE4D0085FAD9 /* login_background@2x.png */,
 				9803785F1F09DE4D0085FAD9 /* login_background@3x.png */,
 				980378601F09DE4D0085FAD9 /* login_password@2x.png */,
@@ -2125,8 +2111,8 @@
 		984CBCBF1F18534C00589BCC /* PULHOME */ = {
 			isa = PBXGroup;
 			children = (
-				985A9B031F4C119900D0E3B5 /* menu_add.png */,
-				985A9B041F4C119900D0E3B5 /* menu_del.png */,
+				98FBDB7A1F5FEA3C00AD0D4B /* menu_add.png */,
+				98FBDB7B1F5FEA3C00AD0D4B /* menu_del.png */,
 				98618D621F4AC868004CFFA9 /* home_btn_ask.png */,
 				98618D631F4AC868004CFFA9 /* home_btn_bank.png */,
 				98618D641F4AC868004CFFA9 /* home_btn_dev.png */,
@@ -2810,6 +2796,7 @@
 				988E65EC1F4D5AB500894EF1 /* icon_setting_female@3x.png in Resources */,
 				980379371F09DE4E0085FAD9 /* yy_head_byb_click@3x.png in Resources */,
 				980378E51F09DE4D0085FAD9 /* icon_circle@2x.png in Resources */,
+				98FBDB7D1F5FEA3C00AD0D4B /* menu_del.png in Resources */,
 				980379711F09DE4E0085FAD9 /* 辅助元素@3x.png in Resources */,
 				980379801F09DE4E0085FAD9 /* login_background@2x.png in Resources */,
 				980379401F09DE4E0085FAD9 /* yy_head_nn1_click@2x.png in Resources */,
@@ -2905,8 +2892,6 @@
 				980379381F09DE4E0085FAD9 /* yy_head_lyl.png in Resources */,
 				980378DE1F09DE4D0085FAD9 /* TLdown@2x.png in Resources */,
 				980379331F09DE4E0085FAD9 /* yy_head_byb@2x.png in Resources */,
-				9803797C1F09DE4E0085FAD9 /* icon修改1@2x.png in Resources */,
-				985A9B051F4C119900D0E3B5 /* menu_add.png in Resources */,
 				980378A71F09DE4D0085FAD9 /* jdbh_hot@2x.png in Resources */,
 				9803789E1F09DE4D0085FAD9 /* icon_back@2x.png in Resources */,
 				980378AB1F09DE4D0085FAD9 /* jdbh_line@3x.png in Resources */,
@@ -2965,7 +2950,6 @@
 				980379131F09DE4E0085FAD9 /* headDefalt@2x.png in Resources */,
 				988E66081F4ECB4B00894EF1 /* icon_team_headimage@3x.png in Resources */,
 				983D47D41DCC2B1100D61BC9 /* video_num_bg@2x.png in Resources */,
-				9803797E1F09DE4E0085FAD9 /* Layer-14@2x.png in Resources */,
 				983D47DA1DCC2B1100D61BC9 /* JRPlayerViewController.xib in Resources */,
 				983D47D01DCC2B1100D61BC9 /* play_disable@2x.png in Resources */,
 				9863345E1F3DB77200E03F6C /* back@3x.png in Resources */,
@@ -3002,6 +2986,7 @@
 				980379081F09DE4E0085FAD9 /* icon_team_msg@2x.png in Resources */,
 				980379311F09DE4E0085FAD9 /* icon_team_transfer@3x.png in Resources */,
 				980378771F09DE4D0085FAD9 /* center_name_logo@2x.png in Resources */,
+				98FBDB7C1F5FEA3C00AD0D4B /* menu_add.png in Resources */,
 				980378981F09DE4D0085FAD9 /* zl_share_pressed@3x.png in Resources */,
 				9803798A1F09DE4E0085FAD9 /* qrcode-small@3x.png in Resources */,
 				980378A21F09DE4D0085FAD9 /* icon_circle_ranking.jpg in Resources */,
@@ -3018,7 +3003,6 @@
 				9803790D1F09DE4E0085FAD9 /* post_normal@3x.png in Resources */,
 				98618D681F4AC868004CFFA9 /* home_btn_dev.png in Resources */,
 				980378A31F09DE4D0085FAD9 /* icon_circle_second.png in Resources */,
-				980378CB1F09DE4D0085FAD9 /* banner.jpg in Resources */,
 				980378F81F09DE4E0085FAD9 /* icon_record@3x.png in Resources */,
 				980378911F09DE4D0085FAD9 /* myTab_singin@2x.png in Resources */,
 				989B2C531C4DE7AA00F14EFA /* Assets.xcassets in Resources */,
@@ -3042,7 +3026,6 @@
 				9803793A1F09DE4E0085FAD9 /* yy_head_lyl@3x.png in Resources */,
 				988E65EA1F4D5AB500894EF1 /* icon_setting_answer@3x.png in Resources */,
 				980378C81F09DE4D0085FAD9 /* icon_expert_history@2x.png in Resources */,
-				9803797F1F09DE4E0085FAD9 /* Layer-14@3x.png in Resources */,
 				980379061F09DE4E0085FAD9 /* icon_team@3x.png in Resources */,
 				9863346C1F3DB77200E03F6C /* Exercise record@3x.png in Resources */,
 				980379781F09DE4E0085FAD9 /* 运输调度@2x.png in Resources */,
@@ -3065,7 +3048,6 @@
 				986334191F385E2B00E03F6C /* home_btn_school@2x.png in Resources */,
 				980379861F09DE4E0085FAD9 /* logo.png in Resources */,
 				980379191F09DE4E0085FAD9 /* icon_team_circle_practice@3x.png in Resources */,
-				980378D21F09DE4D0085FAD9 /* tab_circle@2x.png in Resources */,
 				986334861F42C34300E03F6C /* home_icon_question@3x.png.png in Resources */,
 				988E65F51F4D5AB500894EF1 /* icon_setting_question@2x.png in Resources */,
 				980378D11F09DE4D0085FAD9 /* search_icon@2x.png in Resources */,
@@ -3073,7 +3055,6 @@
 				988E65EB1F4D5AB500894EF1 /* icon_setting_female@2x.png in Resources */,
 				985A9B021F4C0B1300D0E3B5 /* yy_nav_why@3x.png in Resources */,
 				986334591F3DB77200E03F6C /* 1@3x.png in Resources */,
-				9803797D1F09DE4E0085FAD9 /* icon修改1@3x.png in Resources */,
 				980378A91F09DE4D0085FAD9 /* jdbh_line.png in Resources */,
 				986334211F385E2B00E03F6C /* home_icon_signin@3x.png in Resources */,
 				988E65F01F4D5AB500894EF1 /* icon_setting_integration@3x.png in Resources */,
@@ -3144,7 +3125,6 @@
 				980378CE1F09DE4D0085FAD9 /* icon_my_practice@2x.png in Resources */,
 				983D47CA1DCC2B1100D61BC9 /* fast_forward_disable@2x.png in Resources */,
 				9863340F1F385E2B00E03F6C /* home_btn_export@2x.png in Resources */,
-				985A9B061F4C119900D0E3B5 /* menu_del.png in Resources */,
 				980378D91F09DE4D0085FAD9 /* ic_best_answer.png in Resources */,
 				980379911F09DE4E0085FAD9 /* tab_setting_normal@3x.png in Resources */,
 				980378DC1F09DE4D0085FAD9 /* refresh_Rank@2x.png in Resources */,
@@ -3487,6 +3467,228 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9817A7B01F6293F200F74069 /* ToTestServer */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Wu Xin Technology Co. Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Wu Xin Technology Co. Ltd.";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = ToTestServer;
+		};
+		9817A7B11F6293F200F74069 /* ToTestServer */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68B2B751561D4B6A8171829D /* Pods-PUL_iOS.totestserver.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/电知道.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ripeng Zhao (8BJ5KF4673)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = CJ8CND7Y24;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Chat",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/PUL_iOS/PrefixHeader.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/PUL_iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "正式版本Debug模式";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SHARED_PRECOMPS_DIR = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 armv7s armv7";
+				WARNING_CFLAGS = "";
+				ZENITH_BUNDLEID = "com.zenithElec.PUL-testServer";
+				ZENITH_SERVER = "http://114.55.55.205:8888/emarkspg_nbsjzd";
+			};
+			name = ToTestServer;
+		};
+		9817A7B21F6293F200F74069 /* ToTestServer */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = NewCenturyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.newCentury.NewCenturyTests;
+				PRODUCT_NAME = PUL_iOS;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PUL_iOS.app/PUL_iOS";
+			};
+			name = ToTestServer;
+		};
+		9817A7B31F6293F200F74069 /* ToTestServer */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = NewCenturyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.newCentury.NewCenturyUITests;
+				PRODUCT_NAME = PUL_iOS;
+				TEST_TARGET_NAME = NewCentury;
+				USES_XCTRUNNER = YES;
+			};
+			name = ToTestServer;
+		};
+		9817A7B41F62942300F74069 /* ToPersonalServer */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Hangzhou Wu Xin Technology Co. Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hangzhou Wu Xin Technology Co. Ltd.";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = ToPersonalServer;
+		};
+		9817A7B51F62942300F74069 /* ToPersonalServer */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B86BFFC9F2793E8B8F40026 /* Pods-PUL_iOS.topersonalserver.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/电知道.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ripeng Zhao (8BJ5KF4673)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = CJ8CND7Y24;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Chat",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/PUL_iOS/PrefixHeader.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/PUL_iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "个人电脑版";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SHARED_PRECOMPS_DIR = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = "arm64 armv7s armv7";
+				WARNING_CFLAGS = "";
+				ZENITH_BUNDLEID = "com.zenithElec.PUL-person";
+				ZENITH_SERVER = "http://192.168.1.189:8080/emark_learn";
+			};
+			name = ToPersonalServer;
+		};
+		9817A7B61F62942300F74069 /* ToPersonalServer */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = NewCenturyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.newCentury.NewCenturyTests;
+				PRODUCT_NAME = PUL_iOS;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PUL_iOS.app/PUL_iOS";
+			};
+			name = ToPersonalServer;
+		};
+		9817A7B71F62942300F74069 /* ToPersonalServer */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = NewCenturyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.newCentury.NewCenturyUITests;
+				PRODUCT_NAME = PUL_iOS;
+				TEST_TARGET_NAME = NewCentury;
+				USES_XCTRUNNER = YES;
+			};
+			name = ToPersonalServer;
+		};
 		989B2C6E1C4DE7AA00F14EFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3603,7 +3805,6 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zenithElec.PUL;
 				PRODUCT_NAME = "拾学-Debug";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3641,7 +3842,6 @@
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zenithElec.PUL;
 				PRODUCT_NAME = "拾学";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3650,7 +3850,7 @@
 				VALID_ARCHS = "arm64 armv7s armv7";
 				WARNING_CFLAGS = "";
 				ZENITH_BUNDLEID = com.zenithElec.PUL;
-				ZENITH_SERVER = "http://117.149.2.229:1630/emark_learn";
+				ZENITH_SERVER = "http://114.55.55.205:8888/emarkspg_nbsjzd";
 			};
 			name = Release;
 		};
@@ -3710,6 +3910,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				989B2C6E1C4DE7AA00F14EFA /* Debug */,
+				9817A7B41F62942300F74069 /* ToPersonalServer */,
+				9817A7B01F6293F200F74069 /* ToTestServer */,
 				989B2C6F1C4DE7AA00F14EFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -3719,6 +3921,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				989B2C711C4DE7AA00F14EFA /* Debug */,
+				9817A7B51F62942300F74069 /* ToPersonalServer */,
+				9817A7B11F6293F200F74069 /* ToTestServer */,
 				989B2C721C4DE7AA00F14EFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -3728,6 +3932,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				989B2C741C4DE7AA00F14EFA /* Debug */,
+				9817A7B61F62942300F74069 /* ToPersonalServer */,
+				9817A7B21F6293F200F74069 /* ToTestServer */,
 				989B2C751C4DE7AA00F14EFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -3737,6 +3943,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				989B2C771C4DE7AA00F14EFA /* Debug */,
+				9817A7B71F62942300F74069 /* ToPersonalServer */,
+				9817A7B31F6293F200F74069 /* ToTestServer */,
 				989B2C781C4DE7AA00F14EFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

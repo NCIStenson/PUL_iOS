@@ -23,13 +23,11 @@
 {
     self.heroImageVIew = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH / 3, SCREEN_WIDTH / 3)];
     [self addSubview:self.heroImageVIew];
-    
     self.heroImageVIew.layer.cornerRadius = 5.0f;
     self.heroImageVIew.layer.masksToBounds = YES;
 
     self.contentView.backgroundColor = [UIColor clearColor];
     self.backgroundColor = [UIColor clearColor];
-    
     
     self.nameLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, self.width, 20)];
     _nameLab.backgroundColor = [UIColor redColor];

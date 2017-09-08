@@ -48,7 +48,9 @@
 #define METHOD_INSERT @"addSave"
 #define METHOD_DELETE @"delete"
 
-#define JMESSAGE_APPKEY @"921311c06b555b9309eab799"
+#define APPID @"SX"
+#define JMESSAGE_APPKEY @"c7b4b8aa2a0902bfd22b7915"
+#define JMESSAGE_MasterSecret  @"0c04e7556f382bd665171b94"
 
 #define kTiltlFontSize 14.0f
 #define kSubTiltlFontSize 12.0f

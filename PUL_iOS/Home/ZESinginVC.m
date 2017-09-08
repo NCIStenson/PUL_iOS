@@ -12,6 +12,8 @@
 @interface ZESinginVC ()<JFCalendarPickerViewDelegate>
 {
     JFCalendarPickerView *calendarPicker;
+    
+    BOOL isGone;  //  进入页面是否签到过 避免出现循环签到现象
 }
 @end
 
@@ -22,6 +24,7 @@
     // Do any additional setup after loading the view.
     self.title = @"签到";
     [self initCalendarPickView];
+    isGone = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -69,16 +72,24 @@
                                  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                                  [dateFormatter setDateFormat:@"yyyy-MM-dd"];
                                  NSString *todayString = [dateFormatter stringFromDate:[NSDate date]];
+                
+                                 // 切换月份时 判断当前月份是不是选择的月份
+                                 NSDateFormatter *monthFormatter = [[NSDateFormatter alloc] init];
+                                 [monthFormatter setDateFormat:@"yyyy-MM"];
+                                 NSString *todayMonth = [monthFormatter stringFromDate:[NSDate date]];
                                  
-                                 BOOL todayIsSignin = NO;
-                                 for (int j = 0; j < arr.count; j ++) {
-                                     NSDictionary * dic = arr[j];
-                                     if([todayString isEqualToString:[[dic objectForKey:@"SIGNINDATE"] substringToIndex:10]]){
-                                         todayIsSignin = YES;
+                                 if ([monthStr isEqualToString:todayMonth]) {
+                                     BOOL todayIsSignin = NO;
+                                     for (int j = 0; j < arr.count; j ++) {
+                                         NSDictionary * dic = arr[j];
+                                         if([todayString isEqualToString:[[dic objectForKey:@"SIGNINDATE"] substringToIndex:10]]){
+                                             todayIsSignin = YES;
+                                         }
                                      }
-                                 }
-                                 if (!todayIsSignin) {
-                                     [self goSignin];
+                                     if (!todayIsSignin && !isGone ) {
+                                         isGone = YES;
+                                         [self goSignin];
+                                     }
                                  }
                              } fail:^(NSError *errorCode) {
 

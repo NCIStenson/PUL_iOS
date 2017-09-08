@@ -736,7 +736,7 @@
             break;
 
             case ENTER_QUESTIONBANK_TYPE_RECORD:
-            return @"练习记录";
+            return @"我的练习";
             break;
             
             case ENTER_QUESTIONBANK_TYPE_ABISCHOOL:

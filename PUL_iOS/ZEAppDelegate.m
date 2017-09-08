@@ -29,12 +29,12 @@
     // Override point for customization after application launch.
     
     NSLog(@"  \n\n\n\n\n\n\n\n  %@  \n\n\n\n\n\n\n\n ",Zenith_Server);
-
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     application.applicationSupportsShakeToEdit = YES;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reLogin) name:kRelogin object:nil];
-    [self showVC];
+    [self showVCWithIndex:0];
     
     NSDictionary *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
     
@@ -62,13 +62,13 @@
     [JPUSHService setupWithOption:launchOptions
                            appKey:JMESSAGE_APPKEY
                           channel:@"App Store"
-                 apsForProduction:NO
+                 apsForProduction:YES
             advertisingIdentifier:nil];
     
     [JMessage setupJMessage:launchOptions
                      appKey:JMESSAGE_APPKEY
                     channel:@"App Store"
-           apsForProduction:NO
+           apsForProduction:YES
                    category:nil];
     [JMessage addDelegate:self withConversation:nil];
 
@@ -78,7 +78,7 @@
     return YES;
 }
 
--(void)showVC
+-(void)showVCWithIndex:(NSInteger)index
 {
     if([[ZESettingLocalData getUSERNAME] length] > 0 && [[ZESettingLocalData getUSERPASSWORD] length] > 0) {
         
@@ -89,7 +89,6 @@
         homeVC.navigationItem.title = @"拾学";
         homeVC.tabBarItem.title = @"首页";
         homeVC.tabBarItem.image = [UIImage imageNamed:@"tabbar_home"];
-        
         UINavigationController *firstNC = [[UINavigationController alloc]initWithRootViewController:homeVC];
         
         ZETeamVC *secondVC = [ZETeamVC new];
@@ -99,16 +98,6 @@
         //可以根据需求设置标签的的图标
         secondVC.tabBarItem.image = [UIImage imageNamed:@"tabbar_team"];
         UINavigationController *secondNC = [[UINavigationController alloc]initWithRootViewController:secondVC];
-        
-//        ZEPULWebVC *thirdVC = [ZEPULWebVC new];
-//        thirdVC.enterPULWebVCType = PULHOME_WEB_SCHOOL;
-//        thirdVC.navigationItem.title = @"学堂";
-//        //设置标签名称
-//        thirdVC.tabBarItem.title = @"学堂";
-//        //可以根据需求设置标签的的图标
-//        thirdVC.tabBarItem.image = [UIImage imageNamed:@"icon_school"];
-//        UINavigationController *thidrNC = [[UINavigationController alloc]initWithRootViewController:thirdVC];
-        
         
         ZEPersonalNotiVC *fourthVC = [ZEPersonalNotiVC new];
         fourthVC.navigationItem.title = @"消息";
@@ -132,6 +121,7 @@
         //特别注意：管理一组的控制器(最多显示五个,多余五个的话,包括第五个全部在更多模块里面,并且可以通过拖拽方式进行顺序编辑);
         NSArray *array = @[firstNC,secondNC,fourthNC,fifthNC];
         tab.viewControllers = array;
+        tab.selectedIndex = index;
         self.window.rootViewController = tab;
     
     }else{
@@ -175,14 +165,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Required
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     
-    ZEPersonalNotiVC * notiVC = [[ZEPersonalNotiVC alloc]init];
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:notiVC];
-    notiVC.enterPerNotiType = ENTER_PERSONALNOTICENTER_TYPE_NOTI;
-    nav.navigationBarHidden = YES;
-    if ([[userInfo objectForKey:@"_j_type"] isEqualToString:@"jmessage"]) {
-        notiVC.enterPerNotiType = ENTER_PERSONALNOTICENTER_TYPE_NOTI_CHAT;
-    }
-    self.window.rootViewController = nav;
+    [self showVCWithIndex:2];
 
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
@@ -204,14 +187,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         hud3.yOffset = SCREEN_HEIGHT / 2 - 80;
     }else if (application.applicationState == UIApplicationStateBackground ||application.applicationState == UIApplicationStateInactive){
         
-        ZEPersonalNotiVC * notiVC = [[ZEPersonalNotiVC alloc]init];
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:notiVC];
-        notiVC.enterPerNotiType = ENTER_PERSONALNOTICENTER_TYPE_NOTI;
-        if ([apnsType isEqualToString:@"jmessage"]) {
-            notiVC.enterPerNotiType = ENTER_PERSONALNOTICENTER_TYPE_NOTI_CHAT;
-        }
-        nav.navigationBarHidden = YES;
-        self.window.rootViewController = nav;
+        [self showVCWithIndex:2];
     }
     [application setApplicationIconBadgeNumber:0];
     

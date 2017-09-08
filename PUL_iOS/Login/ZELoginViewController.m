@@ -49,7 +49,7 @@
 
 -(void)initView
 {
-    ZELoginView * loginView = [[ZELoginView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
+    ZELoginView * loginView = [[ZELoginView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     loginView.delegate = self;
     [self.view addSubview:loginView];
 }
@@ -146,7 +146,8 @@
     
 }
 
-#pragma mark - 登陆极光用户
+#pragma mark - 登陆极光聊天用户
+
 -(void)loginJPushServer:(NSString *)username
 {
     [JMSGUser loginWithUsername:username
@@ -165,52 +166,6 @@
     }
     
 }
-
-
-#pragma mark - 查询该用户是否为专家
-
-//-(void)isExpert
-//{
-//    NSDictionary * parametersDic = @{@"limit":@"20",
-//                                     @"MASTERTABLE":KLB_EXPERT_INFO,
-//                                     @"MENUAPP":@"EMARK_APP",
-//                                     @"ORDERSQL":@"",
-//                                     @"WHERESQL":@"",
-//                                     @"start":@"0",
-//                                     @"METHOD":@"search",
-//                                     @"MASTERFIELD":@"SEQKEY",
-//                                     @"DETAILFIELD":@"",
-//                                     @"CLASSNAME":BASIC_CLASS_NAME,
-//                                     @"DETAILTABLE":@"",};
-//
-//    NSDictionary * fieldsDic =@{@"USERCODE":[ZESettingLocalData getUSERNAME],
-//                                @"USERNAME":@"",
-//                                @"EXPERTDATE":@"",
-//                                @"EXPERTTYPE":@"",
-//                                @"STATUS":@"",
-//                                @"EXPERTFRADE":@"",
-//                                @"SEQKEY":@""};
-//
-//    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_EXPERT_INFO]
-//                                                                           withFields:@[fieldsDic]
-//                                                                       withPARAMETERS:parametersDic
-//                                                                       withActionFlag:nil];
-//
-//    [ZEUserServer getDataWithJsonDic:packageDic
-//                       showAlertView:NO
-//                             success:^(id data) {
-//                                 NSDictionary * dataDic = [ZEUtil getServerDic:data withTabelName:KLB_EXPERT_INFO];
-//                                 if ([[dataDic objectForKey:@"totalCount"] integerValue] == 0) {
-//                                     [ZESettingLocalData setISEXPERT:NO];
-//                                 }else{
-//                                     [ZESettingLocalData setISEXPERT:YES];
-//                                 }
-//
-//                             } fail:^(NSError *errorCode) {
-//                                 NSLog(@">>  %@",errorCode);
-//                             }];
-//}
-
 
 -(void)showAlertView:(NSString *)alertMes
 {

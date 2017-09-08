@@ -84,18 +84,19 @@
                                  NSString * targetURL = [dic objectForKey:@"target"];
                                  if (targetURL.length > 0) {
                                      NSLog(@"targetURL >>>  %@",targetURL);
-    
-                                     
-                                     self.navBar.hidden = YES;
                                      wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
                                      if (_enterType == ENTER_WKWEBVC_TEST) {
+                                         self.navBar.hidden = YES;
+
                                          wkWebView.top = 20;
                                          wkWebView.height = SCREEN_HEIGHT - 20;
                                          
                                          UIView * statusBackgroundView = [UIView new];
                                          statusBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
-                                         statusBackgroundView.backgroundColor = MAIN_NAV_COLOR;
                                          [self.view addSubview:statusBackgroundView];
+                                         [ZEUtil addGradientLayer:statusBackgroundView];
+                                     }else{
+                                         self.navBar.hidden = NO;
                                      }
                                      [self.view addSubview:wkWebView];
                                      wkWebView.navigationDelegate = self;

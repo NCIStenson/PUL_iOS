@@ -39,6 +39,8 @@
     UITextField * searchTF;
     
     ZEPULHomeModel * _currentSelectHomeModel; // 当前选择的忽略动态
+    
+    BOOL _viewIsEditing;
 }
 
 @property (nonatomic,retain) NSMutableArray * PULHomeRequestionData;
@@ -57,6 +59,8 @@
         _PULHomeViewFrame = frame;
         [self initNavBar];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+
         self.homeBtnArr = [NSMutableArray array];
                 
         [self initPULHomeView];
@@ -104,8 +108,13 @@
     return YES;
 }
 
+-(void)keyboardWillShow:(NSNotification *)noti{
+    _viewIsEditing = YES;
+}
+
 -(void)downTheKeyboard
 {
+    _viewIsEditing = NO;
     [self endEditing:YES];
 }
 
@@ -399,8 +408,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+
     ZEPULHomeModel * model = [ZEPULHomeModel getDetailWithDic:self.PULHomeRequestionData[indexPath.row]];
-    
     if ([model.MES_TYPE integerValue] == 4) {
         [self goSinginView];
     }else if ([model.MES_TYPE integerValue] == 2){
@@ -446,8 +459,10 @@
 
 -(void)didSelectMyOption:(UIButton *)btn
 {
-    [self endEditing:YES];
-    
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
     if([self.delegate respondsToSelector:@selector(serverBtnClick:)]){
         [self.delegate serverBtnClick:btn.tag - 200];
     }
@@ -455,6 +470,11 @@
 
 -(void)loadNewData:(MJRefreshHeader *)header
 {
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+
     if([self.delegate respondsToSelector:@selector(loadNewData)]){
         [self.delegate loadNewData];
     }
@@ -474,6 +494,10 @@
  */
 -(void)goZYQ
 {
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(goZYQ)]) {
         [self.delegate goZYQ];
     }
@@ -483,6 +507,10 @@
  */
 -(void)goGWCP
 {
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(goGWCP)]) {
         [self.delegate goGWCP];
     }
@@ -493,6 +521,10 @@
  */
 -(void)goZYXGCP
 {
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(goZYXGCP)]) {
         [self.delegate goZYXGCP];
     }
@@ -502,6 +534,10 @@
  */
 -(void)goGWTX
 {
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(goGWTX)]) {
         [self.delegate goGWTX];
     }
@@ -511,6 +547,10 @@
  专家在线
  */
 -(void)goZJZX{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(goZJZX)]) {
         [self.delegate goZJZX];
     }
@@ -520,6 +560,10 @@
  行为规范
  */
 -(void)goXWGF{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(goXWGF)]) {
         [self.delegate goXWGF];
     }
@@ -530,6 +574,10 @@
  在线测试
  */
 -(void)goZXCS{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(goZXCS)]) {
         [self.delegate goZXCS];
     }
@@ -541,6 +589,10 @@
  */
 -(void)goMoreFunction
 {
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
     if ([self.delegate respondsToSelector:@selector(goMoreFunction)]) {
         [self.delegate goMoreFunction];
     }
