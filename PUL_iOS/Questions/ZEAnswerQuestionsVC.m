@@ -169,6 +169,7 @@
 
 -(void)insertData
 {
+    self.rightBtn.enabled = NO;
     NSDictionary * parametersDic = @{@"limit":@"20",
                                      @"MASTERTABLE":KLB_ANSWER_INFO,
                                      @"MENUAPP":@"EMARK_APP",
@@ -218,6 +219,7 @@
                                          [self performSelector:@selector(goBack) withObject:nil afterDelay:1.5];
                                      }
                                  } fail:^(NSError *error) {
+                                     self.rightBtn.enabled = YES;
                                      [self showTips:@"回答问题失败，请稍后重试。"];
                                  }];
 }

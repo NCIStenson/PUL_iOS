@@ -38,6 +38,9 @@
     [detailView addSubview:detailImageView];
     [detailImageView sd_setImageWithURL:ZENITH_IMAGEURL(teamCircleInfo.FILEURL) placeholderImage:ZENITH_PLACEHODLER_TEAM_IMAGE];
     detailImageView.contentMode = UIViewContentModeCenter;
+    if(teamCircleInfo.FILEURL.length > 0){
+        detailImageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
     detailImageView.clipsToBounds = YES;    
     
     UILabel * caseNameLab = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH / 3 + 15, 15, SCREEN_WIDTH - SCREEN_WIDTH / 3 - 25, 20)];

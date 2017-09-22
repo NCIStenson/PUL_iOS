@@ -13,7 +13,7 @@
 #import "ZEChangePersonalMsgVC.h"
 
 #import "ZEQuestionTypeCache.h"
-
+#import "ZEChangePwdVC.h"
 #import "JPUSHService.h"
 
 @interface ZESetPersonalMessageVC ()<ZESetPersonalMessageViewDelegate>
@@ -161,6 +161,10 @@
 
 -(void)changePassword
 {
+    ZEChangePwdVC * pwdVC = [ZEChangePwdVC new];
+    [self.navigationController pushViewController:pwdVC animated:YES];
+    return;
+    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"修改密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UITextField * field1 = alertController.textFields[0];

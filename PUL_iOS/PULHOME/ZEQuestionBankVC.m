@@ -67,7 +67,6 @@
                                  
                                  NSString * targetStr = [dic objectForKey:@"target"];
                                  NSDictionary * resultDic =  [self dictionaryWithJsonString:targetStr];
-                                 NSLog(@" ====  %@",resultDic);
                                  
                                  bankView.bankModel = [ZEPULHomeQuestionBankModel getDetailWithDic:resultDic];
                                  

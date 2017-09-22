@@ -13,6 +13,8 @@
 
 #import "ZEAskQuestionTypeView.h"
 
+#import "ZEWithoutDataTipsView.h"
+
 @interface ZEShowQuestionVC ()<ZEShowQuestionViewDelegate,ZEAskQuestionTypeViewDelegate>
 {
     ZEShowQuestionView * _questionsView;
@@ -21,6 +23,8 @@
     NSString * _currentInputStr;
     
     ZEAskQuestionTypeView * askTypeView;
+    
+    ZEWithoutDataTipsView * tipsView;
     
 }
 @end
@@ -266,6 +270,8 @@
                                  
                                  NSArray * dataArr = [ZEUtil getServerData:data withTabelName:V_KLB_QUESTION_INFO];
                                  if (dataArr.count > 0) {
+                                     [tipsView removeFromSuperview];
+                                     tipsView = nil;
                                      if (_currentPage == 0) {
                                          [_questionsView reloadFirstView:dataArr];
                                      }else{
@@ -280,9 +286,20 @@
                                          return ;
                                      }else{
                                          if (_showQuestionListType != QUESTION_LIST_MY_QUESTION) {
-                                             [self showTips:@"暂时没有相关问题，去提一个吧~" afterDelay:1.5];
+//                                             [self showTips:@"暂时没有相关问题，去提一个吧~" afterDelay:1.5];
+                                             if (!tipsView) {
+                                                 tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, 120, SCREEN_WIDTH, SCREEN_HEIGHT - 200)];
+                                                 tipsView.type = SHOW_TIPS_TYPE_MYQUESTION;
+                                                 [self.view addSubview:tipsView];
+                                             }
+
                                          }else{
-                                             [self showTips:@"您还没有提问过任何问题，去提一个吧~" afterDelay:1.5];
+//                                             [self showTips:@"您还没有提问过任何问题，去提一个吧~" afterDelay:1.5];
+                                             if (!tipsView) {
+                                                 tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, 120, SCREEN_WIDTH, SCREEN_HEIGHT - 200)];
+                                                 tipsView.type = SHOW_TIPS_TYPE_MYQUESTION;
+                                                 [self.view addSubview:tipsView];
+                                             }
                                          }
                                      }
                                      [_questionsView reloadFirstView:dataArr];
@@ -320,6 +337,8 @@
                                  
                                  NSArray * dataArr = [ZEUtil getServerData:data withTabelName:V_KLB_QUESTION_INFO_LIST];
                                  if (dataArr.count > 0) {
+                                     [tipsView removeFromSuperview];
+                                     tipsView = nil;
                                      if (_currentPage == 0) {
                                          [_questionsView reloadFirstView:dataArr];
                                      }else{
@@ -334,6 +353,11 @@
                                          return ;
                                      }else{
                                          [self showTips:@"快去帮助小伙伴们解决他们的疑问吧！" afterDelay:1.5];
+                                         if (!tipsView) {
+                                             tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, 120, SCREEN_WIDTH, SCREEN_HEIGHT - 200)];
+                                             tipsView.type = SHOW_TIPS_TYPE_MYANSWER;
+                                             [self.view addSubview:tipsView];
+                                         }
                                      }
                                      [_questionsView reloadFirstView:dataArr];
                                      [_questionsView headerEndRefreshing];

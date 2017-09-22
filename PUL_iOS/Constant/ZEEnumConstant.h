@@ -144,6 +144,13 @@ typedef enum : NSUInteger{
 } ENTER_FINDTEAM;
 
 typedef enum : NSUInteger{
+    SHOW_TIPS_TYPE_MYANSWER,
+    SHOW_TIPS_TYPE_MYQUESTION,
+    SHOW_TIPS_TYPE_QUESTIONDETAIL,
+} SHOW_TIPS_TYPE;
+
+
+typedef enum : NSUInteger{
     ENTER_QUESTIONBANK_TYPE_EXAM = 100,  /***** 章节练习 *****/
     ENTER_QUESTIONBANK_TYPE_RANDOM,  /**** 随机练习 ****/
     ENTER_QUESTIONBANK_TYPE_TEST,  /**** 模拟考试 ****/

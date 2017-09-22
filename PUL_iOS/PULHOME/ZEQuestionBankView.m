@@ -6,7 +6,7 @@
 //  Copyright © 2017年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
-#define kMyAchievementViewHeight  (IPHONE5 ? 110 : 140)
+#define kMyAchievementViewHeight  (IPHONE6_MORE ? 140 : 110)
 
 #define kMyBankBtnViewHeight (SCREEN_HEIGHT - kMyBankViewHeight - kMyAchievementViewHeight - NAV_HEIGHT)
 #define kMyBankViewHeight 80.0f
@@ -14,9 +14,9 @@
 #define kLineWidth 2
 #define endPointMargin 4
 
-#define kServerBtnWidth (SCREEN_WIDTH - 40 ) / 4
+#define kServerBtnWidth (IPHONE4S_LESS ? 50 : (SCREEN_WIDTH - 40 ) / 4)
 
-#define kBankFlowerWidth (SCREEN_WIDTH - 60)
+#define kBankFlowerWidth  (IPHONE4S_LESS ? 200 : (SCREEN_WIDTH - 60))
 
 
 #import "ZEQuestionBankView.h"
@@ -54,7 +54,7 @@
 }
 
 -(void)initMyAchievementView
-{
+{    
     UIView * achiView = [[UIView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, 140)];
     [self addSubview:achiView];
     
@@ -64,17 +64,26 @@
     lineLayer.backgroundColor = [MAIN_LINE_COLOR CGColor];
     
     UILabel * textLab = [[UILabel alloc]initWithFrame:CGRectMake((IPHONE5 ? 20 : 40), 10, 100, 20)];
+    if (IPHONE4S_LESS) {
+        textLab.left = 20;
+    }
     textLab.textColor = MAIN_TITLEBLACK_COLOR;
     textLab.font = [UIFont systemFontOfSize:14];
     textLab.text = @"我的成就";
     [achiView addSubview:textLab];
     
     _circle = [[XLCircle alloc] initWithFrame:CGRectMake((IPHONE5 ? 30 : 50), 35, (IPHONE5 ? 70 : 100), (IPHONE5 ? 70 : 100)) lineWidth:(IPHONE5 ? 3 : 4)];
+    if (IPHONE4S_LESS) {
+        _circle = [[XLCircle alloc] initWithFrame:CGRectMake(30, 35, 70, 70) lineWidth:3 ];
+    }
     [achiView addSubview:_circle];
     
     for (int i = 0; i < 2; i ++) {
         UIImageView * imageView = [UIImageView new];
         imageView.frame = CGRectMake(SCREEN_WIDTH - 170, (IPHONE5 ? (_circle.top + 5 + 40 * i): (_circle.top + 15 + 45 * i)), 25, 25);
+        if (IPHONE4S_LESS) {
+            imageView.frame = CGRectMake(SCREEN_WIDTH - 170,  (_circle.top + 5 + 40 * i), 25, 25);
+        }
         [achiView addSubview:imageView];
         
         UILabel * textLab = [UILabel new];
@@ -137,6 +146,9 @@
     [flowerImageView setImage:[UIImage imageNamed:@"complete"]];
     [bankBtnView addSubview:flowerImageView];
     [self initFlowerView:flowerImageView];
+    if (IPHONE4S_LESS) {
+        flowerImageView.centerX = SCREEN_WIDTH / 2;
+    }
     
 }
 -(void)initFlowerView:(UIView *)flowerImageView
@@ -151,7 +163,10 @@
         optionBtn.tag = i + 100;
         [optionBtn addTarget:self action:@selector(goQuestionBankWebView:) forControlEvents:UIControlEventTouchUpInside];
         [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
-        
+        if (IPHONE4S_LESS) {
+            optionBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        }
+
         switch (i) {
                 case 0:
                 optionBtn.center = CGPointMake(flowerImageView.width / 4 - 10, flowerImageView.height / 4 -10);
@@ -206,11 +221,15 @@
     dailyBtn.clipsToBounds = YES;
     dailyBtn.layer.cornerRadius = dailyBtn.height / 2;
     dailyBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    if (IPHONE4S_LESS) {
+        dailyBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    }
 }
 
 -(void)initTabBar
 {
     UIView * tabBarView = [UIView new];
+    tabBarView.backgroundColor = [UIColor whiteColor];
     [self addSubview:tabBarView];
     tabBarView.frame = CGRectMake(0, SCREEN_HEIGHT - kServerBtnWidth, SCREEN_WIDTH, kServerBtnWidth);
     
@@ -222,7 +241,7 @@
     for (int i = 0 ; i < 4; i ++) {
         ZEButton * optionBtn = [ZEButton buttonWithType:UIButtonTypeCustom];
         [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
-        optionBtn.frame = CGRectMake(20 + kServerBtnWidth * i, 0, kServerBtnWidth, kServerBtnWidth);
+        optionBtn.frame = CGRectMake(20 + (IPHONE4S_LESS ? (SCREEN_WIDTH - 40 ) / 4 : kServerBtnWidth) * i, 0, (IPHONE4S_LESS ? (SCREEN_WIDTH - 40 ) / 4 : kServerBtnWidth), kServerBtnWidth);
         [tabBarView addSubview:optionBtn];
         optionBtn.backgroundColor = [UIColor clearColor];
         optionBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -273,7 +292,6 @@
 
 -(void)changeBankBtnClick
 {
-    NSLog(@" =================  %@",self.bankModel.module_list);
     if (![ZEUtil isStrNotEmpty:self.bankID]) {
         if ([self.delegate respondsToSelector:@selector(goSearchBankList)]) {
             [self.delegate goSearchBankList];

@@ -746,7 +746,6 @@
 
 -(void)selectMonthStr:(NSString *)yearMonth
 {
-    NSLog(@" yearMonth  ===============  %@ ",yearMonth);
     [self sendAnswerRankingRequest:yearMonth];
     [self sendAskRankingRequest:yearMonth];
 }

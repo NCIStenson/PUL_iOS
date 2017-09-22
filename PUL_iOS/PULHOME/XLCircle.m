@@ -46,6 +46,10 @@ static CGFloat endPointMargin = -5.0f;
     
     numberLab = [UILabel new];
     numberLab.frame = CGRectMake(0, (IPHONE5 ? 15 :20), self.frame.size.width,  (IPHONE5 ? 25 :40));
+    if(IPHONE4S_LESS){
+        numberLab.top = 15;
+        numberLab.height = 25;
+    }
     [self addSubview:numberLab];
     numberLab.text = [NSString  stringWithFormat:@"%.2f%%",_progress * 100];
     numberLab.font = [UIFont systemFontOfSize:20];

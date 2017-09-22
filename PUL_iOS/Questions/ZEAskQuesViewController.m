@@ -358,12 +358,13 @@
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
                                                                        withActionFlag:nil];
-   
+    self.rightBtn.enabled = NO;
     [self progressBegin:@"问题提交中，请稍后..."];
     [ZEUserServer uploadImageWithJsonDic:packageDic
                             withImageArr:self.imagesArr
                            showAlertView:YES
                                  success:^(id data) {
+                                     self.rightBtn.enabled = YES;
                                      NSArray * arr = [ZEUtil getEXCEPTIONDATA:data];
                                      if(arr.count > 0){
                                          NSDictionary * failReason = arr[0];
@@ -374,6 +375,7 @@
                                          [self performSelector:@selector(goBack) withObject:nil afterDelay:1.5];
                                      }
                                  } fail:^(NSError *error) {
+                                     self.rightBtn.enabled = YES;
                                      [self showTips:@"问题发表失败，请稍后重试。"];
                                  }];
 }
@@ -382,6 +384,7 @@
 
 -(void)updateData
 {
+    self.rightBtn.enabled = NO;
     NSDictionary * parametersDic = @{@"limit":@"-1",
                                      @"MASTERTABLE":KLB_QUESTION_INFO,
                                      @"MENUAPP":@"EMARK_APP",
@@ -431,6 +434,7 @@
                             withImageArr:self.imagesArr
                            showAlertView:YES
                                  success:^(id data) {
+                                     self.rightBtn.enabled = YES;
                                      NSArray * arr = [ZEUtil getEXCEPTIONDATA:data];
                                      if(arr.count > 0){
                                          NSDictionary * failReason = arr[0];
@@ -441,6 +445,7 @@
                                          [self performSelector:@selector(goBack) withObject:nil afterDelay:1];
                                      }
                                  } fail:^(NSError *error) {
+                                     self.rightBtn.enabled = YES;
                                      [self showTips:@"问题发表失败，请稍后重试。"];
                                  }];
 }

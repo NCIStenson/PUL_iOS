@@ -111,6 +111,7 @@
     NSString * TITLE = [dataDic objectForKey:@"TITLE"];
     NSString * REMARK = [dataDic objectForKey:@"REMARK"];
     NSString * RELEASEDATE = [dataDic objectForKey:@"RELEASEDATE"];
+    NSString * ISREAD = [dataDic objectForKey:@"ISREAD"];
     
     UIImageView * typicalImageView = [[UIImageView alloc]init];
     [cell addSubview:typicalImageView];
@@ -156,6 +157,17 @@
     lineView.frame = CGRectMake(0, kRowHeight - 0.5, SCREEN_WIDTH, 0.5);
     [cell addSubview:lineView];
     lineView.backgroundColor = MAIN_LINE_COLOR;
+    
+    if (![ISREAD boolValue]) {
+        UIImageView * redImage = [[UIImageView alloc]init];
+        redImage.backgroundColor = [UIColor redColor];
+        [cell addSubview:redImage];
+        redImage.bounds = CGRectMake(0, 0, 10, 10);
+        redImage.centerX = typicalImageView.right;
+        redImage.centerY = typicalImageView.top;
+        redImage.clipsToBounds = YES;
+        redImage.layer.cornerRadius = redImage.height / 2;
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

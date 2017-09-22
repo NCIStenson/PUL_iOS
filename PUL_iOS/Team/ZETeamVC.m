@@ -49,7 +49,62 @@
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = NO;
     [self teamHomeRequest];
+    [self isHaveNewMessage];
     [ZEUtil cacheQuestionType];
+}
+#pragma mark - 是否有新消息提醒
+
+-(void)isHaveNewMessage
+{
+    NSDictionary * parametersDic = @{@"limit":@"20",
+                                     @"MASTERTABLE":KLB_USER_BASE_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.userinfo.UserInfoManage",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{@"USERCODE":[ZESettingLocalData getUSERCODE],
+                                @"INFOCOUNT":@"",
+                                @"QUESTIONCOUNT":@"",
+                                @"ANSWERCOUNT":@"",
+                                @"TEAMINFOCOUNT":@"",
+                                @"PERINFOCOUNT":@"",
+                                };
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_USER_BASE_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"userbaseinfo"];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * arr = [ZEUtil getServerData:data withTabelName:KLB_USER_BASE_INFO];
+                                 if ([arr count] > 0) {
+                                     //                                     NSString * INFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"INFOCOUNT"]];
+                                     //                                     NSString * TEAMINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"TEAMINFOCOUNT"]];
+                                     
+                                     NSInteger chatUnresadCount = [[JMSGConversation getAllUnreadCount] integerValue];
+                                     NSString * PERINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"PERINFOCOUNT"]];
+                                     if ([PERINFOCOUNT integerValue] > 0 ) {
+                                         UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
+                                         item.badgeValue= [NSString stringWithFormat:@"%ld",(long)([PERINFOCOUNT integerValue] + chatUnresadCount)] ;
+                                         if ([PERINFOCOUNT integerValue] + chatUnresadCount > 99) {
+                                             item.badgeValue= @"99+";
+                                         }
+                                     }else{
+                                         UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
+                                         item.badgeValue= nil;
+                                     }
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 NSLog(@">>  %@",errorCode);
+                             }];
 }
 
 -(void)teamHomeRequest
@@ -177,7 +232,6 @@
             ZETeamQuestionVC * questionVC = [[ZETeamQuestionVC alloc]init];
             questionVC.teamCircleInfo = _teamCircleInfo;
             [self.navigationController pushViewController:questionVC animated:YES];
-            NSLog(@" =======  %@",teaminfo.DYNAMICTYPE);
             switch ([cirecleInfo.DYNAMICTYPE integerValue]) {
                 case 1:
                     questionVC.currentContent = TEAM_CONTENT_NEWEST;

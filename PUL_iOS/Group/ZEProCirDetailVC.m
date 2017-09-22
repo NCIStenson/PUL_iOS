@@ -52,9 +52,7 @@
 #pragma mark - 典型案例
 /************* 查询典型案例 *************/
 -(void)sendCaseQuestionsRequest
-{
-    NSLog(@">>>>>>>>=======  %@ ",_PROCIRCLECODE);
-    
+{    
     NSDictionary * parametersDic = @{@"limit":@"3",
                                      @"MASTERTABLE":V_KLB_CLASSICCASE_INFO,
                                      @"MENUAPP":@"EMARK_APP",

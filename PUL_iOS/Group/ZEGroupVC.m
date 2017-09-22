@@ -61,7 +61,7 @@
 //    }else if (_enter_group_type == ENTER_GROUP_TYPE_SETTING){
 //        self.tabBarController.tabBar.hidden = YES;
 //    }
-//    [self isHaveNewMessage];
+    [self isHaveNewMessage];
     self.tabBarController.tabBar.hidden = YES;
 }
 
@@ -99,58 +99,21 @@
                              success:^(id data) {
                                  NSArray * arr = [ZEUtil getServerData:data withTabelName:KLB_USER_BASE_INFO];
                                  if ([arr count] > 0) {
-                                     NSString * INFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"INFOCOUNT"]];
-                                     NSString * TEAMINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"TEAMINFOCOUNT"]];
+                                     //                                     NSString * INFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"INFOCOUNT"]];
+                                     //                                     NSString * TEAMINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"TEAMINFOCOUNT"]];
+                                     
+                                     NSInteger chatUnresadCount = [[JMSGConversation getAllUnreadCount] integerValue];
                                      NSString * PERINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"PERINFOCOUNT"]];
-                                     notiUnreadCount = PERINFOCOUNT;
-                                     if ([INFOCOUNT integerValue] > 0) {
-                                         UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:3];
-                                         item.badgeValue= INFOCOUNT;
-                                         if ([INFOCOUNT integerValue] > 99) {
-                                             item.badgeValue= @"99+";
-                                         }
-                                     }else{
-                                         UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:3];
-                                         item.badgeValue= nil;
-                                     }
-                                     if ([TEAMINFOCOUNT integerValue] > 0 ) {
+                                     if ([PERINFOCOUNT integerValue] > 0 ) {
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
-                                         item.badgeValue= TEAMINFOCOUNT;
-                                         if ([INFOCOUNT integerValue] > 99) {
+                                         item.badgeValue= [NSString stringWithFormat:@"%ld",(long)([PERINFOCOUNT integerValue] + chatUnresadCount)] ;
+                                         if ([PERINFOCOUNT integerValue] + chatUnresadCount > 99) {
                                              item.badgeValue= @"99+";
                                          }
                                      }else{
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
                                          item.badgeValue= nil;
                                      }
-                                     
-                                     long sumCount = [[JMSGConversation getAllUnreadCount] integerValue]+ [PERINFOCOUNT integerValue];
-                                     
-                                     UILabel* tipsImage;
-                                     tipsImage = [self.view viewWithTag:kTipsImageTag];
-                                     if (sumCount  > 0) {
-                                         if (!tipsImage) {
-                                             tipsImage = [[UILabel alloc]init];
-                                             [self.view addSubview:tipsImage];
-                                             tipsImage.backgroundColor = [UIColor redColor];
-                                             tipsImage.top = self.rightBtn.top;
-                                             tipsImage.height = 20;
-                                             tipsImage.width = 20;
-                                             tipsImage.clipsToBounds = YES;
-                                             tipsImage.layer.cornerRadius = 10;
-                                             tipsImage.left = self.rightBtn.centerX + 8;
-                                             tipsImage.tag = kTipsImageTag;
-                                             [tipsImage adjustsFontSizeToFitWidth];
-                                             [tipsImage setFont:[UIFont systemFontOfSize:tipsImage.font.pointSize - 3]];
-                                             tipsImage.textColor = [UIColor whiteColor];
-                                             tipsImage.textAlignment = NSTextAlignmentCenter;
-                                         }
-                                         tipsImage.hidden = NO;
-                                         [tipsImage setText:[NSString stringWithFormat:@"%ld",(long)sumCount]];
-                                     }else{
-                                         tipsImage.hidden = YES;
-                                     }
-                                     
                                  }
                              } fail:^(NSError *errorCode) {
                                  NSLog(@">>  %@",errorCode);

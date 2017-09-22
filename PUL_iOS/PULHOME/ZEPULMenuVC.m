@@ -108,8 +108,6 @@
     }
     
     [menuView callBacktitlesBlock:^(NSMutableArray *inusesTitles, NSMutableArray *unusesTitles) {
-        NSLog(@"inusesTitles ==  %@",inusesTitles);
-        NSLog(@"unusesTitles == %@",unusesTitles);
         NSMutableArray * arr = [NSMutableArray arrayWithArray:inusesTitles];
         for (int i = 0; i < arr.count; i ++) {
             NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:inusesTitles[i]];
@@ -118,7 +116,6 @@
             [dic removeObjectForKey:@"title"];
             [arr replaceObjectAtIndex:i withObject:dic];
         }
-        NSLog(@" ==  %@",inusesTitles);
         
         [self saveFunction:arr];
         
@@ -127,6 +124,7 @@
 
 -(void)saveFunction:(NSArray *)arr
 {
+    [self progressBegin:@"正在保存"];
     NSDictionary * parametersDic = @{@"MASTERTABLE":KLB_FUNCTION_USER_LIST,
                                      @"MENUAPP":@"EMARK_APP",
                                      @"ORDERSQL":@"",
@@ -148,13 +146,12 @@
                                                                            withFields:arr
                                                                        withPARAMETERS:parametersDic
                                                                        withActionFlag:@"functionSave"];
-    NSLog(@" ==  %@",packageDic);
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
                                  [self showTips:@"保存成功"];
                              } fail:^(NSError *errorCode) {
-                                 
+                                 [self showTips:@"保存失败，请重试"];
                              }];
 }
 

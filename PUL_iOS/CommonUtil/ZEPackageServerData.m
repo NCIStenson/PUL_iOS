@@ -45,7 +45,9 @@
                         @"fields":@[@{@"name":@"LOGINPWD",
                                            @"value":pwd},
                                        @{@"name":@"USERACCOUNT",
-                                         @"value":username}]}];
+                                         @"value":username},
+                                    @{@"name":@"ACCOUNTSTATUS",
+                                      @"value":@""}]}];
     return arr;
 }
 
