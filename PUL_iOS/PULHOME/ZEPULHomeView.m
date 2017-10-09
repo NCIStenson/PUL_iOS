@@ -41,6 +41,7 @@
     ZEPULHomeModel * _currentSelectHomeModel; // 当前选择的忽略动态
     
     BOOL _viewIsEditing;
+    NSString * _clickFunctionCode;
 }
 
 @property (nonatomic,retain) NSMutableArray * PULHomeRequestionData;
@@ -348,7 +349,8 @@
             NSDictionary *dic = self.homeBtnArr[i];
             NSString * titleStr =[dic objectForKey:@"FUNCTIONNAME"];
             [optionBtn setTitle:titleStr forState:UIControlStateNormal];
-            NSLog(@"  ====   %@",ZENITH_IMAGEURL([[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""]).absoluteString);
+//            NSLog(@"  ====   %@",ZENITH_IMAGEURL([[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""]).absoluteString);
+            optionBtn.tag = 100 + i;
             [optionBtn sd_setImageWithURL:ZENITH_IMAGEURL([[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""]) forState:UIControlStateNormal];
             [self addBtnSelector:[dic objectForKey:@"FUNCTIONCODE"] withButton:optionBtn];
             if (IPHONE5 && titleStr.length > 5) {
@@ -379,32 +381,43 @@
          专家在线 专业圈
          */
         [button addTarget:self action:@selector(goZYQ) forControlEvents:UIControlEventTouchUpInside];
-    }else if ([functionCode isEqualToString:@"zyxgcp"]){
-        /**
-         职业性格测评
-         */
-        [button addTarget:self action:@selector(goZYXGCP) forControlEvents:UIControlEventTouchUpInside];
-    }else if ([functionCode isEqualToString:@"gwtx"]){
-        /**
-         岗位体系
-         */
-        [button addTarget:self action:@selector(goGWTX) forControlEvents:UIControlEventTouchUpInside];
-    }else if ([functionCode isEqualToString:@"gwcp"]){
-        /**
-         岗位测评
-         */
-        [button addTarget:self action:@selector(goGWCP) forControlEvents:UIControlEventTouchUpInside];
-    }else if ([functionCode isEqualToString:@"xwgf"]){
-        /**
-         行为规范
-         */
-        [button addTarget:self action:@selector(goXWGF) forControlEvents:UIControlEventTouchUpInside];
-    }else if ([functionCode isEqualToString:@"zxcs"]){
-        /**
-         在线测试
-         */
-        [button addTarget:self action:@selector(goZXCS) forControlEvents:UIControlEventTouchUpInside];
+    }else{
+        [button addTarget:self action:@selector(goWebVC:) forControlEvents:UIControlEventTouchUpInside];
     }
+//    else if ([functionCode isEqualToString:@"zyxgcp"]){
+//        /**
+//         职业性格测评
+//         */
+//        [button addTarget:self action:@selector(goZYXGCP) forControlEvents:UIControlEventTouchUpInside];
+//    }else if ([functionCode isEqualToString:@"gwtx"]){
+//        /**
+//         岗位体系
+//         */
+//        [button addTarget:self action:@selector(goGWTX) forControlEvents:UIControlEventTouchUpInside];
+//    }else if ([functionCode isEqualToString:@"gwcp"]){
+//        /**
+//         岗位测评
+//         */
+//        [button addTarget:self action:@selector(goGWCP) forControlEvents:UIControlEventTouchUpInside];
+//    }else if ([functionCode isEqualToString:@"xwgf"]){
+//        /**
+//         行为规范
+//         */
+//        [button addTarget:self action:@selector(goXWGF) forControlEvents:UIControlEventTouchUpInside];
+//    }else if ([functionCode isEqualToString:@"zxcs"]){
+//        /**
+//         在线测试
+//         */
+//        [button addTarget:self action:@selector(goZXCS) forControlEvents:UIControlEventTouchUpInside];
+//    }else if ([functionCode isEqualToString:@"jnqd"]){
+//        /**
+//         在线测试
+//         */
+//        [button addTarget:self action:@selector(goJNQD) forControlEvents:UIControlEventTouchUpInside];
+//    }else{
+//        
+//        [button addTarget:self action:@selector(goWebVC:) forControlEvents:UIControlEventTouchUpInside];
+//    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -584,6 +597,31 @@
     }
 }
 
+
+/**
+ 技能清单
+ */
+-(void)goJNQD{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(goJNQD)]) {
+        [self.delegate goJNQD];
+    }
+}
+
+-(void)goWebVC:(UIButton *)btn
+{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+    NSDictionary * dic = self.homeBtnArr[btn.tag - 100];
+    if ([self.delegate respondsToSelector:@selector(goWebVC:)]) {
+        [self.delegate goWebVC:[dic objectForKey:@"FUNCTIONCODE"]];
+    }
+}
 
 /**
  更多功能

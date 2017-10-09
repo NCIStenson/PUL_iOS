@@ -45,7 +45,6 @@
     self.leftBtn.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reduceUnreadCount:) name:kNOTI_READDYNAMIC object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelTableEditingState) name:kNOTI_PERSONAL_WITHOUTDYNAMIC object:nil];
 

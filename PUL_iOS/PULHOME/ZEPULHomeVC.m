@@ -335,6 +335,13 @@
 
 #pragma mark - 自选功能区
 
+-(void)goWebVC:(NSString *)functionCode
+{
+    ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];
+    bankVC.functionCode = functionCode;
+    [self.navigationController pushViewController:bankVC animated:YES];
+}
+
 -(void)goGWCP
 {
     NSLog(@" ===  岗位测评");
@@ -349,6 +356,9 @@
 -(void)goZYXGCP
 {
     NSLog(@" ===  专职业性格测");
+    ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];
+    bankVC.enterType = ENTER_QUESTIONBANK_TYPE_PROEXAM;
+    [self.navigationController pushViewController:bankVC animated:YES];
 }
 
 -(void)goGWTX
@@ -369,9 +379,15 @@
 -(void)goZXCS
 {
     NSLog(@" ===  在线测试");
-    
     ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];
     bankVC.enterType = ENTER_QUESTIONBANK_TYPE_ONLINEEXAM;
+    [self.navigationController pushViewController:bankVC animated:YES];
+}
+
+-(void)goJNQD
+{
+    ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];
+    bankVC.enterType = ENTER_QUESTIONBANK_TYPE_SKILLLIST;
     [self.navigationController pushViewController:bankVC animated:YES];
 }
 

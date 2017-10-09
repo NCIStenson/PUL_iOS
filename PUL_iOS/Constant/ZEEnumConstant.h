@@ -164,6 +164,8 @@ typedef enum : NSUInteger{
     ENTER_QUESTIONBANK_TYPE_ABISCHOOL, /****** 能力学堂 *****/
     ENTER_QUESTIONBANK_TYPE_STAFFDEV,  /****** 员工发展 *****/
     ENTER_QUESTIONBANK_TYPE_ONLINEEXAM,  /****** 在线测试 *****/
+    ENTER_QUESTIONBANK_TYPE_PROEXAM,  /****** 职业性格测评 *****/
+    ENTER_QUESTIONBANK_TYPE_SKILLLIST,  /****** 技能清单 *****/
     
     ENTER_QUESTIONBANK_TYPE_MYRECORD,  /****** 我的履历 *****/
     ENTER_QUESTIONBANK_TYPE_MYTRAIN,  /****** 我的培训 *****/

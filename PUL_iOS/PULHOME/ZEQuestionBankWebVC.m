@@ -28,17 +28,23 @@
     
     self.title = [ZEUtil getQuestionBankWebVCTitle:_enterType];
 
+    self.isCanSideBack = NO;
+    //关闭ios右滑返回
+    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate=self;
+    }
+
+    if (_functionCode.length > 0) {
+        [self getCustomFunctionList];
+        return;
+    }
+    
     if(_enterType > ENTER_QUESTIONBANK_TYPE_NOTE){
         [self getHomeUrl:_enterType];
     }else{
         [self getUrlWithEnterType:_enterType];
     }
     
-    self.isCanSideBack = NO;
-    //关闭ios右滑返回
-    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate=self;
-    }
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer*)gestureRecognizer {
@@ -67,23 +73,87 @@
     }
 }
 
-
+-(void)getCustomFunctionList
+{
+    NSString * actionFlag = _functionCode;
+    NSString * className = HOME_HTML_CLASS;
+    
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":KLB_FUNCTION_LIST,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":@"ToHtml",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":className,
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_FUNCTION_LIST]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:actionFlag];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSDictionary * dic = [ZEUtil getCOMMANDDATA:data];
+                                 NSString * targetURL = [dic objectForKey:@"target"];
+                                 if (targetURL.length > 0 &&  [ZEUtil isNotNull:targetURL]  ) {
+                                     NSLog(@"targetURL >>>  %@",targetURL);
+                                     self.navBar.hidden = YES;
+                                     
+                                     wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20)];
+                                     wkWebView.top = 20;
+                                     wkWebView.height = SCREEN_HEIGHT - 20;
+                                     
+                                     UIView * statusBackgroundView = [UIView new];
+                                     statusBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
+                                     
+                                     [self.view addSubview:statusBackgroundView];
+                                     [ZEUtil addGradientLayer:statusBackgroundView];
+                                     
+                                     [self.view addSubview:wkWebView];
+                                     wkWebView.navigationDelegate = self;
+                                     
+                                     NSMutableURLRequest * reuqest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:targetURL]];
+                                     webUrl = targetURL;
+                                     
+                                     [wkWebView loadRequest:reuqest];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
 
 -(void)getHomeUrl:(ENTER_QUESTIONBANK_TYPE)type{
     NSString * actionFlag = @"";
     NSString * className = HOME_URL_CLASS;
     switch (type) {
-            case ENTER_QUESTIONBANK_TYPE_ABISCHOOL:
+        case ENTER_QUESTIONBANK_TYPE_ABISCHOOL:
             actionFlag = @"CourseHome";
             break;
             
-            case ENTER_QUESTIONBANK_TYPE_STAFFDEV:
+        case ENTER_QUESTIONBANK_TYPE_STAFFDEV:
             actionFlag = @"DevelopNavigation";
             break;
             
         case ENTER_QUESTIONBANK_TYPE_ONLINEEXAM:
             actionFlag = @"onlineExam";
             className = HOME_ONLINEEXAM_CLASS;
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_PROEXAM:
+            actionFlag = @"characterAppraisal";
+            className = HOME_EXAMFUNCTION_CLASS;
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_SKILLLIST:
+            actionFlag = @"skillInventory";
+            className = HOME_EXAMFUNCTION_CLASS;
             break;
             
         case ENTER_QUESTIONBANK_TYPE_MYRECORD:

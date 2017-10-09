@@ -271,6 +271,9 @@
     if (TEAMCIRCLENAME.length == 0|| TEAMCIRCLEREMARK.length == 0 ||  TEAMMANIFESTO.length == 0 || TEAMCIRCLECODENAME.length == 0) {
         [self showTips:@"请完善班组圈信息"];
         return;
+    }else if (_originMembersArr.count == 0){
+        [self showTips:@"请等待加载完人员信息后再进行修改"];
+        return;
     }
     
     NSDictionary * parametersDic = @{@"limit":@"-1",

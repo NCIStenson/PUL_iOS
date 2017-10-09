@@ -86,6 +86,8 @@
 
 #define HOME_URL_CLASS @"com.nci.klb.app.zct.ZctHttpClient"          /***   首页链接跳转链接获取  ***/
 #define HOME_ONLINEEXAM_CLASS @"com.nci.klb.app.exam.examCaseTeam"          /***  在线考试链接  ***/
+#define HOME_EXAMFUNCTION_CLASS @"com.nci.klb.app.exam.examFunction"          /***  在线考试链接  ***/
+#define HOME_HTML_CLASS @"com.nci.klb.app.exam.examFunction"          /***   获取自定义功能区H5链接  ***/
 #define HOME_CLASS_METHOD @"com.nci.klb.app.homePage.FunctionList"          /***   自定义功能区  ***/
 #define HOME_MY_MESSAGE @"com.nci.klb.app.homePage.MessageList"          /***   我的动态消息列表  ***/
 #define QUESTION_BANK @"com.nci.klb.app.exam.QuestionBank"          /***   题库列表  ***/

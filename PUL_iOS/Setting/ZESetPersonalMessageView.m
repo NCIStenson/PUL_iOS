@@ -69,7 +69,7 @@
 {
     switch (section) {
         case 0:
-            return 3;
+            return 4;
             break;
         case 1:
             return 3;
@@ -122,10 +122,14 @@
         {
             switch (indexPath.row) {
                 case 0:
+                    cell.textLabel.text = @"用户名";
+                    cell.detailTextLabel.text = [ZESettingLocalData getUSERNAME];
+                    break;
+                case 1:
                     cell.textLabel.text = @"用户昵称";
                     cell.detailTextLabel.text = [ZESettingLocalData getNICKNAME];
                     break;
-                case 1:
+                case 2:
                     cell.textLabel.text = @"个人积分";
                     if ([sumpoints  integerValue ] == 0) {
                         cell.detailTextLabel.text = @"0";
@@ -133,9 +137,11 @@
                         cell.detailTextLabel.text = sumpoints;
                     }
                     break;
-                case 2:
+                case 3:
                     cell.textLabel.text = @"当前等级";
-                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@",[self.userInfoDic objectForKey:@"LEVELNAME"],[self.userInfoDic objectForKey:@"LEVELCODE"]];
+                    if([[self.userInfoDic objectForKey:@"LEVELNAME"] length] > 0){
+                        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@",[self.userInfoDic objectForKey:@"LEVELNAME"],[self.userInfoDic objectForKey:@"LEVELCODE"]];
+                    }
                     cell.accessoryType = UITableViewCellAccessoryNone;
                     break;
                     
@@ -181,14 +187,14 @@
         case 0:
         {
             switch (indexPath.row) {
-                case 0:{
+                case 1:{
                     if ([self.delegate respondsToSelector:@selector(changePersonalMsg:)]) {
                         [self.delegate changePersonalMsg:CHANGE_PERSONALMSG_NICKNAME];
                     }
                 }
                     break;
                     
-                case 1:{
+                case 2:{
                     
                 }
                     break;

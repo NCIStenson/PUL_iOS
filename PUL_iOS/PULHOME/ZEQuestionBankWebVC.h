@@ -12,6 +12,8 @@
 
 @property (nonatomic,assign) ENTER_QUESTIONBANK_TYPE enterType;
 
+@property (nonatomic,copy) NSString * functionCode;
+
 @property (nonatomic,copy) NSString * bankID;
 
 @end

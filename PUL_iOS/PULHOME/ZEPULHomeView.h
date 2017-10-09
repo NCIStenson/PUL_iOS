@@ -71,6 +71,19 @@
 -(void)goZXCS;
 
 /**
+ 技能清单
+ */
+-(void)goJNQD;
+
+
+/**
+ 根据functionCode 跳转 指定网页界面
+
+ @param functionCode 指定的 functionCode = actionFlag
+ */
+-(void)goWebVC:(NSString *)functionCode;
+
+/**
  更多功能
  */
 -(void)goMoreFunction;

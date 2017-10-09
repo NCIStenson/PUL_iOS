@@ -3805,7 +3805,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/电知道.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ripeng Zhao (8BJ5KF4673)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = CJ8CND7Y24;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
