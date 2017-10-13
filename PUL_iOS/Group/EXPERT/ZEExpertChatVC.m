@@ -12,6 +12,9 @@
 {
     PYPhotoBrowseView * browseView;
 }
+
+@property (nonatomic,assign) BOOL isCanSideBack;
+
 @end
 
 @implementation ZEExpertChatVC
@@ -19,17 +22,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:MAIN_NAV_COLOR] forBarMetrics:UIBarMetricsDefault];
-    
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:@"#41b76a"].CGColor,  (__bridge id)RGBA(33, 132, 136, 0.8).CGColor];
     gradientLayer.startPoint = CGPointMake(0.0, 0.0);
     gradientLayer.endPoint = CGPointMake(1.0, 0.0);
-    gradientLayer.frame = CGRectMake(0, -20, SCREEN_WIDTH, 64);
-    [self.navigationController.navigationBar.layer addSublayer:gradientLayer];
-    
+    gradientLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 64);
+    for (UIView *subv in self.navigationController.navigationBar.subviews) {
+        NSLog(@"===  %@",subv);
+        if ([subv isKindOfClass:NSClassFromString(@"_UIBarBackground")]) {
+            [subv.layer addSublayer:gradientLayer];
+        }
+    }
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:MAIN_NAV_COLOR] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     if([ZEUtil isNotNull:_expertModel]){
         self.title = _expertModel.USERNAME;
@@ -39,6 +45,29 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showChatImage:) name:kJMESSAGE_TAP_IMAGE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPersonalMessage:) name:kJMESSAGE_TAP_HEADVIEW object:nil];
+    self.isCanSideBack = NO;
+    //关闭ios右滑返回
+    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate=self;
+    }
+}
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer*)gestureRecognizer {
+    return self.isCanSideBack;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self resetSideBack];
+}
+/**
+ *恢复边缘返回
+ */
+- (void)resetSideBack {
+    self.isCanSideBack=YES;
+    //开启ios右滑返回
+    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -47,6 +76,12 @@
     [self.navigationController setNavigationBarHidden:NO];
     self.tabBarController.tabBar.hidden = YES;
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
@@ -61,14 +96,17 @@
 - (void)showChatImage:(NSNotification *)noti
 {
     UIImage * image = noti.object;
-    browseView = [[PYPhotoBrowseView alloc]initWithFrame:self.view.frame];
+    browseView = [[PYPhotoBrowseView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     browseView.images = @[image];
     browseView.delegate = self;
     [browseView show];
+    NSLog(@"    ======    %@",NSStringFromCGRect(browseView.frame));
+
 }
 
 - (void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView willShowWithImages:(NSArray *)images index:(NSInteger)index
 {
+    NSLog(@"    ======    %@",NSStringFromCGRect(photoBrowseView.frame));
     self.navigationController.navigationBar.hidden = YES;
 }
 
@@ -88,8 +126,6 @@
         [hud3 hide:YES afterDelay:1.5];
     }
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

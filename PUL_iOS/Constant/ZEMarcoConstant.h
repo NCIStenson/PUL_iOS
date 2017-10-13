@@ -22,6 +22,7 @@
 #define IS_IOS8 [[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0
 #define IS_IOS9 [[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0
 #define IS_IOS10 [[[UIDevice currentDevice] systemVersion] floatValue] >= 10.0
+#define IS_IOS11 [[[UIDevice currentDevice] systemVersion] floatValue] >= 11.0
 
 #define SCREEN_HEIGHT   [[UIScreen mainScreen] bounds].size.height
 #define SCREEN_WIDTH     [[UIScreen mainScreen] bounds].size.width

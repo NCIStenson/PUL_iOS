@@ -105,7 +105,7 @@
                                      [_personalNotiView loadNoMoreData];
                                  }
                              } fail:^(NSError *errorCode) {
-                                 
+                                 [_personalNotiView headerEndRefreshing];
                              }];
 }
 
@@ -254,8 +254,6 @@
 
 -(void)didSelectTeamMessage:(ZETeamNotiCenModel *)notiModel
 {
-    NSLog(@">>>>  %@",notiModel.QUESTIONEXPLAIN);
-    
     ZENotiDetailVC * notiDetailVC = [[ZENotiDetailVC alloc]init];
     notiDetailVC.notiCenModel = notiModel;
     [self.navigationController pushViewController:notiDetailVC animated:YES];

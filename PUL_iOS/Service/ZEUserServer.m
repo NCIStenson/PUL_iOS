@@ -67,7 +67,7 @@
                                                        static NSInteger i = 0;
                                                        i ++;
                                                        
-                                                       if (i > 3) {
+                                                       if (i > 10) {
                                                            [ZEUserServer operationFailed];
                                                        }
                                                        NSError *errorCode = nil;

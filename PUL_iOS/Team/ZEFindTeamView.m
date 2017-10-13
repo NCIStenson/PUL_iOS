@@ -189,14 +189,25 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 0;
+    return 50;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView * sectionView = [[UIView alloc]init];
+    sectionView.backgroundColor = MAIN_LINE_COLOR;
+    
+    UIView * textfieldView = [self searchTextfieldView];
+    textfieldView.center = CGPointMake(SCREEN_WIDTH / 2, 25.0f);
+    [sectionView addSubview:textfieldView];
+    
+    return sectionView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return SCREEN_WIDTH / 3 + 10;
 }
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * cellID = @"cell";
@@ -218,15 +229,54 @@
     return cell;
 }
 
+
+-(UIView *)searchTextfieldView
+{
+    UIView * searchTFView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 50, 30)];
+    searchTFView.backgroundColor = [UIColor whiteColor];
+    
+    UIImageView * searchTFImg = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 18, 18)];
+    searchTFImg.image = [UIImage imageNamed:@"search_icon"];
+    [searchTFView addSubview:searchTFImg];
+    
+    _questionSearchTF =[[UITextField alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 50, 30)];
+    [searchTFView addSubview:_questionSearchTF];
+    _questionSearchTF.placeholder = @"搜索团队";
+    [_questionSearchTF setReturnKeyType:UIReturnKeySearch];
+    _questionSearchTF.font = [UIFont systemFontOfSize:14];
+    _questionSearchTF.leftViewMode = UITextFieldViewModeAlways;
+    _questionSearchTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 25, 30)];
+    _questionSearchTF.delegate=self;
+    searchTFView.clipsToBounds = YES;
+    searchTFView.layer.cornerRadius = 30 / 2;
+    if (_searchStr.length > 0) {
+        _questionSearchTF.text = _searchStr;
+    }
+    
+    return searchTFView;
+}
+
 #pragma mark - ZEFindTeamViewDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self endEditing:YES];
     if([self.delegate respondsToSelector:@selector(goTeamVCDetail:)]){
         ZETeamCircleModel * teamCircleInfo = [ZETeamCircleModel getDetailWithDic:self.teamsDataArr[indexPath.row]];
         [self.delegate goTeamVCDetail:teamCircleInfo];
     }
 }
 
+#pragma mark - UITextFieldDelegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    _searchStr = textField.text;
+    if ([self.delegate respondsToSelector:@selector(goSerachTeamWithStr:)]) {
+        [self.delegate goSerachTeamWithStr:textField.text];
+    }
+    return YES;
+}
 
 @end

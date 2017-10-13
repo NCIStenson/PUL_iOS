@@ -136,6 +136,7 @@
         [self logoutSuccess];
     } fail:^(NSError *error) {
         [self progressEnd:nil];
+        [self logoutSuccess];
     }];
 }
 

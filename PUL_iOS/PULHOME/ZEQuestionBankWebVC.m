@@ -10,7 +10,7 @@
 
 #import <WebKit/WebKit.h>
 
-@interface ZEQuestionBankWebVC ()<WKNavigationDelegate,UIGestureRecognizerDelegate>
+@interface ZEQuestionBankWebVC ()<WKNavigationDelegate,UIGestureRecognizerDelegate,WKScriptMessageHandler>
 {
     WKWebView * wkWebView;
     NSString * webUrl;
@@ -48,7 +48,6 @@
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer*)gestureRecognizer {
-    
     return self.isCanSideBack;
 }
 
@@ -155,7 +154,6 @@
             actionFlag = @"skillInventory";
             className = HOME_EXAMFUNCTION_CLASS;
             break;
-            
         case ENTER_QUESTIONBANK_TYPE_MYRECORD:
             actionFlag = @"myRecord";
             break;
@@ -202,24 +200,30 @@
                                  if (targetURL.length > 0 &&  [ZEUtil isNotNull:targetURL]  ) {
                                      NSLog(@"targetURL >>>  %@",targetURL);
                                      self.navBar.hidden = YES;
+                                     WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+                                     configuration.userContentController = [WKUserContentController new];
                                      
-                                     wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20)];
+                                     if(_enterType == ENTER_QUESTIONBANK_TYPE_ABISCHOOL){
+                                         [configuration.userContentController addScriptMessageHandler:self name:@"ShowMessageFromWKWebView"];
+                                     }
+     
+                                     wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20) configuration:configuration];
                                      wkWebView.top = 20;
                                      wkWebView.height = SCREEN_HEIGHT - 20;
-                                     
+
                                      UIView * statusBackgroundView = [UIView new];
                                      statusBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
 
                                      [self.view addSubview:statusBackgroundView];
                                      [ZEUtil addGradientLayer:statusBackgroundView];
                                      
-                                     [self.view addSubview:wkWebView];
                                      wkWebView.navigationDelegate = self;
-                                     
                                      NSMutableURLRequest * reuqest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:targetURL]];
                                      webUrl = targetURL;
                                      
                                      [wkWebView loadRequest:reuqest];
+                                     [self.view addSubview:wkWebView];
+
                                  }
                              } fail:^(NSError *errorCode) {
                                  
@@ -326,9 +330,27 @@
     if([navigationAction.request.URL.absoluteString containsString:@"javasscriptss:back"]){
         [self.navigationController popViewControllerAnimated:YES];
     }
-    
     decisionHandler(WKNavigationActionPolicyAllow);
 }
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    
+    NSLog(@"body:%@", message.body);
+    if ([message.name isEqualToString:@"ShowMessageFromWKWebView"]) {
+        if([[YYReachability reachability] status] == YYReachabilityStatusWiFi){
+            NSString *returnJSStr = [NSString stringWithFormat:@"showMessageFromWKWebViewResult('wifi')"];
+            [wkWebView evaluateJavaScript:returnJSStr completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                NSLog(@"%@,%@", result, error);
+            }];
+        }else{
+            NSString *returnJSStr = [NSString stringWithFormat:@"showMessageFromWKWebViewResult('')"];
+            [wkWebView evaluateJavaScript:returnJSStr completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+                NSLog(@"%@,%@", result, error);
+            }];
+        }
+    }
+}
+
 
 -(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
@@ -379,6 +401,9 @@
 {
     wkWebView = nil;
     wkWebView.navigationDelegate = nil;
+    if (_enterType == ENTER_QUESTIONBANK_TYPE_ABISCHOOL) {
+        [wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"ShowMessageFromWKWebView"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -69,19 +69,9 @@
 -(void)reloadData:(NSArray *)arr
 {
     if (arr.count == 0 ) {
-        if (!tipsView) {
-            
-            float questionHeight = [self calHeaderHeight];
-            
-            if(questionHeight < 120){
-                questionHeight = 120;
-            }
-            tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, questionHeight + 70, SCREEN_WIDTH, SCREEN_HEIGHT - questionHeight - 80)];
-            tipsView.type = SHOW_TIPS_TYPE_QUESTIONDETAIL;
-            [self addSubview:tipsView];
-        }
-        return;
+        contentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     }else{
+        contentTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         [tipsView removeAllSubviews];
         [tipsView removeFromSuperview];
         tipsView = nil;
@@ -99,6 +89,10 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (_answerInfoArr.count == 0) {
+        return 1;
+    }
+    
     return _answerInfoArr.count;
 }
 
@@ -120,12 +114,6 @@
     UIView *  questionsView = [[UIView alloc]init];
 
     float questionHeight =[ZEUtil heightForString:_questionInfoModel.QUESTIONEXPLAIN font:[UIFont boldSystemFontOfSize:kDetailTitleFontSize] andWidth:SCREEN_WIDTH - 40];
-    
-//    UILabel * questionsLab = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH - 40, questionHeight)];
-//    questionsLab.numberOfLines = 0;
-//    questionsLab.text = _questionInfoModel.QUESTIONEXPLAIN;
-//    questionsLab.font = [UIFont boldSystemFontOfSize:kDetailTitleFontSize];
-//    [questionsView addSubview:questionsLab];
 
     UITextView * questionsLab = [[UITextView alloc]initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH - 40, questionHeight)];
     questionsLab.text = _questionInfoModel.QUESTIONEXPLAIN;
@@ -249,45 +237,6 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-//    float questionHeight =[ZEUtil heightForString:_questionInfoModel.QUESTIONEXPLAIN font:[UIFont boldSystemFontOfSize:kDetailTitleFontSize] andWidth:SCREEN_WIDTH - 40];
-//    
-//    NSArray * typeCodeArr = [_questionInfoModel.QUESTIONTYPECODE componentsSeparatedByString:@","];
-//    NSString * typeNameContent = @"";
-//    
-//    for (NSDictionary * dic in [[ZEQuestionTypeCache instance] getQuestionTypeCaches]) {
-//        ZEQuestionTypeModel * questionTypeM = nil;
-//        ZEQuestionTypeModel * typeM = [ZEQuestionTypeModel getDetailWithDic:dic];
-//        for (int i = 0; i < typeCodeArr.count; i ++) {
-//            if ([typeM.CODE isEqualToString:typeCodeArr[i]]) {
-//                questionTypeM = typeM;
-//                if (![ZEUtil isStrNotEmpty:typeNameContent]) {
-//                    typeNameContent = questionTypeM.NAME;
-//                }else{
-//                    typeNameContent = [NSString stringWithFormat:@"%@,%@",typeNameContent,questionTypeM.NAME];
-//                }
-//                break;
-//            }
-//        }
-//    }
-//    
-//    float tagHeight = [ZEUtil heightForString:typeNameContent font:[UIFont systemFontOfSize:kSubTiltlFontSize] andWidth:SCREEN_WIDTH - 70];
-//    
-//    NSString * targetUsernameStr = [NSString stringWithFormat:@"指定人员回答 ：%@", _questionInfoModel.TARGETUSERNAME];
-//    float targetUsernameHeight = [ZEUtil heightForString:targetUsernameStr font:[UIFont systemFontOfSize:kSubTiltlFontSize] andWidth:SCREEN_WIDTH - 40];
-//    
-//    if(_questionInfoModel.FILEURLARR.count > 0){
-//        if(_questionInfoModel.TARGETUSERNAME.length > 0){
-//            return questionHeight + kCellImgaeHeight + tagHeight + 75.0f + targetUsernameHeight;
-//        }
-//        return questionHeight + kCellImgaeHeight + tagHeight + 70.0f;
-//    }
-//    
-//    if (_questionInfoModel.TARGETUSERNAME.length > 0) {
-//        return questionHeight + tagHeight + 65.0f + targetUsernameHeight;
-//    }
-
-//    return questionHeight + tagHeight + 65.0f;
-    
     return  [self calHeaderHeight];
 }
 
@@ -346,13 +295,23 @@
         [lastView removeFromSuperview];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [self initCellContentView:cell.contentView withIndexPath:indexPath];
+    if (_answerInfoArr.count == 0) {
+        tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 300)];
+        tipsView.type = SHOW_TIPS_TYPE_QUESTIONDETAIL;
+        [cell.contentView addSubview:tipsView];
+    }else{
+        [self initCellContentView:cell.contentView withIndexPath:indexPath];
+    }
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (_answerInfoArr.count == 0) {
+        return 300;
+    }
+    
     ZEAnswerInfoModel * answerInfoM = [ZEAnswerInfoModel getDetailWithDic:_answerInfoArr[indexPath.row]];
 
     float answerHeight =[ZEUtil heightForString:answerInfoM.ANSWEREXPLAIN font:[UIFont boldSystemFontOfSize:kDetailTitleFontSize] andWidth:SCREEN_WIDTH - 65];
@@ -539,7 +498,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%@",_answerInfoArr[indexPath.row]);
+    if (_answerInfoArr.count == 0) {
+        return;
+    }
+    
     ZEAnswerInfoModel * answerInfoM = [ZEAnswerInfoModel getDetailWithDic:_answerInfoArr[indexPath.row]];
     if ([self.delegate respondsToSelector:@selector(acceptTheAnswerWithQuestionInfo:withAnswerInfo:)]) {
         [self.delegate acceptTheAnswerWithQuestionInfo:_questionInfoModel withAnswerInfo:answerInfoM];

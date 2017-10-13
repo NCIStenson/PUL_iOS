@@ -16,10 +16,10 @@
 @interface ZEPersonalChatListVC ()<JMessageDelegate>
 {
     NSInteger _unreadCount;
-    
 }
 @property (nonatomic,strong) UITableView * chatTableView;
 @property (nonatomic,strong) NSMutableArray * conversationArr;
+
 
 @end
 

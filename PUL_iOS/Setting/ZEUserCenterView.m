@@ -81,7 +81,6 @@
     levelLab.text = _levelTitle;
     levelLab.width = [ZEUtil widthForString:_levelTitle font:levelLab.font maxSize:CGSizeMake(100, 20)];
     levelLab.left = usernameLabel.right + 10;
-
 }
 
 #pragma mark - 新消息提醒图标

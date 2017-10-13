@@ -621,7 +621,6 @@
 		9801DB0C1D6170A8008B1676 /* ZEUserServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEUserServer.m; path = Service/ZEUserServer.m; sourceTree = "<group>"; };
 		9801DBEB1D644BF7008B1676 /* ZEShowQuestionTypeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEShowQuestionTypeView.h; path = Questions/ZEShowQuestionTypeView.h; sourceTree = "<group>"; };
 		9801DBEC1D644BF7008B1676 /* ZEShowQuestionTypeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEShowQuestionTypeView.m; path = Questions/ZEShowQuestionTypeView.m; sourceTree = "<group>"; };
-		980377461F09DCE00085FAD9 /* 电知道.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "电知道.entitlements"; sourceTree = "<group>"; };
 		980377481F09DE4D0085FAD9 /* answer_tag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "answer_tag@2x.png"; sourceTree = "<group>"; };
 		980377491F09DE4D0085FAD9 /* answer_tag@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "answer_tag@3x.png"; sourceTree = "<group>"; };
 		9803774A1F09DE4D0085FAD9 /* bubble_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_left@2x.png"; sourceTree = "<group>"; };
@@ -1342,6 +1341,7 @@
 		98EE5DB51DE56D9A00C82FCB /* ZEChooseMonthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZEChooseMonthView.h; sourceTree = "<group>"; };
 		98EE5DB61DE56D9A00C82FCB /* ZEChooseMonthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZEChooseMonthView.m; sourceTree = "<group>"; };
 		98EE5DBA1DE576FF00C82FCB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		98F24B251F8DF2AB00FC09A3 /* 拾学.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "拾学.entitlements"; sourceTree = "<group>"; };
 		98F471961D5434CF0016CD5A /* ZEAnswerQuestionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEAnswerQuestionsVC.h; path = Questions/ZEAnswerQuestionsVC.h; sourceTree = "<group>"; };
 		98F471971D5434CF0016CD5A /* ZEAnswerQuestionsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEAnswerQuestionsVC.m; path = Questions/ZEAnswerQuestionsVC.m; sourceTree = "<group>"; };
 		98F4719C1D5434F70016CD5A /* ZEAnswerQuestionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEAnswerQuestionsView.h; path = Questions/ZEAnswerQuestionsView.h; sourceTree = "<group>"; };
@@ -2396,7 +2396,7 @@
 		989B2C451C4DE7AA00F14EFA /* PUL_iOS */ = {
 			isa = PBXGroup;
 			children = (
-				980377461F09DCE00085FAD9 /* 电知道.entitlements */,
+				98F24B251F8DF2AB00FC09A3 /* 拾学.entitlements */,
 				989B2C491C4DE7AA00F14EFA /* ZEAppDelegate.h */,
 				989B2C4A1C4DE7AA00F14EFA /* ZEAppDelegate.m */,
 				98DB7C541C4F53EA0046D405 /* ZEMainViewController.h */,
@@ -3539,9 +3539,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/电知道.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/拾学.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ripeng Zhao (8BJ5KF4673)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CJ8CND7Y24;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3650,9 +3651,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/电知道.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/拾学.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ripeng Zhao (8BJ5KF4673)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CJ8CND7Y24;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3803,9 +3805,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/电知道.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/拾学.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ripeng Zhao (8BJ5KF4673)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CJ8CND7Y24;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3841,9 +3844,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/电知道.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "PUL_iOS/拾学.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Ripeng Zhao (8BJ5KF4673)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CJ8CND7Y24;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -29,11 +29,11 @@
 }
 
 -(void)initUI {
-    
-    UIImageView * tipImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, _frame.size.width - 40, _frame.size.height - 40)];
+    UIImageView * tipImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, (_frame.size.width - 40 )* .7,( _frame.size.height - 40 )* .7)];
     tipImage.image = [UIImage imageNamed:@"without_tips"];
     tipImage.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:tipImage];
+    tipImage.centerX = SCREEN_WIDTH / 2;
     
     tipsLab = [[UILabel alloc]initWithFrame:CGRectMake(0, tipImage.bottom + 5,  _frame.size.width, 30)];
     tipsLab.textAlignment = NSTextAlignmentCenter;

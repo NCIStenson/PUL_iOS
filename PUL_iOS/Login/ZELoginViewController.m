@@ -317,7 +317,6 @@
     if ([ZESettingLocalData getUSERCODE] > 0) {
         [JPUSHService setAlias:[ZESettingLocalData getUSERCODE] callbackSelector:nil object:nil];
     }
-    
 }
 
 -(void)showAlertView:(NSString *)alertMes

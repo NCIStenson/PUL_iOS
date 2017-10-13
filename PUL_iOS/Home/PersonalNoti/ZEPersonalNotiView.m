@@ -315,19 +315,16 @@
     dynamiLab.lineBreakMode = NSLineBreakByTruncatingMiddle;
     dynamiLab.text = [NSString stringWithFormat:@"%@  |  %@",notiM.QUESTIONEXPLAIN,notiM.CREATORNAME];
     float explainHeight = [ZEUtil heightForString:dynamiLab.text font:dynamiLab.font andWidth:dynamiLab.width];
+    if(explainHeight > 40){
+        explainHeight = 40;
+    }
     dynamiLab.height = explainHeight;
     
     UILabel * receiptLab = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 90,10,70,20.0f)];
     receiptLab.textAlignment = NSTextAlignmentRight;
-    receiptLab.numberOfLines = 0;
     receiptLab.textColor = MAIN_SUBTITLE_COLOR;
     receiptLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
     [cell.contentView addSubview:receiptLab];
-//    if ([notiM.DYNAMICTYPE integerValue] == 1 || [notiM.DYNAMICTYPE integerValue] == 2) {
-//        receiptLab.text = @"需回执";
-//    }else{
-//        receiptLab.hidden = YES;
-//    }
     receiptLab.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@",notiM.SYSCREATEDATE]];
     
     if (![notiM.ISREAD boolValue]) {
@@ -340,18 +337,6 @@
         redImage.clipsToBounds = YES;
         redImage.layer.cornerRadius = redImage.height / 2;
     }
-    
-//    UILabel * _dateLab = [UILabel new];
-////    _dateLab.top = _disUsername.top;
-//    _dateLab.left = 10;
-//    [cell.contentView addSubview:_dateLab];
-//    _dateLab.size = CGSizeMake(SCREEN_WIDTH - 20, 20);
-//    _dateLab.textAlignment = NSTextAlignmentRight;
-//    _dateLab.textColor = [UIColor lightGrayColor];
-//    _dateLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-//    _dateLab.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@",notiM.SYSCREATEDATE]];
-//    NSLog(@">>>  %@",notiM.SYSCREATEDATE);
-
     if (indexPath.row == 0) {
         UIView * lineView = [UIView new];
         lineView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
@@ -479,8 +464,11 @@
         }
 
         [self.personalNotiArr removeObjectAtIndex:indexPath.row];//tableview数据源
-        if (![self.personalNotiArr count]) { //删除此行后数据源为空
-            [_notiContentView deleteSections: [NSIndexSet indexSetWithIndex: indexPath.section] withRowAnimation:UITableViewRowAnimationBottom];
+        if ([self.personalNotiArr count] == 0) { //删除此行后数据源为空
+            [_notiContentView reloadData];
+//            NSLog(@" =======  %d  %d",indexPath.row , indexPath.section);
+//            [_notiContentView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            [_notiContentView deleteSections: [NSIndexSet indexSetWithIndex: indexPath.section] withRowAnimation:UITableViewRowAnimationBottom];
         } else {
             [_notiContentView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }        

@@ -12,6 +12,7 @@
 @interface ZEFindTeamVC ()
 {
     ZEFindTeamView * findTeamView;
+    NSString * searchStr;
 }
 @end
 
@@ -27,8 +28,21 @@
     
     [self initView];
     
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithActionBlock:^(id  _Nonnull sender) {
+        [self.view endEditing:YES];
+    }];
+    tap.delegate = self;
+    [self.view addGestureRecognizer:tap];
 }
-
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:[UITableView class]]){
+        return NO;
+    }
+    if ([NSStringFromClass([touch.view class]) isEqualToString:@"UITableViewCellContentView"]) {
+        return NO;
+    }
+    return YES;
+}
 -(void)goBackTeamVC{
     self.tabBarController.selectedIndex = 1;
     [self.navigationController popViewControllerAnimated:YES];
@@ -45,7 +59,11 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self findTeamRequest];
+    if (searchStr.length > 0) {
+        [self goSerachTeamWithStr:searchStr];
+    }else{
+        [self findTeamRequest];
+    }
     self.tabBarController.tabBar.hidden = YES;
     if (_enterType == ENTER_FINDTEAM_HOMEDYNAMIC) {
         [self.leftBtn addTarget:self action:@selector(goBackTeamVC) forControlEvents:UIControlEventTouchUpInside];
@@ -145,6 +163,48 @@
     
 }
 
+-(void)goSerachTeamWithStr:(NSString *)inputStr
+{
+    searchStr = inputStr;
+    NSString * orderSQL =@"TEAMMEMBERS desc ";
+    if (_enterType == ENTER_FINDTEAM_HOMEDYNAMIC) {
+        orderSQL =@"SYSCREATEDATE desc ";
+    }
+    
+    NSString * whereSQL = [NSString stringWithFormat:@"TEAMCIRCLENAME like '%%%@%%'",inputStr];
+    
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":V_KLB_TEAMCIRCLE_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":orderSQL,
+                                     @"WHERESQL":whereSQL,
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.teamcircle.TeamcircleInfo",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_TEAMCIRCLE_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * dataArr = [ZEUtil getServerData:data withTabelName:V_KLB_TEAMCIRCLE_INFO];
+                                 if ([dataArr count] > 0) {
+                                     [findTeamView reloadFindTeamView:dataArr];
+                                 }else{
+                                     [findTeamView reloadFindTeamView:dataArr];
+                                     [self showTips:@"暂未找到包含该信息的团队"];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -29,11 +29,17 @@
 
 -(void)goApplyJoinTeam:(ZETeamCircleModel *)teamCircleInfo;
 
+-(void)goSerachTeamWithStr:(NSString *)inputStr;
+
 @end
 
-@interface ZEFindTeamView : UIView<UITableViewDataSource,UITableViewDelegate>
+@interface ZEFindTeamView : UIView<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 {
     UITableView * contentTableView;
+    
+    UITextField * _questionSearchTF;
+    
+    NSString * _searchStr;
 }
 @property (nonatomic,weak) id <ZEFindTeamViewDelegate> delegate;
 @property (nonatomic,strong) NSMutableArray * teamsDataArr;

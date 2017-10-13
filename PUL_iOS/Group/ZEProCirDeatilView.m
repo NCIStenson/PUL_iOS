@@ -173,7 +173,7 @@
     maskView.layer.cornerRadius = 1.0f;
     
     UILabel * rowTitleLab = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 80, 50)];
-    rowTitleLab.text = @"经典案例";
+    rowTitleLab.text = @"典型案例";
     rowTitleLab.textAlignment = NSTextAlignmentCenter;
     rowTitleLab.font = [UIFont systemFontOfSize:18];
     [typicalCaseView addSubview:rowTitleLab];

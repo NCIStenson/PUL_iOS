@@ -33,6 +33,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     application.applicationSupportsShakeToEdit = YES;
 
+    if(@available(ios 11.0,*)){
+        [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reLogin) name:kRelogin object:nil];
     [self showVCWithIndex:0];
     
@@ -74,7 +78,6 @@
 
 //    NSLog(@"%@",NSHomeDirectory());
 //    NSLog(@"%@",Zenith_Server);
-    
     return YES;
 }
 

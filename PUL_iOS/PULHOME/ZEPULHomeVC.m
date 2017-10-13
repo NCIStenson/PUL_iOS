@@ -55,13 +55,11 @@
     [ZEUtil cacheQuestionType];
     
     [self isHaveNewMessage];
-
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-
 }
 
 -(void)initView
@@ -120,7 +118,6 @@
     
 }
 #pragma mark - 是否有新消息提醒
-
 -(void)isHaveNewMessage
 {
     NSDictionary * parametersDic = @{@"limit":@"20",
@@ -334,7 +331,6 @@
 }
 
 #pragma mark - 自选功能区
-
 -(void)goWebVC:(NSString *)functionCode
 {
     ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];

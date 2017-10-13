@@ -242,6 +242,7 @@
                                          [self showTips:@"创建成功"];
                                          [self performSelector:@selector(goBack) withObject:nil afterDelay:1.5];
                                      } fail:^(NSError *errorCode) {
+                                         [self progressEnd:nil];
                                          [self.rightBtn setEnabled:YES];
                                      }];
     }else{
@@ -251,6 +252,7 @@
                                          [self showTips:@"创建成功"];
                                          [self performSelector:@selector(goBack) withObject:nil afterDelay:1.5];
                                      } fail:^(NSError *error) {
+                                         [self progressEnd:nil];
                                          [self.rightBtn setEnabled:YES];
                                      }];
 

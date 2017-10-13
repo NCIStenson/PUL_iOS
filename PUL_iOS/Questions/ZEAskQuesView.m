@@ -159,7 +159,7 @@
     UIButton * downKeyboardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     downKeyboardBtn.frame = CGRectMake(10, 0, 30, 30);
     [downKeyboardBtn setImage:[UIImage imageNamed:@"TLdown"] forState:UIControlStateNormal];
-    [_functionButtonView addSubview:downKeyboardBtn];
+//    [_functionButtonView addSubview:downKeyboardBtn];
     [downKeyboardBtn addTarget:self action:@selector(downTheKeyBoard) forControlEvents:UIControlEventTouchUpInside];
     downKeyboardBtn.clipsToBounds = YES;
     downKeyboardBtn.layer.cornerRadius = 15.0f;

@@ -107,7 +107,9 @@
     _dateLab.text =[NSString stringWithFormat:@"发布时间：%@",[ZEUtil formatContainTime:notiModel.SYSCREATEDATE]];
     if ((type == ENTER_TEAMNOTI_TYPE_RECEIPT_N || type == ENTER_TEAMNOTI_TYPE_RECEIPT_Y ) && notiModel.QUESTIONEXPLAIN.length > 0) {
         _notiTextLab.text = notiModel.QUESTIONEXPLAIN;
+        _notiTextLab.height = [ZEUtil heightForString:notiModel.QUESTIONEXPLAIN font:_notiTextLab.font andWidth:SCREEN_WIDTH - _notiTextLab.left * 2];
         _disUsername.text = [NSString stringWithFormat:@"发布人：%@",notiModel.CREATORNAME];;
+        _lineLayer.frame = CGRectMake(0, _notiTextLab.bottom + 5, SCREEN_WIDTH, 1.0f);
     }
     if(type == ENTER_TEAMNOTI_TYPE_DEFAULT || type == ENTER_TEAMNOTI_TYPE_RECEIPT_N){
         _receiptBtn.hidden = YES;

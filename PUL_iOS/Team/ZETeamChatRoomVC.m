@@ -12,6 +12,9 @@
 {
     PYPhotoBrowseView * browseView;
 }
+
+@property (nonatomic,assign) BOOL isCanSideBack;
+
 @end
 
 @implementation ZETeamChatRoomVC
@@ -30,7 +33,33 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showChatImage:) name:kJMESSAGE_TAP_IMAGE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPersonalMessage:) name:kJMESSAGE_TAP_HEADVIEW object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.isCanSideBack = NO;
+    //关闭ios右滑返回
+    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate=self;
+    }
+
 }
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer*)gestureRecognizer {
+    return self.isCanSideBack;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self resetSideBack];
+}
+/**
+ *恢复边缘返回
+ */
+- (void)resetSideBack {
+    self.isCanSideBack=YES;
+    //开启ios右滑返回
+    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+    }
+}
+
 
 -(void)viewWillAppear:(BOOL)animated
 {

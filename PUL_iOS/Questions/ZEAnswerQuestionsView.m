@@ -76,32 +76,6 @@
     _inputView.top = kInputViewMarginTop + questionExplainView.height;
     _inputView.size = CGSizeMake(kInputViewWidth, kInputViewHeight);
     [self addSubview:_inputView];
-    
-//    UIView * _dashView= [[UIView alloc]initWithFrame:CGRectMake( 0,_inputView.bottom, SCREEN_WIDTH, 1)];
-//    [self addSubview:_dashView];
-//    
-//    [self drawDashLine:_dashView lineLength:5 lineSpacing:2 lineColor:[UIColor lightGrayColor]];
-//    
-//    UIButton * downKeyboardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    downKeyboardBtn.frame = CGRectMake(10, _inputView.bottom + 5.0f, 30, 30);
-//    [downKeyboardBtn setImage:[UIImage imageNamed:@"TLdown"] forState:UIControlStateNormal];
-//    [self addSubview:downKeyboardBtn];
-//    [downKeyboardBtn addTarget:self action:@selector(downTheKeyBoard) forControlEvents:UIControlEventTouchUpInside];
-//    downKeyboardBtn.clipsToBounds = YES;
-//    downKeyboardBtn.layer.cornerRadius = 15.0f;
-//    downKeyboardBtn.layer.borderWidth = 1.5;
-//    downKeyboardBtn.layer.borderColor = [MAIN_GREEN_COLOR CGColor];
-//    
-//    UIButton * cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    cameraBtn.frame = CGRectMake(SCREEN_WIDTH - 40.0f, _inputView.bottom + 5.0f, 30, 30);
-//    [cameraBtn setImage:[UIImage imageNamed:@"camera_gray" color:MAIN_GREEN_COLOR] forState:UIControlStateNormal];
-//    [self addSubview:cameraBtn];
-//    cameraBtn.clipsToBounds = YES;
-//    cameraBtn.layer.cornerRadius = 15.0f;
-//    cameraBtn.layer.borderWidth = 1.5;
-//    cameraBtn.layer.borderColor = [MAIN_GREEN_COLOR CGColor];
-//    [cameraBtn addTarget:self action:@selector(showCondition) forControlEvents:UIControlEventTouchUpInside];
-    
 }
 
 -(void)initImageView

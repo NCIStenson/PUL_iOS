@@ -153,7 +153,6 @@
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    
     UIView * sectionView = [[UIView alloc]init];
     
     UIView * sectionTitleV = [self createSectionTitleView:section];

@@ -139,7 +139,6 @@ NSString *const JFCalendarCellIdentifier = @"cell";
 
 -(void)reloadDateData:(NSArray *)arr;
 {
-    
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *todayString = [dateFormatter stringFromDate:_today];
