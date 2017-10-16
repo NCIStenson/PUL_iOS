@@ -86,17 +86,17 @@
     [_segmentedControl addTarget:self action:@selector(selectDiffertReceipt:) forControlEvents:UIControlEventValueChanged];
     
     _receiptBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _receiptBtn.backgroundColor = MAIN_NAV_COLOR;
+    _receiptBtn.backgroundColor = [UIColor lightGrayColor];
     _receiptBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
     _receiptBtn.size = CGSizeMake(SCREEN_WIDTH - 40, 40);
     [self addSubview:_receiptBtn];
     [_receiptBtn setTitle:@"点击回执" forState:UIControlStateNormal];
+    _receiptBtn.userInteractionEnabled = NO;
     _receiptBtn.clipsToBounds = YES;
     _receiptBtn.layer.cornerRadius = 5;
     _receiptBtn.top = _dateLab.bottom + 20;
     _receiptBtn.left = (SCREEN_WIDTH - _receiptBtn.width)/ 2;
     [_receiptBtn addTarget:self action:@selector(receiptBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
 }
 
 -(void)setViewFrames:(ZETeamNotiCenModel *)notiModel withEnterTeamNotiType:(ENTER_TEAMNOTI_TYPE)type
@@ -281,6 +281,10 @@
         [headerView.receiptBtn setTitle:@"已回执" forState:UIControlStateNormal];
         [headerView.receiptBtn setBackgroundColor:[UIColor lightGrayColor]];
         headerView.receiptBtn.userInteractionEnabled = NO;
+    }else{
+        [headerView.receiptBtn setTitle:@"点击回执" forState:UIControlStateNormal];
+        [headerView.receiptBtn setBackgroundColor:MAIN_NAV_COLOR];
+        headerView.receiptBtn.userInteractionEnabled = YES;
     }
     
     [headerView.segmentedControl setHidden:YES];
@@ -357,7 +361,9 @@
         lastName.backgroundColor = MAIN_ARM_COLOR;
         lastName.clipsToBounds = YES;
         lastName.layer.cornerRadius = lastName.height / 2;
-        lastName.text = [USERNAME substringToIndex:1];
+        if(USERNAME.length > 0){
+            lastName.text = [USERNAME substringToIndex:1];
+        }
         lastName.textAlignment = NSTextAlignmentCenter;
         lastName.textColor = [UIColor whiteColor];
     }

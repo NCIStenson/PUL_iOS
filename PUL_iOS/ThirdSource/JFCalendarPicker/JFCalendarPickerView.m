@@ -56,7 +56,7 @@ NSString *const JFCalendarCellIdentifier = @"cell";
     [monthBtn addTarget:self action:@selector(chooseMonth) forControlEvents:UIControlEventTouchUpInside];
     [monthBtn setTitle:[ZEUtil getCurrentDate:@"yyyy-MM"] forState:UIControlStateNormal];
     monthBtn.frame = CGRectMake(10, 15, 70, 30);
-    [tipsView addSubview:monthBtn];
+//    [tipsView addSubview:monthBtn];
     [monthBtn setClipsToBounds: YES];
     [monthBtn.layer setCornerRadius:5.0f];
     [monthBtn.layer setBorderWidth:0.5];
@@ -83,7 +83,6 @@ NSString *const JFCalendarCellIdentifier = @"cell";
     [signinBtn.layer setCornerRadius:5.0f];
     [signinBtn.layer setBorderWidth:0.5];
     [signinBtn.layer setBorderColor:[MAIN_NAV_COLOR CGColor]];
-    
     
     CALayer * lineLayer = [CALayer layer];
     lineLayer.frame = CGRectMake(0,59.0f, SCREEN_WIDTH, 1.0f);

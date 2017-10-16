@@ -162,7 +162,7 @@
     _designatedNumberBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_designatedNumberBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     _designatedNumberBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
-    _designatedNumberBtn.titleLabel.numberOfLines = 0;
+    _designatedNumberBtn.titleLabel.numberOfLines = 2;
     
     UIView * dashView3= [[UIView alloc]initWithFrame:CGRectMake( 0, kInputViewHeight + NAV_HEIGHT + 80, SCREEN_WIDTH, 1)];
     [self addSubview:dashView3];

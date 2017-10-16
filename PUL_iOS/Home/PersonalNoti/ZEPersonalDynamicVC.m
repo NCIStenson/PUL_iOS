@@ -149,6 +149,7 @@
                                      hud3.labelText = @"删除成功";
                                      [hud3 hide:YES afterDelay:1.0f];
                                  }
+                                 [self isHaveNewMessage];
                              } fail:^(NSError *errorCode) {
                                  
                              }];
@@ -200,6 +201,7 @@
                                      [hud3 hide:YES afterDelay:1.0f];
                                      [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_PERSONAL_WITHOUTDYNAMIC object:nil];
                                  }
+                                 [self isHaveNewMessage];
                              } fail:^(NSError *errorCode) {
                                  
                              }];
@@ -239,8 +241,64 @@
                                      [hud3 hide:YES afterDelay:1.0f];
                                      [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_DELETE_ALL_DYNAMIC object:nil];
                                  }
+                                 [self isHaveNewMessage];
                              } fail:^(NSError *errorCode) {
                                  
+                             }];
+}
+
+
+#pragma mark - 是否有新消息提醒
+-(void)isHaveNewMessage
+{
+    NSDictionary * parametersDic = @{@"limit":@"20",
+                                     @"MASTERTABLE":KLB_USER_BASE_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.userinfo.UserInfoManage",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{@"USERCODE":[ZESettingLocalData getUSERCODE],
+                                @"INFOCOUNT":@"",
+                                @"QUESTIONCOUNT":@"",
+                                @"ANSWERCOUNT":@"",
+                                @"TEAMINFOCOUNT":@"",
+                                @"PERINFOCOUNT":@"",
+                                };
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_USER_BASE_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"userbaseinfo"];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * arr = [ZEUtil getServerData:data withTabelName:KLB_USER_BASE_INFO];
+                                 if ([arr count] > 0) {
+                                     //                                     NSString * INFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"INFOCOUNT"]];
+                                     //                                     NSString * TEAMINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"TEAMINFOCOUNT"]];
+                                     
+                                     NSInteger chatUnresadCount = [[JMSGConversation getAllUnreadCount] integerValue];
+                                     NSString * PERINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"PERINFOCOUNT"]];
+                                     if ([PERINFOCOUNT integerValue] > 0 ) {
+                                         UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
+                                         item.badgeValue= [NSString stringWithFormat:@"%ld",(long)([PERINFOCOUNT integerValue] + chatUnresadCount)] ;
+                                         if ([PERINFOCOUNT integerValue] + chatUnresadCount > 99) {
+                                             item.badgeValue= @"99+";
+                                         }
+                                     }else{
+                                         UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
+                                         item.badgeValue= nil;
+                                     }
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 NSLog(@">>  %@",errorCode);
                              }];
 }
 
@@ -266,7 +324,6 @@
 
 -(void)didSelectQuestionMessage:(ZETeamNotiCenModel *)notiModel
 {
-    NSLog(@">>>>  %@",notiModel.QUESTIONEXPLAIN);
     previousSelectNotiModel = notiModel;
     ZEQuestionsDetailVC * questionDetailVC = [[ZEQuestionsDetailVC alloc]init];
     questionDetailVC.enterDetailIsFromNoti = QUESTIONDETAIL_TYPE_NOTI;
@@ -278,8 +335,6 @@
 {
     [self deletePersonalDataWithSeqkey:notiModel.SEQKEY];
 }
-
-
 -(void)loadNewData
 {
     _currentPageCount = 0;

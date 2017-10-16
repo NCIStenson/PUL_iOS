@@ -57,11 +57,12 @@
                                      @"MASTERTABLE":V_KLB_CLASSICCASE_INFO,
                                      @"MENUAPP":@"EMARK_APP",
                                      @"ORDERSQL":@"CLICKCOUNT desc",
-                                     @"WHERESQL":[NSString stringWithFormat:@"PROCIRCLECODE = %@",_PROCIRCLECODE],
+                                     @"WHERESQL":@"",
                                      @"start":@"0",
                                      @"METHOD":METHOD_SEARCH,
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
+                                     @"PROCIRCLECODE":_PROCIRCLECODE,
                                      @"CLASSNAME":@"com.nci.klb.app.classiccase.ClassicCase",
                                      @"DETAILTABLE":@"",};
 
@@ -70,7 +71,7 @@
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_CLASSICCASE_INFO]
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
-                                                                       withActionFlag:nil];
+                                                                       withActionFlag:@"classicCaseSearch"];
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
@@ -78,7 +79,7 @@
                                  if ([ZEUtil isNotNull:arr] && [arr count] > 0) {
                                      [detailView reloadCaseView:arr];
                                  }else{
-                                     [self sendWithoutProcircleCodeCaseQuestionsRequest];
+//                                     [self sendWithoutProcircleCodeCaseQuestionsRequest];
                                  }
                              } fail:^(NSError *errorCode) {
 
@@ -98,6 +99,7 @@
                                      @"METHOD":METHOD_SEARCH,
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
+                                     @"PROCIRCLECODE":@"",
                                      @"CLASSNAME":@"com.nci.klb.app.classiccase.ClassicCase",
                                      @"DETAILTABLE":@"",};
     
@@ -106,7 +108,7 @@
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_CLASSICCASE_INFO]
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
-                                                                       withActionFlag:nil];
+                                                                       withActionFlag:@"classicCaseSearch"];
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {

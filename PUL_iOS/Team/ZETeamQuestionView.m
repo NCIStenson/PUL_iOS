@@ -1581,7 +1581,7 @@
         badgeLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
         badgeLab.textColor = [UIColor whiteColor];
         badgeLab.textAlignment = NSTextAlignmentCenter;
-        [questionsView addSubview:badgeLab];
+//        [questionsView addSubview:badgeLab];
         badgeLab.clipsToBounds = YES;
         badgeLab.layer.cornerRadius = badgeLab.height / 2;
         badgeLab.text = quesInfoM.INFOCOUNT;

@@ -258,9 +258,11 @@
     ZETeamNotiCenModel * notiCenM = [ZETeamNotiCenModel getDetailWithDic:self.personalNotiArr[indexPath.row]];
 
     if ([notiCenM.MESTYPE integerValue] == 1) {
-        [self initTeamCellViewWithIndexpath:indexPath withCell:cell];
+        [self initTeamCellViewWithIndexpath:indexPath withCell:cell withMestype:1];
     }else if ([notiCenM.MESTYPE integerValue] == 2){
         [self initQuestionCellViewWithIndexpath:indexPath withCell:cell];
+    }else if ([notiCenM.MESTYPE integerValue] == 4){
+        [self initTeamCellViewWithIndexpath:indexPath withCell:cell withMestype:4];
     }
         
     return cell;
@@ -281,7 +283,7 @@
 //    return 0;
 }
 
--(void)initTeamCellViewWithIndexpath:(NSIndexPath *)indexPath withCell:(UITableViewCell *)cell
+-(void)initTeamCellViewWithIndexpath:(NSIndexPath *)indexPath withCell:(UITableViewCell *)cell withMestype:(NSInteger)mestype
 {
     NSDictionary * dynamicDic =self.personalNotiArr[indexPath.row];
 
@@ -298,6 +300,9 @@
     }
     UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(100, 10, SCREEN_WIDTH - 120, 20)];
     nameLab.text = @"团队消息";
+    if(mestype == 4){
+        nameLab.text = @"团队消息（已撤回）";
+    }
     nameLab.numberOfLines = 0;
     nameLab.textAlignment = NSTextAlignmentLeft;
     nameLab.font = [UIFont systemFontOfSize:18];
@@ -403,6 +408,9 @@
     dynamiLab.lineBreakMode = NSLineBreakByTruncatingMiddle;
     dynamiLab.text = [NSString stringWithFormat:@"%@",notiM.ANSWEREXPLAIN];
     float explainHeight = [ZEUtil heightForString:dynamiLab.text font:dynamiLab.font andWidth:dynamiLab.width];
+    if(explainHeight > 40){
+        explainHeight = 40;
+    }
     dynamiLab.height = explainHeight;
     
     UILabel * receiptLab = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 90,10,70,20.0f)];
@@ -414,6 +422,7 @@
     //    if ([notiM.DYNAMICTYPE integerValue] == 1 || [notiM.DYNAMICTYPE integerValue] == 2) {
     //        receiptLab.text = @"需回执";
     //    }else{
+    
     //        receiptLab.hidden = YES;
     //    }
     receiptLab.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@",notiM.SYSCREATEDATE]];

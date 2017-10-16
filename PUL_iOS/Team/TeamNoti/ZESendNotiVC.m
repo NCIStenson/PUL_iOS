@@ -51,6 +51,7 @@
     
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"是否发送通知" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定发送" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.rightBtn.enabled = NO;
         [self confirmSendMessage];
     }];
     
@@ -98,6 +99,7 @@
                                  }
                              } fail:^(NSError *errorCode) {
                                  [self showTips:@"通知发送失败，请重试" afterDelay:1];
+                                 self.rightBtn.enabled = YES;
                              }];
 }
 

@@ -87,6 +87,8 @@
         }
     }
     if (targetMembersStr.length > 0) {
+//        askView.designatedNumberBtn.backgroundColor = MAIN_ARM_COLOR;
+//        askView.designatedNumberBtn.height = [ZEUtil heightForString:targetMembersStr font:askView.designatedNumberBtn.titleLabel.font andWidth:askView.designatedNumberBtn.width];
         [askView.designatedNumberBtn setTitle:targetMembersUsername forState:UIControlStateNormal];
     }else{
         [askView.designatedNumberBtn  setTitle:@"指定提问：只能选取团队中的人，可多选" forState:UIControlStateNormal];

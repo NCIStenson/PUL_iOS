@@ -41,8 +41,8 @@
             [self clearPersonalNotiUnreadCount];
         }
     }else if(_enterTeamNotiType == ENTER_TEAMNOTI_TYPE_RECEIPT_Y){
+        [detailView reloadPersonalYesReceiptView:_notiCenModel isReceipt:YES];
         [self getIsReceipt];
-        [detailView reloadPersonalYesReceiptView:_notiCenModel isReceipt:NO];
         if ([_notiCenModel.DYNAMICTYPE integerValue] == 0 || [_notiCenModel.DYNAMICTYPE integerValue] == 1) {
             [self clearPersonalNotiUnreadCount];
         }

@@ -40,15 +40,14 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    [self sendSearchAnswerRequest];
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(acceptSuccess) name:kNOTI_ACCEPT_SUCCESS object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSearchAnswerRequestWithoutOperateType) name:kNOTI_BACK_QUEANSVIEW object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSearchAnswerRequestWithoutOperateType) name:kNOTI_BACK_QUEANSVIEW object:nil];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = YES;
+    [self sendSearchAnswerRequest];
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -65,11 +64,9 @@
     _questionInfoModel.ISSOLVE = @"1";
 }
 
-
 -(void)sendSearchAnswerRequestWithoutOperateType
 {
     NSString * operatetype = @"";
-    
     NSDictionary * parametersDic = @{@"limit":@"-1",
                                      @"MASTERTABLE":V_KLB_TEAMCIRCLE_ANSWER_INFO,
                                      @"MENUAPP":@"EMARK_APP",
@@ -96,7 +93,7 @@
                                  _datasArr = [ZEUtil getServerData:data withTabelName:V_KLB_TEAMCIRCLE_ANSWER_INFO];
                                  [_quesDetailView reloadData:_datasArr];
                              } fail:^(NSError *errorCode) {
-                                 
+                                 NSLog(@" ==========   %@",errorCode);
                              }];
 }
 
