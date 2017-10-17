@@ -7,7 +7,6 @@
 //
 
 #import "ZESendNotiView.h"
-
 @interface ZESendNotiView()<UITextViewDelegate>
 {
     

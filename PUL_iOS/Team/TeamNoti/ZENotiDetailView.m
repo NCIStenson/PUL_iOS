@@ -7,7 +7,6 @@
 //
 
 #import "ZENotiDetailView.h"
-
 @implementation ZENotiDetailHeaderView
 
 -(id)initWithFrame:(CGRect)frame
@@ -202,7 +201,6 @@
     notiDetailTableView.dataSource = self;
     [self addSubview:notiDetailTableView];
     notiDetailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
 }
 
 #pragma mark - Public Method

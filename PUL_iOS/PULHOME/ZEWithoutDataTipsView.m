@@ -11,6 +11,7 @@
 @interface ZEWithoutDataTipsView()
 {
     CGRect _frame;
+    UIImageView * tipImage;
     UILabel * tipsLab;
 }
 
@@ -29,7 +30,7 @@
 }
 
 -(void)initUI {
-    UIImageView * tipImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, (_frame.size.width - 40 )* .7,( _frame.size.height - 40 )* .7)];
+  tipImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 0, (_frame.size.width - 40 )* .7,( _frame.size.height - 40 )* .7)];
     tipImage.image = [UIImage imageNamed:@"without_tips"];
     tipImage.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:tipImage];
@@ -40,6 +41,25 @@
     tipsLab.textColor = kTextColor;
     [self addSubview:tipsLab];
     tipsLab.text = @"好心塞，居然是空的";
+}
+
+-(void)setImageType:(SHOW_TIPS_IMAGETYPE)imageType
+{
+    _imageType = imageType;
+    switch (imageType) {
+        case SHOW_TIPS_IMAGETYPE_COMMON:
+            tipImage.image = [UIImage imageNamed:@"without_tips"];
+            break;
+        case SHOW_TIPS_IMAGETYPE_CRY:
+            tipImage.image = [UIImage imageNamed:@"without_tips"];
+            break;
+        case SHOW_TIPS_IMAGETYPE_LAUGH:
+            tipImage.image = [UIImage imageNamed:@"without_tips"];
+            break;
+        default:
+            tipImage.image = [UIImage imageNamed:@"without_tips_commmon"];
+            break;
+    }
 }
 
 -(void)setType:(SHOW_TIPS_TYPE)type
@@ -60,7 +80,10 @@
         case SHOW_TIPS_TYPE_QUESTIONDETAIL:
             return @"还没有人回答，快来帮帮TA吧！";
             break;
-            
+        case SHOW_TIPS_TYPE_SENDNOTICENTER:
+            return @"还没有通知发布哦！";
+            break;
+
         default:
             return @"";
             break;

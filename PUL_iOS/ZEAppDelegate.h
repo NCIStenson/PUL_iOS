@@ -23,6 +23,7 @@
 
 @interface ZEAppDelegate : UIResponder <UIApplicationDelegate,JPUSHRegisterDelegate,JMessageDelegate>
 
+@property (nonatomic, assign) BOOL allowRotation; // 标记是否可以旋转
 @property (strong, nonatomic) UIWindow *window;
 
 @end

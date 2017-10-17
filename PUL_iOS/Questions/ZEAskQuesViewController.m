@@ -288,8 +288,14 @@
     if ([askView.inputView.text isEqualToString:textViewStr]) {
         [self showAlertView:@"请输入问题说明" isBack:NO];
         return;
-    }else if (askView.inputView.text.length < 5){
-        [self showAlertView:@"请详细输入问题说明" isBack:NO];
+    }else if (askView.inputView.text.length < 6){
+        [self showAlertView:@"请输入不少于6个字的问题描述" isBack:NO];
+        return;
+    }else if ([ZEUtil isEmpty:askView.inputView.text]){
+        [self showAlertView:@"不能发表空白问题" isBack:NO];
+        return;
+    }else if (askView.inputView.text.length > 200){
+        [self showAlertView:@"请输入不多于200字的问题描述" isBack:NO];
         return;
     }else{
         

@@ -32,6 +32,8 @@
         NSLog(@"===  %@",subv);
         if ([subv isKindOfClass:NSClassFromString(@"_UIBarBackground")]) {
             [subv.layer addSublayer:gradientLayer];
+        }else if ([subv isKindOfClass:NSClassFromString(@"_UINavigationBarBackground")]){
+            [subv.layer addSublayer:gradientLayer];
         }
     }
 //    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:MAIN_NAV_COLOR] forBarMetrics:UIBarMetricsDefault];

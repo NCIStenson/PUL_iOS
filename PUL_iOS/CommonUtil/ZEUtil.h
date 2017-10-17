@@ -154,4 +154,7 @@
 #pragma mark - 缓存分类列表
 +(void)cacheQuestionType;
 
+#pragma mark - 输入全部为空格判断
++ (BOOL) isEmpty:(NSString *) str ;
+
 @end

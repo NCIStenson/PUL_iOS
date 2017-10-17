@@ -135,9 +135,10 @@
             _teamNameField.leftViewMode = UITextFieldViewModeAlways;
             _teamNameField.placeholder = @"请输入团队名称";
             _teamNameField.textColor = kTextColor;
+            _teamNameField.delegate = self;
             [self addSubview:_teamNameField];
             [_teamNameField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
-
+            [_teamNameField addTarget:self  action:@selector(valueChanged:)  forControlEvents:UIControlEventAllEditingEvents];
         }else if (i == 1){
             caseNameLab.text = @"团队分类:";
             _teamTypeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -223,6 +224,12 @@
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
+    if([textView isEqual:_manifestoTextView] && [_inputManifestoStr isEqualToString:textViewStr]){
+        _inputManifestoStr = textView.text;
+    }else if([textView isEqual:_profileTextView] && [_inputManifestoStr isEqualToString:textViewProfileStr]){
+        _inputProfileStr = textView.text;
+    }
+    
     if ([textView.text isEqualToString:textViewStr] || [textView.text isEqualToString:textViewProfileStr]) {
         textView.text = @"";
         textView.textColor = kTextColor;
@@ -241,12 +248,90 @@
 
 -(void)textViewDidChange:(UITextView *)textView
 {
+    BOOL flag=[self isContainsTwoEmoji:textView.text];
+    if ([textView isEqual:_manifestoTextView] ) {
+        if (flag){
+            _manifestoTextView.text = [textView.text substringToIndex:_inputManifestoStr.length];
+        }else{
+            _inputManifestoStr = _manifestoTextView.text;
+        }
+    }else if ([textView isEqual:_profileTextView]){
+        if (flag){
+            _profileTextView.text = [textView.text substringToIndex:_inputProfileStr.length];
+        }else{
+            _inputProfileStr = _profileTextView.text;
+        }
+    }
+
     if (textView.text.length > 20 && [textView isEqual:_manifestoTextView]) {
         textView.text = [textView.text substringToIndex:20];
     }else if (textView.text.length > 100 && [textView isEqual:_profileTextView]){
         textView.text = [textView.text substringToIndex:100];
     }
 }
+
+#pragma mark - UITextFieldDelegate
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if ([textField isEqual:_teamNameField]) {
+        _teamNameStr = textField.text;
+    }
+}
+
+-(void)valueChanged:(NSNotification *)noti
+{
+    UITextField *textField = (UITextField *)noti;
+
+    BOOL flag=[self isContainsTwoEmoji:textField.text];
+    if (flag) {
+        _teamNameField.text = [textField.text substringToIndex:_teamNameStr.length];
+    }else{
+        _teamNameStr = textField.text;
+    }
+}
+
+-(BOOL)isContainsTwoEmoji:(NSString *)string
+{
+    __block BOOL isEomji = NO;
+    [string enumerateSubstringsInRange:NSMakeRange(0, [string length]) options:NSStringEnumerationByComposedCharacterSequences usingBlock:
+     ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+         const unichar hs = [substring characterAtIndex:0];
+         //         NSLog(@"hs++++++++%04x",hs);
+         if (0xd800 <= hs && hs <= 0xdbff) {
+             if (substring.length > 1) {
+                 const unichar ls = [substring characterAtIndex:1];
+                 const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
+                 if (0x1d000 <= uc && uc <= 0x1f77f)
+                 {
+                     isEomji = YES;
+                 }
+                 //                 NSLog(@"uc++++++++%04x",uc);
+             }
+         } else if (substring.length > 1) {
+             const unichar ls = [substring characterAtIndex:1];
+             if (ls == 0x20e3|| ls ==0xfe0f) {
+                 isEomji = YES;
+             }
+             //             NSLog(@"ls++++++++%04x",ls);
+         } else {
+             if (0x2100 <= hs && hs <= 0x27ff && hs != 0x263b) {
+                 isEomji = YES;
+             } else if (0x2B05 <= hs && hs <= 0x2b07) {
+                 isEomji = YES;
+             } else if (0x2934 <= hs && hs <= 0x2935) {
+                 isEomji = YES;
+             } else if (0x3297 <= hs && hs <= 0x3299) {
+                 isEomji = YES;
+             } else if (hs == 0xa9 || hs == 0xae || hs == 0x303d || hs == 0x3030 || hs == 0x2b55 || hs == 0x2b1c || hs == 0x2b1b || hs == 0x2b50|| hs == 0x231a ) {
+                 isEomji = YES;
+             }
+         }
+         
+     }];
+    return isEomji;
+}
+
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {

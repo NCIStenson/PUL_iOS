@@ -13,5 +13,6 @@
 -(id)initWithFrame:(CGRect)frame;
 
 @property (nonatomic,assign) SHOW_TIPS_TYPE type;
+@property (nonatomic,assign) SHOW_TIPS_IMAGETYPE imageType;
 
 @end

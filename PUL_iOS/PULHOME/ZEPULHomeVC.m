@@ -25,6 +25,8 @@
 #import "ZEGroupVC.h"
 #import "ZESinginVC.h"
 #import "ZEFindTeamVC.h"
+
+#import "SvUDIDTools.h"
 @interface ZEPULHomeVC () <ZEPULHomeViewDelegate>
 {
     ZEPULHomeView * _PULHomeView ;
@@ -42,6 +44,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self initView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(verifyLogin:) name:kVerifyLogin object:nil];
+    
+    [self storeSystemInfo];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -74,6 +78,177 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kVerifyLogin object:nil];
 }
 
+#pragma mark - 检测更新
+
+-(void)checkUpdate
+{
+    NSDictionary * parametersDic = @{@"MASTERTABLE":SNOW_APP_VERSION,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"MOBILETYPE='5'",
+                                     @"start":@"0",
+                                     @"METHOD":@"search",
+                                     @"DETAILTABLE":@"",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     };
+    
+    NSDictionary * fieldsDic =@{@"MOBILETYPE":@"",
+                                @"VERSIONCODE":@"",
+                                @"VERSIONNAME":@"",
+                                @"FILEURL":@"",
+                                @"FILEURL2":@"",
+                                @"TYPE":@""};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[SNOW_APP_VERSION]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 if ([[ZEUtil getServerData:data withTabelName:SNOW_APP_VERSION] count] > 0) {
+                                     NSDictionary * dic = [ZEUtil getServerData:data withTabelName:SNOW_APP_VERSION][0];
+                                     NSString* localVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+                                     if ([localVersion floatValue] < [[dic objectForKey:@"VERSIONNAME"] floatValue]) {
+                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"经检测当前版本不是最新版本，点击确定跳转更新。" preferredStyle:UIAlertControllerStyleAlert];
+                                         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[dic objectForKey:@"FILEURL"]]];
+                                         }];
+                                         [alertController addAction:okAction];
+                                         [self presentViewController:alertController animated:YES completion:nil];
+                                         
+                                     }
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+    
+}
+-(void)storeSystemInfo
+{
+    NSDictionary * parametersDic = @{@"MASTERTABLE":SNOW_MOBILE_DEVICE,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"limit":@"2000",
+                                     @"METHOD":@"search",
+                                     @"DETAILTABLE":@"",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     };
+    
+    NSDictionary * fieldsDic =@{@"IMEI":[SvUDIDTools UDID],
+                                @"SEQKEY":@"",
+                                @"LOGINTIMES":@""};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[SNOW_MOBILE_DEVICE]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 if([[ZEUtil getServerData:data withTabelName:SNOW_MOBILE_DEVICE] count] == 0){
+                                     [self insertSystemInfo];
+                                 }else{
+                                     [self updateSystemInfo:[ZEUtil getServerData:data withTabelName:SNOW_MOBILE_DEVICE][0]];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+-(void)insertSystemInfo
+{
+    NSDictionary * parametersDic = @{@"MASTERTABLE":SNOW_MOBILE_DEVICE,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"limit":@"20",
+                                     @"METHOD":@"addSave",
+                                     @"DETAILTABLE":@"",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     };
+    
+    NSMutableDictionary * fieldsDic = [NSMutableDictionary dictionaryWithDictionary:[ZEUtil getSystemInfo]];
+    [fieldsDic setObject:@"1" forKey:@"LOGINTIMES"];
+    [fieldsDic setObject:@"true" forKey:@"ISENABLE"];
+    [fieldsDic setObject:[ZEUtil getCurrentDate:@"YYYY-MM-dd"] forKey:@"FIRSTUSE"];
+    [fieldsDic setObject:[ZEUtil getCurrentDate:@"YYYY-MM-dd"] forKey:@"LATESTUSE"];
+    [fieldsDic setObject:[ZEUtil getCurrentDate:@"YYYY-MM-dd"] forKey:@"SYSCREATEDATE"];
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[SNOW_MOBILE_DEVICE]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 
+                                 if([[ZEUtil getServerData:data withTabelName:SNOW_MOBILE_DEVICE] count] == 0){
+                                     
+                                 }else{
+                                     
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+    
+    
+}
+
+-(void)updateSystemInfo:(NSDictionary *)dic
+{
+    long loginTimes = [[dic objectForKey:@"LOGINTIMES"] integerValue];
+    loginTimes += 1;
+    
+    NSDictionary * parametersDic = @{@"MASTERTABLE":SNOW_MOBILE_DEVICE,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"limit":@"20",
+                                     @"METHOD":@"updateSave",
+                                     @"DETAILTABLE":@"",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     };
+    
+    NSMutableDictionary * fieldsDic = [NSMutableDictionary dictionaryWithDictionary:@{@"IMEI":[SvUDIDTools UDID],
+                                                                                      @"SEQKEY":[dic objectForKey:@"SEQKEY"],
+                                                                                      @"LOGINTIMES":[NSString stringWithFormat:@"%ld",loginTimes],
+                                                                                      @"LATESTUSE":[ZEUtil getCurrentDate:@"YYYY-MM-dd"],
+                                                                                      @"SYSUPDATEDATE":[ZEUtil getCurrentDate:@"YYYY-MM-dd"]}];
+    
+    [fieldsDic setObject:[ZESettingLocalData getUSERNAME] forKey:@"USERACCOUNT"];
+    [fieldsDic setObject:[ZESettingLocalData getNAME] forKey:@"PSNNAME"];
+    [fieldsDic setObject:[ZESettingLocalData getUSERCODE] forKey:@"PSNNUM"];
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[SNOW_MOBILE_DEVICE]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSLog(@">>>>>>  %@",data);
+                                 if([[ZEUtil getServerData:data withTabelName:SNOW_MOBILE_DEVICE] count] == 0){
+                                     
+                                 }else{
+                                     
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+
 #pragma mark - Request
 #pragma mark - 获取首页图标请求
 
@@ -81,6 +256,7 @@
 {
     [[ZEServerEngine sharedInstance] cancelAllTask];
 
+    [self checkUpdate];
     [self geMyMessageList];
     [self getPULHomeIconRequest];
     [ZEUtil cacheQuestionType];

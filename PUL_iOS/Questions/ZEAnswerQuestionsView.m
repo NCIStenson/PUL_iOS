@@ -16,7 +16,7 @@
 #import "ZEAnswerQuestionsView.h"
 #import "JCAlertView.h"
 #import "PYPhotoBrowseView.h"
-@interface ZEAnswerQuestionsView()<UITextViewDelegate>
+@interface ZEAnswerQuestionsView()<UITextViewDelegate,PYPhotoBrowseViewDataSource,PYPhotoBrowseViewDelegate>
 {
     UITextView * _inputView;
     NSMutableArray * _choosedImageArr;
@@ -223,7 +223,18 @@
     PYPhotoBrowseView *browser = [[PYPhotoBrowseView alloc] init];
     browser.images = self.choosedImageArr; // 图片总数
     browser.currentIndex = btn.tag - 100;
+    browser.delegate = self;
+    browser.dataSource = self;
     [browser show];
+}
+
+- (CGRect)frameFormWindow{
+    return CGRectMake(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40);
+}
+
+-(void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView didSingleClickedImage:(UIImage *)image index:(NSInteger)index
+{
+    [photoBrowseView hidden];
 }
 
 

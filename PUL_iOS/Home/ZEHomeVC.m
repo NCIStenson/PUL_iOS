@@ -60,7 +60,6 @@
     [self.view addGestureRecognizer:tapGr];
     
     [self sendHomeDataRequest];
-    [self storeSystemInfo];
 }
 
 -(void)viewTapped:(UITapGestureRecognizer*)tapGr
@@ -93,7 +92,6 @@
 {
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = YES;
-//    [self checkUpdate];
     
     [[NSNotificationCenter defaultCenter]postNotificationName:kNOTI_ASK_QUESTION object:nil];
     [self isHaveNewMessage];

@@ -19,7 +19,7 @@
 
 @end
 
-@interface ZECreateTeamMessageView : UIView<UITextViewDelegate,ZEAskQuestionTypeViewDelegate>
+@interface ZECreateTeamMessageView : UIView<UITextFieldDelegate,UITextViewDelegate,ZEAskQuestionTypeViewDelegate>
 {
     UITextView * _manifestoTextView;
     UITextField * _teamNameField;
@@ -28,7 +28,7 @@
     UIButton * _teamHeadImgBtn;
     ZETeamCircleModel * teamCircleInfo;
 }
-
+@property (nonatomic, assign) NSInteger textLocation;//这里声明一个全局属性，用来记录输入位置
 @property (nonatomic,weak) ZECreateTeamView * createTeamView;
 @property (nonatomic,strong) ZEAskQuestionTypeView * teamTypeView;
 @property (nonatomic,strong) UITextField * teamNameField;    // 团队名称
@@ -37,6 +37,11 @@
 @property (nonatomic,strong) UITextView * profileTextView;   //  团队简介
 @property (nonatomic,copy) NSString * TEAMCIRCLECODENAME;    //  班组圈分类名称
 @property (nonatomic,copy) NSString * TEAMCIRCLECODE;        //  班组圈分类编码
+
+@property (nonatomic,copy) NSString * teamNameStr;        // 团队名称字符
+@property (nonatomic,copy) NSString * inputManifestoStr;        //  班组宣言字符
+@property (nonatomic,copy) NSString * inputProfileStr;        // 团队简介字符
+
 
 - (void)reloadTeamHeadImageView:(UIImage *)headImage;
 

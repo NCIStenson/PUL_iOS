@@ -7,7 +7,7 @@
 //
 
 #import "ZEQuestionBankWebVC.h"
-
+#import "ZEAppDelegate.h"
 #import <WebKit/WebKit.h>
 
 @interface ZEQuestionBankWebVC ()<WKNavigationDelegate,UIGestureRecognizerDelegate,WKScriptMessageHandler>
@@ -33,6 +33,10 @@
     if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate=self;
     }
+#pragma - mark  视频全屏问题
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowVisible:) name:UIWindowDidBecomeVisibleNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowHidden:) name:UIWindowDidBecomeHiddenNotification object:nil];
+    
 
     if (_functionCode.length > 0) {
         [self getCustomFunctionList];
@@ -46,6 +50,42 @@
     }
     
 }
+
+#pragma - mark  视频进入全屏
+-(void)windowVisible:(NSNotification *)notification
+{
+    ZEAppDelegate *appDelegate = (ZEAppDelegate *)[UIApplication sharedApplication].delegate;
+//    appDelegate.allowRotation = YES;
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val =UIDeviceOrientationLandscapeLeft;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+
+}
+
+#pragma - mark 视频将退出
+-(void)windowHidden:(NSNotification *)notification
+{
+    ZEAppDelegate *appDelegate = (ZEAppDelegate *)  [UIApplication sharedApplication].delegate;
+//    appDelegate.allowRotation = NO;
+    
+    // 强制归正
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+        SEL selector = NSSelectorFromString(@"setOrientation:");
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+        [invocation setSelector:selector];
+        [invocation setTarget:[UIDevice currentDevice]];
+        int val =UIInterfaceOrientationPortrait;
+        [invocation setArgument:&val atIndex:2];
+        [invocation invoke];
+    }
+}
+
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer*)gestureRecognizer {
     return self.isCanSideBack;
@@ -108,7 +148,6 @@
                                      wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20)];
                                      wkWebView.top = 20;
                                      wkWebView.height = SCREEN_HEIGHT - 20;
-                                     
                                      UIView * statusBackgroundView = [UIView new];
                                      statusBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
                                      

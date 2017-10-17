@@ -111,7 +111,10 @@
     _usernameField.delegate = self;
     [inputMessageBackView addSubview:_usernameField];
     _usernameField.textColor = kTextColor;
-
+    if([ZESettingLocalData getUSERNAME].length > 0){
+        _usernameField.text = [ZESettingLocalData getUSERNAME];
+    }
+    
     CALayer * lineLayer = [CALayer layer];
     lineLayer.frame = CGRectMake(kUsernameImageMarginLeft, kUsernameLabMarginTop + kUsernameLabHeight , inputMessageBackView.width, 0.5);
     lineLayer.backgroundColor = MAIN_LOGIN_COLOR.CGColor;

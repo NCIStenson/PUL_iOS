@@ -212,7 +212,6 @@ static NSString * kUSERINFODic      = @"kUSERINFODic";
 +(void)clearLocalData
 {
     [ZESettingLocalData deleteCookie];
-    [ZESettingLocalData deleteUSERNAME];
     [ZESettingLocalData deleteUSERPASSWORD];
     [ZESettingLocalData deleteUSERCODE];
     [ZESettingLocalData deleteUSERINFODic];

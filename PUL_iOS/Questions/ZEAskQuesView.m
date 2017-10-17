@@ -18,7 +18,7 @@
 #import "ZEAskQuesView.h"
 #import "ZEAskQuestionTypeView.h"
 
-@interface ZEAskQuesView()<UITextViewDelegate,ZEAskQuestionTypeViewDelegate>
+@interface ZEAskQuesView()<UITextViewDelegate,ZEAskQuestionTypeViewDelegate,PYPhotoBrowseViewDataSource,PYPhotoBrowseViewDelegate>
 {
     UITextView * _inputView;
     NSMutableArray * _choosedImageArr;
@@ -623,11 +623,23 @@
 
 -(void)goLookView:(UIButton*)btn
 {
-    PYPhotoBrowseView *browser = [[PYPhotoBrowseView alloc] init];
-    browser.images = self.choosedImageArr; // 图片总数
-    browser.currentIndex = btn.tag - 100;
-    [browser show];
+    PYPhotoBrowseView * browseView = [[PYPhotoBrowseView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    browseView.images = self.choosedImageArr; // 图片总数
+    browseView.currentIndex = btn.tag - 100;
+    browseView.delegate = self;
+    browseView.dataSource = self;
+    [browseView show];
 }
+
+- (CGRect)frameFormWindow{
+    return CGRectMake(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40);
+}
+
+-(void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView didSingleClickedImage:(UIImage *)image index:(NSInteger)index
+{
+    [photoBrowseView hidden];
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

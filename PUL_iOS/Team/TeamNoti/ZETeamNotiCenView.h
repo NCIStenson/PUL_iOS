@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZEWithoutDataTipsView.h"
 
 #import "ZETeamNotiLayout.h"
 

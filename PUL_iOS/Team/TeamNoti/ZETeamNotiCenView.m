@@ -10,6 +10,8 @@
 
 #import "ZETeamNotiCenView.h"
 #import "ZETeamNotiLayout.h"
+#import "ZEWithoutDataTipsView.h"
+
 @implementation ZETeamNotiCenTableViewCell
 
 -(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -101,6 +103,7 @@
 @interface ZETeamNotiCenView()<UITableViewDelegate,UITableViewDataSource>
 {
     UITableView * _notiCenTableView;
+    ZEWithoutDataTipsView * _withoutTipsView;
 }
 @property (nonatomic,strong) NSMutableArray * layouts;
 
@@ -137,7 +140,20 @@
         });
     });
 }
+-(void)showTipsView
+{
+    if (!_withoutTipsView) {
+        _withoutTipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:self.frame];
+        _withoutTipsView.type = SHOW_TIPS_TYPE_SENDNOTICENTER;
+        [self addSubview:_withoutTipsView];
+        [self bringSubviewToFront:_withoutTipsView];
+    }
+}
 
+-(void)hiddenTipsView{
+    [_withoutTipsView removeFromSuperview];
+    _withoutTipsView = nil;
+}
 
 -(void)initView
 {
@@ -152,6 +168,7 @@
     
     MJRefreshFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     _notiCenTableView.mj_footer = footer;
+    
 }
 
 #pragma mark - Public Method
@@ -172,8 +189,12 @@
     }
     
     [_notiCenTableView reloadData];
-
     
+    if (arr.count == 0) {
+        [self showTipsView];
+    }else{
+        [self hiddenTipsView];
+    }
 }
 
 -(void)canLoadMoreData
@@ -265,7 +286,9 @@
         
         [self.layouts removeObjectAtIndex:indexPath.row];//tableview数据源
         if (![self.layouts count]) { //删除此行后数据源为空
-            [_notiCenTableView deleteSections: [NSIndexSet indexSetWithIndex: indexPath.section] withRowAnimation:UITableViewRowAnimationBottom];
+            [_notiCenTableView reloadData];
+            [self showTipsView];
+//            [_notiCenTableView deleteSections: [NSIndexSet indexSetWithIndex: indexPath.section] withRowAnimation:UITableViewRowAnimationBottom];
         } else {
             [_notiCenTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }

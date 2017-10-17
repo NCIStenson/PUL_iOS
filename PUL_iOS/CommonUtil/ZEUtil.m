@@ -788,5 +788,33 @@
                              }];
 }
 
++ (BOOL) isEmpty:(NSString *) str {
+    
+    if (!str) {
+        
+        return true;
+        
+    } else {
+        
+        NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+        
+        NSString *trimedString = [str stringByTrimmingCharactersInSet:set];
+        
+        if ([trimedString length] == 0) {
+            
+            return true;
+            
+        } else {
+            
+            return false;
+            
+        }
+        
+    }
+    
+}
+
+
+
 
 @end

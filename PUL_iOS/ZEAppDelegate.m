@@ -66,13 +66,13 @@
     [JPUSHService setupWithOption:launchOptions
                            appKey:JMESSAGE_APPKEY
                           channel:@"App Store"
-                 apsForProduction:YES
+                 apsForProduction:NO
             advertisingIdentifier:nil];
     
     [JMessage setupJMessage:launchOptions
                      appKey:JMESSAGE_APPKEY
                     channel:@"App Store"
-           apsForProduction:YES
+           apsForProduction:NO
                    category:nil];
     [JMessage addDelegate:self withConversation:nil];
 
@@ -245,8 +245,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         case kJMSGEventNotificationReceiveServerFriendUpdate:
             NSLog(@"Receive Server Friend update Notification Event");
             break;
-            
-            
         case kJMSGEventNotificationLoginKicked:
             [self goLoginVC:@"您的账号在其他设备登录，请重新登录"];
             break;
@@ -343,5 +341,19 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - 解决网页视频全屏播放问题
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)nowWindow {
+    
+    if (_allowRotation) {
+        return UIInterfaceOrientationMaskAll;
+    }
+    else
+    {
+        return UIInterfaceOrientationMaskPortrait;
+    }
+}
+
 
 @end

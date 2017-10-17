@@ -141,6 +141,9 @@
     if (_answerQuesView.inputView.text.length == 0 || [_answerQuesView.inputView.text isEqualToString:textViewStr]){
         [self showTips:@"请输入回答内容"];
         return;
+    }else if ([ZEUtil isEmpty:_answerQuesView.inputView.text]){
+        [self showTips:@"不能回复空白答案"];
+        return;
     }else{
         UIAlertController * alertCont= [UIAlertController alertControllerWithTitle:@"是否确定提交问题答案" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
