@@ -37,6 +37,11 @@
 
 -(void)deleteSelectedImageWIthIndex:(NSInteger)index;
 
+/**
+ 选择分类时修改title
+ */
+-(void)changeAskQuestionTitle;
+
 @end
 
 @interface ZEAskQuesView : UIView

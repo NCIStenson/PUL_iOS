@@ -83,5 +83,7 @@
 	<false/>
 	<key>ZenithServerAddress</key>
 	<string>$(ZENITH_SERVER)</string>
+	<key>UILaunchStoryboardName</key>
+	<string></string>
 </dict>
 </plist>

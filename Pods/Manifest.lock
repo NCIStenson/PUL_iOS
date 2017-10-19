@@ -24,9 +24,11 @@ PODS:
   - SDWebImage (3.7.6):
     - SDWebImage/Core (= 3.7.6)
   - SDWebImage/Core (3.7.6)
-  - YYKit (1.0.7):
-    - YYKit/no-arc (= 1.0.7)
-  - YYKit/no-arc (1.0.7)
+  - YYKit (1.0.9):
+    - YYKit/no-arc (= 1.0.9)
+  - YYKit/no-arc (1.0.9)
+  - ZLPhotoBrowser (2.4.9):
+    - SDWebImage
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0.4)
@@ -36,6 +38,7 @@ DEPENDENCIES:
   - MJRefresh (~> 3.1.0)
   - SDWebImage (~> 3.7.4)
   - YYKit (~> 1.0.7)
+  - ZLPhotoBrowser (~> 2.4.9)
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
@@ -45,8 +48,9 @@ SPEC CHECKSUMS:
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
-  YYKit: 843d1b26e20b82c695790c9a89907eaa1e99907f
+  YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
+  ZLPhotoBrowser: 1a5c422e2f621caa79e3689649483ece8ca96381
 
-PODFILE CHECKSUM: 92acb70c2a95cfdb4fc5338f897a94086ec2fdf6
+PODFILE CHECKSUM: f646fbfc6686b4695480d12cd62fad6b1d5aa6af
 
-COCOAPODS: 1.2.1.beta.1
+COCOAPODS: 1.3.1

@@ -1292,6 +1292,8 @@
 		98B13C451E6E99E8006C783B /* NSArray+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Extension.m"; sourceTree = "<group>"; };
 		98B1DA721E8B525F00CB6815 /* ZEExpertModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEExpertModel.h; path = Group/EXPERT/ZEExpertModel.h; sourceTree = "<group>"; };
 		98B1DA731E8B525F00CB6815 /* ZEExpertModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEExpertModel.m; path = Group/EXPERT/ZEExpertModel.m; sourceTree = "<group>"; };
+		98BCAD091F984C9A000258CE /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		98BCAD0B1F984CA7000258CE /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
 		98BF43EE1F74A256004B6C36 /* ZEChangePwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEChangePwdVC.h; path = Setting/ZEChangePwdVC.h; sourceTree = "<group>"; };
 		98BF43EF1F74A256004B6C36 /* ZEChangePwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEChangePwdVC.m; path = Setting/ZEChangePwdVC.m; sourceTree = "<group>"; };
 		98BF43F11F75065E004B6C36 /* ZEChangePweAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZEChangePweAlertView.h; sourceTree = "<group>"; };
@@ -2658,6 +2660,8 @@
 		B7D1F079C1E85BD7D2342805 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				98BCAD0B1F984CA7000258CE /* PhotosUI.framework */,
+				98BCAD091F984C9A000258CE /* Photos.framework */,
 				9828A7311EA9DB2300611327 /* WebKit.framework */,
 				9899CC481EA893CD00A1446F /* JavaScriptCore.framework */,
 				9850691C1E7FC46B005F30A6 /* libresolv.tbd */,
@@ -3229,9 +3233,15 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PUL_iOS/Pods-PUL_iOS-resources.sh",
+				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
+				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/ZLPhotoActionSheet.xib",
+				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/ZLPhotoBrowserCell.xib",
+				"${PODS_ROOT}/ZLPhotoBrowser/PhotoBrowser/resource/ZLPhotoBrowser.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -3259,13 +3269,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PUL_iOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

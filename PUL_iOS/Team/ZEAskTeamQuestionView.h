@@ -35,6 +35,12 @@
  */
 -(void)goChoooseMemberVC;
 
+
+/**
+ 选择分类时修改问题title
+ */
+-(void)changeAskTeamQuestionTitle;
+
 @end
 
 @interface ZEAskTeamQuestionView : UIView

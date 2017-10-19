@@ -35,7 +35,7 @@
 
 -(void)setUI{
     
-    _notiContentView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 109.0f) style:UITableViewStylePlain];
+    _notiContentView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 60.0f - IPHONETabbarHeight) style:UITableViewStylePlain];
     _notiContentView.dataSource = self;
     _notiContentView.delegate =self;
     [self addSubview:_notiContentView];

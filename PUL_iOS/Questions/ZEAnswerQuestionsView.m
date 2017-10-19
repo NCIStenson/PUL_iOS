@@ -193,9 +193,15 @@
 
 -(void)textViewDidChange:(UITextView *)textView
 {
-//    if (textView.text.length > 50) {
-//        textView.text = [textView.text substringToIndex:50];
-//    }
+    if (textView.text.length > 500) {
+        MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self animated:YES];
+        hud3.mode = MBProgressHUDModeText;
+        hud3.detailsLabelText = @"您输入的内容已超过500个字";
+        hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
+        [hud3 hide:YES afterDelay:1.0f];
+
+        textView.text = [textView.text substringToIndex:500];
+    }
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event

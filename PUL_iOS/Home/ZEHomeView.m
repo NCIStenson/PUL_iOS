@@ -22,12 +22,12 @@
 #define kLeftButtonWidth 40.0f
 #define kLeftButtonHeight 40.0f
 #define kLeftButtonMarginLeft 10.0f
-#define kLeftButtonMarginTop 20.0f + 2.0f
+#define kLeftButtonMarginTop (IPHONEX ? 40.0f : 20.0f + 2.0f)
 
 #define kNavTitleLabelWidth (SCREEN_WIDTH - 110.0f)
 #define kNavTitleLabelHeight 44.0f
 #define kNavTitleLabelMarginLeft (kNavBarWidth - kNavTitleLabelWidth) / 2.0f
-#define kNavTitleLabelMarginTop 20.0f
+#define kNavTitleLabelMarginTop ( IPHONEX ? 40.0f : 20.0f)
 
 #define kSearchTFMarginLeft   70.0f
 #define kSearchTFMarginTop    27.0f
@@ -132,7 +132,7 @@
     
     for (int i = 1; i < 4; i ++) {
         UIButton * _typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _typeBtn.frame = CGRectMake(SCREEN_WIDTH - 140 + 33 * i, 27, 30.0, 30.0);
+        _typeBtn.frame = CGRectMake(SCREEN_WIDTH - 140 + 33 * i, (IPHONEX ? 47 : 27.0f), 30.0, 30.0);
         _typeBtn.contentMode = UIViewContentModeScaleAspectFit;
         _typeBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [navView addSubview:_typeBtn];

@@ -324,11 +324,11 @@
 
 -(void)acceptAnswer
 {
-    UIAlertController *  alertC = [UIAlertController alertControllerWithTitle:nil message:@"确定采纳该建议为答案？" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *  alertC = [UIAlertController alertControllerWithTitle:nil message:@"确定采纳该回答？" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction * confirmAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self updateKLB_ANSWER_INFOWithQuestionInfo:_questionInfo withAnswerInfo:_answerInfo];
     }];
-    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"再想想" style:UIAlertActionStyleDefault handler:nil];
     [alertC addAction:cancelAction];
     [alertC addAction:confirmAction];
 

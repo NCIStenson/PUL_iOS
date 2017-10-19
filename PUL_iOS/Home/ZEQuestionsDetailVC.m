@@ -40,6 +40,9 @@
         }
         if ([_questionInfoModel.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]) {
             [self.rightBtn setTitle:@"修改" forState:UIControlStateNormal];
+            if([_questionInfoModel.ISSOLVE boolValue]){
+                self.rightBtn.hidden = YES;
+            }
         }else{
             [self.rightBtn setTitle:@"回答" forState:UIControlStateNormal];
         }
@@ -349,8 +352,9 @@
 
 #pragma mark - 点赞
 
--(void)giveLikes:(NSString *)answerSeqkey
+-(void)giveLikes:(NSString *)answerSeqkey withButton:(UIButton *)button
 {
+    button.enabled = NO;
     NSDictionary * parametersDic = @{@"limit":@"20",
                                      @"MASTERTABLE":KLB_ANSWER_GOOD,
                                      @"DETAILTABLE":@"",
@@ -375,10 +379,11 @@
 
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
-                             success:^(id data) {                                 
+                             success:^(id data) {
+                                 button.enabled = YES;
                                  [self sendSearchAnswerRequest];
                              } fail:^(NSError *errorCode) {
-
+                                 button.enabled = YES;
                              }];
 }
 

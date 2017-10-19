@@ -37,6 +37,9 @@
 #define IPHONE6_MORE     ([[UIScreen mainScreen] bounds].size.height > 568)
 #define IPHONE6     ([[UIScreen mainScreen] bounds].size.height == 667)
 #define IPHONE6P     ([[UIScreen mainScreen] bounds].size.height == 736)
+#define IPHONEX     ([[UIScreen mainScreen] bounds].size.height == 812)
+
+#define IPHONETabbarHeight (IPHONEX ? 83.0f : 49.0f)
 
 #define TYPEIMAGE @"ZEIMAGE"
 #define TYPETEXT @"ZETEXT"
@@ -61,8 +64,9 @@
 //追问界面行间距
 #define kLabel_LineSpace 3.0f
 
-#define NAV_HEIGHT 64.0f
-#define TAB_BAR_HEIGHT 49.0f
+#define NAV_HEIGHT (IPHONEX ? 88.0f : 64.0f)
+#define STATUS_HEIGHT (IPHONEX ? 44.0f : 20.0f)
+#define TAB_BAR_HEIGHT (IPHONEX ? 83.0f : 49.0f)
 #define MAX_PAGE_COUNT 20
 
 #define Zenith_Server [[[NSBundle mainBundle] infoDictionary] objectForKey:@"ZenithServerAddress"]

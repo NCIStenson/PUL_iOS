@@ -9,24 +9,24 @@
 
 // 导航栏
 #define kNavBarWidth SCREEN_WIDTH
-#define kNavBarHeight 64.0f
+#define kNavBarHeight NAV_HEIGHT
 #define kNavBarMarginLeft 0.0f
 #define kNavBarMarginTop 0.0f
 // 导航栏内左侧按钮
 #define kLeftButtonWidth 40.0f + 16.0f
 #define kLeftButtonHeight 40.0f
 #define kLeftButtonMarginLeft 0.0f
-#define kLeftButtonMarginTop 20.0f + 2.0f
+#define kLeftButtonMarginTop (IPHONEX ? 42 : 20.0f + 2.0f)
 // 导航栏右侧按钮
 #define kRightButtonWidth 60.0f
 #define kRightButtonHeight 40.0f
 #define kRightButtonMarginLeft kNavBarWidth - kRightButtonWidth
-#define kRightButtonMarginTop kLeftButtonMarginTop + 1.0f
+#define kRightButtonMarginTop kLeftButtonMarginTop + 2.0f
 // 导航栏标题
 #define kNavTitleLabelWidth (SCREEN_WIDTH - 110.0f)
 #define kNavTitleLabelHeight 44.0f
 #define kNavTitleLabelMarginLeft (kNavBarWidth - kNavTitleLabelWidth) / 2.0f
-#define kNavTitleLabelMarginTop 20.0f
+#define kNavTitleLabelMarginTop kLeftButtonMarginTop - 2.0f
 
 @interface ZESettingRootVC ()
 {
@@ -69,7 +69,8 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud3.mode = MBProgressHUDModeText;
-    hud3.labelText = labelText;
+    hud3.detailsLabelText = labelText;
+    hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
     [hud3 hide:YES afterDelay:1.0f];
 }
 

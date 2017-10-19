@@ -68,6 +68,12 @@
     headerLab.text = @"团队动态";
     headerLab.textColor = kTextColor;
     headerLab.font = [UIFont boldSystemFontOfSize:18];
+    
+    UIView * lineView2 = [UIView new];
+    lineView2.frame = CGRectMake(0,  (SCREEN_WIDTH / 3 + (IPHONE5 ? 30 : IPHONE6 ? 40 : 50)) + 60 - 1, SCREEN_WIDTH, 0.5);
+    lineView2.backgroundColor = MAIN_LINE_COLOR;
+    [self addSubview:lineView2];
+
 }
 
 #pragma makr - collectionView delegate
@@ -284,13 +290,6 @@
     SYSCREATEDATE.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
     [cell.contentView addSubview:SYSCREATEDATE];
     SYSCREATEDATE.userInteractionEnabled = YES;
-
-    if (indexPath.row == 0) {
-        UIView * lineView = [UIView new];
-        lineView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
-        lineView.backgroundColor = MAIN_LINE_COLOR;
-        [cell.contentView addSubview:lineView];
-    }
     
     UILabel * tipsLab = [UILabel new];
     tipsLab.frame = CGRectMake(0, 90, SCREEN_WIDTH, 25);

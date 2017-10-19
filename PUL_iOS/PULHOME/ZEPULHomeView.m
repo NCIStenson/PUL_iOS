@@ -9,7 +9,7 @@
 #define kNavBarMarginLeft   0.0f
 #define kNavBarMarginTop    0.0f
 #define kNavBarWidth        SCREEN_WIDTH
-#define kNavBarHeight       (43 + (IPHONE6_MORE ? 35 : 30))
+#define kNavBarHeight       ((IPHONEX ? 63 : 43) + (IPHONE6_MORE ? 35 : 30))
 // 导航栏内左侧按钮
 #define kLeftButtonWidth 40.0f
 #define kLeftButtonHeight 40.0f
@@ -17,7 +17,7 @@
 #define kLeftButtonMarginTop 20.0f + 2.0f
 
 #define kSearchTFMarginLeft   25.0f
-#define kSearchTFMarginTop    27.0f
+#define kSearchTFMarginTop    (IPHONEX ? 47.0f : 27.0f)
 #define kSearchTFWidth        SCREEN_WIDTH - 50.0f
 #define kSearchTFHeight       (IPHONE6_MORE ? 35 : 30)
 
@@ -358,12 +358,17 @@
             }
             if([[dic objectForKey:@"IS_SPREAD"] boolValue]){
                 UIImageView * newImageView = [[UIImageView alloc]init];
-                newImageView.frame = CGRectMake(0, 0, 25, 16);
+                newImageView.frame = CGRectMake(0, 0, 25, 25);
                 [optionBtn addSubview:newImageView];
                 newImageView.userInteractionEnabled = YES;
                 [newImageView setImage:[UIImage imageNamed:@"home_icon_new"]];
-                newImageView.left = optionBtn.imageView.centerX * .1 * kCURRENTASPECT;
-                newImageView.top = (optionBtn.imageView.centerY - 30 )* kCURRENTASPECT;
+                newImageView.left = (optionBtn.right - 30) * kCURRENTASPECT;
+                newImageView.top = 5 * kCURRENTASPECT;
+                if(IPHONE6_MORE){
+                    newImageView.frame = CGRectMake(0, 0, 30, 30);
+                    newImageView.left = (optionBtn.right - 40) * kCURRENTASPECT;
+                    newImageView.top = 5;
+                }
             }
         }
     }

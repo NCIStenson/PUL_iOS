@@ -8,7 +8,7 @@
 
 #import "ZEAnswerQuestionsVC.h"
 #import "ZEAnswerQuestionsView.h"
-
+#import <ZLPhotoActionSheet.h>
 #import "ZELookViewController.h"
 
 #define textViewStr @"这个问题将由您来解答。"
@@ -19,6 +19,7 @@
 }
 
 @property (nonatomic,strong) NSMutableArray * imagesArr;
+@property (nonatomic, strong) NSMutableArray<PHAsset *> *lastSelectAssets;
 
 @end
 
@@ -31,6 +32,7 @@
     self.title = @"回答";
     [self.rightBtn setTitle:@"提交" forState:UIControlStateNormal];
     self.imagesArr = [NSMutableArray array];
+    self.lastSelectAssets = [NSMutableArray array];
 }
 
 -(void)initView
@@ -72,7 +74,7 @@
     UIAlertAction * takeAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self showImagePickController:YES];
     }];
-    UIAlertAction * chooseAction = [UIAlertAction actionWithTitle:@"选择一张照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction * chooseAction = [UIAlertAction actionWithTitle:@"从相册中选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self showImagePickController:NO];
     }];
     UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -88,7 +90,6 @@
     }];
 }
 
-
 /**
  *  @author Stenson, 16-08-01 16:08:07
  *
@@ -102,17 +103,42 @@
         [self showTips:@"最多上传三张照片"];
         return;
     }
+    [[self getPas] showPhotoLibrary];
+}
+- (ZLPhotoActionSheet *)getPas
+{
+    ZLPhotoActionSheet *actionSheet = [[ZLPhotoActionSheet alloc] init];
+    //设置照片最大预览数
+    actionSheet.maxPreviewCount = 3;
+    //设置照片最大选择数
+    actionSheet.maxSelectCount = 3;
+    //设置允许选择的视频最大时长
+    actionSheet.allowSelectVideo = NO;
+    //设置照片cell弧度
+    actionSheet.cellCornerRadio = 5;
+    //单选模式是否显示选择按钮
+    actionSheet.showSelectBtn = NO;
+    //是否在选择图片后直接进入编辑界面
+    actionSheet.editAfterSelectThumbnailImage = NO;
+    //设置编辑比例
+    //是否在已选择照片上显示遮罩层
+    actionSheet.showSelectedMask = NO;
+#pragma required
+    //如果调用的方法没有传sender，则该属性必须提前赋值
+    actionSheet.sender = self;
+    actionSheet.arrSelectedAssets = self.lastSelectAssets;
     
-    UIImagePickerController * imagePicker = [[UIImagePickerController alloc]init];
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] && isTaking) {
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }else{
-        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    }
-    imagePicker.delegate = self;
-    [self presentViewController:imagePicker animated:YES completion:^{
+    zl_weakify(self);
+    [actionSheet setSelectImageBlock:^(NSArray<UIImage *> * _Nonnull images, NSArray<PHAsset *> * _Nonnull assets, BOOL isOriginal) {
+        zl_strongify(weakSelf);
         
+        strongSelf.imagesArr = [NSMutableArray array];
+        [strongSelf.imagesArr addObjectsFromArray:images];
+        [_answerQuesView reloadChoosedImageView:strongSelf.imagesArr];
+        strongSelf.lastSelectAssets = assets.mutableCopy;
     }];
+    
+    return actionSheet;
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -143,6 +169,7 @@
 {
     [self.imagesArr removeObjectAtIndex:index];
     [_answerQuesView reloadChoosedImageView:self.imagesArr];
+    [self.lastSelectAssets removeObjectAtIndex:index];
 }
 
 
@@ -216,6 +243,7 @@
                                      if(arr.count > 0){
                                          NSDictionary * failReason = arr[0];
                                          [self showTips:[NSString stringWithFormat:@"%@\n",[failReason objectForKey:@"reason"]] afterDelay:1.5];
+                                         self.rightBtn.enabled = YES;
                                      }else{
                                          [self showTips:[[ZEUtil getCOMMANDDATA:data] objectForKey:@"target"] afterDelay:1.5];
                                          [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_BACK_QUEANSVIEW object:nil];

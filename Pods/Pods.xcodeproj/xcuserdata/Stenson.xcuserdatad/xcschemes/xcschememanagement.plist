@@ -34,39 +34,13 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ZLPhotoBrowser.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>5D0230BC649DB8BF9FCBD1A11DE727A1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6F530B59C5707812FA6CD3CDD515B22A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>8F42E82BE19BBBFAD1D3349AF4ED38B1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>A9372B63284C36BAE3A6EF0FFF26AE9B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C300A38CA672FF9BE77E8D85D8637576</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E0C868EED8D3E23D488D8B1AA26FAE3C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-	</dict>
+	<dict/>
 </dict>
 </plist>

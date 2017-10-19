@@ -104,7 +104,7 @@
     calendarPicker.delegate = self;
     calendarPicker.today = [NSDate date];
     calendarPicker.date = calendarPicker.today;
-    calendarPicker.frame = CGRectMake(0, 64, SCREEN_WIDTH, 360);
+    calendarPicker.frame = CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, 360);
     calendarPicker.calendarBlock = ^(NSInteger day, NSInteger month, NSInteger year){
         NSLog(@">>  %@",[NSString stringWithFormat:@"\n日：%ld\n月：%ld\n年：%ld",(long)day, (long)month, (long)year]);
     };

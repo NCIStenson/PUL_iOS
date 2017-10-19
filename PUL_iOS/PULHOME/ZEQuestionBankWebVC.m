@@ -246,12 +246,12 @@
                                          [configuration.userContentController addScriptMessageHandler:self name:@"ShowMessageFromWKWebView"];
                                      }
      
-                                     wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20) configuration:configuration];
-                                     wkWebView.top = 20;
-                                     wkWebView.height = SCREEN_HEIGHT - 20;
+                                     wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,STATUS_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - STATUS_HEIGHT) configuration:configuration];
+                                     wkWebView.top =  STATUS_HEIGHT;
+                                     wkWebView.height = SCREEN_HEIGHT - STATUS_HEIGHT;
 
                                      UIView * statusBackgroundView = [UIView new];
-                                     statusBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
+                                     statusBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, STATUS_HEIGHT);
 
                                      [self.view addSubview:statusBackgroundView];
                                      [ZEUtil addGradientLayer:statusBackgroundView];
@@ -443,6 +443,8 @@
     if (_enterType == ENTER_QUESTIONBANK_TYPE_ABISCHOOL) {
         [wkWebView.configuration.userContentController removeScriptMessageHandlerForName:@"ShowMessageFromWKWebView"];
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIWindowDidBecomeVisibleNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIWindowDidBecomeHiddenNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {

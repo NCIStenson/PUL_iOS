@@ -109,7 +109,11 @@
 - (void)keyboardWillHide:(NSNotification *)aNotification
 {
     [UIView animateWithDuration:0.29 animations:^{
-        _functionButtonView.frame = CGRectMake(0, SCREEN_HEIGHT - 250.0f, SCREEN_WIDTH, 30.0f);
+        if(_backImageView.top == SCREEN_HEIGHT - 216 || _anonymousAskView.top == SCREEN_HEIGHT - 216 || _rewardGoldView.top == SCREEN_HEIGHT - 216){
+            _functionButtonView.frame = CGRectMake(0, SCREEN_HEIGHT - 250.0f, SCREEN_WIDTH, 30.0f);
+        }else{
+            _functionButtonView.frame = CGRectMake(0, SCREEN_HEIGHT - 40.0f, SCREEN_WIDTH, 30.0f);
+        }
     }];
 }
 
@@ -152,8 +156,7 @@
     
     [self drawDashLine:dashView2 lineLength:5 lineSpacing:2 lineColor:[UIColor lightGrayColor]];
 
-    
-    _functionButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 250, SCREEN_WIDTH, 30)];
+    _functionButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH, 30)];
     [self addSubview:_functionButtonView];
     
     UIButton * downKeyboardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -219,8 +222,9 @@
 
 -(void)initImageView
 {
-    _backImageView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 216, SCREEN_WIDTH, 216)];
+    _backImageView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216)];
     [self addSubview:_backImageView];
+    _backImageView.hidden = YES;
     
     _dashView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
     [_backImageView addSubview:_dashView];
@@ -234,7 +238,7 @@
         [_backImageView addSubview:upImageBtn];
         
         if (i == self.choosedImageArr.count && self.choosedImageArr.count < 4) {
-            [upImageBtn addTarget:self action:@selector(showCondition) forControlEvents:UIControlEventTouchUpInside];
+            [upImageBtn addTarget:self action:@selector(addImageBtnClick) forControlEvents:UIControlEventTouchUpInside];
             [upImageBtn setImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
         }else{
             CGSize imageSize = [self getScaleImageSize:self.choosedImageArr[i] backgroundFrame:upImageBtn.frame];
@@ -440,14 +444,18 @@
     [self bringSubviewToFront:_anonymousAskView];
     
     if (_anonymousAskView.frame.origin.y == SCREEN_HEIGHT) {
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.29 animations:^{
+            _functionButtonView.top =  SCREEN_HEIGHT - 250;
             _anonymousAskView.frame = CGRectMake(0, SCREEN_HEIGHT - 216, SCREEN_WIDTH, 216);
         } completion:^(BOOL finished) {
             _rewardGoldView.hidden = YES;
+            _backImageView.hidden = YES;
             _rewardGoldView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216);
+            _backImageView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216);
         }];
     }else{
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.29 animations:^{
+            _functionButtonView.top =  SCREEN_HEIGHT - 40;
             _anonymousAskView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216);
         }];
     }
@@ -467,14 +475,18 @@
     [self bringSubviewToFront:_rewardGoldView];
 
     if (_rewardGoldView.frame.origin.y == SCREEN_HEIGHT) {
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.29 animations:^{
+            _functionButtonView.top =  SCREEN_HEIGHT - 250;
             _rewardGoldView.frame = CGRectMake(0, SCREEN_HEIGHT - 216, SCREEN_WIDTH, 216);
         } completion:^(BOOL finished) {
             _anonymousAskView.hidden = YES;
+            _backImageView.hidden = YES;
             _anonymousAskView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216);
+            _backImageView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216);
         }];
     }else{
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.29 animations:^{
+            _functionButtonView.top =  SCREEN_HEIGHT - 40;
             _rewardGoldView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216);
         }];
     }
@@ -508,18 +520,23 @@
 
 #pragma mark - Public Method
 
--(void)reloadChoosedImageView:(UIImage *)choosedImage
+-(void)reloadChoosedImageView:(id)choosedImage
 {
     if ([choosedImage isKindOfClass:[UIImage class]]) {
         [_choosedImageArr addObject:choosedImage];
     }else if([choosedImage isKindOfClass:[NSArray class]]){
-        self.choosedImageArr = [NSMutableArray arrayWithArray:(NSArray *)choosedImage];
+        self.choosedImageArr = [NSMutableArray arrayWithArray:choosedImage];
     }
     for (UIView * view in _backImageView.subviews) {
         [view removeFromSuperview];
     }
+    _backImageView = nil;
     
     [self initImageView];
+    _backImageView.hidden = NO;
+    _backImageView.top = SCREEN_HEIGHT - 216;
+    _functionButtonView.top = SCREEN_HEIGHT  -250;
+    [self bringSubviewToFront:_functionButtonView];
 }
 
 #pragma mark - 展示提问问题分类列表
@@ -527,6 +544,9 @@
 -(void)showQuestionTypeView
 {
     [self endEditing:YES];
+    if([self.delegate respondsToSelector:@selector(changeAskQuestionTitle)]){
+        [self.delegate changeAskQuestionTitle];
+    }
     _askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _askTypeView.delegate = self;
     [self addSubview:_askTypeView];
@@ -560,7 +580,6 @@
     
     [self initAnonymousView];
     [self initRewardGoldView];
-    
 }
 
 #pragma mark - UITextViewDelegate
@@ -592,24 +611,42 @@
     [self downTheKeyBoard];
 }
 
-
 -(void)downTheKeyBoard
 {
     [_inputView resignFirstResponder];
 }
 
--(void)showCondition
-{
-    [UIView animateWithDuration:0.29 animations:^{
-        _rewardGoldView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216.0f);
-        _anonymousAskView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216.0f);
-    } completion:^(BOOL finished) {
-        _rewardGoldView.hidden = YES;
-        _anonymousAskView.hidden = YES;
-    }];
-    
+-(void)addImageBtnClick{
     if ([self.delegate respondsToSelector:@selector(takePhotosOrChoosePictures)]) {
         [self.delegate takePhotosOrChoosePictures];
+    }
+}
+
+-(void)showCondition
+{
+    [self endEditing:YES];
+    _backImageView.hidden = NO;
+    [self bringSubviewToFront:_backImageView];
+    
+    if (_backImageView.frame.origin.y == SCREEN_HEIGHT) {
+        [UIView animateWithDuration:0.29 animations:^{
+            _functionButtonView.top =  SCREEN_HEIGHT - 250;
+            _backImageView.frame = CGRectMake(0, SCREEN_HEIGHT - 216, SCREEN_WIDTH, 216);
+        } completion:^(BOOL finished) {
+            _anonymousAskView.hidden = YES;
+            _rewardGoldView.hidden = YES;
+            _anonymousAskView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216);
+            _rewardGoldView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216);
+        }];
+        
+        if ([self.delegate respondsToSelector:@selector(takePhotosOrChoosePictures)]) {
+            [self.delegate takePhotosOrChoosePictures];
+        }
+    }else{
+        [UIView animateWithDuration:0.29 animations:^{
+            _backImageView.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216);
+            _functionButtonView.top =  SCREEN_HEIGHT - 40;
+        }];
     }
 }
 

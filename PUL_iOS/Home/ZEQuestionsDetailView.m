@@ -512,8 +512,8 @@
 {
     ZEAnswerInfoModel * answerInfoM = [ZEAnswerInfoModel getDetailWithDic:_answerInfoArr[btn.tag]];
 
-    if([self.delegate respondsToSelector:@selector(giveLikes:)]){
-        [self.delegate giveLikes:answerInfoM.SEQKEY];
+    if([self.delegate respondsToSelector:@selector(giveLikes:withButton:)]){
+        [self.delegate giveLikes:answerInfoM.SEQKEY withButton:btn];
     }
     
 }

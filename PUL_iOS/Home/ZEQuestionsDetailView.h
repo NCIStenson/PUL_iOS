@@ -22,7 +22,7 @@
 -(void)acceptTheAnswerWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
                         withAnswerInfo:(ZEAnswerInfoModel *)answerModel;
 
--(void)giveLikes:(NSString *)answerSeqkey;
+-(void)giveLikes:(NSString *)answerSeqkey withButton:(UIButton *)button;
 
 @end
 

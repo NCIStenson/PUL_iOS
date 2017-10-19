@@ -37,7 +37,6 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.datasArr = [NSMutableArray array];
     [self initView];
-
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -59,7 +58,6 @@
         [self myCircleRequest];
         return;
     }
-    
     NSDictionary * parametersDic = @{@"limit":@"-1",
                                      @"MASTERTABLE":tableName,
                                      @"MENUAPP":@"EMARK_APP",
@@ -86,7 +84,6 @@
                                  self.datasArr = [NSMutableArray arrayWithArray:arr];
                                  
                                  //  整理数据 加入圈子排名字段
-
                                  NSMutableArray * rankingArr = [NSMutableArray array];
                                  long i = 1;
                                  for (NSDictionary * dic in arr) {
