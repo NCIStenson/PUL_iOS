@@ -290,6 +290,7 @@
                                              if (!tipsView) {
                                                  tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, 120, SCREEN_WIDTH, SCREEN_HEIGHT - 200)];
                                                  tipsView.type = SHOW_TIPS_TYPE_MYQUESTION;
+                                                 tipsView.imageType = SHOW_TIPS_IMAGETYPE_CRY;
                                                  [self.view addSubview:tipsView];
                                              }
 
@@ -298,6 +299,7 @@
                                              if (!tipsView) {
                                                  tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, 120, SCREEN_WIDTH, SCREEN_HEIGHT - 200)];
                                                  tipsView.type = SHOW_TIPS_TYPE_MYQUESTION;
+                                                 tipsView.imageType = SHOW_TIPS_IMAGETYPE_CRY;
                                                  [self.view addSubview:tipsView];
                                              }
                                          }
@@ -356,6 +358,7 @@
                                          if (!tipsView) {
                                              tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, 120, SCREEN_WIDTH, SCREEN_HEIGHT - 200)];
                                              tipsView.type = SHOW_TIPS_TYPE_MYANSWER;
+                                             tipsView.imageType = SHOW_TIPS_IMAGETYPE_CRY;
                                              [self.view addSubview:tipsView];
                                          }
                                      }

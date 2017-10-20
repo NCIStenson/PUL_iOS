@@ -28,7 +28,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     NSLog(@"  \n\n\n\n\n\n\n\n  %@   \n\n\n\n\n\n\n\n ",Zenith_Server);
-    
+    NSLog(@" ====  %@",[UIImage imageNamed:@"without_tips"]);
+    NSLog(@" ====  %@",[UIImage imageNamed:@"without_tips_laugh"]);
+    NSLog(@" ====  %@",[UIImage imageNamed:@"without_tips_cry"]);
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     application.applicationSupportsShakeToEdit = YES;
 

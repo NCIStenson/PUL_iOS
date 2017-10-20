@@ -145,6 +145,7 @@
     if (!_withoutTipsView) {
         _withoutTipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:self.frame];
         _withoutTipsView.type = SHOW_TIPS_TYPE_SENDNOTICENTER;
+        _withoutTipsView.imageType = SHOW_TIPS_IMAGETYPE_COMMON;
         [self addSubview:_withoutTipsView];
         [self bringSubviewToFront:_withoutTipsView];
     }

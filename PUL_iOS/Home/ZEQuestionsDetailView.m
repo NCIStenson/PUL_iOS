@@ -298,6 +298,7 @@
     if (_answerInfoArr.count == 0) {
         tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 300)];
         tipsView.type = SHOW_TIPS_TYPE_QUESTIONDETAIL;
+        tipsView.imageType = SHOW_TIPS_IMAGETYPE_CRY;
         [cell.contentView addSubview:tipsView];
     }else{
         [self initCellContentView:cell.contentView withIndexPath:indexPath];
