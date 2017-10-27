@@ -27,11 +27,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self initView];
     self.title = @"回答";
     [self.rightBtn setTitle:@"提交" forState:UIControlStateNormal];
     self.imagesArr = [NSMutableArray array];
     self.lastSelectAssets = [NSMutableArray array];
+    
+    UITapGestureRecognizer * TAP = [[UITapGestureRecognizer alloc]initWithActionBlock:^(id  _Nonnull sender) {
+        [self.view endEditing:YES];
+    }];
+    [self.view addGestureRecognizer:TAP];
 }
 
 -(void)initView
@@ -173,6 +179,9 @@
         return;
     }else if ([ZEUtil isEmpty:_answerQuesView.inputView.text]){
         [self showTips:@"不能回复空白答案"];
+        return;
+    }else if (_answerQuesView.inputView.text.length > 500){
+        [self showTips:@"您输入的内容已超过500个字"];
         return;
     }else{
         UIAlertController * alertCont= [UIAlertController alertControllerWithTitle:@"是否确定提交问题答案" message:@"" preferredStyle:UIAlertControllerStyleAlert];

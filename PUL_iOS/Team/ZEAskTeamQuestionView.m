@@ -133,19 +133,28 @@
     _inputView.textColor = [UIColor lightGrayColor];
     _inputView.delegate = self;
     [self addSubview:_inputView];
-    [_inputView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(kInputViewMarginLeft);
-        make.top.mas_equalTo(kInputViewMarginTop);
-        make.size.mas_equalTo(CGSizeMake(kInputViewWidth, kInputViewHeight));
-    }];
+    _inputView.frame = CGRectMake(kInputViewMarginLeft, kInputViewMarginTop, kInputViewWidth, kInputViewHeight);
+
+    self.lengthLab = [UILabel new];
+    _lengthLab.frame = CGRectMake(_inputView.left, _inputView.bottom, _inputView.width, 20);
+    _lengthLab.font = [UIFont systemFontOfSize:14];
+    _lengthLab.textColor = kTextColor;
+    if([ZEUtil isNotNull:_QUESINFOM]){
+        _lengthLab.text = [NSString stringWithFormat:@"%ld/%ld",(long)_QUESINFOM.QUESTIONEXPLAIN.length,(long)kMaxTextLength];
+    }else{
+        _lengthLab.text = [NSString stringWithFormat:@"0/%ld",(long)kMaxTextLength];
+    }
+    _lengthLab.textAlignment = NSTextAlignmentRight;
+    [self addSubview:_lengthLab];
+
     
-    UIView * dashView= [[UIView alloc]initWithFrame:CGRectMake( 0, kInputViewHeight + NAV_HEIGHT, SCREEN_WIDTH, 1)];
+    UIView * dashView= [[UIView alloc]initWithFrame:CGRectMake( 0, _lengthLab.bottom, SCREEN_WIDTH, 1)];
     [self addSubview:dashView];
     
     [self drawDashLine:dashView lineLength:5 lineSpacing:2 lineColor:[UIColor lightGrayColor]];
     
     questionTypeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    questionTypeBtn.frame = CGRectMake(10 , kInputViewHeight + NAV_HEIGHT , SCREEN_WIDTH - 20, 40.0f);
+    questionTypeBtn.frame = CGRectMake(10 , dashView.bottom , SCREEN_WIDTH - 20, 40.0f);
     [questionTypeBtn  setTitle:@"关键词：请选择问题分类" forState:UIControlStateNormal];
     [self addSubview:questionTypeBtn];
     [questionTypeBtn addTarget:self action:@selector(showQuestionTypeView) forControlEvents:UIControlEventTouchUpInside];
@@ -154,13 +163,13 @@
     questionTypeBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
     questionTypeBtn.titleLabel.numberOfLines = 0;
     
-    UIView * dashView2= [[UIView alloc]initWithFrame:CGRectMake( 0, kInputViewHeight + NAV_HEIGHT + 40, SCREEN_WIDTH, 1)];
+    UIView * dashView2= [[UIView alloc]initWithFrame:CGRectMake( 0, questionTypeBtn.bottom, SCREEN_WIDTH, 1)];
     [self addSubview:dashView2];
     [self drawDashLine:dashView2 lineLength:5 lineSpacing:2 lineColor:[UIColor lightGrayColor]];
     
     _designatedNumberBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _designatedNumberBtn.frame = CGRectMake(10 , kInputViewHeight + NAV_HEIGHT + 40 , SCREEN_WIDTH - 20, 40.0f);
-    [_designatedNumberBtn  setTitle:@"指定提问：只能选取团队中的人，可多选" forState:UIControlStateNormal];
+    _designatedNumberBtn.frame = CGRectMake(10 , dashView2.bottom , SCREEN_WIDTH - 20, 40.0f);
+    [_designatedNumberBtn  setTitle:@"指定回答者：只能选取团队中的人，可多选" forState:UIControlStateNormal];
     [self addSubview:_designatedNumberBtn];
     [_designatedNumberBtn addTarget:self action:@selector(goChoooseNumberVC) forControlEvents:UIControlEventTouchUpInside];
     _designatedNumberBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -168,7 +177,7 @@
     _designatedNumberBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
     _designatedNumberBtn.titleLabel.numberOfLines = 2;
     
-    UIView * dashView3= [[UIView alloc]initWithFrame:CGRectMake( 0, kInputViewHeight + NAV_HEIGHT + 80, SCREEN_WIDTH, 1)];
+    UIView * dashView3= [[UIView alloc]initWithFrame:CGRectMake( 0, _designatedNumberBtn.bottom, SCREEN_WIDTH, 1)];
     [self addSubview:dashView3];
     [self drawDashLine:dashView3 lineLength:5 lineSpacing:2 lineColor:[UIColor lightGrayColor]];
 
@@ -548,8 +557,8 @@
 -(void)showQuestionTypeView
 {
     [self endEditing:YES];
-    if([self.delegate respondsToSelector:@selector(changeAskTeamQuestionTitle)]){
-        [self.delegate changeAskTeamQuestionTitle];
+    if([self.delegate respondsToSelector:@selector(changeAskTeamQuestionTitle:)]){
+        [self.delegate changeAskTeamQuestionTitle:@"描述你的问题"];
     }
     _askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _askTypeView.delegate = self;
@@ -578,6 +587,9 @@
     }
     [_askTypeView removeFromSuperview];
     _askTypeView = nil;
+    if([self.delegate respondsToSelector:@selector(changeAskTeamQuestionTitle:)]){
+        [self.delegate changeAskTeamQuestionTitle:@"描述你的问题"];
+    }
 }
 
 
@@ -611,8 +623,16 @@
 
 -(void)textViewDidChange:(UITextView *)textView
 {
+    _lengthLab.text = [NSString stringWithFormat:@"%ld/%ld",(long)textView.text.length,(long)kMaxTextLength];
     if (textView.text.length > kMaxTextLength) {
-        textView.text = [textView.text substringToIndex:kMaxTextLength];
+        MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self animated:YES];
+        hud3.mode = MBProgressHUDModeText;
+        hud3.detailsLabelText = @"最多显示200个字";
+        hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
+        [hud3 hide:YES afterDelay:1.0f];
+        
+        textView.text = [textView.text substringToIndex:200];
+        _lengthLab.text = [NSString stringWithFormat:@"%ld/%ld",(long)textView.text.length,(long)kMaxTextLength];
     }
 }
 

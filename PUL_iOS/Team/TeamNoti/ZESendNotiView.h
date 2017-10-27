@@ -11,7 +11,13 @@
 @interface ZESendNotiView : UIView
 
 @property (nonnull,strong) UITextView * notiTextView;
+@property (nonnull,strong) UILabel * notiTextLengthLab;
+
 @property (nonnull,strong) UITextView * notiDetailTextView;
+@property (nonnull,strong) UILabel * notiDetailTextLengthLab;
+
+@property (nonnull,copy) NSString * notiStr;
+@property (nonnull,copy) NSString * notiDetailStr;
 
 @property (nonatomic,assign) BOOL isReceipt; // 是否回执
 

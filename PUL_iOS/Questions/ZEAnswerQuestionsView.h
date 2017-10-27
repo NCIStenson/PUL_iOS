@@ -40,7 +40,9 @@
 
 @property (nonatomic,weak) id <ZEAnswerQuestionsViewDelegate> delegate;
 
+@property (nonatomic,strong) UIScrollView * questionExplainView;
 @property (nonatomic,strong) UITextView * inputView;
+@property (nonatomic,strong) UILabel * lengthLab;
 /************** 问题主键 *************/
 @property (nonatomic,copy) NSString * quesTypeSEQKEY;
 

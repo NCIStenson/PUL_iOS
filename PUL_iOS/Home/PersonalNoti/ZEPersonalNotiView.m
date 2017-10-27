@@ -497,10 +497,10 @@
     }
 
     ZETeamNotiCenModel * notiModel = [ZETeamNotiCenModel getDetailWithDic:self.personalNotiArr[indexPath.row]];
-    if([notiModel.MESTYPE integerValue] == 1 && [self.delegate respondsToSelector:@selector(didSelectTeamMessage:)] ){
-        [self.delegate didSelectTeamMessage:notiModel];
-    }else if([notiModel.MESTYPE integerValue] == 2 && [self.delegate respondsToSelector:@selector(didSelectQuestionMessage:)] ){
+    if([notiModel.MESTYPE integerValue] == 2 && [self.delegate respondsToSelector:@selector(didSelectQuestionMessage:)] ){
         [self.delegate didSelectQuestionMessage:notiModel];
+    }else if( [self.delegate respondsToSelector:@selector(didSelectTeamMessage:)] ){
+        [self.delegate didSelectTeamMessage:notiModel];
     }
 }
 

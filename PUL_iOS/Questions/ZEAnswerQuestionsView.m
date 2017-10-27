@@ -6,6 +6,8 @@
 //  Copyright © 2016年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
+#define kMaxTextLength 500
+
 #define kInputViewMarginLeft    10.0f
 #define kInputViewMarginTop     NAV_HEIGHT
 #define kInputViewWidth         SCREEN_WIDTH - 20.0f
@@ -49,23 +51,27 @@
 }
 -(void)initView
 {
-    UIView * questionExplainView = [UIView new];
-    [self addSubview:questionExplainView];
-    questionExplainView.backgroundColor = MAIN_BACKGROUND_COLOR;
+    self.questionExplainView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT- 217)];
+    _questionExplainView.delegate = self;
+    _questionExplainView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:_questionExplainView];
     
     float questionExplainHeight = [ZEUtil heightForString:_questionInfoM.QUESTIONEXPLAIN font:[UIFont boldSystemFontOfSize:16] andWidth:SCREEN_WIDTH - 20];
     
+    UIView * backgroundView = [UIView new];
+    backgroundView.backgroundColor = MAIN_BACKGROUND_COLOR;
+    [_questionExplainView addSubview:backgroundView];
+    backgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, questionExplainHeight + 20);
+
     UILabel * explainLab = [UILabel new];
     explainLab.left = 10;
     explainLab.top = 10;
     explainLab.size = CGSizeMake(SCREEN_WIDTH - 20, questionExplainHeight);
-    [questionExplainView addSubview:explainLab];
+    [backgroundView addSubview:explainLab];
     explainLab.text = _questionInfoM.QUESTIONEXPLAIN;
     explainLab.font = [UIFont boldSystemFontOfSize:16];
     explainLab.textColor = kTextColor;
     explainLab.numberOfLines = 0;
-    
-    questionExplainView.frame = CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, questionExplainHeight + 20);
     
     self.inputView = [[UITextView alloc]initWithFrame:CGRectZero];
     _inputView.text = textViewStr;
@@ -73,9 +79,19 @@
     _inputView.textColor = [UIColor lightGrayColor];
     _inputView.delegate = self;
     _inputView.left = kInputViewMarginLeft;
-    _inputView.top = kInputViewMarginTop + questionExplainView.height;
+    _inputView.top =  backgroundView.bottom;
     _inputView.size = CGSizeMake(kInputViewWidth, kInputViewHeight);
-    [self addSubview:_inputView];
+    [_questionExplainView addSubview:_inputView];
+    
+    self.lengthLab = [UILabel new];
+    _lengthLab.frame = CGRectMake(_inputView.left, _inputView.bottom, _inputView.width, 20);
+    _lengthLab.font = [UIFont systemFontOfSize:14];
+    _lengthLab.textColor = kTextColor;
+    _lengthLab.text = [NSString stringWithFormat:@"0/%ld",(long)kMaxTextLength];
+    _lengthLab.textAlignment = NSTextAlignmentRight;
+    [_questionExplainView addSubview:_lengthLab];
+
+    _questionExplainView.contentSize = CGSizeMake(SCREEN_WIDTH, _lengthLab.bottom);
 }
 
 -(void)initImageView
@@ -178,6 +194,11 @@
 
 -(void)textViewDidBeginEditing:(UITextView *)textView
 {
+    if (_questionExplainView.contentSize.height > NAV_HEIGHT + 282) {
+        _questionExplainView.height = SCREEN_HEIGHT - NAV_HEIGHT- 300;
+        [_questionExplainView scrollToBottom];
+    }
+    
     if ([textView.text isEqualToString:textViewStr]) {
         textView.text = @"";
         textView.textColor = [UIColor blackColor];
@@ -191,16 +212,22 @@
     }
 }
 
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [self downTheKeyBoard];
+}
+
 -(void)textViewDidChange:(UITextView *)textView
 {
-    if (textView.text.length > 500) {
+    _lengthLab.text = [NSString stringWithFormat:@"%ld/%ld",(long)textView.text.length,(long)kMaxTextLength];
+    if (textView.text.length > kMaxTextLength) {
         MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self animated:YES];
         hud3.mode = MBProgressHUDModeText;
-        hud3.detailsLabelText = @"您输入的内容已超过500个字";
+        hud3.detailsLabelText = @"最多显示500个字";
         hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
         [hud3 hide:YES afterDelay:1.0f];
 
         textView.text = [textView.text substringToIndex:500];
+        _lengthLab.text = [NSString stringWithFormat:@"%ld/%ld",(long)textView.text.length,(long)kMaxTextLength];
     }
 }
 
@@ -212,6 +239,7 @@
 
 -(void)downTheKeyBoard
 {
+    _questionExplainView.height = SCREEN_HEIGHT - NAV_HEIGHT- 217;
     [_inputView resignFirstResponder];
 }
 

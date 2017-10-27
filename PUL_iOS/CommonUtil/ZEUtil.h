@@ -157,4 +157,10 @@
 #pragma mark - 输入全部为空格判断
 + (BOOL) isEmpty:(NSString *) str ;
 
+#pragma mark - 输入是否包含表情
++(BOOL)isContainsTwoEmoji:(NSString *)string;
+
+#pragma mark - 输入字符长度 一个汉字 = 两个英文字符
++(NSInteger)sinaCountWord:(NSString *)s;
+
 @end

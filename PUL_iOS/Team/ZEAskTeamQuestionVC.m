@@ -49,7 +49,9 @@
     self.cachesImagesArr = [NSMutableArray array];
 
     targetMembersStr = _QUESINFOM.TARGETUSERCODE;
-    targetMembersUsername = _QUESINFOM.TARGETUSERNAME;
+    targetMembersUsername = [NSString stringWithFormat:@"指定回答者：%@",_QUESINFOM.TARGETUSERNAME];
+
+//    targetMembersUsername = _QUESINFOM.TARGETUSERNAME;
     if(targetMembersStr.length == 0){
         targetMembersStr = @"";
     }
@@ -86,7 +88,7 @@
         }
         
         if (targetMembersUsername.length == 0) {
-            targetMembersUsername = userinfo.USERNAME;
+            targetMembersUsername = [NSString stringWithFormat:@"指定回答者：%@",userinfo.USERNAME];
         }else{
             targetMembersUsername = [NSString stringWithFormat:@"%@,%@",targetMembersUsername,userinfo.USERNAME];
         }
@@ -96,7 +98,7 @@
 //        askView.designatedNumberBtn.height = [ZEUtil heightForString:targetMembersStr font:askView.designatedNumberBtn.titleLabel.font andWidth:askView.designatedNumberBtn.width];
         [askView.designatedNumberBtn setTitle:targetMembersUsername forState:UIControlStateNormal];
     }else{
-        [askView.designatedNumberBtn  setTitle:@"指定提问：只能选取团队中的人，可多选" forState:UIControlStateNormal];
+        [askView.designatedNumberBtn  setTitle:@"指定回答者：只能选取团队中的人，可多选" forState:UIControlStateNormal];
     }
 }
 
@@ -197,9 +199,9 @@
         targetMembersUsername = _QUESINFOM.TARGETUSERNAME;
         
         if (targetMembersStr.length > 0) {
-            [askView.designatedNumberBtn setTitle:targetMembersUsername forState:UIControlStateNormal];
+            [askView.designatedNumberBtn setTitle:[NSString stringWithFormat:@"指定回答者：%@",targetMembersUsername] forState:UIControlStateNormal];
         }else{
-            [askView.designatedNumberBtn  setTitle:@"指定提问：只能选取团队中的人，可多选" forState:UIControlStateNormal];
+            [askView.designatedNumberBtn  setTitle:@"指定回答者：只能选取团队中的人，可多选" forState:UIControlStateNormal];
         }
 
         for (NSString * str in self.QUESINFOM.FILEURLARR) {
@@ -222,8 +224,8 @@
 
 #pragma mark - ZEAskQuesViewDelegate
 
--(void)changeAskTeamQuestionTitle{
-    self.title = @"分类";
+-(void)changeAskTeamQuestionTitle:(NSString *)titleStr{
+    self.title = titleStr;
 }
 -(void)takePhotosOrChoosePictures
 {
@@ -266,7 +268,6 @@
 }
 - (ZLPhotoActionSheet *)getPas
 {
-    NSLog(@"    ======   %d  ",3 - self.imagesArr.count);
     ZLPhotoActionSheet *actionSheet = [[ZLPhotoActionSheet alloc] init];
     //设置照片最大预览数
     actionSheet.maxPreviewCount = 3;
@@ -405,11 +406,11 @@
             return;
         }
         
-        UIAlertController * alertCont= [UIAlertController alertControllerWithTitle:askView.isAnonymousAsk ? @"是否确定提交匿名问题" : @"是否确定提交问题" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController * alertCont= [UIAlertController alertControllerWithTitle: @"确定要提交这个提问吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"提交" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self insertData];
         }];
-        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"我再想想" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
         }];
         
@@ -434,8 +435,6 @@
                                      @"CLASSNAME":@"com.nci.klb.app.teamcircle.TeamcircleQuestion",
                                      @"DETAILTABLE":@"",};
     
-    NSLog(@">>>>  %@", _teamInfoModel.TEAMCODE);
-
     NSDictionary * fieldsDic =@{@"SEQKEY":@"",
                                 @"QUESTIONTYPECODE":askView.quesTypeSEQKEY,
                                 @"QUESTIONEXPLAIN":askView.inputView.text,
@@ -449,7 +448,7 @@
                                 @"ISSOLVE":@"0",
                                 @"TEAMCIRCLECODE":_teamInfoModel.TEAMCODE,
                                 @"TARGETUSERCODE":targetMembersStr,
-                                @"TARGETUSERNAME":targetMembersUsername,
+                                @"TARGETUSERNAME":[targetMembersUsername stringByReplacingOccurrencesOfString:@"指定回答者：" withString:@""],
                                 };
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_TEAMCIRCLE_QUESTION_INFO]
                                                                            withFields:@[fieldsDic]
@@ -496,7 +495,7 @@
                                 @"QUESTIONEXPLAIN":askView.inputView.text,
                                 @"TEAMCIRCLECODE":_teamInfoModel.TEAMCODE,
                                 @"TARGETUSERCODE":targetMembersStr,
-                                @"TARGETUSERNAME":targetMembersUsername,
+                                @"TARGETUSERNAME":[targetMembersUsername stringByReplacingOccurrencesOfString:@"指定回答者：" withString:@""],
                                 };
     
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_TEAMCIRCLE_QUESTION_INFO]

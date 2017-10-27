@@ -349,7 +349,6 @@
             NSDictionary *dic = self.homeBtnArr[i];
             NSString * titleStr =[dic objectForKey:@"FUNCTIONNAME"];
             [optionBtn setTitle:titleStr forState:UIControlStateNormal];
-//            NSLog(@"  ====   %@",ZENITH_IMAGEURL([[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""]).absoluteString);
             optionBtn.tag = 100 + i;
             [optionBtn sd_setImageWithURL:ZENITH_IMAGEURL([[dic objectForKey:@"FUNCTIONURL"] stringByReplacingOccurrencesOfString:@"," withString:@""]) forState:UIControlStateNormal];
             [self addBtnSelector:[dic objectForKey:@"FUNCTIONCODE"] withButton:optionBtn];

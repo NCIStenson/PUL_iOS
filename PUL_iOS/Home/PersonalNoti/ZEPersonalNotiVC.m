@@ -62,11 +62,32 @@
     self.tabBarController.tabBar.hidden = NO;
     if([[JMSGConversation getAllUnreadCount] integerValue] > 0){
         chatUnreadTipsLab.hidden = NO;
-        [chatUnreadTipsLab setText:[NSString stringWithFormat:@"%@",[JMSGConversation getAllUnreadCount]]];
+        if ([[JMSGConversation getAllUnreadCount] integerValue]> 99) {
+            chatUnreadTipsLab.width = 35;
+            [chatUnreadTipsLab setText:@"99+"];
+        }else{
+            chatUnreadTipsLab.width = 25;
+            [chatUnreadTipsLab setText:[NSString stringWithFormat:@"%@",[JMSGConversation getAllUnreadCount]]];
+        }
+
     }else{
         [chatUnreadTipsLab setText:@"0"];
         chatUnreadTipsLab.hidden = YES;
     }
+    
+    if (_notiCount > 0) {
+        notiUnreadTipsLab.hidden = NO;
+        if (_notiCount > 99) {
+            notiUnreadTipsLab.width = 35;
+            [notiUnreadTipsLab setText:@"99+"];
+        }else{
+            notiUnreadTipsLab.width = 25;
+            [notiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_notiCount]];
+        }
+    }else{
+        notiUnreadTipsLab.hidden = YES;
+    }
+
     [self isHaveUnresdMessage];
 }
 
@@ -111,11 +132,24 @@
                                      
                                      NSInteger chatUnresadCount = [[JMSGConversation getAllUnreadCount] integerValue];
                                      NSString * PERINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"PERINFOCOUNT"]];
-                                     if ([PERINFOCOUNT integerValue] > 0 ) {
+                                     if ([PERINFOCOUNT integerValue]  + chatUnresadCount> 0 ) {
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
                                          item.badgeValue= [NSString stringWithFormat:@"%ld",(long)([PERINFOCOUNT integerValue] + chatUnresadCount)] ;
                                          if ([PERINFOCOUNT integerValue] + chatUnresadCount > 99) {
                                              item.badgeValue= @"99+";
+                                         }
+                                         _notiCount = [PERINFOCOUNT integerValue];
+                                         if (_notiCount > 0) {
+                                             notiUnreadTipsLab.hidden = NO;
+                                             if (_notiCount > 99) {
+                                                 notiUnreadTipsLab.width = 35;
+                                                 [notiUnreadTipsLab setText:@"99+"];
+                                             }else{
+                                                 notiUnreadTipsLab.width = 25;
+                                                 [notiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_notiCount]];
+                                             }
+                                         }else{
+                                             notiUnreadTipsLab.hidden = YES;
                                          }
                                      }else{
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
@@ -132,7 +166,13 @@
     _notiCount -= 1;
     if (_notiCount > 0) {
         notiUnreadTipsLab.hidden = NO;
-        [notiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_notiCount]];
+        if (_notiCount > 99) {
+            notiUnreadTipsLab.width = 35;
+            [notiUnreadTipsLab setText:@"99+"];
+        }else{
+            notiUnreadTipsLab.width = 25;
+            [notiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_notiCount]];
+        }
     }else{
         notiUnreadTipsLab.hidden = YES;
     }
@@ -253,7 +293,7 @@
         labelContentBtn.width = SCREEN_WIDTH / arr.count;
         labelContentBtn.left = marginLeft;
         
-        if(i == 0 && _notiCount > 0){
+        if(i == 0){
             notiUnreadTipsLab = [[UILabel alloc]init];
             [_labelScrollView addSubview:notiUnreadTipsLab];
             notiUnreadTipsLab.backgroundColor = [UIColor redColor];
@@ -269,7 +309,7 @@
             notiUnreadTipsLab.textColor = [UIColor whiteColor];
             notiUnreadTipsLab.textAlignment = NSTextAlignmentCenter;
         }
-        if (i == 2 && [[JMSGConversation getAllUnreadCount] integerValue]> 0) {
+        if (i == 2 ) {
             chatUnreadTipsLab = [[UILabel alloc]init];
             [_labelScrollView addSubview:chatUnreadTipsLab];
             chatUnreadTipsLab.backgroundColor = [UIColor redColor];
@@ -284,6 +324,7 @@
             [chatUnreadTipsLab setFont:[UIFont systemFontOfSize:chatUnreadTipsLab.font.pointSize - 3]];
             chatUnreadTipsLab.textColor = [UIColor whiteColor];
             chatUnreadTipsLab.textAlignment = NSTextAlignmentCenter;
+            chatUnreadTipsLab.hidden = YES;
         }
         
         marginLeft += labelContentBtn.width;

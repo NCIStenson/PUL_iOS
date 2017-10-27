@@ -41,22 +41,41 @@
     
     [self getConversationList];
 }
+//<JMSGConversation, 0x17431bd80> - [ARRAY - conversationType:群聊会话, targetId:23306117, title:互联网研发部, avatarPath:<null>, unreadCount:0, message_table:message_table_1C604CDEAE9F8F291330BACD1508747631, latestMsgTime:1508749159963, latestMessage:<JMSGMessage, 0x1743a2a00> - [ARRAY - msgId:msgId_1508826192968155, serverMessageId:192968155, otherSide:23306117, isReceived:0, contentType:事件通知消息, status:消息接收成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x174319e00> - [ARRAY - conversationType:群聊会话, targetId:23332937, title:致成集团, avatarPath:<null>, unreadCount:0, message_table:message_table_BEFB437589FB383E72373F6A1508747630, latestMsgTime:1508749153984, latestMessage:<JMSGMessage, 0x1743a1dc0> - [ARRAY - msgId:msgId_1508826192967478, serverMessageId:192967478, otherSide:23332937, isReceived:0, contentType:事件通知消息, status:消息接收成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x17031d130> - [ARRAY - conversationType:群聊会话, targetId:23331541, title:拾学团队, avatarPath:<null>, unreadCount:0, message_table:message_table_930A4508A02CBC82BC8668E21508747631, latestMsgTime:1508748006792, latestMessage:<JMSGMessage, 0x1703a5cc0> - [ARRAY - msgId:msgId_1508748007063128, serverMessageId:457304965, otherSide:pansy, isReceived:1, contentType:文本消息, status:消息接收成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x170507590> - [ARRAY - conversationType:群聊会话, targetId:23335319, title:Edg, avatarPath:<null>, unreadCount:0, message_table:message_table_E82948DAB145F70BBCF3895C1508747631, latestMsgTime:1508730881451, latestMessage:<JMSGMessage, 0x1703a56a0> - [ARRAY - msgId:msgId_1508747457155105, serverMessageId:457155105, otherSide:pansy, isReceived:1, contentType:文本消息, status:消息接收成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x17010d020> - [ARRAY - conversationType:群聊会话, targetId:23346711, title:23346711, avatarPath:<null>, unreadCount:0, message_table:message_table_B75A4BE4AF304BBBD75B562B1508747635, latestMsgTime:1508686130066, latestMessage:<JMSGMessage, 0x1703a2140> - [ARRAY - msgId:msgId_1508747192895109, serverMessageId:192895109, otherSide:23346711, isReceived:0, contentType:事件通知消息, status:消息接收成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x170508c10> - [ARRAY - conversationType:群聊会话, targetId:10212578, title:修改聊天框架, avatarPath:<null>, unreadCount:0, message_table:message_table_E837413D9FA37DAC4F55D18A1508747631, latestMsgTime:1508674332321, latestMessage:<JMSGMessage, 0x1703a62e0> - [ARRAY - msgId:msgId_1508747456664979, serverMessageId:456664979, otherSide:99912999, isReceived:1, contentType:文本消息, status:消息接收成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x17410b010> - [ARRAY - conversationType:群聊会话, targetId:23331193, title:测试iOS团队, avatarPath:<null>, unreadCount:0, message_table:message_table_50C44CD58201444DC663F0DB1508747630, latestMsgTime:1508580490017, latestMessage:<JMSGMessage, 0x1703a6580> - [ARRAY - msgId:msgId_1508747455612061, serverMessageId:455612061, otherSide:99912999, isReceived:1, contentType:文本消息, status:消息接收成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x170509480> - [ARRAY - conversationType:群聊会话, targetId:23338887, title:哈哈哈, avatarPath:<null>, unreadCount:0, message_table:message_table_98D04EBD8E44964AF4D3203D1508747631, latestMsgTime:1508220721255, latestMessage:<JMSGMessage, 0x1703a5da0> - [ARRAY - msgId:msgId_1508747452463400, serverMessageId:452463400, otherSide:23338887, isReceived:0, contentType:文本消息, status:消息上传成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x170509750> - [ARRAY - conversationType:群聊会话, targetId:10198936, title:后台开发学习, avatarPath:<null>, unreadCount:0, message_table:message_table_B82142859642F278D8D1E9AB1508747631, latestMsgTime:1508220652760, latestMessage:<JMSGMessage, 0x1703a69e0> - [ARRAY - msgId:msgId_1508747452462908, serverMessageId:452462908, otherSide:10198936, isReceived:0, contentType:文本消息, status:消息上传成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x170509d80> - [ARRAY - conversationType:群聊会话, targetId:23335229, title:23335229, avatarPath:<null>, unreadCount:0, message_table:message_table_1AFD414B8B89DE44A491BD9A1508747631, latestMsgTime:1508054188727, latestMessage:<JMSGMessage, 0x1703a6ac0> - [ARRAY - msgId:msgId_1508747451151437, serverMessageId:451151437, otherSide:chenb, isReceived:1, contentType:文本消息, status:消息接收成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>],
+//<JMSGConversation, 0x170509ab0> - [ARRAY - conversationType:群聊会话, targetId:23251617, title:嗨嗨苑, avatarPath:<null>, unreadCount:0, message_table:message_table_A65247AEB86BAE40E1C3209A1508747631, latestMsgTime:1507864706738, latestMessage:<JMSGMessage, 0x1703a6ba0> - [ARRAY - msgId:msgId_1508747449375341, serverMessageId:449375341, otherSide:zhanghy, isReceived:1, contentType:文本消息, status:消息接收成功, fromAppKey:c7b4b8aa2a0902bfd22b7915, targetAppKey:<null>], targetAppKey:<null>]
+//)
 
 - (void)getConversationList {
     [JMSGConversation allConversations:^(id resultObject, NSError *error) {
         if (error == nil) {
             _conversationArr = [self sortConversation:resultObject];
             _unreadCount = 0;
-            NSMutableArray * singleCoversation = [NSMutableArray array];
+            NSMutableArray * centerArr = [NSMutableArray array];
             for (NSInteger i=0; i < [_conversationArr count]; i++) {
                 JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
-//                if (conversation.conversationType == kJMSGConversationTypeSingle) {
-                    [singleCoversation addObject:conversation];
-//                }
-                _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
+
+                JMSGGroup * group = (JMSGGroup *) conversation.target;
+                if (conversation.conversationType == kJMSGConversationTypeGroup && ![group.gid isEqualToString:conversation.title] ) {
+                    [centerArr addObject:conversation];
+                    _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
+                }else if (conversation.conversationType == kJMSGConversationTypeSingle){
+                    [centerArr addObject:conversation];
+                    _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
+                }else{
+                    [JMSGConversation deleteGroupConversationWithGroupId:group.gid];
+                }
             }
-            _conversationArr = singleCoversation;
-            [self saveBadge:_unreadCount];
+            _conversationArr = centerArr;
+            [self saveBadge:0];
         } else {
             _conversationArr = nil;
         }
@@ -122,7 +141,7 @@
 
 -(void)initView
 {
-    _chatTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAV_HEIGHT + 60.0f, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 84.0f) style:UITableViewStylePlain];
+    _chatTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAV_HEIGHT + 60.0f, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 60.0f - IPHONETabbarHeight) style:UITableViewStylePlain];
     [_chatTableView setBackgroundColor:[UIColor whiteColor]];
     _chatTableView.dataSource=self;
     _chatTableView.delegate=self;

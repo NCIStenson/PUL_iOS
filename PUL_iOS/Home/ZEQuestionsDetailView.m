@@ -89,7 +89,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_answerInfoArr.count == 0) {
+    if (_answerInfoArr.count == 0 && [_questionInfoModel.ANSWERSUM integerValue] == 0) {
         return 1;
     }
     
@@ -115,14 +115,17 @@
 
     float questionHeight =[ZEUtil heightForString:_questionInfoModel.QUESTIONEXPLAIN font:[UIFont boldSystemFontOfSize:kDetailTitleFontSize] andWidth:SCREEN_WIDTH - 40];
 
+    if (questionHeight > SCREEN_HEIGHT - NAV_HEIGHT) {
+        questionHeight = SCREEN_HEIGHT - NAV_HEIGHT - 200;
+    }
+    
     UITextView * questionsLab = [[UITextView alloc]initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH - 40, questionHeight)];
     questionsLab.text = _questionInfoModel.QUESTIONEXPLAIN;
     questionsLab.editable = NO;
-//    questionsLab.scrollEnabled = NO;
+    questionsLab.scrollEnabled = YES;
     questionsLab.font = [UIFont boldSystemFontOfSize:kDetailTitleFontSize];
     [questionsView addSubview:questionsLab];
     [questionsLab setContentInset:UIEdgeInsetsMake(-8, 0, 0, 0)];//设置UITextView的内边距
-
     
     //  问题文字与用户信息之间间隔
     float userY = questionHeight + 20.0f;
@@ -242,7 +245,10 @@
 
 -(float)calHeaderHeight{
     float questionHeight =[ZEUtil heightForString:_questionInfoModel.QUESTIONEXPLAIN font:[UIFont boldSystemFontOfSize:kDetailTitleFontSize] andWidth:SCREEN_WIDTH - 40];
-    
+    if (questionHeight > SCREEN_HEIGHT - NAV_HEIGHT) {
+        questionHeight = SCREEN_HEIGHT - NAV_HEIGHT - 200;
+    }
+
     NSArray * typeCodeArr = [_questionInfoModel.QUESTIONTYPECODE componentsSeparatedByString:@","];
     NSString * typeNameContent = @"";
     
@@ -295,7 +301,7 @@
         [lastView removeFromSuperview];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (_answerInfoArr.count == 0) {
+    if (_answerInfoArr.count == 0 && [_questionInfoModel.ANSWERSUM integerValue] == 0) {
         tipsView = [[ZEWithoutDataTipsView alloc]initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 300)];
         tipsView.type = SHOW_TIPS_TYPE_QUESTIONDETAIL;
         tipsView.imageType = SHOW_TIPS_IMAGETYPE_CRY;
@@ -309,7 +315,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_answerInfoArr.count == 0) {
+    if (_answerInfoArr.count == 0 && [_questionInfoModel.ANSWERSUM integerValue] == 0) {
         return 300;
     }
     
@@ -511,6 +517,7 @@
 
 -(void)giveLikes:(UIButton *)btn
 {
+    btn.enabled = NO;
     ZEAnswerInfoModel * answerInfoM = [ZEAnswerInfoModel getDetailWithDic:_answerInfoArr[btn.tag]];
 
     if([self.delegate respondsToSelector:@selector(giveLikes:withButton:)]){
@@ -521,7 +528,7 @@
 
 -(void)havenGiveLikes{
     MBProgressHUD *hud2 = [MBProgressHUD showHUDAddedTo:self animated:YES];
-    hud2.labelText = @"已经点赞过了";
+    hud2.labelText = @"不能重复点赞！";
     hud2.mode = MBProgressHUDModeText;
     [hud2 hide:YES afterDelay:1.0f];
 }

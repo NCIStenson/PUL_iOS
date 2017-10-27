@@ -5,6 +5,8 @@
 //  Created by Stenson on 16/12/5.
 //  Copyright © 2016年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
+#define ZE_weakify(var)   __weak typeof(var) weakSelf = var
+#define ZE_strongify(var) __strong typeof(var) strongSelf = var
 
 #import "ZEChatView.h"
 
@@ -51,7 +53,7 @@
     UIButton * sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     sendBtn.frame = CGRectMake(SCREEN_WIDTH - 70, 5.0f, 60, 30);
     [self addSubview:sendBtn];
-    [sendBtn addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
+    [sendBtn addTarget:self action:@selector(sendComment:) forControlEvents:UIControlEventTouchUpInside];
     [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
     [sendBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
     sendBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -68,11 +70,17 @@
     }
 }
 
--(void)sendComment
+-(void)sendComment:(UIButton *)button
 {
+    button.enabled = NO;
+    [self performSelector:@selector(enableBtn:) withObject:button afterDelay:0.29];
     if([_chatView.delegate respondsToSelector:@selector(didSelectSend:)]){
         [_chatView.delegate didSelectSend:_inputField.text];
     }
+}
+-(void)enableBtn:(UIButton *)obj
+{
+    obj.enabled = YES;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -192,10 +200,12 @@
 
 -(void)reloadDataWithArr:(NSArray *)arr
 {
-    @weakify(self);
+    ZE_weakify(self);
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        weak_self.layouts = [NSMutableArray array];
+        ZE_strongify(weakSelf);
+
+        strongSelf.layouts = [NSMutableArray array];
         [self initLayoutArr];
         
         for (int i = 0; i < arr.count ; i ++) {
@@ -327,6 +337,9 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row >= _layouts.count) {
+        return 0;
+    }
     NSDictionary * dic = _layouts[indexPath.row];
     ZEChatLayout * layout = [dic objectForKey:@"layout"];
     return layout.height;
@@ -342,7 +355,11 @@
     
     cell.delegate = self;
 
-        
+    if (indexPath.row >= _layouts.count) {
+        return cell;
+    }
+    NSLog(@" =====   %d",_layouts.count);
+    NSLog(@" =====   %d",indexPath.row);
     NSDictionary * dic = _layouts[indexPath.row];
     [cell setLayout:dic[@"layout"] withContentType:dic[@"type"]];
 

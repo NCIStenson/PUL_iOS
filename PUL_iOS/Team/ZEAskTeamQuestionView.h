@@ -39,7 +39,7 @@
 /**
  选择分类时修改问题title
  */
--(void)changeAskTeamQuestionTitle;
+-(void)changeAskTeamQuestionTitle:(NSString *)titleStr;
 
 @end
 
@@ -53,6 +53,7 @@
 
 @property (nonatomic,strong) UIButton * designatedNumberBtn;
 @property (nonatomic,strong) UITextView * inputView;
+@property (nonatomic,strong) UILabel * lengthLab;
 /************** 问题主键 *************/
 @property (nonatomic,copy) NSString * quesTypeSEQKEY;
 

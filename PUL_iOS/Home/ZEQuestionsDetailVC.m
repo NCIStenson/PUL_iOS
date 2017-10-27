@@ -80,6 +80,7 @@
 
 -(void)acceptSuccess{
     _questionInfoModel.ISSOLVE = @"1";
+    self.rightBtn.hidden = YES;
 }
 
 -(void)enterFromNotiSendRequest

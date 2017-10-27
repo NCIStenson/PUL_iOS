@@ -91,7 +91,7 @@
                                      
                                      NSInteger chatUnresadCount = [[JMSGConversation getAllUnreadCount] integerValue];
                                      NSString * PERINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"PERINFOCOUNT"]];
-                                     if ([PERINFOCOUNT integerValue] > 0 ) {
+                                     if ([PERINFOCOUNT integerValue]  + chatUnresadCount> 0 ) {
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
                                          item.badgeValue= [NSString stringWithFormat:@"%ld",(long)([PERINFOCOUNT integerValue] + chatUnresadCount)] ;
                                          if ([PERINFOCOUNT integerValue] + chatUnresadCount > 99) {

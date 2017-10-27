@@ -196,9 +196,9 @@
     }];
 }
 
--(void)changeAskQuestionTitle
+-(void)changeAskQuestionTitle:(NSString *)titleStr
 {
-    self.title = @"分类";
+    self.title = titleStr;
 }
 
 /**
@@ -356,11 +356,11 @@
             return;
         }
         
-        UIAlertController * alertCont= [UIAlertController alertControllerWithTitle:askView.isAnonymousAsk ? @"是否确定提交匿名问题" : @"是否确定提交问题" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController * alertCont= [UIAlertController alertControllerWithTitle: @"确定要提交这个提问吗？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"提交" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self insertData];
         }];
-        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"我再想想" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             
         }];
         

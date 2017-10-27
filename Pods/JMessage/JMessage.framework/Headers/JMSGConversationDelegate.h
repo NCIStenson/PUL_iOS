@@ -36,6 +36,47 @@
 @optional
 - (void)onUnreadChanged:(NSUInteger)newCount;
 
+/*!
+ * @abstract 同步离线消息、离线事件通知
+ *
+ * @param conversation    同步离线消息的会话
+ * @param offlineMessages 离线消息、离线事件数组
+ *
+ * @discussion 注意：
+ *
+ * SDK 会将消息下发分为在线下发和离线下发两种情况,
+ * 其中用户在离线状态(包括用户登出或者网络断开)期间所收到的消息我们称之为离线消息.
+ *
+ * 当用户上线收到这部分离线消息后,这里的处理与之前版本不同的是:
+ *
+ * 3.1.0 版本之前: SDK 会和在线时收到的消息一样,每收到一条消息都会上抛一个在线消息 JMSGMessage 来通知上层.
+ *
+ * 3.1.0 版本之后: SDK 会以会话为单位，不管该会话有多少离线消息，SDK同步完成后每个会话只上抛一次.
+ *
+ * 3.2.1 版本之后: SDK 会以会话为单位，不管该会话有多少离线事件，SDK同步完成后每个会话只上抛一次
+ *
+ * 注意：一个会话最多触发两次这个代理，即：离线消息和离线事件各一次,这样会大大减轻上层在收到消息刷新 UI 的压力.
+ *
+ * 上层通过此代理方法监听离线消息同步的会话,详见官方文档.
+ *
+ */
+@optional
+- (void)onSyncOfflineMessageConversation:(JMSGConversation *)conversation
+                         offlineMessages:(NSArray JMSG_GENERIC(__kindof JMSGMessage *)*)offlineMessages;
+/*!
+ * @abstract 同步漫游消息通知
+ *
+ * @param conversation 同步漫游消息的会话
+ *
+ * @discussion 注意：
+ *
+ * 当 SDK 触发此函数时，说明该会话有同步下漫游消息，并且已经存储到本地数据库中，
+ * 上层可通过 JMSGConversation 类中的获取message的方法刷新UI.
+ *
+ * @since 3.1.0
+ */
+@optional
+- (void)onSyncRoamingMessageConversation:(JMSGConversation *)conversation;
 
 
 @end

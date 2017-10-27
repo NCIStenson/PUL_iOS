@@ -112,9 +112,9 @@
     _teamHeadImgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _teamHeadImgBtn.frame = CGRectMake(10 , 10 , 90, 90);
     [self addSubview:_teamHeadImgBtn];
-    [_teamHeadImgBtn setImage:[UIImage imageNamed:@"logo.png"] forState:UIControlStateNormal];
+    [_teamHeadImgBtn setImage:[UIImage imageNamed:@"icon_team_headimage2"] forState:UIControlStateNormal];
     [_teamHeadImgBtn addTarget:self action:@selector(showCamera) forControlEvents:UIControlEventTouchUpInside];
-    _teamHeadImgBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    _teamHeadImgBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     for (int i = 0; i < 3;  i ++) {
         UILabel * caseNameLab = [[UILabel alloc]initWithFrame:CGRectMake(110, 15 + 30 * i, 70, 30)];
@@ -128,11 +128,11 @@
         float maiginWidth = SCREEN_WIDTH - marginLeft - 20;
         
         if (i == 0) {
-            _teamNameField = [[UITextField alloc]initWithFrame:CGRectMake(marginLeft, marginTop, maiginWidth, 30)];
+            _teamNameField = [[UITextField alloc]initWithFrame:CGRectMake(marginLeft + 5, marginTop, maiginWidth, 30)];
             _teamNameField.clipsToBounds = YES;
             _teamNameField.layer.cornerRadius = 5.0f;
-            _teamNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 5, 0)];
-            _teamNameField.leftViewMode = UITextFieldViewModeAlways;
+//            _teamNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 5, 0)];
+//            _teamNameField.leftViewMode = UITextFieldViewModeAlways;
             _teamNameField.placeholder = @"请输入团队名称";
             _teamNameField.textColor = kTextColor;
             _teamNameField.delegate = self;
@@ -193,7 +193,7 @@
             [_teamTypeBtn removeTarget:self action:@selector(showQuestionTypeView) forControlEvents:UIControlEventTouchUpInside];
         }
         
-        [_teamHeadImgBtn sd_setImageWithURL:ZENITH_IMAGEURL(teamCircleInfo.FILEURL) forState:UIControlStateNormal placeholderImage:ZENITH_PLACEHODLER_TEAM_IMAGE];
+        [_teamHeadImgBtn sd_setImageWithURL:ZENITH_IMAGEURL(teamCircleInfo.FILEURL) forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"icon_team_headimage2"]];
         
         _teamNameField.text = teamCircleInfo.TEAMCIRCLENAME;
         
@@ -248,7 +248,7 @@
 
 -(void)textViewDidChange:(UITextView *)textView
 {
-    BOOL flag=[self isContainsTwoEmoji:textView.text];
+    BOOL flag=[ZEUtil isContainsTwoEmoji:textView.text];
     if ([textView isEqual:_manifestoTextView] ) {
         if (flag){
             _manifestoTextView.text = [textView.text substringToIndex:_inputManifestoStr.length];
@@ -283,56 +283,13 @@
 {
     UITextField *textField = (UITextField *)noti;
 
-    BOOL flag=[self isContainsTwoEmoji:textField.text];
+    BOOL flag=[ZEUtil isContainsTwoEmoji:textField.text];
     if (flag) {
         _teamNameField.text = [textField.text substringToIndex:_teamNameStr.length];
     }else{
         _teamNameStr = textField.text;
     }
 }
-
--(BOOL)isContainsTwoEmoji:(NSString *)string
-{
-    __block BOOL isEomji = NO;
-    [string enumerateSubstringsInRange:NSMakeRange(0, [string length]) options:NSStringEnumerationByComposedCharacterSequences usingBlock:
-     ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-         const unichar hs = [substring characterAtIndex:0];
-         //         NSLog(@"hs++++++++%04x",hs);
-         if (0xd800 <= hs && hs <= 0xdbff) {
-             if (substring.length > 1) {
-                 const unichar ls = [substring characterAtIndex:1];
-                 const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
-                 if (0x1d000 <= uc && uc <= 0x1f77f)
-                 {
-                     isEomji = YES;
-                 }
-                 //                 NSLog(@"uc++++++++%04x",uc);
-             }
-         } else if (substring.length > 1) {
-             const unichar ls = [substring characterAtIndex:1];
-             if (ls == 0x20e3|| ls ==0xfe0f) {
-                 isEomji = YES;
-             }
-             //             NSLog(@"ls++++++++%04x",ls);
-         } else {
-             if (0x2100 <= hs && hs <= 0x27ff && hs != 0x263b) {
-                 isEomji = YES;
-             } else if (0x2B05 <= hs && hs <= 0x2b07) {
-                 isEomji = YES;
-             } else if (0x2934 <= hs && hs <= 0x2935) {
-                 isEomji = YES;
-             } else if (0x3297 <= hs && hs <= 0x3299) {
-                 isEomji = YES;
-             } else if (hs == 0xa9 || hs == 0xae || hs == 0x303d || hs == 0x3030 || hs == 0x2b55 || hs == 0x2b1c || hs == 0x2b1b || hs == 0x2b50|| hs == 0x231a ) {
-                 isEomji = YES;
-             }
-         }
-         
-     }];
-    return isEomji;
-}
-
-
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self downTheKeyBoard];

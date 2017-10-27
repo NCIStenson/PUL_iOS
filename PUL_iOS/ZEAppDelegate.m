@@ -28,10 +28,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     NSLog(@"  \n\n\n\n\n\n\n\n  %@   \n\n\n\n\n\n\n\n ",Zenith_Server);
-    NSLog(@" ====  %@",[UIImage imageNamed:@"without_tips"]);
-    NSLog(@" ====  %@",[UIImage imageNamed:@"without_tips_laugh"]);
-    NSLog(@" ====  %@",[UIImage imageNamed:@"without_tips_cry"]);
-
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     application.applicationSupportsShakeToEdit = YES;
 
@@ -75,7 +71,9 @@
                      appKey:JMESSAGE_APPKEY
                     channel:@"App Store"
            apsForProduction:NO
-                   category:nil];
+                   category:nil
+             messageRoaming:YES];
+    
     [JMessage addDelegate:self withConversation:nil];
 
 //    NSLog(@"%@",NSHomeDirectory());
@@ -162,7 +160,11 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         [JPUSHService handleRemoteNotification:userInfo];
     }
-    completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+    UIApplicationState state = [UIApplication sharedApplication].applicationState;
+    BOOL result = (state == UIApplicationStateBackground);
+    if (result) {
+        completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+    }
 }
 
 // iOS 10 Support
@@ -191,7 +193,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [hud3 hide:YES afterDelay:2];
         hud3.yOffset = SCREEN_HEIGHT / 2 - 80;
     }else if (application.applicationState == UIApplicationStateBackground ||application.applicationState == UIApplicationStateInactive){
-        
         [self showVCWithIndex:2];
     }
     [application setApplicationIconBadgeNumber:0];

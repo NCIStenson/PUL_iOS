@@ -15,7 +15,7 @@ PODS:
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
   - JCore (1.1.1)
-  - JMessage (3.0.1):
+  - JMessage (3.2.1):
     - JCore (~> 1.1.1)
   - JPush (3.0.2):
     - JCore (~> 1.1.1)
@@ -32,18 +32,18 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0.4)
-  - JMessage (~> 3.0.1)
+  - JMessage (~> 3.2.1)
   - JPush (~> 3.0.2)
   - Masonry (~> 0.6.4)
   - MJRefresh (~> 3.1.0)
   - SDWebImage (~> 3.7.4)
-  - YYKit (~> 1.0.7)
+  - YYKit (~> 1.0.9)
   - ZLPhotoBrowser (~> 2.4.9)
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   JCore: 2210a789c8efb7dc2a46b1c24d2209b995b18ad2
-  JMessage: af41e2b2561ab402206d36bf87763c08f496d6bf
+  JMessage: 1fba591cbc82640316e780a2a10933ffe9cd0925
   JPush: 01a693fafe51b93eafc2e368bbc7a7cc07e12ce4
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
@@ -51,6 +51,6 @@ SPEC CHECKSUMS:
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
   ZLPhotoBrowser: 1a5c422e2f621caa79e3689649483ece8ca96381
 
-PODFILE CHECKSUM: f646fbfc6686b4695480d12cd62fad6b1d5aa6af
+PODFILE CHECKSUM: f02fbbd0b85cc02d5d3e658f545d9e5c93e5aad5
 
 COCOAPODS: 1.3.1

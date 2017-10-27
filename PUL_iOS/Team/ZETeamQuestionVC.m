@@ -73,8 +73,43 @@
 {
     if ([noti.object isKindOfClass:[ZETeamCircleModel class]]) {
         _teamCircleInfo = noti.object;
+        _teamCircleInfo.TEAMCODE = _teamCircleInfo.SEQKEY;
+        [self teamHomeRequest:_teamCircleInfo.SEQKEY];
     }
 }
+
+-(void)teamHomeRequest:(NSString *)teamcode
+{
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":V_KLB_TEAMUSER_TEAMNAME,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":[NSString stringWithFormat:@"USERCODE = '%@' and TEAMCODE = '%@'",[ZESettingLocalData getUSERCODE],teamcode],
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.teamcircle.TeamUserName",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_TEAMUSER_TEAMNAME]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * dataArr = [ZEUtil getServerData:data withTabelName:V_KLB_TEAMUSER_TEAMNAME];
+                                 if ([dataArr count] > 0) {
+                                     _teamCircleInfo = [ZETeamCircleModel getDetailWithDic:dataArr[0]];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+
 -(void)addNavBarBtn
 {
     for (int i = 0; i < 3; i ++) {
@@ -178,7 +213,9 @@
 
 -(void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNOTI_TEAM_CHANGE_QUESTION_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kNOTI_CHANGE_TEAMCIRCLEINFO_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNOTI_LEAVE_PRACTICE_WEBVIEW object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNOTI_ASK_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNOTI_ANSWER_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:kNOTI_ACCEPT_SUCCESS object:nil];
@@ -263,22 +300,12 @@
                              success:^(id data) {
                                  NSArray * arr = [ZEUtil getServerData:data withTabelName:KLB_USER_BASE_INFO];
                                  if ([arr count] > 0) {
-                                     NSString * INFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"INFOCOUNT"]];
-                                     NSString * TEAMINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"TEAMINFOCOUNT"]];
-                                     if ([INFOCOUNT integerValue] > 0) {
-                                         UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:3];
-                                         item.badgeValue= INFOCOUNT;
-                                         if ([INFOCOUNT integerValue] > 99) {
-                                             item.badgeValue= @"99+";
-                                         }
-                                     }else{
-                                         UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:3];
-                                         item.badgeValue= nil;
-                                     }
-                                     if ([TEAMINFOCOUNT integerValue] > 0 ) {
+                                     NSInteger chatUnresadCount = [[JMSGConversation getAllUnreadCount] integerValue];
+                                     NSString * PERINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"PERINFOCOUNT"]];
+                                     if ([PERINFOCOUNT integerValue]  + chatUnresadCount> 0 ) {
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
-                                         item.badgeValue= TEAMINFOCOUNT;
-                                         if ([INFOCOUNT integerValue] > 99) {
+                                         item.badgeValue= [NSString stringWithFormat:@"%ld",(long)([PERINFOCOUNT integerValue] + chatUnresadCount)] ;
+                                         if ([PERINFOCOUNT integerValue] + chatUnresadCount > 99) {
                                              item.badgeValue= @"99+";
                                          }
                                      }else{
@@ -362,7 +389,7 @@
     NSDictionary * parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long) MAX_PAGE_COUNT],
                                      @"MASTERTABLE":V_KLB_TEAMCIRCLE_QUESTION_INFO,
                                      @"MENUAPP":@"EMARK_APP",
-                                     @"ORDERSQL":@" SYSCREATEDATE,ANSWERSUM desc ",
+                                     @"ORDERSQL":@" SYSCREATEDATE desc ",
                                      @"WHERESQL":WHERESQL,
                                      @"start":[NSString stringWithFormat:@"%ld",(long)_currentTeamTargetPage * MAX_PAGE_COUNT],
                                      @"METHOD":METHOD_SEARCH,
@@ -419,7 +446,7 @@
     NSDictionary * parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long) MAX_PAGE_COUNT],
                                      @"MASTERTABLE":V_KLB_TEAMCIRCLE_QUESTION_INFO,
                                      @"MENUAPP":@"EMARK_APP",
-                                     @"ORDERSQL":@" SYSCREATEDATE,ANSWERSUM desc ",
+                                     @"ORDERSQL":@" SYSCREATEDATE desc ",
                                      @"WHERESQL":WHERESQL,
                                      @"start":[NSString stringWithFormat:@"%ld",(long)_currentTeamSolvedPage * MAX_PAGE_COUNT],
                                      @"METHOD":METHOD_SEARCH,

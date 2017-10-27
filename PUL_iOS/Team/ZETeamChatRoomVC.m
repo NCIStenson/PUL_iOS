@@ -79,12 +79,16 @@
     browseView = [[PYPhotoBrowseView alloc]initWithFrame:self.view.frame];
     browseView.images = @[image];
     browseView.delegate = self;
+    browseView.dataSource = self;
     [browseView show];
 }
 
 - (void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView willShowWithImages:(NSArray *)images index:(NSInteger)index
 {
     self.navigationController.navigationBar.hidden = YES;
+}
+- (CGRect)frameFormWindow{
+    return CGRectMake(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40);
 }
 
 -(void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView didSingleClickedImage:(UIImage *)image index:(NSInteger)index

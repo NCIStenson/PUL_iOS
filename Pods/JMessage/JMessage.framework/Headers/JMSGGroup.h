@@ -81,6 +81,20 @@ JMSG_ASSUME_NONNULL_BEGIN
  */
 + (void)myGroupArray:(JMSGCompletionHandler)handler;
 
+/*!
+ * @abstract 获取所有设置群消息屏蔽的群组
+ *
+ * @param handler 结果回调。回调参数：
+ *
+ * - resultObject 类型为 NSArray，数组里成员的类型为 JMSGGroup
+ * - error 错误信息
+ *
+ * 如果 error 为 nil, 表示设置成功
+ * 如果 error 不为 nil,表示设置失败
+ *
+ * @discussion 从服务器获取，返回所有设置群消息屏蔽的群组。
+ */
++ (void)shieldList:(JMSGCompletionHandler)handler;
 
 ///----------------------------------------------------
 /// @name Group basic fields 群组基本属性
@@ -149,6 +163,13 @@ JMSG_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign, readonly) BOOL isNoDisturb;
 
 /*!
+ * @abstract 该群是否已被设置为消息屏蔽
+ *
+ * @discussion YES:是 , NO: 否
+ */
+@property(nonatomic, assign, readonly) BOOL isShieldMessage;
+
+/*!
  * @abstract 设置群组消息免打扰（支持跨应用设置）
  *
  * @param isNoDisturb 是否免打扰 YES:是 NO: 否
@@ -165,6 +186,22 @@ JMSG_ASSUME_NONNULL_BEGIN
  */
 - (void)setIsNoDisturb:(BOOL)isNoDisturb handler:(JMSGCompletionHandler)handler;
 
+/*!
+ * @abstract 设置群组消息屏蔽
+ *
+ * @param isShield 是否群消息屏蔽 YES:是 NO: 否
+ * @param handler 结果回调。回调参数：
+ *
+ * - resultObject 相应对象
+ * - error 错误信息
+ *
+ * 如果 error 为 nil, 表示设置成功
+ * 如果 error 不为 nil,表示设置失败
+ *
+ * @discussion 针对单个群组设置群消息屏蔽
+ */
+- (void)setIsShield:(BOOL)isShield handler:(JMSGCompletionHandler)handler;
+
 
 ///----------------------------------------------------
 /// @name Group members maintenance 群组成员维护
@@ -172,7 +209,7 @@ JMSG_ASSUME_NONNULL_BEGIN
 
 
 /*!
- * @abstract 获取群组成员列表
+ * @abstract 获取群组成员列表（同步接口，建议使用异步接口）
  *
  * @return 成员列表. NSArray 里成员类型是 JMSGUser.
  *
@@ -180,6 +217,16 @@ JMSG_ASSUME_NONNULL_BEGIN
  * 本接口只是在本地请求成员列表，不会发起服务器端请求。
  */
 - (NSArray JMSG_GENERIC(__kindof JMSGUser *)*)memberArray;
+
+/*!
+ * @abstract 获取群组成员列表（异步接口）
+ *
+ * @handler 成员列表. NSArray 里成员类型是 JMSGUser.
+ *
+ * @discussion 一般在群组详情界面调用此接口，展示群组的所有成员列表。
+ * 本接口只是在本地请求成员列表，不会发起服务器端请求。
+ */
+- (void)memberArrayWithCompletionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
 /*!
  * @abstract 添加群组成员

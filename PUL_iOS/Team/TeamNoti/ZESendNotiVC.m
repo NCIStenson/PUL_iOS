@@ -47,6 +47,12 @@
     if(_sendNotiView.notiTextView.text.length < 5 ){
         [self showTips:@"请输入详细通知主题"];
         return;
+    }else if ([ZEUtil sinaCountWord: _sendNotiView.notiTextView.text] > 50){
+        [self showTips:@"通知不能超过50个字"];
+        return;
+    }else if ([ZEUtil sinaCountWord: _sendNotiView.notiDetailTextView.text] > 1000){
+        [self showTips:@"补充说明不能超过1000个字"];
+        return;
     }
     
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"是否发送通知" message:nil preferredStyle:UIAlertControllerStyleAlert];

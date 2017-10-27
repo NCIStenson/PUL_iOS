@@ -40,7 +40,7 @@
 /**
  选择分类时修改title
  */
--(void)changeAskQuestionTitle;
+-(void)changeAskQuestionTitle:(NSString *)titleStr;
 
 @end
 
@@ -53,6 +53,8 @@
 @property (nonatomic,copy) NSString * goldScore;  // 悬赏值
 
 @property (nonatomic,strong) UITextView * inputView;
+@property (nonatomic,strong) UILabel * lengthLab;
+
 /************** 问题主键 *************/
 @property (nonatomic,copy) NSString * quesTypeSEQKEY;
 

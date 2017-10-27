@@ -7,7 +7,7 @@ target 'PUL_iOS' do
     pod 'Masonry', '~> 0.6.4'
     pod 'SDWebImage', '~> 3.7.4'
     pod 'AFNetworking', '~> 3.0.4'
-    pod 'YYKit', '~> 1.0.7'
-    pod 'JMessage', '~> 3.0.1'
+    pod 'YYKit', '~> 1.0.9'
+    pod 'JMessage', '~> 3.2.1'
     pod 'JPush', '~> 3.0.2'
 end

@@ -79,6 +79,9 @@
     _questionSearchTF =[[UITextField alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 50, 30)];
     [searchTFView addSubview:_questionSearchTF];
     _questionSearchTF.placeholder = @"关键词筛选";
+    if(_enterShowQuestionListType == QUESTION_LIST_EXPERT){
+        _questionSearchTF.placeholder = @"搜索问题";
+    }
     [_questionSearchTF setReturnKeyType:UIReturnKeySearch];
     _questionSearchTF.font = [UIFont systemFontOfSize:14];
     _questionSearchTF.leftViewMode = UITextFieldViewModeAlways;

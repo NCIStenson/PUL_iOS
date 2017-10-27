@@ -17,6 +17,7 @@
 @class JMSGAbstractContent;
 @class JMSGUser;
 @protocol JMSGTargetProtocol;
+@class JMSGOptionalContent;
 
 /*!
  * 消息
@@ -80,6 +81,30 @@ JMSG_ASSUME_NONNULL_BEGIN
                                        groupId:(NSString *)groupId;
 
 /*!
+ * @abstract 创建@人的群聊消息
+ *
+ * @param content 消息内容对象
+ * @param groupId 群聊ID
+ * @param at_list @对象的数组
+ *
+ * @discussion 不关心会话时的直接创建聊天消息的接口。一般建议使用 JMSGConversation -> createMessageWithContent:
+ */
++ (JMSGMessage *)createGroupMessageWithContent:(JMSGAbstractContent *)content
+                                       groupId:(NSString *)groupId
+                                       at_list:(NSArray<__kindof JMSGUser *> *)at_list;
+
+/*!
+ * @abstract 创建@所有人的群聊消息
+ *
+ * @param content 消息内容对象
+ * @param groupId 群聊ID
+ *
+ * @discussion 不关心会话时的直接创建聊天消息的接口。一般建议使用 JMSGConversation -> createMessageWithContent:
+ */
++ (JMSGMessage *)createGroupAtAllMessageWithContent:(JMSGAbstractContent *)content
+                                       groupId:(NSString *)groupId;
+
+/*!
  * @abstract 发送消息（已经创建好的）
  *
  * @param message 消息对象。
@@ -87,6 +112,17 @@ JMSG_ASSUME_NONNULL_BEGIN
  * @discussion 此接口与 createMessage:: 相关接口配合使用，创建好后使用此接口发送。
  */
 + (void)sendMessage:(JMSGMessage *)message;
+
+/*!
+ * @abstract 发送消息（附带可选功能，如：控制离线消息存储、自定义通知栏内容等）
+ *
+ * @param message           通过消息创建类接口，创建好的消息对象
+ * @param optionalContent   可选功能，具体请查看 JMSGOptionalContent 类
+ *
+ * @discussion 可选功能里可以设置离线消息存储、自定义通知栏内容等，具体请查看 JMSGOptionalContent 类。
+ *
+ */
++ (void)sendMessage:(JMSGMessage *)message optionalContent:(JMSGOptionalContent *)optionalContent;
 
 /*!
  * @abstract 发送单聊文本消息
@@ -281,6 +317,44 @@ JMSG_ASSUME_NONNULL_BEGIN
                             scale:(NSNumber *)scale
                           address:(NSString *)address
                            toGroup:(NSString *)groupId;
+/*!
+ * @abstract 消息撤回
+ *
+ * @param message 需要撤回的消息
+ * @param handler 结果回调
+ *
+ * - resultObject 撤回后的消息
+ * - error        错误信息
+ *
+ * @discussion 注意：SDK可撤回3分钟内的消息
+ */
++ (void)retractMessage:(JMSGMessage *)message completionHandler:(JMSGCompletionHandler)handler;
+
+/*!
+ * @abstract 是否是@自己的消息（只针对群消息，单聊消息无@功能）
+ */
+- (BOOL)isAtMe;
+
+/*!
+ * @abstract 是否是@所有人的消息（只针对群消息，单聊消息无@功能）
+ */
+- (BOOL)isAtAll;
+
+/*!
+ * @abstract 获取消息体中所有@对象（只针对群消息，单聊消息无@功能）
+ *
+ * @param handler 结果回调。回调参数：
+ *
+ * - resultObject 类型为 NSArray，数组里成员的类型为 JMSGUser
+ * 注意：如果该消息为@所有人消息时，resultObject 返回nil，可以通过 isAtAll 接口来判断是否是@所有人的消息
+ * - error 错误信息
+ *
+ * 如果 error 为 nil, 表示获取成功
+ * 如果 error 不为 nil,表示获取失败
+ *
+ * @discussion 从服务器获取，返回消息的所有@对象。
+ */
+- (void)getAt_List:(JMSGCompletionHandler)handler;
 
 
 ///----------------------------------------------------
@@ -309,7 +383,7 @@ JMSG_ASSUME_NONNULL_BEGIN
  *      单聊是对方用户;
  *      群聊是聊天群组, 也与当前会话的目标一致 [JMSGConversation target]
  */
-@property(nonatomic, strong, readonly) id<JMSGTargetProtocol> target;
+@property(nonatomic, strong, readonly) id target;
 
 /*!
  * @abstract 消息发送目标应用

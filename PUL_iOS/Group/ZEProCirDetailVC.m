@@ -297,7 +297,7 @@
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
-                                 [self showTips:@"加入成功"];
+                                 [self showTips:@"加入圈子成功"];
 
                                  [self.rightBtn setTitle:@"退出圈子" forState:UIControlStateNormal];
                                  [self.rightBtn removeTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -333,7 +333,7 @@
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
-                                 [self showTips:@"退出成功"];
+                                 [self showTips:@"退出圈子成功"];
                                  [self.rightBtn setTitle:@"加入圈子" forState:UIControlStateNormal];
                                  [self.rightBtn removeTarget:self action:@selector(exitCircle) forControlEvents:UIControlEventTouchUpInside];
                                  [self.rightBtn addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];

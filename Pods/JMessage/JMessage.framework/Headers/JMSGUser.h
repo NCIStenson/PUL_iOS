@@ -16,7 +16,7 @@
  * @abstract 更新用户字段
  */
 typedef NS_ENUM(NSUInteger, JMSGUserField) {
-  /// 用户信息字段: 用户名
+  /// 用户信息字段: 昵称
   kJMSGUserFieldsNickname = 0,
   /// 用户信息字段: 生日
   kJMSGUserFieldsBirthday = 1,
@@ -28,6 +28,9 @@ typedef NS_ENUM(NSUInteger, JMSGUserField) {
   kJMSGUserFieldsRegion = 4,
   /// 用户信息字段: 头像 (内部定义的 media_id)
   kJMSGUserFieldsAvatar = 5,
+  /// 用户信息字段: 地址
+  kJMSGUserFieldsAddress = 6,
+
 };
 
 /*!
@@ -41,6 +44,29 @@ typedef NS_ENUM(NSUInteger, JMSGUserGender) {
   /// 用户性别类型: 女
   kJMSGUserGenderFemale,
 };
+
+/*!
+ * 用户信息类（仅可用于修改用户信息）
+ */
+@interface JMSGUserInfo : NSObject
+JMSG_ASSUME_NONNULL_BEGIN
+/** 昵称 */
+@property(nonatomic, strong) NSString * nickname;
+/** 生日，格式：时间戳 */
+@property(nonatomic, strong) NSNumber * birthday;
+/** 签名 */
+@property(nonatomic, strong) NSString * signature;
+/** 性别 */
+@property(nonatomic, assign) JMSGUserGender gender;
+/** 区域 */
+@property(nonatomic, strong) NSString * region;
+/** 地址 */
+@property(nonatomic, strong) NSString * address;
+/** 头像数据 */
+@property(nonatomic, strong) NSData   * avatarData;
+
+JMSG_ASSUME_NONNULL_END
+@end
 
 
 /*!
@@ -129,6 +155,29 @@ JMSG_ASSUME_NONNULL_BEGIN
                     userFieldType:(JMSGUserField)type
                 completionHandler:(JMSGCompletionHandler JMSG_NULLABLE)handler;
 
+/*!
+ * @abstract 更新用户信息（支持将字段统一上传）
+ *
+ * @param userInfo  用户信息对象，类型是 JMSGUserInfo
+ * @param handler   更新用户信息回调接口函数
+ *
+ * @discussion 参数 userInfo 是 JMSGUserInfo 类，JMSGUserInfo 仅可用于修改用户信息
+ */
++ (void)updateMyInfoWithUserInfo:(JMSGUserInfo *)userInfo
+               completionHandler:(JMSGCompletionHandler)handler;
+
+/*!
+ * @abstract 更新头像（支持传图片格式）
+ *
+ * @param avatarData      头像数据
+ * @param avatarFormat    头像格式，可以为空，不包括"."
+ * @param handler         回调
+ *
+ * @discussion 头像格式参数直接填格式名称，不要带点。正确：@"png"，错误：@".png"
+ */
++ (void)updateMyAvatarWithData:(NSData *)avatarData
+                  avatarFormat:(NSString *)avatarFormat
+             completionHandler:(JMSGCompletionHandler)handler;
 /*!
  * @abstract 更新密码接口
  *
@@ -248,6 +297,9 @@ JMSG_ASSUME_NONNULL_BEGIN
 @property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE region;
 
 @property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE signature;
+
+@property(nonatomic, copy, readonly) NSString * JMSG_NULLABLE address;
+
 /*!
  * @abstract 备注名
  */
@@ -337,6 +389,13 @@ JMSG_ASSUME_NONNULL_BEGIN
 - (void)thumbAvatarData:(JMSGAsyncDataHandler)handler;
 
 /*!
+ * @abstract 获取头像缩略文件的本地路径
+ *
+ * @return 返回本地路，返回值只有在下载完成之后才有意义
+ */
+- (NSString *)thumbAvatarLocalPath;
+
+/*!
  * @abstract 获取头像大图文件数据
  *
  * @param handler 结果回调。回调参数:
@@ -351,6 +410,13 @@ JMSG_ASSUME_NONNULL_BEGIN
  * 如果本地已经有文件，则会返回本地，否则会从服务器上下载。
  */
 - (void)largeAvatarData:(JMSGAsyncDataHandler)handler;
+
+/*!
+ * @abstract 获取头像大图文件的本地路径
+ *
+ * @return 返回本地路，返回值只有在下载完成之后才有意义
+ */
+- (NSString *)largeAvatarLocalPath;
 
 /*!
  * @abstract 用户展示名

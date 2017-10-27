@@ -286,7 +286,7 @@
                                      
                                      NSInteger chatUnresadCount = [[JMSGConversation getAllUnreadCount] integerValue];
                                      NSString * PERINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"PERINFOCOUNT"]];
-                                     if ([PERINFOCOUNT integerValue] > 0 ) {
+                                     if ([PERINFOCOUNT integerValue]  + chatUnresadCount> 0 ) {
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
                                          item.badgeValue= [NSString stringWithFormat:@"%ld",(long)([PERINFOCOUNT integerValue] + chatUnresadCount)] ;
                                          if ([PERINFOCOUNT integerValue] + chatUnresadCount > 99) {
@@ -302,6 +302,43 @@
                              }];
 }
 
+-(void)clearPersonalNotiUnreadCount:(ZETeamNotiCenModel *)notiCenModel
+{
+    NSDictionary * parametersDic = @{@"limit":@"1",
+                                     @"MASTERTABLE":KLB_DYNAMIC_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.message.PersonMessageManage",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{@"SEQKEY":notiCenModel.SEQKEY,
+                                @"ISREAD":@""};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_DYNAMIC_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"messageDetail"];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * arr = [ZEUtil getServerData:data withTabelName:KLB_DYNAMIC_INFO];
+                                 if ([ZEUtil isNotNull:arr] && arr.count > 0) {
+                                     BOOL isRead = [arr[0] objectForKey:@"ISREAD"];
+                                     if (!isRead) {
+                                         [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_READDYNAMIC object:nil];
+                                     }
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+
+
 -(void)initView{
     _personalNotiView = [[ZEPersonalNotiView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT + 60.0f, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT - 60)];
     _personalNotiView.delegate = self;
@@ -312,6 +349,11 @@
 
 -(void)didSelectTeamMessage:(ZETeamNotiCenModel *)notiModel
 {
+    if([notiModel.MESTYPE integerValue] == 4){
+        [self clearPersonalNotiUnreadCount:notiModel];
+        return;
+    }
+    
     ZENotiDetailVC * notiDetailVC = [[ZENotiDetailVC alloc]init];
     notiDetailVC.notiCenModel = notiModel;
     [self.navigationController pushViewController:notiDetailVC animated:YES];

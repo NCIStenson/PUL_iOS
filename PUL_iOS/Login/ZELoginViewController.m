@@ -261,6 +261,7 @@
                                 @"EXPERTDATE":@"",
                                 @"EXPERTTYPE":@"",
                                 @"STATUS":@"",
+                                @"USERID":@"",
                                 @"EXPERTFRADE":@"",
                                 @"ISEXPERT":@"",
                                 @"USERACCOUNT":username,
@@ -280,7 +281,7 @@
                                      [userinfoDic setObject:[userinfoDic objectForKey:@"USERNAME"] forKey:@"NAME"];
                                      [ZESettingLocalData setUSERINFODic:userinfoDic];
                                      
-                                     [self loginJPushServer:username];
+                                     [self loginJPushServer:[userinfoDic objectForKey:@"USERCODE"]];
                                      
                                      //  重新注册通知
                                      if ([ZESettingLocalData getUSERCODE] > 0) {

@@ -8,7 +8,7 @@
 
 #import "ZEExpertChatVC.h"
 
-@interface ZEExpertChatVC ()<PYPhotoBrowseViewDelegate>
+@interface ZEExpertChatVC ()<PYPhotoBrowseViewDelegate,PYPhotoBrowseViewDataSource,UIGestureRecognizerDelegate>
 {
     PYPhotoBrowseView * browseView;
 }
@@ -101,9 +101,11 @@
     browseView = [[PYPhotoBrowseView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     browseView.images = @[image];
     browseView.delegate = self;
+    browseView.dataSource = self;
     [browseView show];
-    NSLog(@"    ======    %@",NSStringFromCGRect(browseView.frame));
-
+}
+- (CGRect)frameFormWindow{
+    return CGRectMake(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40);
 }
 
 - (void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView willShowWithImages:(NSArray *)images index:(NSInteger)index

@@ -44,7 +44,7 @@
     flow.minimumInteritemSpacing = 30;
     flow.needAlpha = YES;
     flow.delegate = self;
-    CGFloat oneX =SCREEN_WIDTH / 4;
+    CGFloat oneX =SCREEN_WIDTH / 3;
     flow.sectionInset = UIEdgeInsetsMake(0, oneX, 0, oneX);
 
     UIView * lineView = [UIView new];
@@ -112,7 +112,7 @@
         heroImageVIew.layer.masksToBounds = YES;
         heroImageVIew.backgroundColor = [UIColor whiteColor];
         if (teaminfo.FILEURL.length > 0) {
-            heroImageVIew.contentMode = UIViewContentModeScaleAspectFit;
+            heroImageVIew.contentMode = UIViewContentModeScaleToFill;
         }else{
             heroImageVIew.contentMode = UIViewContentModeCenter;
         }
@@ -128,12 +128,13 @@
     }else{
         UIImageView * heroImageVIew = [[UIImageView alloc]initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH / 3 - 30, SCREEN_WIDTH / 3 )];
         [cell.contentView addSubview:heroImageVIew];
+        heroImageVIew.backgroundColor = MAIN_NAV_COLOR;
         heroImageVIew.contentMode = UIViewContentModeScaleAspectFit;
         heroImageVIew.layer.cornerRadius = 5.0f;
         heroImageVIew.layer.masksToBounds = YES;
         heroImageVIew.image = [UIImage imageNamed:@"icon_addTeam"];
     }
-    
+        
     return cell;
 }
 
@@ -243,7 +244,7 @@
     headerImage.backgroundColor = [self getBackgroundColor:indexPath withAlpha:1];
     
     if (fileUrl.length > 0) {
-        headerImage.contentMode = UIViewContentModeScaleAspectFit;
+        headerImage.contentMode = UIViewContentModeScaleToFill;
         [headerImage sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"icon_team_headimage" color:[UIColor whiteColor]]];
     }else{
         UIImageView * showImageView  =[[UIImageView alloc]init];
@@ -252,7 +253,7 @@
         showImageView.center = headeImage.center;
         [showImageView sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"icon_team_headimage" color:[UIColor whiteColor]]];
         showImageView.layer.cornerRadius = showImageView.height / 2;
-        showImageView.contentMode = UIViewContentModeScaleAspectFit;
+        headerImage.contentMode = UIViewContentModeScaleToFill;
     }
     
     

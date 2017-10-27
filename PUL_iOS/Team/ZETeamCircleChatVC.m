@@ -22,7 +22,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     if([_questionInfo.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]){
@@ -61,7 +60,7 @@
                                      @"METHOD":METHOD_SEARCH,
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
-                                     @"CLASSNAME":@"com.nci.klb.app.teamcircle.QueAnsDetail",
+                                     @"CLASSNAME":@"com.nci.klb.app.teamcircle.AnswerGood",
                                      @"DETAILTABLE":@"",};
     
     NSDictionary * fieldsDic =@{};
@@ -69,7 +68,7 @@
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_TEAMCIRCLE_ANSWER_INFO]
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
-                                                                       withActionFlag:@"anssearch"];
+                                                                       withActionFlag:@""];
     
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO

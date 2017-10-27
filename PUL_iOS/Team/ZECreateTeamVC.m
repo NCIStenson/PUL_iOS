@@ -36,6 +36,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithActionBlock:^(id  _Nonnull sender) {
+        [self.view endEditing:YES];
+    }];
+    [self.navBar addGestureRecognizer:tap];
+
     [self initView];
 
     if(_enterType == ENTER_TEAM_CREATE){
@@ -46,6 +52,12 @@
         [createTeamView.numbersView reloadNumbersView:@[] withEnterType:ENTER_TEAM_CREATE];
     }else{
         self.title = _teamCircleInfo.TEAMCIRCLENAME;
+        NSString * strUrl =[NSString stringWithFormat:@"%@/file/%@",Zenith_Server,_teamCircleInfo.FILEURL];
+        UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:strUrl];
+        if([ZEUtil isNotNull:cachedImage]){
+            _choosedImage = cachedImage;
+        }
+
         if([[ZESettingLocalData getUSERCODE] isEqualToString:_teamCircleInfo.SYSCREATORID]){
             [self.rightBtn setTitle:@"确认修改" forState:UIControlStateNormal];
             [self.rightBtn addTarget:self action:@selector(updateTeamData) forControlEvents:UIControlEventTouchUpInside];
@@ -181,12 +193,18 @@
     NSString * TEAMCIRCLECODE = createTeamView.messageView.TEAMCIRCLECODE;
     NSString * TEAMCIRCLECODENAME =createTeamView.messageView.TEAMCIRCLECODENAME;
     
-    if (TEAMCIRCLENAME.length == 0|| TEAMCIRCLEREMARK.length == 0 ||  TEAMMANIFESTO.length == 0 || TEAMCIRCLECODENAME.length == 0) {
-        [self showTips:@"请完善班组圈信息"];
+    if (TEAMCIRCLENAME.length == 0) {
+        [self showTips:@"请输入团队名称"];
         return;
-    }
-    if ([TEAMMANIFESTO isEqualToString:textViewStr] || [TEAMCIRCLEREMARK isEqualToString:textViewProfileStr]) {
-        [self showTips:@"请完善班组圈信息"];
+    }else if (TEAMCIRCLECODENAME.length == 0){
+        [self showTips:@"请选择团队分类"];
+        return;
+    }else if (TEAMMANIFESTO.length == 0 || [TEAMMANIFESTO isEqualToString:textViewStr]){
+        [self showTips:@"请输入团队宣言"];
+        return;
+        
+    }else if (TEAMCIRCLEREMARK.length == 0 || [TEAMCIRCLEREMARK isEqualToString:textViewProfileStr]){
+        [self showTips:@"请输入团队简介"];
         return;
     }
     
@@ -270,8 +288,17 @@
     NSString * TEAMCIRCLECODE = createTeamView.messageView.TEAMCIRCLECODE;
     NSString * TEAMCIRCLECODENAME =createTeamView.messageView.TEAMCIRCLECODENAME;
     
-    if (TEAMCIRCLENAME.length == 0|| TEAMCIRCLEREMARK.length == 0 ||  TEAMMANIFESTO.length == 0 || TEAMCIRCLECODENAME.length == 0) {
-        [self showTips:@"请完善班组圈信息"];
+    if (TEAMCIRCLENAME.length == 0) {
+        [self showTips:@"请输入团队名称"];
+        return;
+    }else if (TEAMCIRCLECODENAME.length == 0){
+        [self showTips:@"请选择团队分类"];
+        return;
+    }else if (TEAMMANIFESTO.length == 0 || [TEAMMANIFESTO isEqualToString:textViewStr]){
+        [self showTips:@"请输入团队宣言"];
+        return;
+    }else if (TEAMCIRCLEREMARK.length == 0 || [TEAMCIRCLEREMARK isEqualToString:textViewProfileStr]){
+        [self showTips:@"请输入团队简介"];
         return;
     }else if (_originMembersArr.count == 0){
         [self showTips:@"请等待加载完人员信息后再进行修改"];

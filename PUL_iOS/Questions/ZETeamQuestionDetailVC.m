@@ -65,6 +65,7 @@
 
 -(void)acceptSuccess{
     _questionInfoModel.ISSOLVE = @"1";
+    self.rightBtn.hidden = YES;
 }
 
 -(void)sendSearchAnswerRequestWithoutOperateType
@@ -190,8 +191,9 @@
 
 #pragma mark - 点赞
 
--(void)giveLikes:(NSString *)answerSeqkey
+-(void)giveLikes:(NSString *)answerSeqkey withButton:(UIButton *)button
 {
+    button.enabled = NO;
     NSDictionary * parametersDic = @{@"limit":@"20",
                                      @"MASTERTABLE":KLB_TEAMCIRCLE_ANSWER_GOOD,
                                      @"DETAILTABLE":@"",
@@ -216,10 +218,11 @@
     
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
-                             success:^(id data) {                                 
+                             success:^(id data) {
+                                 button.enabled = YES;
                                  [self sendSearchAnswerRequest];
                              } fail:^(NSError *errorCode) {
-                                 
+                                 button.enabled = YES;
                              }];
 }
 

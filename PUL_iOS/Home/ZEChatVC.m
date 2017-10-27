@@ -61,7 +61,7 @@
                                      @"METHOD":@"search",
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
-                                     @"CLASSNAME":@"com.nci.klb.app.answer.QueAnsDetail",
+                                     @"CLASSNAME":@"com.nci.klb.app.answer.AnswerGood",
                                      @"DETAILTABLE":@"",};
     
     NSDictionary * fieldsDic =@{};
@@ -69,7 +69,7 @@
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_ANSWER_INFO]
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
-                                                                       withActionFlag:@"anssearch"];
+                                                                       withActionFlag:@""];
     
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO

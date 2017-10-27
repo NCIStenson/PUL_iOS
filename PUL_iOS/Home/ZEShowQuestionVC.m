@@ -106,7 +106,7 @@
 
 -(void)initAskTypeView
 {
-    self.title = @"问题分类";
+    self.title = @"分类";
     self.rightBtn.enabled = NO;
     
     askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
