@@ -354,6 +354,7 @@
 		983D47DA1DCC2B1100D61BC9 /* JRPlayerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 983D47C51DCC2B1100D61BC9 /* JRPlayerViewController.xib */; };
 		984492C91E5D5D080066AFD1 /* ZEHomeBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 984492C81E5D5D080066AFD1 /* ZEHomeBaseCell.m */; };
 		984492CC1E5D5D270066AFD1 /* ZEHomeLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 984492CB1E5D5D270066AFD1 /* ZEHomeLayout.m */; };
+		9844EC6A1FA3157600174CD5 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9844EC691FA3157600174CD5 /* placeholder.png */; };
 		984A32901DAC88CE00B9F53B /* MBProgressHUD+PY.m in Sources */ = {isa = PBXBuildFile; fileRef = 984A32711DAC88CE00B9F53B /* MBProgressHUD+PY.m */; };
 		984A32911DAC88CE00B9F53B /* UIView+PYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 984A32731DAC88CE00B9F53B /* UIView+PYExtension.m */; };
 		984A32921DAC88CE00B9F53B /* PYNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984A32761DAC88CE00B9F53B /* PYNavigationController.m */; };
@@ -1019,6 +1020,7 @@
 		984492C81E5D5D080066AFD1 /* ZEHomeBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEHomeBaseCell.m; path = Home/HomeView/ZEHomeBaseCell.m; sourceTree = "<group>"; };
 		984492CA1E5D5D270066AFD1 /* ZEHomeLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEHomeLayout.h; path = Home/HomeView/ZEHomeLayout.h; sourceTree = "<group>"; };
 		984492CB1E5D5D270066AFD1 /* ZEHomeLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEHomeLayout.m; path = Home/HomeView/ZEHomeLayout.m; sourceTree = "<group>"; };
+		9844EC691FA3157600174CD5 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 		984A32701DAC88CE00B9F53B /* MBProgressHUD+PY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+PY.h"; sourceTree = "<group>"; };
 		984A32711DAC88CE00B9F53B /* MBProgressHUD+PY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+PY.m"; sourceTree = "<group>"; };
 		984A32721DAC88CE00B9F53B /* UIView+PYExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PYExtension.h"; sourceTree = "<group>"; };
@@ -1437,6 +1439,7 @@
 		980377471F09DE4D0085FAD9 /* SourceImg */ = {
 			isa = PBXGroup;
 			children = (
+				9844EC691FA3157600174CD5 /* placeholder.png */,
 				988E65D01F4D5AB500894EF1 /* PUL_Setting */,
 				984CBCBF1F18534C00589BCC /* PULHOME */,
 				980377481F09DE4D0085FAD9 /* answer_tag@2x.png */,
@@ -3114,6 +3117,7 @@
 				986334691F3DB77200E03F6C /* Error@2x.png in Resources */,
 				988E65F11F4D5AB500894EF1 /* icon_setting_male@2x.png in Resources */,
 				9803795E1F09DE4E0085FAD9 /* yy_three@3x.png in Resources */,
+				9844EC6A1FA3157600174CD5 /* placeholder.png in Resources */,
 				9863346B1F3DB77200E03F6C /* Exercise record@2x.png in Resources */,
 				980378CC1F09DE4D0085FAD9 /* forum_list_post@2x.png in Resources */,
 				9803796F1F09DE4E0085FAD9 /* 箭头-(4)@3x.png in Resources */,

@@ -7,7 +7,7 @@
 //
 
 #import "ZEPersonalDynamicVC.h"
-
+#import "ZEQuestionBankWebVC.h"
 #import "ZENotiDetailVC.h"
 #import "ZEQuestionsDetailVC.h"
 
@@ -371,6 +371,14 @@
     questionDetailVC.enterDetailIsFromNoti = QUESTIONDETAIL_TYPE_NOTI;
     questionDetailVC.notiCenM = notiModel;
     [self.navigationController pushViewController:questionDetailVC animated:YES];
+}
+
+-(void)didSelectWebViewWithIndex:(NSString *)urlpath;
+{
+    ZEQuestionBankWebVC * webVC = [[ZEQuestionBankWebVC alloc]init];
+//    webVC.enterType = ENTER_PERSONALNOTICENTER_EXAM;
+    webVC.URLPATH = urlpath;
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 -(void)didSelectDeleteBtn:(ZETeamNotiCenModel *)notiModel

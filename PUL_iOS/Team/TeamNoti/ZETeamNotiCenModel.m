@@ -27,7 +27,8 @@ static ZETeamNotiCenModel *teamNotiM = nil;
     teamNotiM.USERNAME              = [dic objectForKey:@"USERNAME"];
     teamNotiM.CREATORNAME              = [dic objectForKey:@"CREATORNAME"];
     teamNotiM.ISREAD              = [dic objectForKey:@"ISREAD"];
-    
+    teamNotiM.URLPATH              = [dic objectForKey:@"URLPATH"];
+
     teamNotiM.MESTYPE              = [dic objectForKey:@"MESTYPE"];
     teamNotiM.DYNAMICTYPE              = [dic objectForKey:@"DYNAMICTYPE"];
     teamNotiM.TIPS              = [dic objectForKey:@"TIPS"];

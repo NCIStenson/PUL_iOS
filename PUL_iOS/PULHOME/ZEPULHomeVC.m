@@ -484,6 +484,13 @@
     [self.navigationController pushViewController:webVC animated:YES];
 }
 
+-(void)didSelectWebViewWithIndex:(NSString *)urlpath
+{
+    ZEQuestionBankWebVC * webVC = [[ZEQuestionBankWebVC alloc]init];
+    webVC.URLPATH = urlpath;
+    [self.navigationController pushViewController:webVC animated:YES];
+}
+
 -(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
 {
     ZEQuestionsDetailVC * detailVC = [[ZEQuestionsDetailVC alloc]init];

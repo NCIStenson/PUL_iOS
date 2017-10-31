@@ -9,8 +9,6 @@
 #define kSubTitleColor         [UIColor colorWithHexString:@"#828282"]
 #define kTitleColor         [UIColor colorWithHexString:@"#333333"]
 
-
-
 #import "ZEPULHomeDynamicCell.h"
 
 @implementation ZEPULHomeDynamicCell
@@ -31,21 +29,21 @@
     [self.contentView addSubview:self.dynamicImageView];
     
     self.textLab = [UILabel new];
-    _textLab.text = @"签到";
+//    _textLab.text = @"签到";
     _textLab.frame = CGRectMake(_dynamicImageView.right + 20, 15, 100, 15);
     [self.contentView addSubview:_textLab];
     self.textLab.font = [UIFont systemFontOfSize:14];
     self.textLab.textColor = kSubTitleColor;
 
     self.timeLab = [UILabel new];
-    _timeLab.text = @"10分钟前";
+//    _timeLab.text = @"10分钟前";
     _timeLab.frame = CGRectMake(self.textLab.left, self.textLab.bottom + 5 , 100, 15);
     [self.contentView addSubview:_timeLab];
     _timeLab.font = [UIFont systemFontOfSize:14];
     _timeLab.textColor = kSubTitleColor;
 
     self.contentLab = [UILabel new];
-    _contentLab.text = @"每日签到";
+//    _contentLab.text = @"每日签到";
     _contentLab.frame = CGRectMake(self.textLab.left, self.timeLab.bottom, SCREEN_WIDTH - self.textLab.left - 20, 35);
     [self.contentView addSubview:_contentLab];
     _contentLab.font = [UIFont systemFontOfSize:18];
@@ -82,30 +80,45 @@
 
 -(void)reloadCellView:(ZEPULHomeModel *)model;
 {
+    [_dynamicImageView sd_setImageWithURL:ZENITH_IMAGEURL(model.FILEURL) placeholderImage:ZENITH_PLACEHODLER_IMAGE];
+    _textLab.text = model.FILEURL;
+    NSLog(@"  ===  %@ ", [ZENITH_IMAGEURL(model.FILEURL) absoluteString]);
     if ([model.MES_TYPE integerValue] == 4) {
-        [_dynamicImageView setImage:[UIImage imageNamed:@"home_icon_signin"]];
         _textLab.text = @"签到";
-        _timeLab.text = @"刚刚";
+        _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
         _contentLab.text = @"每日签到，奖励多多";
         _contentLab.height = 45;
         _subContentLab.hidden = YES;
         _tipsLab.text = model.EXTRASPARAM;
     }else if ([model.MES_TYPE integerValue] == 2){
-        [_dynamicImageView setImage:[UIImage imageNamed:@"home_icon_team"]];
         _textLab.text = @"团队";
         _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
         _contentLab.text = model.MSG_TITLE;
         _subContentLab.text = model.MSG_CONTENT;
         _tipsLab.text = @"立即查看";
     }else if ([model.MES_TYPE integerValue] == 1){
-        [_dynamicImageView setImage:[UIImage imageNamed:@"home_icon_question"]];
         _textLab.text = @"问答";
         _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
         _contentLab.text = model.MSG_TITLE;
         _subContentLab.text = model.MSG_CONTENT;
         _tipsLab.text = model.EXTRASPARAM;
+    }else if ([model.MES_TYPE integerValue] == 5){
+        _textLab.text = @"在线考试";
+        _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
+        _contentLab.text = model.MSG_TITLE;
+        _contentLab.height = 50;
+        _contentLab.numberOfLines = 0;
+//        _subContentLab.text = model.MSG_CONTENT;
+        _tipsLab.text = model.EXTRASPARAM;
+    }else if ([model.MES_TYPE integerValue] == 3){
+        _textLab.text = @"能力学堂";
+        _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
+        _contentLab.text = model.MSG_TITLE;
+        _contentLab.height = 50;
+        _contentLab.numberOfLines = 0;
+//        _subContentLab.text = model.MSG_CONTENT;
+        _tipsLab.text = model.EXTRASPARAM;
     }
-    
 }
 
 - (void)awakeFromNib {

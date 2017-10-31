@@ -263,6 +263,8 @@
         [self initQuestionCellViewWithIndexpath:indexPath withCell:cell];
     }else if ([notiCenM.MESTYPE integerValue] == 4){
         [self initTeamCellViewWithIndexpath:indexPath withCell:cell withMestype:4];
+    }else if ([notiCenM.MESTYPE integerValue] == 5){
+        [self initTeamCellViewWithIndexpath:indexPath withCell:cell withMestype:5];
     }
         
     return cell;
@@ -291,17 +293,27 @@
     NSString * fileUrl = [[[dynamicDic objectForKey:@"FILEURL"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"] stringByReplacingOccurrencesOfString:@"," withString:@""];
     
     UIImageView * headeImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 60, 60)];
-    [headeImage setImage:ZENITH_PLACEHODLER_TEAM_IMAGE];
-    [headeImage sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"xihz_td.png"]];
     [cell.contentView addSubview:headeImage];
     [headeImage setContentMode:UIViewContentModeScaleAspectFit];
-    if(fileUrl.length > 0){
-        [headeImage sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"xihz_td.png"]];
+    if(mestype == 1 || mestype == 4){
+        [headeImage setImage:[UIImage imageNamed:@"xihz_td.png"]];
+        if (fileUrl.length > 0) {
+            [headeImage sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"xihz_td.png"]];
+        }
+    }else if ( mestype == 5){
+        [headeImage setImage:[UIImage imageNamed:@"xihz_td.png"]];
+        if (fileUrl.length > 0 ) {
+            [headeImage sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"xihz_td.png"]];
+        }
     }
+    
+    
     UILabel * nameLab = [[UILabel alloc]initWithFrame:CGRectMake(100, 10, SCREEN_WIDTH - 120, 20)];
     nameLab.text = @"团队消息";
     if(mestype == 4){
         nameLab.text = @"团队消息（已撤回）";
+    }else if (mestype == 5){
+        nameLab.text = @"在线考试";
     }
     nameLab.numberOfLines = 0;
     nameLab.textAlignment = NSTextAlignmentLeft;
@@ -319,6 +331,9 @@
     dynamiLab.textVerticalAlignment = YYTextVerticalAlignmentCenter;
     dynamiLab.lineBreakMode = NSLineBreakByTruncatingMiddle;
     dynamiLab.text = [NSString stringWithFormat:@"%@  |  %@",notiM.QUESTIONEXPLAIN,notiM.CREATORNAME];
+    if (mestype == 5){
+        dynamiLab.text = [NSString stringWithFormat:@"%@",notiM.QUESTIONEXPLAIN];
+    }
     float explainHeight = [ZEUtil heightForString:dynamiLab.text font:dynamiLab.font andWidth:dynamiLab.width];
     if(explainHeight > 40){
         explainHeight = 40;
@@ -331,7 +346,10 @@
     receiptLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
     [cell.contentView addSubview:receiptLab];
     receiptLab.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@",notiM.SYSCREATEDATE]];
-    
+    if (mestype == 5){
+        receiptLab.hidden = YES;
+    }
+
     if (![notiM.ISREAD boolValue]) {
         UIImageView * redImage = [[UIImageView alloc]init];
         redImage.backgroundColor = [UIColor redColor];
@@ -499,8 +517,14 @@
     ZETeamNotiCenModel * notiModel = [ZETeamNotiCenModel getDetailWithDic:self.personalNotiArr[indexPath.row]];
     if([notiModel.MESTYPE integerValue] == 2 && [self.delegate respondsToSelector:@selector(didSelectQuestionMessage:)] ){
         [self.delegate didSelectQuestionMessage:notiModel];
-    }else if( [self.delegate respondsToSelector:@selector(didSelectTeamMessage:)] ){
-        [self.delegate didSelectTeamMessage:notiModel];
+    }else if([notiModel.MESTYPE integerValue] == 1 || [notiModel.MESTYPE integerValue] == 4){
+        if ([self.delegate respondsToSelector:@selector(didSelectTeamMessage:)] ) {
+            [self.delegate didSelectTeamMessage:notiModel];
+        }
+    }else if ([notiModel.MESTYPE integerValue] == 5){
+        if ([self.delegate respondsToSelector:@selector(didSelectWebViewWithIndex:)]) {
+            [self.delegate didSelectWebViewWithIndex:notiModel.URLPATH];
+        }
     }
 }
 

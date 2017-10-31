@@ -347,16 +347,15 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 
 #pragma mark - 解决网页视频全屏播放问题
 
-- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)nowWindow {
-    
-    if (_allowRotation) {
-        return UIInterfaceOrientationMaskAll;
-    }
-    else
-    {
-        return UIInterfaceOrientationMaskPortrait;
-    }
-}
+//- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)nowWindow {
+//
+//    if (_allowRotation) {
+//        return UIInterfaceOrientationMaskAll;
+//    }
+//    else{
+//        return UIInterfaceOrientationMaskPortrait;
+//    }
+//}
 
 
 @end

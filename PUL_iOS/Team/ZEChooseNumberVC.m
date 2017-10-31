@@ -112,6 +112,7 @@
     NSMutableArray * USERCODELIST = [NSMutableArray array];
     
     for (NSDictionary * dic in chooseNumberView.alreadyInviteNumbersArr) {
+        NSLog(@" ===  %@ ",dic);
         ZEUSER_BASE_INFOM * userinfo = [ZEUSER_BASE_INFOM getDetailWithDic:dic];
         NSDictionary * listDic;
         if ([userinfo.USERTYPE integerValue] == 0 || [userinfo.USERTYPE integerValue] == 4) {
@@ -122,6 +123,10 @@
             listDic = @{@"USERCODE":userinfo.USERCODE,
                         @"USERNAME":userinfo.USERNAME,
                         @"USERTYPE":@"2"};
+        }else if ([userinfo.USERTYPE integerValue] == 3){
+            listDic = @{@"USERCODE":userinfo.USERCODE,
+                        @"USERNAME":userinfo.USERNAME,
+                        @"USERTYPE":@"3"};
         }
         
         if ([userinfo.USERCODE isEqualToString:chooseNumberView.currentSelectUserinfo.USERCODE]) {

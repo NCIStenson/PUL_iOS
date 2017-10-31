@@ -11,7 +11,7 @@
 #define kInputViewMarginLeft    10.0f
 #define kInputViewMarginTop     NAV_HEIGHT
 #define kInputViewWidth         SCREEN_WIDTH - 20.0f
-#define kInputViewHeight        120.0f
+#define kInputViewHeight        200.0f
 
 #define textViewStr @"这个问题将由您来解答。"
 
@@ -263,7 +263,7 @@
 }
 
 - (CGRect)frameFormWindow{
-    return CGRectMake(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40);
+    return CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 -(void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView didSingleClickedImage:(UIImage *)image index:(NSInteger)index

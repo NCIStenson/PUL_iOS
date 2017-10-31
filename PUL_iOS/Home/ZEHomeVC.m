@@ -346,7 +346,7 @@
                                      @"METHOD":METHOD_SEARCH,
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
-                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     @"CLASSNAME":@"com.nci.klb.app.procirclestatus.ProcirclePosition",
                                      @"DETAILTABLE":@"",};
     
     NSDictionary * fieldsDic =@{};
@@ -359,9 +359,6 @@
                        showAlertView:NO
                              success:^(id data) {
                                  [[ZEQuestionTypeCache instance]setQuestionTypeCaches:[ZEUtil getServerData:data withTabelName:V_KLB_QUESTION_TYPE]];
-                                 [_homeView reloadContentViewWithArr:@[] withHomeContent:HOME_CONTENT_RECOMMAND];
-                                 [_homeView reloadContentViewWithArr:@[] withHomeContent:HOME_CONTENT_NEWEST];
-                                 [_homeView reloadContentViewWithArr:@[] withHomeContent:HOME_CONTENT_BOUNS];
                              } fail:^(NSError *errorCode) {
                                  
                              }];

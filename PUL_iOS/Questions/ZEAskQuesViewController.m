@@ -89,7 +89,7 @@
                                      @"METHOD":@"search",
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
-                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     @"CLASSNAME":@"com.nci.klb.app.procirclestatus.ProcirclePosition",
                                      @"DETAILTABLE":@"",};
     
     NSDictionary * fieldsDic =@{};

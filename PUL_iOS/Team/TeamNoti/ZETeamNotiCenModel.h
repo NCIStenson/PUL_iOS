@@ -22,6 +22,8 @@
 @property (nonatomic,copy) NSString * USERNAME;
 @property (nonatomic,copy) NSString * CREATORNAME;
 
+@property (nonatomic,copy) NSString * URLPATH;
+
 @property (nonatomic,copy) NSString * MESTYPE; //  1 团队通知 或者 2 个人问题通知
 @property (nonatomic,copy) NSString * DYNAMICTYPE;
 

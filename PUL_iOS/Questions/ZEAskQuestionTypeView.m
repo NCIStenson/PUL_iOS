@@ -251,6 +251,8 @@
 
         contentImage.top = (kTableViewCellHeight - contentImage.height) / 2 ;
         
+        NSLog(@" = = = =  %@", dic );
+        NSLog(@" = = = =  %@",[ZENITH_ICON_IMAGEURL([dic objectForKey:@"ICOPATH"]) absoluteString] );
         [contentImage sd_setImageWithURL:ZENITH_ICON_IMAGEURL([dic objectForKey:@"ICOPATH"]) placeholderImage:ZENITH_PLACEHODLER_IMAGE];
         
         UILabel * contentLab = [[UILabel alloc]initWithFrame:CGRectMake(26.0f,0,_typeTableView.frame.size.width - 27 ,kTableViewCellHeight - 2.0f)];
@@ -289,8 +291,6 @@
         }];
     }
 }
-
-
 
 -(void)handleDoubleTap:(UIView *)view
 {

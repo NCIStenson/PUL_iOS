@@ -708,7 +708,7 @@
 {
     NSString * alertMsg = [NSString stringWithFormat:@"是否指定%@为管理员",userinfo.USERNAME];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertMsg message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self confirmDesignatedAdministrator:userinfo];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -767,7 +767,7 @@
 #pragma mark - 撤销管理员
 -(void)revokeAdministrator:(ZEUSER_BASE_INFOM *)userinfo
 {
-    NSString * alertMsg = [NSString stringWithFormat:@"是否撤销%@的管理员",userinfo.USERNAME];
+    NSString * alertMsg = [NSString stringWithFormat:@"是否撤销%@的管理员权限",userinfo.USERNAME];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:alertMsg message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self confirmRevokeAdministrator:userinfo];

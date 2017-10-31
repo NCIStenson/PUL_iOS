@@ -190,8 +190,8 @@
     }
     userY += circleLab.height + 5.0f;
 
-    if (_questionInfoModel.TARGETUSERNAME.length > 0) {
-
+    if (_questionInfoModel.TARGETUSERNAME.length > 0 && ![ZEUtil isStrNotEmpty:_questionInfoModel.TARGETUSERNAME]) {
+        NSLog(@" ===  %@",_questionInfoModel.TARGETUSERNAME);
         NSString * targetUsernameStr = [NSString stringWithFormat:@"指定人员回答 ：%@",_questionInfoModel.TARGETUSERNAME];
         
         float targetUsernameHeight = [ZEUtil heightForString:targetUsernameStr font:[UIFont systemFontOfSize:kSubTiltlFontSize] andWidth:SCREEN_WIDTH - 40];
@@ -274,13 +274,13 @@
     float targetUsernameHeight = [ZEUtil heightForString:targetUsernameStr font:[UIFont systemFontOfSize:kSubTiltlFontSize] andWidth:SCREEN_WIDTH - 40];
     
     if(_questionInfoModel.FILEURLARR.count > 0){
-        if(_questionInfoModel.TARGETUSERNAME.length > 0){
+        if (_questionInfoModel.TARGETUSERNAME.length > 0 && ![ZEUtil isStrNotEmpty:_questionInfoModel.TARGETUSERNAME]) {
             return questionHeight + kCellImgaeHeight + tagHeight + 75.0f + targetUsernameHeight;
         }
         return questionHeight + kCellImgaeHeight + tagHeight + 70.0f;
     }
     
-    if (_questionInfoModel.TARGETUSERNAME.length > 0) {
+    if (_questionInfoModel.TARGETUSERNAME.length > 0 && ![ZEUtil isStrNotEmpty:_questionInfoModel.TARGETUSERNAME]) {
         return questionHeight + tagHeight + 65.0f + targetUsernameHeight;
     }
     

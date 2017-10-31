@@ -1646,7 +1646,8 @@
 #pragma mark - WKNavigationDelegate
 // 页面加载完成之后调用
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
-    if([[webView.URL absoluteString] containsString:@"/ecm/mobile/MobileExamCaseStep.jspx"]){
+    NSLog(@" ===   %@",[webView.URL absoluteString]);
+    if([[webView.URL absoluteString] containsString:@"/ecm_grow/mobile/MobileExamCaseStepDailyPractice.jspx"] || [[webView.URL absoluteString] containsString:@"/ecm_grow/mobile/MobileExamCaseStepTeamTest.jspx"]){
         _isPractice = YES;
     }else{
         _isPractice = NO;
@@ -1668,6 +1669,7 @@
 
 -(void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
+    NSLog(@" ===  %@",navigationAction.request.URL.absoluteString);
     if([navigationAction.request.URL.absoluteString containsString:@"javasscriptss:tiaozhuang"]){
         _isPractice = NO;
         [self goLeavePracticeWebView];

@@ -133,7 +133,7 @@
             _teamNameField.layer.cornerRadius = 5.0f;
 //            _teamNameField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 5, 0)];
 //            _teamNameField.leftViewMode = UITextFieldViewModeAlways;
-            _teamNameField.placeholder = @"请输入团队名称";
+            _teamNameField.placeholder = @"请输入不超过10字";
             _teamNameField.textColor = kTextColor;
             _teamNameField.delegate = self;
             [self addSubview:_teamNameField];
@@ -289,6 +289,18 @@
     }else{
         _teamNameStr = textField.text;
     }
+    
+    if (textField.text.length > 10) {
+        MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self animated:YES];
+        hud3.mode = MBProgressHUDModeText;
+        hud3.detailsLabelText = @"最多显示10个字";
+        hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
+        [hud3 hide:YES afterDelay:1.0f];
+
+        _teamNameField.text = [textField.text substringToIndex:10];
+        _teamNameStr = textField.text;
+    }
+    
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {

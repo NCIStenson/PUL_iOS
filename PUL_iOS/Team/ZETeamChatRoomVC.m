@@ -76,7 +76,7 @@
 - (void)showChatImage:(NSNotification *)noti
 {
     UIImage * image = noti.object;
-    browseView = [[PYPhotoBrowseView alloc]initWithFrame:self.view.frame];
+    browseView = [[PYPhotoBrowseView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     browseView.images = @[image];
     browseView.delegate = self;
     browseView.dataSource = self;
@@ -88,7 +88,7 @@
     self.navigationController.navigationBar.hidden = YES;
 }
 - (CGRect)frameFormWindow{
-    return CGRectMake(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40);
+    return CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 -(void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView didSingleClickedImage:(UIImage *)image index:(NSInteger)index

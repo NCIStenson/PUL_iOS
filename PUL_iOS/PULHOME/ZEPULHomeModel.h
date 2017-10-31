@@ -11,6 +11,7 @@
 @interface ZEPULHomeModel : NSObject
 
 @property (nonatomic,copy) NSString * SEQKEY;
+@property (nonatomic,copy) NSString * FILEURL;
 @property (nonatomic,copy) NSString * FORKEY;  // 团队创建日期
 @property (nonatomic,copy) NSString * EXTRASPARAM;  // 团队创建日期
 @property (nonatomic,copy) NSString * MES_STATE; // 团队所属分类code
@@ -18,6 +19,7 @@
 @property (nonatomic,copy) NSString * MSG_CONTENT; // 团队名称
 @property (nonatomic,copy) NSString * MSG_TITLE; // 团队所属分类name
 @property (nonatomic,copy) NSString * SYSCREATEDATE;  // 团队简介
+@property (nonatomic,copy) NSString * URLPATH;  // 团队简介
 
 #pragma mark - 没用的
 

@@ -376,6 +376,14 @@
     QUESTIONUSERNAME.font = [UIFont systemFontOfSize:kQuestionTitleFontSize];
     [questionsView addSubview:QUESTIONUSERNAME];
     
+    UILabel * SYSCREATEDATE = [[UILabel alloc]initWithFrame:CGRectMake(QUESTIONUSERNAME.frame.origin.x + QUESTIONUSERNAME.frame.size.width + 5.0f,userY,100.0f,20.0f)];
+    SYSCREATEDATE.text = [ZEUtil compareCurrentTime:quesInfoM.SYSCREATEDATE];
+    SYSCREATEDATE.userInteractionEnabled = NO;
+    SYSCREATEDATE.textColor = MAIN_SUBTITLE_COLOR;
+    SYSCREATEDATE.font = [UIFont systemFontOfSize:12];
+    [questionsView addSubview:SYSCREATEDATE];
+    SYSCREATEDATE.userInteractionEnabled = YES;
+    
     NSString * praiseNumLabText =[NSString stringWithFormat:@"%ld 回答",(long)[quesInfoM.ANSWERSUM integerValue]];
     
     float praiseNumWidth = [ZEUtil widthForString:praiseNumLabText font:[UIFont systemFontOfSize:kSubTiltlFontSize] maxSize:CGSizeMake(200, 20)];

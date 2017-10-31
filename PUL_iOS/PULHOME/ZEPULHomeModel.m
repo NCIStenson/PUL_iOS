@@ -20,13 +20,15 @@ static ZEPULHomeQuestionBankModel * bankModel = nil;
     
     pulHomeM.SEQKEY         = [dic objectForKey:@"SEQKEY"];
     pulHomeM.EXTRASPARAM  = [dic objectForKey:@"EXTRASPARAM"];
+    pulHomeM.FILEURL  = [dic objectForKey:@"FILEURL"];
     pulHomeM.FORKEY  = [dic objectForKey:@"FORKEY"];
     pulHomeM.MES_STATE  = [dic objectForKey:@"MES_STATE"];
     pulHomeM.MES_TYPE    = [dic objectForKey:@"MES_TYPE"];
     pulHomeM.MSG_CONTENT = [dic objectForKey:@"MSG_CONTENT"];
     pulHomeM.MSG_TITLE = [dic objectForKey:@"MSG_TITLE"];
     pulHomeM.SYSCREATEDATE = [dic objectForKey:@"SYSCREATEDATE"];
-    
+    pulHomeM.URLPATH = [dic objectForKey:@"URLPATH"];
+
     pulHomeM.SYSCREATORID = [dic objectForKey:@"SYSCREATORID"];
     pulHomeM.TEAMMEMBERS = [dic objectForKey:@"TEAMMEMBERS"];
     pulHomeM.JMESSAGEGROUPID = [dic objectForKey:@"JMESSAGEGROUPID"];

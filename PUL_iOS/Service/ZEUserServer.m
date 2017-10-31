@@ -9,6 +9,9 @@
 #import "ZEPackageServerData.h"
 #import "ZEUserServer.h"
 #import "ZELoginViewController.h"
+
+#import "JPUSHService.h"
+
 @implementation ZEUserServer
 
 
@@ -58,12 +61,14 @@
     [[ZEServerEngine sharedInstance]requestWithJsonDic:dic
                                      withServerAddress:commonServer
                                                success:^(id data) {
-                                                                                                      
                                                    if ([ZEUtil isSuccess:[data objectForKey:@"RETMSG"]]) {
                                                        successBlock(data);
                                                    }else{
                                                        NSLog(@" failBlock ==  %@ ",[data objectForKey:@"RETMSG"]);
                                                        NSLog(@" failData ==  %@ ",data);
+                                                       if (![ZEUtil isNotNull:data]) {
+                                                           [self reLogin];
+                                                       }
                                                        static NSInteger i = 0;
                                                        i ++;
                                                        
@@ -77,6 +82,55 @@
                                                    failBlock(errorCode);
                                                }];
 }
+
++(void)reLogin{
+    if([ZESettingLocalData getUSERNAME].length > 0 && [[ZESettingLocalData getUSERPASSWORD] length] > 0){
+        [self goLogin:[ZESettingLocalData getUSERNAME] password:[ZESettingLocalData getUSERPASSWORD]];
+    }
+}
++(void)goLogin:(NSString *)username password:(NSString *)pwd
+{
+    [ZEUserServer loginWithNum:username
+                  withPassword:pwd
+                       success:^(id data) {
+                           if ([[data objectForKey:@"RETMSG"] isEqualToString:@"null"]) {
+                               [ZESettingLocalData setUSERNAME:username];
+                               [ZESettingLocalData setUSERPASSWORD:pwd];
+                               [[NSNotificationCenter defaultCenter]postNotificationName:kVerifyLogin object:nil];
+                           }else{
+                               [ZESettingLocalData deleteCookie];
+                               [ZESettingLocalData deleteUSERNAME];
+                               [ZESettingLocalData deleteUSERPASSWORD];
+                               [self goLoginVC:[data objectForKey:@"RETMSG"]];
+                           }
+                       } fail:^(NSError *errorCode) {
+                       }];
+}
++(void)goLoginVC:(NSString *)str
+{
+    //  退出成功注销JPush别名
+    if ([ZESettingLocalData getUSERCODE] > 0) {
+        [JPUSHService setTags:nil alias:@"" fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+            if (iResCode == 0) {//对应的状态码返回为0，代表成功
+                [[NSNotificationCenter defaultCenter] removeObserver:self name:kJPFNetworkDidLoginNotification object:nil];
+            }
+        }];
+    }
+    [ZESettingLocalData clearLocalData];
+    [JMSGUser logout:^(id resultObject, NSError *error) {
+        
+    }];
+    
+    ZELoginViewController * loginVC = [[ZELoginViewController alloc]init];
+    UIWindow * window = [UIApplication sharedApplication].keyWindow ;
+     window.rootViewController = loginVC;
+    if (str.length > 0) {
+        [ZEUtil showAlertView:str viewController:loginVC];
+    }
+}
+
+
+
 
 +(void)uploadImageWithJsonDic:(NSDictionary *)dic
                  withImageArr:(NSArray *)arr

@@ -654,7 +654,7 @@
                                  NSDictionary * dic = [ZEUtil getCOMMANDDATA:data];
                                  NSString * targetURL = [dic objectForKey:@"target"];
                                  if (targetURL.length > 0) {
-                                     NSLog(@"targetURL >>>  %@",targetURL);
+                                     NSLog(@" ****************** targetURL ********** >>>  %@",targetURL);
                                      _teamQuestionView.practiceURL = targetURL;
                                      [_teamQuestionView refreshPracticeWebView];
                                  }

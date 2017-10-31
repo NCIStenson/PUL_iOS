@@ -37,6 +37,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowVisible:) name:UIWindowDidBecomeVisibleNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowHidden:) name:UIWindowDidBecomeHiddenNotification object:nil];
     
+    if (self.URLPATH.length > 0) {
+        [self getPersonalNotiURL];
+        return;
+    }
 
     if (_functionCode.length > 0) {
         [self getCustomFunctionList];
@@ -110,6 +114,65 @@
     if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.delegate = nil;
     }
+}
+
+-(void)getPersonalNotiURL{
+    NSString * method = @"ToHtmlPath";
+    NSString * className = HOME_HTML_CLASS;
+
+    if (self.URLPATH.length == 0) {
+        return;
+    }
+    
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":KLB_FUNCTION_LIST,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":method,
+                                     @"URLPATH":self.URLPATH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":className,
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_FUNCTION_LIST]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSDictionary * dic = [ZEUtil getCOMMANDDATA:data];
+                                 NSString * targetURL = [dic objectForKey:@"target"];
+                                 if (targetURL.length > 0 &&  [ZEUtil isNotNull:targetURL]  ) {
+                                     NSLog(@"targetURL >>>  %@",targetURL);
+                                     self.navBar.hidden = YES;
+                                     
+                                     wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20)];
+                                     wkWebView.top = 20;
+                                     wkWebView.height = SCREEN_HEIGHT - 20;
+                                     UIView * statusBackgroundView = [UIView new];
+                                     statusBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
+                                     
+                                     [self.view addSubview:statusBackgroundView];
+                                     [ZEUtil addGradientLayer:statusBackgroundView];
+                                     
+                                     [self.view addSubview:wkWebView];
+                                     wkWebView.navigationDelegate = self;
+                                     
+                                     NSMutableURLRequest * reuqest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:targetURL]];
+                                     webUrl = targetURL;
+                                     
+                                     [wkWebView loadRequest:reuqest];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
 }
 
 -(void)getCustomFunctionList

@@ -47,6 +47,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reduceUnreadCount:) name:kNOTI_READDYNAMIC object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cancelTableEditingState) name:kNOTI_PERSONAL_WITHOUTDYNAMIC object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(isHaveUnresdMessage) name:kNOTI_DELETE_ALL_DYNAMIC object:nil];
 }
 
 -(void)dealloc{
@@ -148,10 +149,11 @@
                                                  notiUnreadTipsLab.width = 25;
                                                  [notiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_notiCount]];
                                              }
-                                         }else{
+                                         }else if(_notiCount <= 0) {
                                              notiUnreadTipsLab.hidden = YES;
                                          }
                                      }else{
+                                         notiUnreadTipsLab.hidden = YES;
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
                                          item.badgeValue= nil;
                                      }

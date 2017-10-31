@@ -686,7 +686,7 @@
 }
 
 - (CGRect)frameFormWindow{
-    return CGRectMake(20, 20, SCREEN_WIDTH - 40, SCREEN_HEIGHT - 40);
+    return CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 -(void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView didSingleClickedImage:(UIImage *)image index:(NSInteger)index

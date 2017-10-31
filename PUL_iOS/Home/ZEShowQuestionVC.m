@@ -37,7 +37,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     if (_showQuestionListType == QUESTION_LIST_NEW) {
-        self.title = @"最新问题";
+        self.title = @"搜索";
     }else if(_showQuestionListType == QUESTION_LIST_TYPE){
         self.title = _QUESTIONTYPENAME;
         [self initAskTypeView];
@@ -83,7 +83,7 @@
                                      @"METHOD":@"search",
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
-                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     @"CLASSNAME":@"com.nci.klb.app.procirclestatus.ProcirclePosition",
                                      @"DETAILTABLE":@"",};
     
     NSDictionary * fieldsDic =@{};

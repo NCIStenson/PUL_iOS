@@ -88,6 +88,7 @@
  */
 -(void)goMoreFunction;
 
+#pragma mark - 首页动态点击跳转
 
 /**
  签到
@@ -103,6 +104,7 @@
  */
 -(void)goQuestionView:(NSString *)QUESTIONID;
 
+-(void)didSelectWebViewWithIndex:(NSString *)urlpath;
 
 /**
  首页搜索

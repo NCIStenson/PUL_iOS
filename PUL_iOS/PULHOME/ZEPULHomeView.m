@@ -187,7 +187,6 @@
 
 -(void)reloadContentViewWithArr:(NSArray *)dataArr;
 {
-    
     [self.PULHomeRequestionData addObjectsFromArray:dataArr];
     
     [_contentTableView.mj_header endRefreshing];
@@ -438,6 +437,14 @@
         [self goTeamView];
     }else if ([model.MES_TYPE integerValue] == 1){
         [self goQuestionView:model.FORKEY];
+    }else if ([model.MES_TYPE integerValue] == 3){
+        if ([self.delegate respondsToSelector:@selector(didSelectWebViewWithIndex:)]) {
+            [self.delegate didSelectWebViewWithIndex:model.URLPATH];
+        }
+    }else if ([model.MES_TYPE integerValue] == 5){
+        if ([self.delegate respondsToSelector:@selector(didSelectWebViewWithIndex:)]) {
+            [self.delegate didSelectWebViewWithIndex:model.URLPATH];
+        }
     }
 }
 
