@@ -64,15 +64,15 @@
     [JPUSHService setupWithOption:launchOptions
                            appKey:JMESSAGE_APPKEY
                           channel:@"App Store"
-                 apsForProduction:NO
+                 apsForProduction:YES
             advertisingIdentifier:nil];
     
     [JMessage setupJMessage:launchOptions
                      appKey:JMESSAGE_APPKEY
                     channel:@"App Store"
-           apsForProduction:NO
-                   category:nil
-             messageRoaming:YES];
+           apsForProduction:YES
+                   category:nil];
+//             messageRoaming:YES];
     
     [JMessage addDelegate:self withConversation:nil];
 
@@ -356,6 +356,5 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 //        return UIInterfaceOrientationMaskPortrait;
 //    }
 //}
-
 
 @end

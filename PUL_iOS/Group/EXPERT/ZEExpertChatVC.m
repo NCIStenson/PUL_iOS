@@ -47,11 +47,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showChatImage:) name:kJMESSAGE_TAP_IMAGE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPersonalMessage:) name:kJMESSAGE_TAP_HEADVIEW object:nil];
-    self.isCanSideBack = NO;
-    //关闭ios右滑返回
-    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate=self;
-    }
 }
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer*)gestureRecognizer {
     return self.isCanSideBack;
@@ -77,6 +72,13 @@
     [super viewWillAppear:YES];
     [self.navigationController setNavigationBarHidden:NO];
     self.tabBarController.tabBar.hidden = YES;
+    
+    self.isCanSideBack = NO;
+    //关闭ios右滑返回
+    if([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.delegate=self;
+    }
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -110,7 +112,6 @@
 
 - (void)photoBrowseView:(PYPhotoBrowseView *)photoBrowseView willShowWithImages:(NSArray *)images index:(NSInteger)index
 {
-    NSLog(@"    ======    %@",NSStringFromCGRect(photoBrowseView.frame));
     self.navigationController.navigationBar.hidden = YES;
 }
 

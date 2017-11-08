@@ -95,10 +95,10 @@
                                  self.datasArr = rankingArr;
                                  
                                  [self myCircleRequest];
-                                 [[ZEQuestionTypeCache instance] setProCircleCaches:rankingArr];
+//                                 [[ZEQuestionTypeCache instance] setProCircleCaches:rankingArr];
                                  
                              } fail:^(NSError *errorCode) {
-                                 NSLog(@">>>  %@",errorCode);
+                                 NSLog(@"errorCode >>>  %@",errorCode);
                              }];
 }
 

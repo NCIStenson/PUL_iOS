@@ -46,29 +46,51 @@
         if (error == nil) {
             _conversationArr = [self sortConversation:resultObject];
             _unreadCount = 0;
-            NSMutableArray * centerArr = [NSMutableArray array];
+            NSMutableArray * singleCoversation = [NSMutableArray array];
             for (NSInteger i=0; i < [_conversationArr count]; i++) {
                 JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
-
-                JMSGGroup * group = (JMSGGroup *) conversation.target;
-                if (conversation.conversationType == kJMSGConversationTypeGroup && ![group.gid isEqualToString:conversation.title] ) {
-                    [centerArr addObject:conversation];
-                    _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
-                }else if (conversation.conversationType == kJMSGConversationTypeSingle){
-                    [centerArr addObject:conversation];
-                    _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
-                }else{
-                    [JMSGConversation deleteGroupConversationWithGroupId:group.gid];
-                }
+                //                if (conversation.conversationType == kJMSGConversationTypeSingle) {
+                [singleCoversation addObject:conversation];
+                //                }
+                _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
             }
-            _conversationArr = centerArr;
-            [self saveBadge:0];
+            _conversationArr = singleCoversation;
+            [self saveBadge:_unreadCount];
         } else {
             _conversationArr = nil;
         }
         [self.chatTableView reloadData];
     }];
 }
+
+//- (void)getConversationList {
+//    [JMSGConversation allConversations:^(id resultObject, NSError *error) {
+//        if (error == nil) {
+//            _conversationArr = [self sortConversation:resultObject];
+//            _unreadCount = 0;
+//            NSMutableArray * centerArr = [NSMutableArray array];
+//            for (NSInteger i=0; i < [_conversationArr count]; i++) {
+//                JMSGConversation *conversation = [_conversationArr objectAtIndex:i];
+//
+//                JMSGGroup * group = (JMSGGroup *) conversation.target;
+//                if (conversation.conversationType == kJMSGConversationTypeGroup && ![group.gid isEqualToString:conversation.title] ) {
+//                    [centerArr addObject:conversation];
+//                    _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
+//                }else if (conversation.conversationType == kJMSGConversationTypeSingle){
+//                    [centerArr addObject:conversation];
+//                    _unreadCount = _unreadCount + [conversation.unreadCount integerValue];
+//                }else{
+//                    [JMSGConversation deleteGroupConversationWithGroupId:group.gid];
+//                }
+//            }
+//            _conversationArr = centerArr;
+//            [self saveBadge:0];
+//        } else {
+//            _conversationArr = nil;
+//        }
+//        [self.chatTableView reloadData];
+//    }];
+//}
 
 
 - (void)addNotifications {

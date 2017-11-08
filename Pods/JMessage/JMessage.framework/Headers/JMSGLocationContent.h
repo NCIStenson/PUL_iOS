@@ -16,24 +16,13 @@
 
 JMSG_ASSUME_NONNULL_BEGIN
 
-/*!
- * @abstract 纬度
- */
+// 纬度
 @property(nonatomic, strong, readonly) NSNumber *latitude;
-
-/*!
- * @abstract 经度
- */
+// 经度
 @property(nonatomic, strong, readonly) NSNumber *longitude;
-
-/*!
- * @abstract 缩放
- */
+// 缩放
 @property(nonatomic, strong, readonly) NSNumber *scale;
-
-/*!
- * @abstract 详细地址信息
- */
+//详细地址信息
 @property(nonatomic, copy, readonly) NSString *address;
 
 // 不支持使用的初始化方法

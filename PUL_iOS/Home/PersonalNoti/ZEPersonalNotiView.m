@@ -525,6 +525,9 @@
         if ([self.delegate respondsToSelector:@selector(didSelectWebViewWithIndex:)]) {
             [self.delegate didSelectWebViewWithIndex:notiModel.URLPATH];
         }
+        if ([self.delegate respondsToSelector:@selector(didSelectTeamMessage:)] ) {
+            [self.delegate didSelectTeamMessage:notiModel];
+        }
     }
 }
 

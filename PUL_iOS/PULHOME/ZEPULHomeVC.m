@@ -25,7 +25,7 @@
 #import "ZEGroupVC.h"
 #import "ZESinginVC.h"
 #import "ZEFindTeamVC.h"
-
+#import "ZEViewController.h"
 #import "SvUDIDTools.h"
 @interface ZEPULHomeVC () <ZEPULHomeViewDelegate>
 {
@@ -529,6 +529,14 @@
 -(void)goZYQ
 {
     NSLog(@" ===  专业圈");
+//    [JMSGConversation allConversations:^(id resultObject, NSError *error) {
+//        ZEViewController *sendMessageCtl =[[ZEViewController alloc] init];
+//        JMSGConversation *conversation = [resultObject objectAtIndex:0];
+//        sendMessageCtl.conversation = conversation;
+//        [self.navigationController pushViewController:sendMessageCtl animated:YES];
+//    }];
+//    return;
+    
     ZEGroupVC *FishVC = [[ZEGroupVC alloc] init];
     [self.navigationController pushViewController:FishVC animated:YES];
 }

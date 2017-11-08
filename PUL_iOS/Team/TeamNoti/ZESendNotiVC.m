@@ -59,6 +59,7 @@
     UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定发送" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.rightBtn.enabled = NO;
         [self confirmSendMessage];
+        [self confirmSendMessage1];
     }];
     
     UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -103,6 +104,46 @@
                                      [self performSelector:@selector(goBack) withObject:nil afterDelay:1.5];
                                      [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_TEAM_SENDMESSAGE_NOTI object:nil];
                                  }
+                             } fail:^(NSError *errorCode) {
+                                 [self showTips:@"通知发送失败，请重试" afterDelay:1];
+                                 self.rightBtn.enabled = YES;
+                             }];
+}
+
+-(void)confirmSendMessage1
+{
+    [self showTips:@"正在发送通知"];
+    NSDictionary * parametersDic = @{@"limit":@"1",
+                                     @"MASTERTABLE":KLB_MESSAGE_SEND,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_INSERT,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.message.TeamMessageManage",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{@"TEAMID":_teamID,
+                                @"MESSAGE":_sendNotiView.notiTextView.text,
+                                @"REMARK":_sendNotiView.notiDetailTextView.text,
+                                @"ISRECEIPT":[NSString stringWithFormat:@"%d",_sendNotiView.isReceipt]
+                                };
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_MESSAGE_SEND]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"sendTeamMes"];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * arr = [ZEUtil getServerData:data withTabelName:KLB_MESSAGE_SEND];
+//                                 if ([ZEUtil isNotNull:arr]) {
+//                                     [self showTips:@"通知发送成功" afterDelay:1.5];
+//                                     [self performSelector:@selector(goBack) withObject:nil afterDelay:1.5];
+//                                     [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_TEAM_SENDMESSAGE_NOTI object:nil];
+//                                 }
                              } fail:^(NSError *errorCode) {
                                  [self showTips:@"通知发送失败，请重试" afterDelay:1];
                                  self.rightBtn.enabled = YES;

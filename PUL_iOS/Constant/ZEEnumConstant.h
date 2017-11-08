@@ -180,7 +180,6 @@ typedef enum : NSUInteger{
     
     ENTER_PERSONALNOTICENTER_EXAM,  /****** 个人消息中在线考试跳转链接 *****/
 
-
 } ENTER_QUESTIONBANK_TYPE;
 
 

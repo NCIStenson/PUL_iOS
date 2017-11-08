@@ -481,7 +481,6 @@
 		987ACBDA1D4AFC31006D692E /* ZEQuestionTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 987ACBD91D4AFC31006D692E /* ZEQuestionTableView.m */; };
 		987CDF9D1F66553600ED68A3 /* ZEWithoutDataTipsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 987CDF9C1F66553600ED68A3 /* ZEWithoutDataTipsView.m */; };
 		988122971DAA199A00DBEB82 /* SvUDIDTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 988122961DAA199A00DBEB82 /* SvUDIDTools.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		988C10641E8A3453006795F0 /* JMUICommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 988C105C1E8A3257006795F0 /* JMUICommon.framework */; };
 		988C10671E8A35B3006795F0 /* ZETeamChatRoomVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C10661E8A35B3006795F0 /* ZETeamChatRoomVC.m */; };
 		988C10721E8A8CF7006795F0 /* ZEExpertListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C10711E8A8CF7006795F0 /* ZEExpertListVC.m */; };
 		988C10761E8A8D2C006795F0 /* ZEExpertListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 988C10751E8A8D2C006795F0 /* ZEExpertListView.m */; };
@@ -564,9 +563,11 @@
 		98DB7C531C4F52050046D405 /* UIImage+ZEImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DB7C521C4F52050046D405 /* UIImage+ZEImage.m */; };
 		98DB7C561C4F53EA0046D405 /* ZEMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DB7C551C4F53EA0046D405 /* ZEMainViewController.m */; };
 		98DB7C591C4F554E0046D405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98DB7C571C4F554E0046D405 /* Main.storyboard */; };
-		98DEF0EB1E8DEE9300242043 /* JMUIChattingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98DEF0EA1E8DEE9300242043 /* JMUIChattingKit.framework */; };
-		98DEF0EE1E8DEF3700242043 /* JMUIChattingKitResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 98DEF0ED1E8DEF3700242043 /* JMUIChattingKitResource.bundle */; };
-		98DEF0F01E8E448400242043 /* RecordViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 98DEF0EF1E8E448400242043 /* RecordViewResources.bundle */; };
+		98E0C2BB1FA883570090DC55 /* ZEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E0C2BA1FA883570090DC55 /* ZEViewController.m */; };
+		98E0C2C11FA95D1D0090DC55 /* JMUIChattingKitResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 98E0C2BD1FA95D1D0090DC55 /* JMUIChattingKitResource.bundle */; };
+		98E0C2C21FA95D1D0090DC55 /* RecordViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 98E0C2BE1FA95D1D0090DC55 /* RecordViewResources.bundle */; };
+		98E0C2C31FA95D1D0090DC55 /* JMUIChattingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98E0C2BF1FA95D1D0090DC55 /* JMUIChattingKit.framework */; };
+		98E0C2C41FA95D1D0090DC55 /* JMUICommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98E0C2C01FA95D1D0090DC55 /* JMUICommon.framework */; };
 		98E485F51D98FDA900AA0278 /* ZEProfessionalCirVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E485F41D98FDA900AA0278 /* ZEProfessionalCirVC.m */; };
 		98E485F81D99085100AA0278 /* ZETeamCircleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E485F71D99085100AA0278 /* ZETeamCircleVC.m */; };
 		98E485FD1D9A14FE00AA0278 /* ZEProCirDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E485FC1D9A14FE00AA0278 /* ZEProCirDetailVC.m */; };
@@ -1202,7 +1203,6 @@
 		987CDF9C1F66553600ED68A3 /* ZEWithoutDataTipsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZEWithoutDataTipsView.m; sourceTree = "<group>"; };
 		988122951DAA199A00DBEB82 /* SvUDIDTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SvUDIDTools.h; path = CommonUtil/SvUDIDTools.h; sourceTree = "<group>"; };
 		988122961DAA199A00DBEB82 /* SvUDIDTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SvUDIDTools.m; path = CommonUtil/SvUDIDTools.m; sourceTree = "<group>"; };
-		988C105C1E8A3257006795F0 /* JMUICommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JMUICommon.framework; sourceTree = "<group>"; };
 		988C10651E8A35B3006795F0 /* ZETeamChatRoomVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZETeamChatRoomVC.h; path = Team/ZETeamChatRoomVC.h; sourceTree = "<group>"; };
 		988C10661E8A35B3006795F0 /* ZETeamChatRoomVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZETeamChatRoomVC.m; path = Team/ZETeamChatRoomVC.m; sourceTree = "<group>"; };
 		988C10701E8A8CF7006795F0 /* ZEExpertListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEExpertListVC.h; path = Group/EXPERT/ZEExpertListVC.h; sourceTree = "<group>"; };
@@ -1339,9 +1339,12 @@
 		98DB7C541C4F53EA0046D405 /* ZEMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZEMainViewController.h; sourceTree = "<group>"; };
 		98DB7C551C4F53EA0046D405 /* ZEMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZEMainViewController.m; sourceTree = "<group>"; };
 		98DB7C581C4F554E0046D405 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		98DEF0EA1E8DEE9300242043 /* JMUIChattingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JMUIChattingKit.framework; sourceTree = "<group>"; };
-		98DEF0ED1E8DEF3700242043 /* JMUIChattingKitResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JMUIChattingKitResource.bundle; sourceTree = "<group>"; };
-		98DEF0EF1E8E448400242043 /* RecordViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RecordViewResources.bundle; sourceTree = "<group>"; };
+		98E0C2B91FA883570090DC55 /* ZEViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZEViewController.h; sourceTree = "<group>"; };
+		98E0C2BA1FA883570090DC55 /* ZEViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZEViewController.m; sourceTree = "<group>"; };
+		98E0C2BD1FA95D1D0090DC55 /* JMUIChattingKitResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JMUIChattingKitResource.bundle; sourceTree = "<group>"; };
+		98E0C2BE1FA95D1D0090DC55 /* RecordViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RecordViewResources.bundle; sourceTree = "<group>"; };
+		98E0C2BF1FA95D1D0090DC55 /* JMUIChattingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JMUIChattingKit.framework; sourceTree = "<group>"; };
+		98E0C2C01FA95D1D0090DC55 /* JMUICommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JMUICommon.framework; sourceTree = "<group>"; };
 		98E485F31D98FDA900AA0278 /* ZEProfessionalCirVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEProfessionalCirVC.h; path = Group/ZEProfessionalCirVC.h; sourceTree = "<group>"; };
 		98E485F41D98FDA900AA0278 /* ZEProfessionalCirVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEProfessionalCirVC.m; path = Group/ZEProfessionalCirVC.m; sourceTree = "<group>"; };
 		98E485F61D99085100AA0278 /* ZETeamCircleVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZETeamCircleVC.h; path = Group/ZETeamCircleVC.h; sourceTree = "<group>"; };
@@ -1400,10 +1403,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98E0C2C41FA95D1D0090DC55 /* JMUICommon.framework in Frameworks */,
+				98E0C2C31FA95D1D0090DC55 /* JMUIChattingKit.framework in Frameworks */,
 				9828A7321EA9DB2300611327 /* WebKit.framework in Frameworks */,
 				9899CC491EA893CD00A1446F /* JavaScriptCore.framework in Frameworks */,
-				988C10641E8A3453006795F0 /* JMUICommon.framework in Frameworks */,
-				98DEF0EB1E8DEE9300242043 /* JMUIChattingKit.framework in Frameworks */,
 				1697F7B14FD1C027EFB7CA1E /* libPods-PUL_iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1814,6 +1817,8 @@
 				986334331F3DABFB00E03F6C /* Model */,
 				980379951F0B69F30085FAD9 /* ZEPULHomeVC.h */,
 				980379961F0B69F30085FAD9 /* ZEPULHomeVC.m */,
+				98E0C2B91FA883570090DC55 /* ZEViewController.h */,
+				98E0C2BA1FA883570090DC55 /* ZEViewController.m */,
 				980379981F0B6A0C0085FAD9 /* ZEPULHomeView.h */,
 				980379991F0B6A0C0085FAD9 /* ZEPULHomeView.m */,
 				9863342C1F398D1700E03F6C /* PULHomeDynamicCell */,
@@ -1966,8 +1971,8 @@
 		982ED3851D420AC900F87343 /* ThirdSource */ = {
 			isa = PBXGroup;
 			children = (
+				98E0C2BC1FA95D1D0090DC55 /* Chat */,
 				986333CF1F33080F00E03F6C /* SDMajletManager */,
-				988C10591E8A3257006795F0 /* Chat */,
 				98B13C2C1E6E9996006C783B /* CustomViews */,
 				98253DEF1E2DB9BB005C3E10 /* Tabbar */,
 				983D47AD1DCC2B1100D61BC9 /* JRVideoPlayerViewController */,
@@ -2329,17 +2334,6 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
-		988C10591E8A3257006795F0 /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				98DEF0EF1E8E448400242043 /* RecordViewResources.bundle */,
-				98DEF0ED1E8DEF3700242043 /* JMUIChattingKitResource.bundle */,
-				98DEF0EA1E8DEE9300242043 /* JMUIChattingKit.framework */,
-				988C105C1E8A3257006795F0 /* JMUICommon.framework */,
-			);
-			path = Chat;
-			sourceTree = "<group>";
-		};
 		988C10731E8A8CFC006795F0 /* EXPERT */ = {
 			isa = PBXGroup;
 			children = (
@@ -2625,6 +2619,17 @@
 			name = CommonUtil;
 			sourceTree = "<group>";
 		};
+		98E0C2BC1FA95D1D0090DC55 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				98E0C2BD1FA95D1D0090DC55 /* JMUIChattingKitResource.bundle */,
+				98E0C2BE1FA95D1D0090DC55 /* RecordViewResources.bundle */,
+				98E0C2BF1FA95D1D0090DC55 /* JMUIChattingKit.framework */,
+				98E0C2C01FA95D1D0090DC55 /* JMUICommon.framework */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		98EE5DB11DE56D9A00C82FCB /* JCAlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2867,7 +2872,6 @@
 				986334931F46CFCE00E03F6C /* question_bank_change_bottom.png in Resources */,
 				9803788A1F09DE4D0085FAD9 /* discuss_pv@2x.png in Resources */,
 				986334611F3DB77200E03F6C /* collection@2x.png in Resources */,
-				98DEF0F01E8E448400242043 /* RecordViewResources.bundle in Resources */,
 				986334751F3DB77200E03F6C /* simulation.png in Resources */,
 				980379461F09DE4E0085FAD9 /* yy_head_wyw-_click@3x.png in Resources */,
 				980378DD1F09DE4D0085FAD9 /* refresh_Rank@3x.png in Resources */,
@@ -3061,6 +3065,7 @@
 				980379121F09DE4E0085FAD9 /* building.gif in Resources */,
 				980378AA1F09DE4D0085FAD9 /* jdbh_line@2x.png in Resources */,
 				980378B71F09DE4D0085FAD9 /* jdbh_zjjd_bg@3x.png in Resources */,
+				98E0C2C11FA95D1D0090DC55 /* JMUIChattingKitResource.bundle in Resources */,
 				986334151F385E2B00E03F6C /* home_btn_proCir@2x.png in Resources */,
 				980379221F09DE4E0085FAD9 /* icon_team_personal_noti@3x.png in Resources */,
 				980378D01F09DE4D0085FAD9 /* rateTa@2x.png in Resources */,
@@ -3080,7 +3085,6 @@
 				98D5845E1E9C88BE004588EE /* JCHATConversationListCell.xib in Resources */,
 				980379441F09DE4E0085FAD9 /* yy_head_wyw-_click.png in Resources */,
 				983D47CC1DCC2B1100D61BC9 /* forward_disable@2x.png in Resources */,
-				98DEF0EE1E8DEF3700242043 /* JMUIChattingKitResource.bundle in Resources */,
 				983D47D21DCC2B1100D61BC9 /* progressThumb@2x.png in Resources */,
 				983D47CD1DCC2B1100D61BC9 /* forward_nor@2x.png in Resources */,
 				980378DB1F09DE4D0085FAD9 /* reduceimage@2x.png in Resources */,
@@ -3217,6 +3221,7 @@
 				980378D61F09DE4D0085FAD9 /* addimg.png in Resources */,
 				9803798F1F09DE4E0085FAD9 /* tab_download_normal@3x.png in Resources */,
 				980378FE1F09DE4E0085FAD9 /* icon_setting_about@3x.png in Resources */,
+				98E0C2C21FA95D1D0090DC55 /* RecordViewResources.bundle in Resources */,
 				9803790C1F09DE4E0085FAD9 /* post_normal@2x.png in Resources */,
 				980379701F09DE4E0085FAD9 /* 辅助元素@2x.png in Resources */,
 				9863345A1F3DB77200E03F6C /* 2@3x.png in Resources */,
@@ -3350,6 +3355,7 @@
 				98D42BB81DC70DCD003A3812 /* ZETypicalCaseView.m in Sources */,
 				9863DE491D657DA100410475 /* ZEQuestionTypeCache.m in Sources */,
 				989B2C481C4DE7AA00F14EFA /* main.m in Sources */,
+				98E0C2BB1FA883570090DC55 /* ZEViewController.m in Sources */,
 				987ACBCD1D4AE845006D692E /* ZEQuestionsView.m in Sources */,
 				98A1D56E1DF5504000D92333 /* ZEChatBaseCell.m in Sources */,
 				98A1D4141DF548C600D92333 /* ZEChatView.m in Sources */,

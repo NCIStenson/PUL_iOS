@@ -28,8 +28,6 @@
 #import <JMessage/JMSGNotificationEvent.h>
 #import <JMessage/JMSGFriendNotificationEvent.h>
 #import <JMessage/JMSGLocationContent.h>
-#import <JMessage/JMSGPromptContent.h>
-#import <JMessage/JMSGOptionalContent.h>
 #import <JMessage/JMSGConstants.h>
 
 @protocol JMSGMessageDelegate;
@@ -53,10 +51,10 @@ extern NSString *const kJMSGServiceErrorNotification;                 // 错误�
 @interface JMessage : NSObject
 
 /*! JMessage SDK 版本号。用于展示 SDK 的版本信息 */
-#define JMESSAGE_VERSION @"3.2.1"
+#define JMESSAGE_VERSION @"3.0.1"
 
 /*! JMessage SDK 构建ID. 每次构建都会增加 */
-#define JMESSAGE_BUILD 168
+#define JMESSAGE_BUILD 139
 
 /*! API Version - int for program logic. SDK API 有变更时会增加 */
 extern NSInteger const JMESSAGE_API_VERSION;
@@ -77,34 +75,13 @@ extern NSInteger const JMESSAGE_API_VERSION;
                appKey:(NSString *)appKey
               channel:(NSString *)channel
      apsForProduction:(BOOL)isProduction
-             category:(NSSet *)category __attribute__((deprecated("JMessage 3.1.0 版本已过期")));
-
-/*!
- * @abstract 初始化 JMessage SDK
- *
- * @param launchOptions    AppDelegate启动函数的参数launchingOption(用于推送服务)
- * @param appKey           appKey(应用Key值,通过JPush官网可以获取)
- * @param channel          应用的渠道名称
- * @param isProduction     是否为生产模式
- * @param category         iOS8新增通知快捷按钮参数
- * @param isRoaming        是否启用消息漫游,默认关闭
- *
- * @discussion 此方法必须被调用, 以初始化 JMessage SDK
- *
- * 如果未调用此方法, 本 SDK 的所有功能将不可用.
- */
-+ (void)setupJMessage:(NSDictionary *)launchOptions
-               appKey:(NSString *)appKey
-              channel:(NSString *)channel
-     apsForProduction:(BOOL)isProduction
-             category:(NSSet *)category
-       messageRoaming:(BOOL)isRoaming;
+             category:(NSSet *)category;
 
 /*!
  * @abstract 增加回调(delegate protocol)监听
  *
  * @param delegate 需要监听的 Delegate Protocol
- * @param conversation 允许为nil
+ * @param conversation 允许为nil.
  *
  * - 为 nil, 表示接收所有的通知, 不区分会话.
  * - 不为 nil，表示只接收指定的 conversation 相关的通知.
@@ -294,5 +271,6 @@ extern NSInteger const JMESSAGE_API_VERSION;
  * 参考 [JMessage setBadge:] 说明来理解其作用.
  */
 + (void)resetBadge;
+
 @end
 

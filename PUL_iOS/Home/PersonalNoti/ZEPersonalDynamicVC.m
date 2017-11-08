@@ -328,7 +328,7 @@
                              success:^(id data) {
                                  NSArray * arr = [ZEUtil getServerData:data withTabelName:KLB_DYNAMIC_INFO];
                                  if ([ZEUtil isNotNull:arr] && arr.count > 0) {
-                                     BOOL isRead = [arr[0] objectForKey:@"ISREAD"];
+                                     BOOL isRead = [[arr[0] objectForKey:@"ISREAD"] boolValue];
                                      if (!isRead) {
                                          [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_READDYNAMIC object:nil];
                                      }
@@ -349,6 +349,11 @@
 
 -(void)didSelectTeamMessage:(ZETeamNotiCenModel *)notiModel
 {
+    if([notiModel.MESTYPE integerValue] == 5){
+        [self clearPersonalNotiUnreadCount:notiModel];
+        return;
+    }
+    
     if([notiModel.MESTYPE integerValue] == 4){
         [self clearPersonalNotiUnreadCount:notiModel];
         return;
@@ -375,8 +380,10 @@
 
 -(void)didSelectWebViewWithIndex:(NSString *)urlpath;
 {
+    if (urlpath.length == 0) {
+        return;
+    }
     ZEQuestionBankWebVC * webVC = [[ZEQuestionBankWebVC alloc]init];
-//    webVC.enterType = ENTER_PERSONALNOTICENTER_EXAM;
     webVC.URLPATH = urlpath;
     [self.navigationController pushViewController:webVC animated:YES];
 }

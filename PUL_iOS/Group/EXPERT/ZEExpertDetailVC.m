@@ -117,7 +117,7 @@
             JMSGConversation *conversation = [JMSGConversation singleConversationWithUsername:_expertModel.USERCODE];
             if (conversation == nil) {
                 [self showTips:@"获取会话" afterDelay:1.5];
-                
+                NSLog(@" ===  %@",_expertModel.USERCODE);
                 [JMSGConversation createSingleConversationWithUsername:_expertModel.USERCODE completionHandler:^(id resultObject, NSError *error) {
                     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                     if (error) {
