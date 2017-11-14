@@ -566,8 +566,6 @@
 
 -(void)didSelectType:(NSString *)typeName typeCode:(NSString *)typeCode fatherCode:(NSString *)fatherCode
 {
-    [questionTypeBtn  setTitle:[NSString stringWithFormat:@"关键词：%@",typeName] forState:UIControlStateNormal];
-    self.quesTypeSEQKEY = typeCode;
     for (UIView * view in _askTypeView.subviews) {
         [view removeFromSuperview];
     }
@@ -576,6 +574,11 @@
     if([self.delegate respondsToSelector:@selector(changeAskQuestionTitle:)]){
         [self.delegate changeAskQuestionTitle:@"描述你的问题"];
     }
+    if (typeName.length == 0  && typeCode.length == 0 &&  fatherCode.length == 0) {
+        return;
+    }
+    [questionTypeBtn  setTitle:[NSString stringWithFormat:@"关键词：%@",typeName] forState:UIControlStateNormal];
+    self.quesTypeSEQKEY = typeCode;
 }
 
 

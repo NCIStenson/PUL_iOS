@@ -559,11 +559,14 @@
 		98D584641E9C8A7E004588EE /* JCHATSendMsgController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D584631E9C8A7E004588EE /* JCHATSendMsgController.m */; };
 		98D598081DC83402002074C7 /* ZETypicalCaseDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D598071DC83402002074C7 /* ZETypicalCaseDetailVC.m */; };
 		98D5980B1DC83424002074C7 /* ZETypicalCaseDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D5980A1DC83424002074C7 /* ZETypicalCaseDetailView.m */; };
+		98D689581FB2D32500BFE46E /* ZENewQuestionListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D689571FB2D32500BFE46E /* ZENewQuestionListVC.m */; };
+		98D6895B1FB2D34C00BFE46E /* ZENewQuestionListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D6895A1FB2D34C00BFE46E /* ZENewQuestionListView.m */; };
+		98D6895E1FB2D37900BFE46E /* ZENewQuestionListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D6895D1FB2D37900BFE46E /* ZENewQuestionListCell.m */; };
+		98D689611FB2D3E200BFE46E /* ZENewQuetionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D689601FB2D3E200BFE46E /* ZENewQuetionLayout.m */; };
 		98DB7C501C4F4FA70046D405 /* ZEUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DB7C4F1C4F4FA70046D405 /* ZEUtil.m */; };
 		98DB7C531C4F52050046D405 /* UIImage+ZEImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DB7C521C4F52050046D405 /* UIImage+ZEImage.m */; };
 		98DB7C561C4F53EA0046D405 /* ZEMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DB7C551C4F53EA0046D405 /* ZEMainViewController.m */; };
 		98DB7C591C4F554E0046D405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98DB7C571C4F554E0046D405 /* Main.storyboard */; };
-		98E0C2BB1FA883570090DC55 /* ZEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E0C2BA1FA883570090DC55 /* ZEViewController.m */; };
 		98E0C2C11FA95D1D0090DC55 /* JMUIChattingKitResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 98E0C2BD1FA95D1D0090DC55 /* JMUIChattingKitResource.bundle */; };
 		98E0C2C21FA95D1D0090DC55 /* RecordViewResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 98E0C2BE1FA95D1D0090DC55 /* RecordViewResources.bundle */; };
 		98E0C2C31FA95D1D0090DC55 /* JMUIChattingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98E0C2BF1FA95D1D0090DC55 /* JMUIChattingKit.framework */; };
@@ -572,6 +575,12 @@
 		98E485F81D99085100AA0278 /* ZETeamCircleVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E485F71D99085100AA0278 /* ZETeamCircleVC.m */; };
 		98E485FD1D9A14FE00AA0278 /* ZEProCirDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E485FC1D9A14FE00AA0278 /* ZEProCirDetailVC.m */; };
 		98E486001D9A151700AA0278 /* ZEProCirDeatilView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E485FF1D9A151700AA0278 /* ZEProCirDeatilView.m */; };
+		98EC3EE71FB57241003B53E5 /* ZENewQuestionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EC3EE61FB57241003B53E5 /* ZENewQuestionDetailVC.m */; };
+		98EC3EEA1FB5725E003B53E5 /* ZENewQuestionDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EC3EE91FB5725E003B53E5 /* ZENewQuestionDetailView.m */; };
+		98EC3EED1FB57283003B53E5 /* ZENewQuestionDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EC3EEC1FB57283003B53E5 /* ZENewQuestionDetailCell.m */; };
+		98EC3EF01FB572A9003B53E5 /* ZENewDetailLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EC3EEF1FB572A9003B53E5 /* ZENewDetailLayout.m */; };
+		98EC3EF31FBAC145003B53E5 /* ZENewAnswerQuestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EC3EF21FBAC145003B53E5 /* ZENewAnswerQuestionVC.m */; };
+		98EC3EF61FBAC15F003B53E5 /* ZENewAnswerQuestionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EC3EF51FBAC15F003B53E5 /* ZENewAnswerQuestionView.m */; };
 		98EE5DB71DE56D9A00C82FCB /* JCAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 98EE5DB21DE56D9A00C82FCB /* JCAlertView.bundle */; };
 		98EE5DB81DE56D9A00C82FCB /* JCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EE5DB41DE56D9A00C82FCB /* JCAlertView.m */; };
 		98EE5DB91DE56D9A00C82FCB /* ZEChooseMonthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EE5DB61DE56D9A00C82FCB /* ZEChooseMonthView.m */; };
@@ -1328,6 +1337,14 @@
 		98D598071DC83402002074C7 /* ZETypicalCaseDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZETypicalCaseDetailVC.m; path = Home/ZETypicalCaseDetailVC.m; sourceTree = "<group>"; };
 		98D598091DC83424002074C7 /* ZETypicalCaseDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZETypicalCaseDetailView.h; path = Home/ZETypicalCaseDetailView.h; sourceTree = "<group>"; };
 		98D5980A1DC83424002074C7 /* ZETypicalCaseDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZETypicalCaseDetailView.m; path = Home/ZETypicalCaseDetailView.m; sourceTree = "<group>"; };
+		98D689561FB2D32500BFE46E /* ZENewQuestionListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewQuestionListVC.h; path = NewQuestion/ZENewQuestionListVC.h; sourceTree = "<group>"; };
+		98D689571FB2D32500BFE46E /* ZENewQuestionListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewQuestionListVC.m; path = NewQuestion/ZENewQuestionListVC.m; sourceTree = "<group>"; };
+		98D689591FB2D34C00BFE46E /* ZENewQuestionListView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewQuestionListView.h; path = NewQuestion/ZENewQuestionListView.h; sourceTree = "<group>"; };
+		98D6895A1FB2D34C00BFE46E /* ZENewQuestionListView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewQuestionListView.m; path = NewQuestion/ZENewQuestionListView.m; sourceTree = "<group>"; };
+		98D6895C1FB2D37900BFE46E /* ZENewQuestionListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewQuestionListCell.h; path = NewQuestion/ZENewQuestionListCell.h; sourceTree = "<group>"; };
+		98D6895D1FB2D37900BFE46E /* ZENewQuestionListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewQuestionListCell.m; path = NewQuestion/ZENewQuestionListCell.m; sourceTree = "<group>"; };
+		98D6895F1FB2D3E200BFE46E /* ZENewQuetionLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewQuetionLayout.h; path = NewQuestion/ZENewQuetionLayout.h; sourceTree = "<group>"; };
+		98D689601FB2D3E200BFE46E /* ZENewQuetionLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewQuetionLayout.m; path = NewQuestion/ZENewQuetionLayout.m; sourceTree = "<group>"; };
 		98DB7C451C4F323A0046D405 /* ZEColorConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEColorConstant.h; path = Constant/ZEColorConstant.h; sourceTree = "<group>"; };
 		98DB7C461C4F323A0046D405 /* ZEEnumConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEEnumConstant.h; path = Constant/ZEEnumConstant.h; sourceTree = "<group>"; };
 		98DB7C471C4F323A0046D405 /* ZEMarcoConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEMarcoConstant.h; path = Constant/ZEMarcoConstant.h; sourceTree = "<group>"; };
@@ -1339,8 +1356,6 @@
 		98DB7C541C4F53EA0046D405 /* ZEMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZEMainViewController.h; sourceTree = "<group>"; };
 		98DB7C551C4F53EA0046D405 /* ZEMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZEMainViewController.m; sourceTree = "<group>"; };
 		98DB7C581C4F554E0046D405 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		98E0C2B91FA883570090DC55 /* ZEViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZEViewController.h; sourceTree = "<group>"; };
-		98E0C2BA1FA883570090DC55 /* ZEViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZEViewController.m; sourceTree = "<group>"; };
 		98E0C2BD1FA95D1D0090DC55 /* JMUIChattingKitResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JMUIChattingKitResource.bundle; sourceTree = "<group>"; };
 		98E0C2BE1FA95D1D0090DC55 /* RecordViewResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = RecordViewResources.bundle; sourceTree = "<group>"; };
 		98E0C2BF1FA95D1D0090DC55 /* JMUIChattingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JMUIChattingKit.framework; sourceTree = "<group>"; };
@@ -1353,6 +1368,18 @@
 		98E485FC1D9A14FE00AA0278 /* ZEProCirDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEProCirDetailVC.m; path = Group/ZEProCirDetailVC.m; sourceTree = "<group>"; };
 		98E485FE1D9A151700AA0278 /* ZEProCirDeatilView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEProCirDeatilView.h; path = Group/ZEProCirDeatilView.h; sourceTree = "<group>"; };
 		98E485FF1D9A151700AA0278 /* ZEProCirDeatilView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEProCirDeatilView.m; path = Group/ZEProCirDeatilView.m; sourceTree = "<group>"; };
+		98EC3EE51FB57241003B53E5 /* ZENewQuestionDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewQuestionDetailVC.h; path = NewQuestion/QuestionDetail/ZENewQuestionDetailVC.h; sourceTree = "<group>"; };
+		98EC3EE61FB57241003B53E5 /* ZENewQuestionDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewQuestionDetailVC.m; path = NewQuestion/QuestionDetail/ZENewQuestionDetailVC.m; sourceTree = "<group>"; };
+		98EC3EE81FB5725E003B53E5 /* ZENewQuestionDetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewQuestionDetailView.h; path = NewQuestion/QuestionDetail/ZENewQuestionDetailView.h; sourceTree = "<group>"; };
+		98EC3EE91FB5725E003B53E5 /* ZENewQuestionDetailView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewQuestionDetailView.m; path = NewQuestion/QuestionDetail/ZENewQuestionDetailView.m; sourceTree = "<group>"; };
+		98EC3EEB1FB57283003B53E5 /* ZENewQuestionDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewQuestionDetailCell.h; path = NewQuestion/QuestionDetail/ZENewQuestionDetailCell.h; sourceTree = "<group>"; };
+		98EC3EEC1FB57283003B53E5 /* ZENewQuestionDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewQuestionDetailCell.m; path = NewQuestion/QuestionDetail/ZENewQuestionDetailCell.m; sourceTree = "<group>"; };
+		98EC3EEE1FB572A9003B53E5 /* ZENewDetailLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewDetailLayout.h; path = NewQuestion/QuestionDetail/ZENewDetailLayout.h; sourceTree = "<group>"; };
+		98EC3EEF1FB572A9003B53E5 /* ZENewDetailLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewDetailLayout.m; path = NewQuestion/QuestionDetail/ZENewDetailLayout.m; sourceTree = "<group>"; };
+		98EC3EF11FBAC145003B53E5 /* ZENewAnswerQuestionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewAnswerQuestionVC.h; path = NewQuestion/ZENewAnswerQuestionVC.h; sourceTree = "<group>"; };
+		98EC3EF21FBAC145003B53E5 /* ZENewAnswerQuestionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewAnswerQuestionVC.m; path = NewQuestion/ZENewAnswerQuestionVC.m; sourceTree = "<group>"; };
+		98EC3EF41FBAC15F003B53E5 /* ZENewAnswerQuestionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewAnswerQuestionView.h; path = NewQuestion/ZENewAnswerQuestionView.h; sourceTree = "<group>"; };
+		98EC3EF51FBAC15F003B53E5 /* ZENewAnswerQuestionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewAnswerQuestionView.m; path = NewQuestion/ZENewAnswerQuestionView.m; sourceTree = "<group>"; };
 		98EE5DB21DE56D9A00C82FCB /* JCAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JCAlertView.bundle; sourceTree = "<group>"; };
 		98EE5DB31DE56D9A00C82FCB /* JCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAlertView.h; sourceTree = "<group>"; };
 		98EE5DB41DE56D9A00C82FCB /* JCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAlertView.m; sourceTree = "<group>"; };
@@ -1817,8 +1844,6 @@
 				986334331F3DABFB00E03F6C /* Model */,
 				980379951F0B69F30085FAD9 /* ZEPULHomeVC.h */,
 				980379961F0B69F30085FAD9 /* ZEPULHomeVC.m */,
-				98E0C2B91FA883570090DC55 /* ZEViewController.h */,
-				98E0C2BA1FA883570090DC55 /* ZEViewController.m */,
 				980379981F0B6A0C0085FAD9 /* ZEPULHomeView.h */,
 				980379991F0B6A0C0085FAD9 /* ZEPULHomeView.m */,
 				9863342C1F398D1700E03F6C /* PULHomeDynamicCell */,
@@ -2418,6 +2443,7 @@
 				987254491D587CD7005C4AB9 /* Login */,
 				9863DE4D1D65813F00410475 /* Model */,
 				980379941F0B69CB0085FAD9 /* PULHOME */,
+				98D689551FB2D2C400BFE46E /* NewQuestion */,
 				982ED3701D4208E300F87343 /* Home */,
 				982ED36F1D4208E000F87343 /* Questions */,
 				982ED36E1D4208DC00F87343 /* Group */,
@@ -2587,6 +2613,26 @@
 			path = Group/EXPERT/CellView;
 			sourceTree = "<group>";
 		};
+		98D689551FB2D2C400BFE46E /* NewQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				98D689561FB2D32500BFE46E /* ZENewQuestionListVC.h */,
+				98D689571FB2D32500BFE46E /* ZENewQuestionListVC.m */,
+				98D689591FB2D34C00BFE46E /* ZENewQuestionListView.h */,
+				98D6895A1FB2D34C00BFE46E /* ZENewQuestionListView.m */,
+				98D6895C1FB2D37900BFE46E /* ZENewQuestionListCell.h */,
+				98D6895D1FB2D37900BFE46E /* ZENewQuestionListCell.m */,
+				98D6895F1FB2D3E200BFE46E /* ZENewQuetionLayout.h */,
+				98D689601FB2D3E200BFE46E /* ZENewQuetionLayout.m */,
+				98EC3EE41FB571F9003B53E5 /* QuestionDetail */,
+				98EC3EF11FBAC145003B53E5 /* ZENewAnswerQuestionVC.h */,
+				98EC3EF21FBAC145003B53E5 /* ZENewAnswerQuestionVC.m */,
+				98EC3EF41FBAC15F003B53E5 /* ZENewAnswerQuestionView.h */,
+				98EC3EF51FBAC15F003B53E5 /* ZENewAnswerQuestionView.m */,
+			);
+			name = NewQuestion;
+			sourceTree = "<group>";
+		};
 		98DB7C3D1C4F2F490046D405 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
@@ -2628,6 +2674,21 @@
 				98E0C2C01FA95D1D0090DC55 /* JMUICommon.framework */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		98EC3EE41FB571F9003B53E5 /* QuestionDetail */ = {
+			isa = PBXGroup;
+			children = (
+				98EC3EE51FB57241003B53E5 /* ZENewQuestionDetailVC.h */,
+				98EC3EE61FB57241003B53E5 /* ZENewQuestionDetailVC.m */,
+				98EC3EE81FB5725E003B53E5 /* ZENewQuestionDetailView.h */,
+				98EC3EE91FB5725E003B53E5 /* ZENewQuestionDetailView.m */,
+				98EC3EEB1FB57283003B53E5 /* ZENewQuestionDetailCell.h */,
+				98EC3EEC1FB57283003B53E5 /* ZENewQuestionDetailCell.m */,
+				98EC3EEE1FB572A9003B53E5 /* ZENewDetailLayout.h */,
+				98EC3EEF1FB572A9003B53E5 /* ZENewDetailLayout.m */,
+			);
+			name = QuestionDetail;
 			sourceTree = "<group>";
 		};
 		98EE5DB11DE56D9A00C82FCB /* JCAlertView */ = {
@@ -3320,6 +3381,7 @@
 			files = (
 				984A329C1DAC88CE00B9F53B /* PYPhotosView.m in Sources */,
 				980AFC171FA07BB6007B2C6D /* ZEInputTextView.m in Sources */,
+				98D6895B1FB2D34C00BFE46E /* ZENewQuestionListView.m in Sources */,
 				98FEF2931EC4402300A0CB17 /* ZEPersonalDynamicVC.m in Sources */,
 				98DB7C501C4F4FA70046D405 /* ZEUtil.m in Sources */,
 				9872575E1D59BAEA005C4AB9 /* ZESettingLocalData.m in Sources */,
@@ -3355,7 +3417,6 @@
 				98D42BB81DC70DCD003A3812 /* ZETypicalCaseView.m in Sources */,
 				9863DE491D657DA100410475 /* ZEQuestionTypeCache.m in Sources */,
 				989B2C481C4DE7AA00F14EFA /* main.m in Sources */,
-				98E0C2BB1FA883570090DC55 /* ZEViewController.m in Sources */,
 				987ACBCD1D4AE845006D692E /* ZEQuestionsView.m in Sources */,
 				98A1D56E1DF5504000D92333 /* ZEChatBaseCell.m in Sources */,
 				98A1D4141DF548C600D92333 /* ZEChatView.m in Sources */,
@@ -3426,8 +3487,10 @@
 				98FEF2901EC2A51F00A0CB17 /* ZEPersonalNotiView.m in Sources */,
 				987ACBDA1D4AFC31006D692E /* ZEQuestionTableView.m in Sources */,
 				98E485FD1D9A14FE00AA0278 /* ZEProCirDetailVC.m in Sources */,
+				98EC3EF61FBAC15F003B53E5 /* ZENewAnswerQuestionView.m in Sources */,
 				98DB7C561C4F53EA0046D405 /* ZEMainViewController.m in Sources */,
 				98FEF2891EBC53FC00A0CB17 /* ZENotiDetailView.m in Sources */,
+				98EC3EEA1FB5725E003B53E5 /* ZENewQuestionDetailView.m in Sources */,
 				9896637E1E8BDB0000F42906 /* ZEExpertChatVC.m in Sources */,
 				982ED3811D420A5000F87343 /* ZEUserCenterVC.m in Sources */,
 				98FA64801ECD71C6000F2133 /* ZESystemNotiVC.m in Sources */,
@@ -3452,13 +3515,20 @@
 				982ED3791D4209DD00F87343 /* ZEQuestionsVC.m in Sources */,
 				98E485F81D99085100AA0278 /* ZETeamCircleVC.m in Sources */,
 				984A32931DAC88CE00B9F53B /* PYPhotosPreviewController.m in Sources */,
+				98D689611FB2D3E200BFE46E /* ZENewQuetionLayout.m in Sources */,
 				984492CC1E5D5D270066AFD1 /* ZEHomeLayout.m in Sources */,
 				980379A31F0E20440085FAD9 /* ZEPULWebVC.m in Sources */,
+				98EC3EED1FB57283003B53E5 /* ZENewQuestionDetailCell.m in Sources */,
+				98EC3EF01FB572A9003B53E5 /* ZENewDetailLayout.m in Sources */,
+				98EC3EF31FBAC145003B53E5 /* ZENewAnswerQuestionVC.m in Sources */,
 				986334321F398D9000E03F6C /* ZEPULHomeDynamicLayout.m in Sources */,
 				981A22321DD31491002821BC /* ZEScoreView.m in Sources */,
 				98B13C431E6E9996006C783B /* MKJOverLayLayout.m in Sources */,
 				983D47D81DCC2B1100D61BC9 /* JRPlayerView.m in Sources */,
 				98AB2A4D1D65A6AA00F4DBF8 /* ZEQuestionTypeModel.m in Sources */,
+				98D6895E1FB2D37900BFE46E /* ZENewQuestionListCell.m in Sources */,
+				98D689581FB2D32500BFE46E /* ZENewQuestionListVC.m in Sources */,
+				98EC3EE71FB57241003B53E5 /* ZENewQuestionDetailVC.m in Sources */,
 				98B1DA741E8B525F00CB6815 /* ZEExpertModel.m in Sources */,
 				9801DB031D61541B008B1676 /* ZEChangePersonalMsgView.m in Sources */,
 				9828A7451EAEEDD800611327 /* ZESearchWorkStandardVC.m in Sources */,

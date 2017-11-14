@@ -17,6 +17,9 @@
 #define NSLog(format, ...)
 #endif
 
+#define ZE_weakify(var)   __weak typeof(var) weakSelf = var
+#define ZE_strongify(var) __strong typeof(var) strongSelf = var
+
 
 #define IS_IOS7 [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0
 #define IS_IOS8 [[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0

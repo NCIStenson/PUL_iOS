@@ -22,10 +22,11 @@
 #import "ZEQuestionBankVC.h"
 #import "ZEQuestionBankWebVC.h"
 
+#import "ZENewQuestionListVC.h"
+
 #import "ZEGroupVC.h"
 #import "ZESinginVC.h"
 #import "ZEFindTeamVC.h"
-#import "ZEViewController.h"
 #import "SvUDIDTools.h"
 @interface ZEPULHomeVC () <ZEPULHomeViewDelegate>
 {
@@ -465,8 +466,8 @@
 
 -(void)goAskHome
 {
-    ZEHomeVC * homeVC = [[ZEHomeVC alloc]init];
-    
+//    ZEHomeVC * homeVC = [[ZEHomeVC alloc]init];
+    ZENewQuestionListVC * homeVC = [ZENewQuestionListVC new];
     [self.navigationController pushViewController:homeVC animated:YES];
 }
 

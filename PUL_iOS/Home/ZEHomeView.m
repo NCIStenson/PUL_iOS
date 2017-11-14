@@ -642,7 +642,6 @@
             [self.delegate loadNewData:_currentHomeContentPage];
         }
     }
-    
 }
 
 #pragma mark - 回答问题

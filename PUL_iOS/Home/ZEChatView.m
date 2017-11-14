@@ -358,8 +358,6 @@
     if (indexPath.row >= _layouts.count) {
         return cell;
     }
-    NSLog(@" =====   %d",_layouts.count);
-    NSLog(@" =====   %d",indexPath.row);
     NSDictionary * dic = _layouts[indexPath.row];
     [cell setLayout:dic[@"layout"] withContentType:dic[@"type"]];
 

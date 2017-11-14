@@ -332,7 +332,7 @@
         [optionBtn setTitleColor:kTextColor forState:UIControlStateNormal];
         optionBtn.frame = CGRectMake(5 + kCustomBtnWidth * (i % 4),  kCustomBtnWidth * (i / 4), kCustomBtnWidth, kCustomBtnWidth );
         [superView addSubview:optionBtn];
-        optionBtn.backgroundColor = [UIColor clearColor];
+        optionBtn.backgroundColor = [UIColor whiteColor];
         optionBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         optionBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
         optionBtn.tag = i + 200;
@@ -733,7 +733,6 @@
     backImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH - 30, 50);
     [self addSubview:backImageView];
     backImageView.userInteractionEnabled = YES;
-//    backImageView.backgroundColor = MAIN_ARM_COLOR;
     
     contentTab = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, backImageView.width , 44) style:UITableViewStylePlain];
     contentTab.delegate = self;

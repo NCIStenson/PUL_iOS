@@ -75,6 +75,7 @@
                        showAlertView:NO
                              success:^(id data) {
                                  NSArray * arr = [ZEUtil getServerData:data withTabelName:V_KLB_ANSWER_INFO];
+                                 NSLog(@" ===  %@",arr);
                                  if (arr.count > 0) {
                                      self.answerInfo = [ZEAnswerInfoModel getDetailWithDic:arr[0]];
                                      self.title = [NSString stringWithFormat:@"%@的回答",_answerInfo.NICKNAME];

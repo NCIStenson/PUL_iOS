@@ -7,7 +7,7 @@
 //
 
 
-#define kTableViewCellHeight 50.0f
+#define kTableViewCellHeight 44.0f
 
 
 #import "ZEAskQuestionTypeView.h"
@@ -31,7 +31,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = MAIN_BACKGROUND_COLOR;
+        self.backgroundColor = [UIColor colorWithWhite:0 alpha:.5];
         _currentSelectType = 0;
         [self initView];
     }
@@ -40,20 +40,30 @@
 
 -(void)initView
 {
+    UIView * tapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, NAV_HEIGHT + 200)];
+    [self addSubview:tapView];
+    
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithActionBlock:^(id  _Nonnull sender) {
+        if([self.delegate respondsToSelector:@selector(didSelectType:typeCode:fatherCode:)]){
+            [self.delegate didSelectType:@"" typeCode:@"" fatherCode:@""];
+        }
+    }];
+    [tapView addGestureRecognizer:tap];
+    
     //确定是水平滚动，还是垂直滚动
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
-    _collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(102, NAV_HEIGHT + 2, SCREEN_WIDTH - 100, SCREEN_HEIGHT - NAV_HEIGHT) collectionViewLayout:flowLayout];
+    _collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(100, NAV_HEIGHT + 200, SCREEN_WIDTH - 100, SCREEN_HEIGHT - NAV_HEIGHT -200 ) collectionViewLayout:flowLayout];
     _collectionView.dataSource=self;
     _collectionView.delegate=self;
-    
+    _collectionView.backgroundColor = [UIColor whiteColor];
+
     [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     //注册Cell，必须要有
     [self addSubview:_collectionView];
-    _collectionView.backgroundColor = MAIN_BACKGROUND_COLOR;
 
-    _typeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, 100, SCREEN_HEIGHT - NAV_HEIGHT) style:UITableViewStylePlain];
+    _typeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT + 200, 100, SCREEN_HEIGHT - NAV_HEIGHT - 200) style:UITableViewStylePlain];
     _typeTableView.delegate = self;
     _typeTableView.dataSource = self;
     _typeTableView.backgroundColor = MAIN_BACKGROUND_COLOR;
@@ -61,7 +71,22 @@
     _typeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _typeTableView.showsVerticalScrollIndicator = NO;
     _typeTableView.showsHorizontalScrollIndicator = NO;
+    
+    UIView * lineView = [UIView new];
+    lineView.frame = CGRectMake(_typeTableView.width, _typeTableView.top, 1,_typeTableView.height);
+    [self addSubview:lineView];
+    lineView.backgroundColor = MAIN_DEEPLINE_COLOR;
 }
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    
+    if ([touch.view isKindOfClass:[UITableView class]] || [touch.view isKindOfClass:[UICollectionView class]]){
+        return NO;
+    }
+    
+    return YES;
+    
+}
+
 
 -(void)reloadTypeData
 {
@@ -123,27 +148,29 @@
     
     cell.backgroundColor = [UIColor whiteColor];
     
-    
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(03, 0, (SCREEN_WIDTH - 106) / 3 - 6, 44.0f)];
-    label.textColor = MAIN_NAV_COLOR;
-    
     NSArray * currentArr = self.typeDetailArr[_currentSelectType];
-    
     if([currentArr count] == 0){
         return cell;
     }
     
-    NSDictionary * dic = currentArr[indexPath.row];
-    label.text = [dic objectForKey:@"NAME"];
-    label.textAlignment = NSTextAlignmentCenter;
-    label.numberOfLines = 0;
-    label.font = [UIFont systemFontOfSize:12];
     for (id subView in cell.contentView.subviews) {
         [subView removeFromSuperview];
     }
     
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 150, 44.0f)];
+    label.textColor = kTextColor;
+    NSDictionary * dic = currentArr[indexPath.row];
+    label.text = [dic objectForKey:@"NAME"];
+    label.textAlignment = NSTextAlignmentLeft;
+    label.numberOfLines = 0;
+    label.font = [UIFont systemFontOfSize:12];
     [cell.contentView addSubview:label];
+    
+    CALayer * lineLayer = [CALayer layer];
+    lineLayer.frame = CGRectMake(10, 43.5, SCREEN_WIDTH - 120, 0.5f);
+    [cell.contentView.layer addSublayer:lineLayer];
+    lineLayer.backgroundColor = [MAIN_DEEPLINE_COLOR CGColor];
+
     return cell;
 }
 
@@ -152,17 +179,17 @@
 //定义每个Item 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((SCREEN_WIDTH - 106) / 3, 44.0f);
+    return CGSizeMake(SCREEN_WIDTH - 100, 44.0f);
 }
 
 //定义每个UICollectionView 的 margin
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 2.0;
+    return 0.5;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
 {
-    return 2.0;
+    return 0.5;
 }
 #pragma mark --UICollectionViewDelegate
 
@@ -230,19 +257,19 @@
         
         cell.contentView.backgroundColor = MAIN_BACKGROUND_COLOR;
         
-        CALayer * lineLayer = [CALayer layer];
-        lineLayer.frame = CGRectMake(0, 0, _typeTableView.frame.size.width, 2.0f);
-        [cell.contentView.layer addSublayer:lineLayer];
-        lineLayer.backgroundColor = [MAIN_BACKGROUND_COLOR CGColor];
-        
         cell.accessoryType = UITableViewCellAccessoryNone;
         
         NSDictionary * dic = self.typeArr[indexPath.row];
         
         UIView * contentView =[[UIView alloc]initWithFrame:CGRectMake(0, 2, _typeTableView.frame.size.width, kTableViewCellHeight - 2.0f)];
-        contentView.backgroundColor = [UIColor whiteColor];
+        contentView.backgroundColor = MAIN_BACKGROUND_COLOR;
         [cell.contentView addSubview:contentView];
         
+        CALayer * lineLayer = [CALayer layer];
+        lineLayer.frame = CGRectMake(0, 43.5, _typeTableView.frame.size.width, 0.5f);
+        [contentView.layer addSublayer:lineLayer];
+        lineLayer.backgroundColor = [MAIN_DEEPLINE_COLOR CGColor];
+
         UIImageView * contentImage = [[UIImageView alloc]init];
         contentImage.contentMode = UIViewContentModeScaleAspectFit;
         [contentView addSubview:contentImage];
@@ -251,8 +278,6 @@
 
         contentImage.top = (kTableViewCellHeight - contentImage.height) / 2 ;
         
-        NSLog(@" = = = =  %@", dic );
-        NSLog(@" = = = =  %@",[ZENITH_ICON_IMAGEURL([dic objectForKey:@"ICOPATH"]) absoluteString] );
         [contentImage sd_setImageWithURL:ZENITH_ICON_IMAGEURL([dic objectForKey:@"ICOPATH"]) placeholderImage:ZENITH_PLACEHODLER_IMAGE];
         
         UILabel * contentLab = [[UILabel alloc]initWithFrame:CGRectMake(26.0f,0,_typeTableView.frame.size.width - 27 ,kTableViewCellHeight - 2.0f)];
@@ -270,9 +295,10 @@
         [cell addGestureRecognizer:doubleTabGesture];
         
         if (_currentSelectType == indexPath.row) {
-            contentView.backgroundColor = MAIN_BACKGROUND_COLOR;
+            contentView.backgroundColor = [UIColor whiteColor];
+            contentLab.textColor = MAIN_NAV_COLOR;
 
-            UIView * maskView = [[UIView alloc]initWithFrame:CGRectMake(0, 7.0, 3, 30.0f)];
+            UIView * maskView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 3, 44.0f)];
             [contentView addSubview:maskView];
             maskView.backgroundColor = MAIN_NAV_COLOR_A(0.7);
         }
@@ -285,7 +311,7 @@
     if ([_typeTableView isEqual:tableView]) {
         _currentSelectType = indexPath.row;
         [UIView animateWithDuration:0.29 animations:^{
-            _typeTableView.frame = CGRectMake(0, NAV_HEIGHT, 100, SCREEN_HEIGHT - NAV_HEIGHT);
+            _typeTableView.frame = CGRectMake(0, NAV_HEIGHT + 200, 100, SCREEN_HEIGHT - NAV_HEIGHT - 200);
             [_typeTableView reloadData];
             [_collectionView reloadData];
         }];
