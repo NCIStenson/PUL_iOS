@@ -46,7 +46,7 @@
         }
     }
     
-    if (_answerInfo.FILEURLARR.count > 0) {
+    if (_answerInfo.DATALIST.count > 0) {
         [self layoutReplyHeight];
         _height += _replayHeight;
         _height += kTypeContentMarginImageContent;
@@ -67,9 +67,38 @@
 -(void)layoutReplyHeight{
     _replayHeight = 0;
     
-    float textH = [_answerInfo.ANSWEREXPLAIN heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 90];
-    _replayHeight += textH;
-    _replayHeight += 10;
+    for (int i = 0; i < _answerInfo.DATALIST.count ; i ++) {
+        ZEAnswerInfoModel * replyInfoModel =  [ZEAnswerInfoModel getDetailWithDic:_answerInfo.DATALIST[i]];
+        
+        if (replyInfoModel.EXPLAIN.length > 0) {
+            NSString * explainStr = @"";
+            if ([replyInfoModel.SYSCREATORID isEqualToString:_questionInfo.SYSCREATORID]) {
+                explainStr = [NSString stringWithFormat:@"%@：%@",_questionInfo.NICKNAME,replyInfoModel.EXPLAIN];
+            }else if([replyInfoModel.SYSCREATORID isEqualToString:_answerInfo.SYSCREATORID]){
+                explainStr = [NSString stringWithFormat:@"%@回复%@ ：%@",_answerInfo.NICKNAME,_questionInfo.NICKNAME,replyInfoModel.EXPLAIN];
+            }
+            
+            float textH = [explainStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 90 - 16];
+            _replayHeight += textH;
+        }else if(replyInfoModel.FILEURL.length > 0){
+            NSString * explainStr = @"";
+            if ([replyInfoModel.SYSCREATORID isEqualToString:_questionInfo.SYSCREATORID]) {
+                explainStr = [NSString stringWithFormat:@"%@：%@",_questionInfo.NICKNAME,replyInfoModel.EXPLAIN];
+            }else if([replyInfoModel.SYSCREATORID isEqualToString:_answerInfo.SYSCREATORID]){
+                explainStr = [NSString stringWithFormat:@"%@回复%@ ：%@",_answerInfo.NICKNAME,_questionInfo.NICKNAME,replyInfoModel.EXPLAIN];
+            }
+            float textH = [explainStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 90 - 16];
+
+            _replayHeight += kReplyImageHeight ;
+            _replayHeight += textH ;
+            _replayHeight += 10 ;
+        }
+        
+    }
+    if (_answerInfo.DATALIST.count >= 2) {
+        _replayHeight += 20;
+    }
+    _replayHeight += 15;
     
 }
 

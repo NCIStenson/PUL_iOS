@@ -70,6 +70,9 @@
 @interface ZEListCellTextContent:UIView
 
 @property (nonatomic,strong) UILabel * contentLab;
+
+@property (nonatomic,strong) UILabel * seeAllExplainLab;
+
 @property (nonatomic,weak) ZENewQuestionListCell * listCell;
 
 @end

@@ -200,10 +200,19 @@
 -(void)initView
 {
     _contentLab = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 40, 0)];
-    _contentLab.numberOfLines = 0;
+    _contentLab.numberOfLines = 4;
     _contentLab.textColor = kTextColor;
     _contentLab.font = [UIFont boldSystemFontOfSize:kTiltlFontSize];
     [self addSubview:_contentLab];
+    
+    _seeAllExplainLab = [[UILabel alloc]initWithFrame:CGRectMake(20, 75, SCREEN_WIDTH - 40, 20)];
+    _seeAllExplainLab.text = @"查看全文";
+    _seeAllExplainLab.textColor = RGBA(36, 91, 131, 1);
+//    _seeAllExplainLab.backgroundColor =MAIN_ARM_COLOR;
+    _seeAllExplainLab.font = [UIFont boldSystemFontOfSize:kTiltlFontSize];
+    [self addSubview:_seeAllExplainLab];
+    _seeAllExplainLab.hidden = YES;
+    
 }
 
 @end
@@ -244,8 +253,6 @@
     _bounsImage = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 70, 10, 20, 20)];
     [_bounsImage setImage:[UIImage imageNamed:@"high_score_icon.png"]];
     [self addSubview:_bounsImage];
-//    _bounsImage.clipsToBounds = YES;
-//    _bounsImage.layer.cornerRadius = _headerImageView.height / 2;
     _bounsImage.hidden = YES;
     
     _bounsLab = [UILabel new];
@@ -326,6 +333,9 @@
     _textContenView.top = _personalMessageView.bottom + kTextContentMarginPersonalMessage;
     _textContenView.size = CGSizeMake(SCREEN_WIDTH, layout.textHeight);
     _textContenView.left = 0;
+    if (layout.isShowMode && layout.textHeight > kMaxExplainHeight) {
+        _textContenView.height = layout.textHeight + 20;
+    }
     
     if (layout.questionInfo.FILEURLARR.count > 0) {
         _imageContentView = [[ZEListCellImageContent alloc]init];
@@ -376,6 +386,15 @@
     
     _textContenView.contentLab.text = layout.questionInfo.QUESTIONEXPLAIN;
     _textContenView.contentLab.height = layout.textHeight;
+    
+    if(!layout.isShowMode){
+        _textContenView.contentLab.numberOfLines = 0;
+    }else{
+        if (layout.textHeight > kMaxExplainHeight) {
+            _textContenView.seeAllExplainLab.hidden =NO;
+        }
+    }
+    
     
     if (layout.questionInfo.FILEURLARR.count > 0) {
         _imageContentView.layout = layout;

@@ -55,6 +55,11 @@
  */
 -(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel;
 
+
+/**
+ 进入问题搜索界面
+ */
+-(void)goSearchView;
 @end
 
 @interface ZENewQuestionListView : UIView

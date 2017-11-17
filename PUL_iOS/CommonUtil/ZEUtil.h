@@ -102,6 +102,9 @@
 //  字典转换Json格式
 + (NSString*)dictionaryToJson:(NSDictionary *)dic;
 
+// json字符串转字典
++ (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
+
 + (void)showAlertView:(NSString *)str viewController:(UIViewController *)viewCon;
 
 +(UIViewController *)getCurrentVC;

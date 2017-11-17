@@ -15,6 +15,8 @@
 #import "ZEChatVC.h"
 #import "ZENewAnswerQuestionVC.h"
 #import "ZEAskQuesViewController.h"
+
+#import "ZENewSearchQuestionVC.h"
 @interface ZENewQuestionListVC ()<ZENewQuestionListViewDelegate>
 {
     ZENewQuestionListView * _questionListView;
@@ -35,6 +37,12 @@
     [self initView];
     self.navBar.hidden = YES;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendHomeDataRequest) name:kNOTI_ASK_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendHomeDataRequest) name:kNOTI_ACCEPT_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendHomeDataRequest) name:kNOTI_ANSWER_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendHomeDataRequest) name:kNOTI_CHANGE_ASK_SUCCESS object:nil];
+
+    
     [self sendNewestQuestionsRequest];
 }
 
@@ -53,6 +61,18 @@
 }
 
 #pragma mark - Request
+
+-(void)sendHomeDataRequest
+{
+    _currentNewestPage = 0;
+    _currentRecommandPage = 0;
+    _currentBounsPage = 0;
+    
+    [self sendNewestQuestionsRequest];
+    [self sendRecommandQuestionsRequest:@""];
+    [self sendBounsQuestionsRequest:@""];
+}
+
 
 -(void)sendNewestQuestionsRequest
 {
@@ -297,14 +317,12 @@
         answerQuesVC.questionInfoM = questionInfo;
         [self.navigationController pushViewController:answerQuesVC animated:YES];
     }
-
 }
 
 -(void)goBack
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 
 -(void)loadNewData:(HOME_CONTENT)contentPage
 {
@@ -353,10 +371,8 @@
 
 -(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
 {
-//    ZEQuestionsDetailVC * detailVC = [[ZEQuestionsDetailVC alloc]init];
     ZENewQuestionDetailVC * detailVC = [[ZENewQuestionDetailVC alloc]init];
     detailVC.questionInfo = infoModel;
-    //    detailVC.questionTypeModel = typeModel;
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 
@@ -365,6 +381,14 @@
     ZEAskQuesViewController * askQues = [[ZEAskQuesViewController alloc]init];
     askQues.enterType = ENTER_GROUP_TYPE_TABBAR;
     [self presentViewController:askQues animated:YES completion:nil];
+}
+
+-(void)goSearchView
+{
+    ZENewSearchQuestionVC * showQuestionsList = [[ZENewSearchQuestionVC alloc]init];
+//    showQuestionsList.showQuestionListType = QUESTION_LIST_NEW;
+//    showQuestionsList.currentInputStr = str;
+    [self.navigationController pushViewController:showQuestionsList animated:YES];
 }
 
 

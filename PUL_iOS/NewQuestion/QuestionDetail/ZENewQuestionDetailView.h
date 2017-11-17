@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ZEWithoutDataTipsView.h"
 #import "ZENewQuestionDetailCell.h"
+#import "ZEShowOptionView.h"
+
 @class ZENewQuestionDetailView;
 
 @protocol ZENewQuestionDetailViewDelegate <NSObject>
@@ -33,12 +35,16 @@
 
 -(void)enterAnswerDetailView:(ZEAnswerInfoModel *)answerInfo;
 
+-(void)sendRequestWithOrder:(NSInteger)order;
+
 @end
 
-@interface ZENewQuestionDetailView : UIView<UITableViewDelegate,UITableViewDataSource,ZENewQuestionDetailCellDelegate>
+@interface ZENewQuestionDetailView : UIView<UITableViewDelegate,UITableViewDataSource,ZENewQuestionDetailCellDelegate,ZEShowOptionViewDelegate>
 {
     ZEWithoutDataTipsView *tipsView;
     UITableView * contentTableView;
+    
+    NSInteger _currentSelectOrder;
 }
 
 @property (nonatomic,weak) id <ZENewQuestionDetailViewDelegate> delegate;
@@ -46,6 +52,7 @@
 
 @property (nonatomic,strong) NSMutableArray * answerInfoArr;
 @property (nonatomic,strong) UIButton * praiseBtn;
+@property (nonatomic,strong) UIButton * orderBtn;
 
 -(id)initWithFrame:(CGRect)frame
   withQuestionInfo:(ZEQuestionInfoModel *)questionInfo;

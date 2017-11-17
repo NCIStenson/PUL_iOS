@@ -31,13 +31,9 @@
     _replyContentLabOne = [[UILabel alloc]init];
     _replyContentLabOne.frame = CGRectMake(8, 5, SCREEN_WIDTH - 90 - 16, 0);
     _replyContentLabOne.font = [UIFont systemFontOfSize:kTiltlFontSize];
-    _replyContentLabOne.textColor = RGBA(217, 217, 217, 1);
+    _replyContentLabOne.textColor = RGBA(36, 91, 131, 1);
     _replyContentLabOne.numberOfLines = 0;
-//    _replyContentLabOne.backgroundColor = MAIN_ARM_COLOR;
     [_contentBackgroundView addSubview:_replyContentLabOne];
-    
-    
-
 }
 
 -(void)setDetailLayout:(ZENewDetailLayout *)detailLayout
@@ -46,10 +42,101 @@
     
     _contentBackgroundView.height = _detailLayout.replayHeight ;
     
-    _replyContentLabOne.text = [NSString stringWithFormat:@"%@回复%@ ：%@",detailLayout.answerInfo.NICKNAME,detailLayout.questionInfo.NICKNAME,detailLayout.answerInfo.ANSWEREXPLAIN];
+    float marginTop = 0;
+    for (int i = 0; i < _detailLayout.answerInfo.DATALIST.count; i ++) {
+        ZEAnswerInfoModel * replyInfoM = [ZEAnswerInfoModel getDetailWithDic:_detailLayout.answerInfo.DATALIST[i]];
+
+        UILabel * textLab= [[UILabel alloc]init];
+        textLab.frame = CGRectMake(8,marginTop + 8, SCREEN_WIDTH - 90 - 16, 20);
+        textLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
+        textLab.textColor = RGBA(217, 217, 217, 1);
+        textLab.numberOfLines = 0;
+        [_contentBackgroundView addSubview:textLab];
+
+        if (replyInfoM.EXPLAIN.length > 0) {
+            
+            if ([replyInfoM.SYSCREATORID isEqualToString:_detailLayout.questionInfo.SYSCREATORID]) {
+                textLab.text = [NSString stringWithFormat:@"%@：%@",detailLayout.questionInfo.NICKNAME,replyInfoM.EXPLAIN];
+                textLab.attributedText = [self getAttributedStringWithQuestionName:detailLayout.questionInfo.NICKNAME
+                                                                    withAnswerName:@""
+                                                                           withStr:textLab.text];
+            }else if([replyInfoM.SYSCREATORID isEqualToString:detailLayout.answerInfo.SYSCREATORID]){
+                textLab.text = [NSString stringWithFormat:@"%@回复%@：%@",detailLayout.answerInfo.NICKNAME,detailLayout.questionInfo.NICKNAME,replyInfoM.EXPLAIN];
+                
+                textLab.attributedText = [self getAttributedStringWithQuestionName:detailLayout.questionInfo.NICKNAME
+                                                                    withAnswerName:detailLayout.answerInfo.NICKNAME
+                                                                           withStr:textLab.text];
+
+            }
+            
+            textLab.height = [textLab.text heightForFont:textLab.font width:textLab.width];
+            
+            marginTop += textLab.height;
+
+        }else if (replyInfoM.FILEURL.length > 0){
+            if ([replyInfoM.SYSCREATORID isEqualToString:_questionInfoModel.SYSCREATORID]) {
+                textLab.text = [NSString stringWithFormat:@"%@：",detailLayout.questionInfo.NICKNAME];
+                textLab.attributedText = [self getAttributedStringWithQuestionName:detailLayout.questionInfo.NICKNAME
+                                                                    withAnswerName:@""
+                                                                           withStr:textLab.text];
+            }else if([replyInfoM.SYSCREATORID isEqualToString:detailLayout.answerInfo.SYSCREATORID]){
+                textLab.text = [NSString stringWithFormat:@"%@回复%@：",detailLayout.answerInfo.NICKNAME,detailLayout.questionInfo.NICKNAME];
+                textLab.attributedText = [self getAttributedStringWithQuestionName:detailLayout.questionInfo.NICKNAME
+                                                                    withAnswerName:detailLayout.answerInfo.NICKNAME
+                                                                           withStr:textLab.text];
+            }
+            textLab.height = [textLab.text heightForFont:textLab.font width:textLab.width];
+
+            PYPhotosView * _linePhotosView = [PYPhotosView photosViewWithThumbnailUrls:@[@"https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3648440179,2890406292&fm=173&s=69C0D30F46C211FD6720358A0300A095&w=602&h=476&img.JPEG"] originalUrls:@[@"https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3648440179,2890406292&fm=173&s=69C0D30F46C211FD6720358A0300A095&w=602&h=476&img.JPEG"]];
+            // 设置Frame
+            
+            // 3. 添加到指定视图中
+            [_contentBackgroundView addSubview:_linePhotosView];
+            _linePhotosView.left = 8;
+            _linePhotosView.top = textLab.bottom + 5;
+            _linePhotosView.width = kReplyImageHeight;
+            _linePhotosView.height = kReplyImageHeight;
+            _linePhotosView.contentSize = CGSizeMake(_linePhotosView.width, _linePhotosView.height);
+            _linePhotosView.photoWidth = kReplyImageHeight;
+            _linePhotosView.photoHeight = kReplyImageHeight;
+            _linePhotosView.backgroundColor = MAIN_ARM_COLOR;
+            
+            marginTop = marginTop + textLab.height;
+            marginTop = marginTop + _linePhotosView.height;
+            marginTop += 10;
+        }
+    }
     
-    _replyContentLabOne.height = [_replyContentLabOne.text heightForFont:_replyContentLabOne.font width:SCREEN_WIDTH - 90];
+    if (_detailLayout.answerInfo.DATALIST.count >= 2) {
+        _replyContentLabOne.top = marginTop + 10;
+        _replyContentLabOne.height = 20;
+        
+        _replyContentLabOne.text = [NSString stringWithFormat:@"共%@条回复>",_detailLayout.answerInfo.QACOUNT];
+        
+    }
+}
+
+-(NSMutableAttributedString *)getAttributedStringWithQuestionName:(NSString *)questionUsername
+                                                    withAnswerName:(NSString *)answerName
+                                                           withStr:(NSString *)str
+{
+    if (questionUsername.length == 0 || str.length == 0) {
+        return nil;
+    }
     
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc]initWithString:str];
+    
+    //添加文字颜色
+    if (answerName.length > 0) {
+        [attrStr addAttribute:NSForegroundColorAttributeName value:RGBA(36, 91, 131, 1) range:NSMakeRange(answerName.length+2, questionUsername.length +1 )];
+        [attrStr addAttribute:NSForegroundColorAttributeName value:RGBA(36, 91, 131, 1) range:NSMakeRange(0, answerName.length)];
+    }else{
+        if (questionUsername.length > 0) {
+            [attrStr addAttribute:NSForegroundColorAttributeName value:RGBA(36, 91, 131, 1) range:NSMakeRange(0, questionUsername.length + 1)];
+        }
+    }
+    
+    return attrStr;
 }
 
 @end
@@ -83,7 +170,8 @@
     [_acceptBtn addTarget:self action:@selector(acceptAnswer:) forControlEvents:UIControlEventTouchUpInside];
     _acceptBtn.clipsToBounds = YES;
     _acceptBtn.layer.cornerRadius = _acceptBtn.height / 2;
-    
+    _acceptBtn.hidden =YES;
+
     _praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _praiseBtn.frame = CGRectMake(SCREEN_WIDTH - 80, 0, 60, 40);
     [_praiseBtn setTitleColor:MAIN_SUBTITLE_COLOR forState:UIControlStateNormal];
@@ -100,6 +188,22 @@
 {
     _detailLayout = detailLayout;
     
+    if([detailLayout.questionInfo.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]] && ![detailLayout.questionInfo.ISSOLVE boolValue]){
+        _acceptBtn.hidden =NO;
+    }
+    
+    if ([detailLayout.answerInfo.ISPASS boolValue]) {
+        [_acceptBtn removeTarget:self action:@selector(acceptAnswer:) forControlEvents:UIControlEventTouchUpInside];;
+        _acceptBtn.top = -20;
+        _acceptBtn.height = 50;
+        _acceptBtn.backgroundColor = [UIColor clearColor];
+        _acceptBtn.hidden =NO;
+        _acceptBtn.layer.cornerRadius = 0;
+        [_acceptBtn setTitle:@"" forState:UIControlStateNormal];
+        [_acceptBtn  setImage:[UIImage imageNamed:@"icon_accept"] forState:UIControlStateNormal];
+
+    }
+    
     _timeLab.text = [detailLayout.answerInfo.SYSCREATEDATE stringByReplacingOccurrencesOfString:@".0" withString:@""];
     if ([detailLayout.answerInfo.GOODNUMS integerValue] == 0) {
         [_praiseBtn setTitle:@" 赞" forState:UIControlStateNormal];
@@ -107,7 +211,7 @@
         [_praiseBtn setTitle:[NSString stringWithFormat:@" %@",detailLayout.answerInfo.GOODNUMS] forState:UIControlStateNormal];
     }
     
-    if (detailLayout.answerInfo.ISGOOD) {
+    if ([detailLayout.answerInfo.ISGOOD boolValue]) {
         _praiseBtn.enabled = NO;
         [_praiseBtn setImage:[UIImage imageNamed:@"qb_praiseBtn_hand.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
     }
@@ -268,7 +372,6 @@
     
     _answerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 40);
     [self.contentView addSubview:_answerView];
-//    _answerView.backgroundColor = MAIN_ARM_COLOR;
     _answerView.detailLayout = layout;
     if (layout.textHeight < 20) {
         _answerView.height = 40;
@@ -294,7 +397,7 @@
     }
     
     _replyView = [ZEDetailCellReplyView new];
-    if (layout.answerInfo.FILEURLARR.count > 0) {
+    if (layout.answerInfo.DATALIST.count > 0) {
         _replyView.frame = CGRectMake(0, 0, SCREEN_WIDTH, layout.replayHeight);
         [self.contentView addSubview:_replyView];
         _replyView.detailLayout = layout;

@@ -31,6 +31,10 @@
 
 @property (nonatomic,strong) UILabel * replyContentLabOne;
 @property (nonatomic,strong) UILabel * replyContentLabTwo;
+
+@property (nonatomic,strong) UILabel * replyContentImageOne;
+@property (nonatomic,strong) UILabel * replyContentImageTwo;
+
 @property (nonatomic,strong) UILabel * totalNum;
 
 @property (nonatomic,strong) ZENewDetailLayout * detailLayout;

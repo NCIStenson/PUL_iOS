@@ -41,6 +41,9 @@
     
     _height += kTextContentMarginPersonalMessage;
     _height += _textHeight;
+    if (self.isShowMode && _textHeight > kMaxExplainHeight) {
+        _height += 20;
+    }
     
     if (_questionInfo.FILEURLARR.count > 0) {
         if (_questionInfo.FILEURLARR.count == 3) {
@@ -53,6 +56,7 @@
     }
     
     [self layoutTypeHeight];
+    
     if(_typeStr.length > 0){
         _height += kTypeContentMarginImageContent;
         _height += 15;
@@ -68,7 +72,11 @@
     
     float textH = [_questionInfo.QUESTIONEXPLAIN heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 40];
     
-    _textHeight = textH;
+    if (self.isShowMode && textH > kMaxExplainHeight) {
+        _textHeight += 75;
+    }else{
+        _textHeight = textH;
+    }
 }
 
 -(void)layoutTypeHeight

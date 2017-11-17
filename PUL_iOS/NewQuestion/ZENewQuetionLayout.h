@@ -9,6 +9,7 @@
 #define kSingleImageHeight (SCREEN_WIDTH - 40) / 2
 #define kMultiImageHeight (SCREEN_WIDTH - 60)/3
 
+#define kMaxExplainHeight 70
 
 #define kPersonalMessageMarginTop 15
 #define kPersonalMessageHeight 40.0f

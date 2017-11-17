@@ -66,7 +66,7 @@
                                  NSDictionary * dic = [ZEUtil getCOMMANDDATA:data];
                                  
                                  NSString * targetStr = [dic objectForKey:@"target"];
-                                 NSDictionary * resultDic =  [self dictionaryWithJsonString:targetStr];
+                                 NSDictionary * resultDic =  [ZEUtil dictionaryWithJsonString:targetStr];
                                  
                                  bankView.bankModel = [ZEPULHomeQuestionBankModel getDetailWithDic:resultDic];
                                  
@@ -75,34 +75,6 @@
                              }];
 }
 
-- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
-    
-    if (jsonString == nil) {
-        
-        return nil;
-    }
-    
-    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSError *err;
-    
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                         
-                                                        options:NSJSONReadingMutableContainers
-                         
-                                                          error:&err];
-    
-    if(err) {
-        
-        NSLog(@"json解析失败：%@",err);
-        
-        return nil;
-        
-    }
-    
-    return dic;
-    
-}
 
 #pragma mark - 跳转网页
 

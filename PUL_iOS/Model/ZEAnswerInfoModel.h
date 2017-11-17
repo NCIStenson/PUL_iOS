@@ -30,6 +30,10 @@
 @property (nonatomic,copy) NSString * INFOCOUNT;
 @property (nonatomic,copy) NSString * QUESTIONCOUNT;
 
+@property (nonatomic,copy) NSString * EXPLAIN;
+@property (nonatomic,copy) NSString * SYSCREATORID;
+@property (nonatomic,strong) NSArray * DATALIST;
+
 @property (nonatomic,strong) NSArray * FILEURLARR;
 
 +(ZEAnswerInfoModel *)getDetailWithDic:(NSDictionary *)dic;

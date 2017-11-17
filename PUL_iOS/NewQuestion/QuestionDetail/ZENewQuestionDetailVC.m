@@ -7,9 +7,10 @@
 //
 
 #import "ZENewQuestionDetailVC.h"
-#import "ZENewQuestionDetailView.h"
 #import "ZENewAnswerQuestionVC.h"
+#import "ZEAskQuesViewController.h"
 #import "ZEChatVC.h"
+
 @interface ZENewQuestionDetailVC ()<ZENewQuestionDetailViewDelegate>
 {
     ZENewQuestionDetailView * _detailView;
@@ -23,19 +24,118 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"问题详情";
-    [self initView];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    if (_enterDetailIsFromNoti == QUESTIONDETAIL_TYPE_DEFAULT) {
+        [self initView];
+        self.title = [NSString stringWithFormat:@"%@的提问",_questionInfo.NICKNAME];
+        if(_questionInfo.ISANONYMITY){
+            self.title = [NSString stringWithFormat:@"%@的提问",@"匿名用户"];
+        }
+        if ([_questionInfo.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]) {
+            [self.rightBtn setTitle:@"修改" forState:UIControlStateNormal];
+            if([_questionInfo.ISSOLVE boolValue]){
+                self.rightBtn.hidden = YES;
+            }
+        }
+        
+        [self sendSearchAnswerRequest];
+    }else if(_enterDetailIsFromNoti == QUESTIONDETAIL_TYPE_NOTI){
+        [self enterFromNotiSendRequest];
+        if(![_notiCenM.ISREAD boolValue] ){
+            [self clearPersonalNotiUnreadCount];
+        }
+    }else if (_enterDetailIsFromNoti == QUESTIONDETAIL_TYPE_HOMEDYNAMIC){
+        [self enterFromNotiSendRequest];
+    }
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSearchAnswerRequestWithoutOperateType) name:kNOTI_BACK_QUEANSVIEW object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSearchAnswerRequestWithoutOperateType) name:kNOTI_ANSWER_SUCCESS object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeQuestionInfoBack) name:kNOTI_CHANGE_ASK_SUCCESS object:nil];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self sendSearchAnswerRequest];
+//    [self sendSearchAnswerRequest];
 }
 
 -(void)initView{
     _detailView = [[ZENewQuestionDetailView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT,SCREEN_WIDTH , SCREEN_HEIGHT - NAV_HEIGHT) withQuestionInfo:_questionInfo];
     _detailView.delegate = self;
     [self.view addSubview:_detailView];
+}
+
+-(void)rightBtnClick
+{
+    if ([_questionInfo.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]) {
+        [self changePersonalQuestion];
+        return;
+    }
+}
+
+-(void)changePersonalQuestion
+{
+    ZEAskQuesViewController * askQues = [[ZEAskQuesViewController alloc]init];
+    askQues.enterType = ENTER_GROUP_TYPE_CHANGE;
+    askQues.QUESINFOM = self.questionInfo;
+    [self.navigationController pushViewController:askQues animated:YES];
+}
+
+-(void)enterFromNotiSendRequest
+{
+    NSString * WHERESQL = [NSString stringWithFormat:@"SEQKEY = '%@'",_notiCenM.QUESTIONID];
+    if (_enterDetailIsFromNoti == QUESTIONDETAIL_TYPE_HOMEDYNAMIC) {
+        WHERESQL = [NSString stringWithFormat:@"SEQKEY = '%@'",_QUESTIONID];
+        
+    }
+    NSDictionary * parametersDic = @{@"limit":@"1",
+                                     @"MASTERTABLE":V_KLB_QUESTION_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"SYSCREATEDATE desc",
+                                     @"WHERESQL":WHERESQL,
+                                     @"start":@"0",
+                                     @"METHOD":@"search",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.question.QuestionPoints",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_QUESTION_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * dataArr = [ZEUtil getServerData:data withTabelName:V_KLB_QUESTION_INFO];
+                                 if (dataArr.count > 0) {
+                                     _questionInfo = [ZEQuestionInfoModel getDetailWithDic:dataArr[0]];
+                                     
+                                     while ([_detailView.subviews lastObject]) {
+                                         [_detailView.subviews.lastObject removeFromSuperview];
+                                     }
+                                     _detailView = nil;
+                                     
+                                     [self initView];
+                                     self.title = [NSString stringWithFormat:@"%@的提问",_questionInfo.NICKNAME];
+                                     if(_questionInfo.ISANONYMITY){
+                                         self.title = [NSString stringWithFormat:@"%@的提问",@"匿名用户"];
+                                     }
+                                     if ([_questionInfo.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]) {
+                                         [self.rightBtn setTitle:@"修改" forState:UIControlStateNormal];
+                                     }
+                                     [self sendSearchAnswerRequest];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+    
 }
 
 
@@ -48,7 +148,7 @@
     }else{
         operatetype = @"1";
     }
-//    @"ISPASS desc, GOODNUMS desc, QACOUNT desc,SYSCREATEDATE asc"
+
     NSDictionary * parametersDic = @{@"limit":@"-1",
                                      @"MASTERTABLE":V_KLB_ANSWER_INFO,
                                      @"MENUAPP":@"EMARK_APP",
@@ -73,10 +173,126 @@
                        showAlertView:NO
                              success:^(id data) {
                                  _datasArr = [ZEUtil getServerData:data withTabelName:V_KLB_ANSWER_INFO];
+                                 NSLog(@"  coutn ===  %d",_datasArr.count);
                                  [_detailView reloadViewWithData:_datasArr];
-//                                 if(_enterQuestionDetailType == QUESTION_LIST_MY_QUESTION && _datasArr.count == 0){
-//                                     [self showTips:@"快让小伙伴们来帮助你解答吧！"];
-//                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+
+-(void)changeQuestionInfoBack
+{
+    NSString * WHERESQL = [NSString stringWithFormat:@"SEQKEY = '%@'",_questionInfo.SEQKEY];
+    NSDictionary * parametersDic = @{@"limit":@"1",
+                                     @"MASTERTABLE":V_KLB_QUESTION_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"SYSCREATEDATE desc",
+                                     @"WHERESQL":WHERESQL,
+                                     @"start":@"0",
+                                     @"METHOD":@"search",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.question.QuestionPoints",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_QUESTION_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * dataArr = [ZEUtil getServerData:data withTabelName:V_KLB_QUESTION_INFO];
+                                 if (dataArr.count > 0) {
+                                     _questionInfo = [ZEQuestionInfoModel getDetailWithDic:dataArr[0]];
+                                     
+                                     while ([_detailView.subviews lastObject]) {
+                                         [_detailView.subviews.lastObject removeFromSuperview];
+                                     }
+                                     [_detailView removeFromSuperview];
+                                     _detailView = nil;
+                                     
+                                     [self initView];
+                                     if(_questionInfo.ISANONYMITY){
+                                         self.title = [NSString stringWithFormat:@"%@的提问",@"匿名用户"];
+                                     }
+                                     if ([_questionInfo.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]) {
+                                         [self.rightBtn setTitle:@"修改" forState:UIControlStateNormal];
+                                     }
+                                     [self sendSearchAnswerRequest];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+    
+}
+
+
+-(void)clearPersonalNotiUnreadCount
+{
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":KLB_DYNAMIC_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.message.PersonMessageManage",
+                                     @"DETAILTABLE":@"",};
+    
+    NSDictionary * fieldsDic =@{@"SEQKEY":_notiCenM.SEQKEY,};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_DYNAMIC_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"questionDetail"];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * arr = [ZEUtil getServerData:data withTabelName:KLB_DYNAMIC_INFO];
+                                 if ([ZEUtil isNotNull:arr]) {
+                                     _notiCenM.ISREAD = @"1";
+                                     [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_READDYNAMIC object:nil];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+
+-(void)sendSearchAnswerRequestWithoutOperateType
+{
+    NSString * operatetype = @"";
+    
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":V_KLB_ANSWER_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"ISPASS desc, GOODNUMS desc, QACOUNT desc,SYSCREATEDATE asc",
+                                     @"WHERESQL":[NSString stringWithFormat:@"QUESTIONID='%@'",_questionInfo.SEQKEY],
+                                     @"start":@"0",
+                                     @"METHOD":@"search",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.answer.AnswerGood",
+                                     @"DETAILTABLE":@"",
+                                     @"OPERATETYPE":operatetype};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_ANSWER_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"answerInfo"];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 _datasArr = [ZEUtil getServerData:data withTabelName:V_KLB_ANSWER_INFO];
+                                 [_detailView reloadViewWithData:_datasArr];
                              } fail:^(NSError *errorCode) {
                                  
                              }];
@@ -153,6 +369,45 @@
                              }];
 }
 
+#pragma mark - 排序查询
+
+-(void)vcSendRequestWithOrder:(NSString *)index
+{
+    NSString * operatetype = @"";
+    
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":V_KLB_ANSWER_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":[NSString stringWithFormat:@"QUESTIONID='%@'",_questionInfo.SEQKEY],
+                                     @"start":@"0",
+                                     @"METHOD":@"search",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.answer.AnswerGood",
+                                     @"DETAILTABLE":@"",
+                                     @"OPERATETYPE":operatetype,
+                                     @"orderstr":index
+                                     };
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_ANSWER_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"answerOrder"];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 _datasArr = [ZEUtil getServerData:data withTabelName:V_KLB_ANSWER_INFO];
+                                 [_detailView reloadViewWithData:_datasArr];
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+
+}
+
 #pragma mark - 采纳
 
 -(void)updateKLB_ANSWER_INFOWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
@@ -188,10 +443,11 @@
                              success:^(id data) {
                                  
                                  [self showTips:@"已采纳为最佳答案"];
+                                 [self sendSearchAnswerRequest];
 //                                 [self.rightBtn setTitle:@"已采纳" forState:UIControlStateNormal];
 //                                 [self.rightBtn setEnabled:NO];
+//                                 [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_ACCEPT_SUCCESS object:nil];
                                  
-                                 [[NSNotificationCenter defaultCenter] postNotificationName:kNOTI_ACCEPT_SUCCESS object:nil];
                              } fail:^(NSError *errorCode) {
                              }];
 }
@@ -260,6 +516,7 @@
     
     [self presentViewController:alertC animated:YES completion:nil];
 }
+
 -(void)enterAnswerDetailView:(ZEAnswerInfoModel *)answerInfo
 {
     ZEChatVC * chatVC = [[ZEChatVC alloc]init];
@@ -268,6 +525,10 @@
     [self.navigationController pushViewController:chatVC animated:YES];
 }
 
+-(void)sendRequestWithOrder:(NSInteger)order
+{
+    [self vcSendRequestWithOrder:[NSString stringWithFormat:@"%ld",(long)order]];
+}
 
 
 - (void)didReceiveMemoryWarning {

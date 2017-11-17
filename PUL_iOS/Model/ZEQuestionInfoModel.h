@@ -23,6 +23,7 @@
 @property (nonatomic,copy) NSString * ISEXPERTANSWER;
 @property (nonatomic,copy) NSString * ISSOLVE;
 @property (nonatomic,copy) NSString * SYSCREATEDATE;
+@property (nonatomic,copy) NSString * SYSCREATORID;
 @property (nonatomic,copy) NSString * ANSWERSUM;
 @property (nonatomic,copy) NSString * FILEURL;
 @property (nonatomic,copy) NSString * HEADIMAGE;

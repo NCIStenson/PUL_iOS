@@ -730,11 +730,11 @@
     [self addGestureRecognizer:tap];
     
     backImageView = [[UIImageView alloc]init];
-    backImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH - 30, 50);
+    backImageView.frame = CGRectMake(0, 0, SCREEN_WIDTH - 30, 55);
     [self addSubview:backImageView];
     backImageView.userInteractionEnabled = YES;
     
-    contentTab = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, backImageView.width , 44) style:UITableViewStylePlain];
+    contentTab = [[UITableView alloc]initWithFrame:CGRectMake(20, 10, backImageView.width - 20 , 44) style:UITableViewStylePlain];
     contentTab.delegate = self;
     contentTab.dataSource  = self;
     [backImageView addSubview:contentTab];
@@ -814,14 +814,15 @@
 //        contentTab.alpha =1;
         backImageView.alpha = 1;
         if (rect.origin.y < SCREEN_HEIGHT / 2) {
-            backImageView.frame = CGRectMake(20, rect.origin.y + rect.size.height - 10, SCREEN_WIDTH - 30, 49);
+            backImageView.frame = CGRectMake(20, rect.origin.y + rect.size.height - 10, SCREEN_WIDTH - 30, 57);
+            contentTab.top = 10;
             UIImage *image = [UIImage imageNamed:@"question_bank_change_bottom"];
             UIImage *newImage = [image stretchableImageWithLeftCapWidth:20 topCapHeight:20];
             [backImageView setImage:newImage];
         }else{
-            backImageView.frame = CGRectMake(20, rect.origin.y - 40, SCREEN_WIDTH - 30, 49);
+            backImageView.frame = CGRectMake(20, rect.origin.y - 40, SCREEN_WIDTH - 30, 55);
             UIImage *image = [UIImage imageNamed:@"question_bank_change_top"];
-            UIImage *newImage = [image stretchableImageWithLeftCapWidth:10 topCapHeight:10];
+            UIImage *newImage = [image stretchableImageWithLeftCapWidth:20 topCapHeight:10];
             [backImageView setImage:newImage];
             contentTab.top = 0;
         }

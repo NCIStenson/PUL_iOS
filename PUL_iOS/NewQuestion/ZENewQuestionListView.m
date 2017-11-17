@@ -15,7 +15,7 @@
 #define kLeftButtonWidth 40.0f
 #define kLeftButtonHeight 40.0f
 #define kLeftButtonMarginLeft 10.0f
-#define kLeftButtonMarginTop (IPHONEX ? 40.0f : 20.0f + 2.0f)
+#define kLeftButtonMarginTop (IPHONEX ? 40.0f : 18.0f)
 
 #define kContentTableMarginLeft  0.0f
 #define kContentTableMarginTop   ( kNavBarHeight )
@@ -52,12 +52,8 @@
 
 -(void)initView
 {
-//    _allTypeArr = @[@"最新",@"推荐",@"悬赏"];
-//    _currentHomeContentPage = HOME_CONTENT_NEWEST;
-    
     [self initNavBar];
     [self initContentView];
-    //    [self initSignInView:self];
 }
 
 -(void)initNavBar
@@ -69,16 +65,27 @@
     
     [ZEUtil addGradientLayer:navView];
     
-    UIButton * _typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _typeBtn.frame = CGRectMake(kLeftButtonMarginLeft, kLeftButtonMarginTop, kLeftButtonWidth, kLeftButtonHeight);
+    UIButton * backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(kLeftButtonMarginLeft, kLeftButtonMarginTop, kLeftButtonWidth, kLeftButtonHeight);
     if(IPHONE6_MORE){
-        _typeBtn.frame = CGRectMake(kLeftButtonMarginLeft, kLeftButtonMarginTop, 50, 50);
+        backBtn.frame = CGRectMake(kLeftButtonMarginLeft, kLeftButtonMarginTop, 50, 50);
     }
-    _typeBtn.imageEdgeInsets = UIEdgeInsetsMake(0.0f, 0, 0.0f, 0.0f);
+    backBtn.imageEdgeInsets = UIEdgeInsetsMake(0.0f, 0, 0.0f, 0.0f);
+    backBtn.contentMode = UIViewContentModeScaleAspectFill;
+    backBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    [backBtn setImage:[UIImage imageNamed:@"icon_back" tintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    [navView addSubview:backBtn];
+    
+    UIButton * _typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _typeBtn.frame = CGRectMake(SCREEN_WIDTH - kLeftButtonWidth - 10, kLeftButtonMarginTop, kLeftButtonWidth, kLeftButtonHeight);
+    if(IPHONE6_MORE){
+        _typeBtn.frame = CGRectMake(SCREEN_WIDTH - 60, kLeftButtonMarginTop, 50, 50);
+    }
     _typeBtn.contentMode = UIViewContentModeScaleAspectFill;
     _typeBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    [_typeBtn setImage:[UIImage imageNamed:@"icon_back" tintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    [_typeBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    [_typeBtn setImage:[UIImage imageNamed:@"home_icon_search" tintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [_typeBtn addTarget:self action:@selector(goSearch) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:_typeBtn];
     
     
@@ -93,25 +100,6 @@
     
     [self.segmentedControl addTarget:self action:@selector(selectItem:) forControlEvents:UIControlEventValueChanged];// 添加响应方法
     [self addSubview:self.segmentedControl];
-
-//    for (int i = 1; i < 4; i ++) {
-//        UIButton * _typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        _typeBtn.frame = CGRectMake(SCREEN_WIDTH - 140 + 33 * i, (IPHONEX ? 47 : 27.0f), 30.0, 30.0);
-//        _typeBtn.contentMode = UIViewContentModeScaleAspectFit;
-//        _typeBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-//        [navView addSubview:_typeBtn];
-//        _typeBtn.tag = i + 100;
-//        if (i == 1){
-//            [_typeBtn setImage:[UIImage imageNamed:@"yy_nav_search" ] forState:UIControlStateNormal];
-//            [_typeBtn addTarget:self action:@selector(goSearchView) forControlEvents:UIControlEventTouchUpInside];
-//        }else if (i == 2){
-//            [_typeBtn setImage:[UIImage imageNamed:@"type" tintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-//            [_typeBtn addTarget:self action:@selector(typeBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//        }else if (i == 3){
-//            [_typeBtn setImage:[UIImage imageNamed:@"yy_nav_why" ] forState:UIControlStateNormal];
-//            [_typeBtn addTarget:self action:@selector(plusBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
-//        }
-//    }
 }
 
 -(void)initContentView
@@ -176,13 +164,6 @@
         default:
             break;
     }
-//    contentTableView = (UITableView *)[_contentScrollView viewWithTag:100 + content_page];
-//
-//    MJRefreshFooter * footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData:)];
-//    contentTableView.mj_footer = footer;
-//
-//    [contentTableView.mj_header endRefreshingWithCompletionBlock:nil];
-//    [contentTableView reloadData];
     
     ZE_weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -232,9 +213,7 @@
 
 -(void)reloadContentViewWithArr:(NSArray *)dataArr withHomeContent:(HOME_CONTENT)content_page;
 {
-    ZE_weakify(self);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        ZE_strongify(weakSelf);
         NSMutableArray * arr = [NSMutableArray array];
         for (int i = 0; i < dataArr.count ; i ++) {
             ZEQuestionInfoModel * quesAnsDetail = [ZEQuestionInfoModel getDetailWithDic:dataArr[i]];
@@ -442,6 +421,11 @@
 
 #pragma mark - ZENewQuestionListCellDelegate
 
+-(void)goSearch{
+    if ([self.delegate respondsToSelector:@selector(goSearchView)]) {
+        [self.delegate goSearchView];
+    }
+}
 
 -(void)goBack
 {
@@ -453,7 +437,26 @@
 -(void)giveQuestionPraise:(ZEQuestionInfoModel *)questionInfo
 {
     NSInteger i = 0 ;
-    for (ZENewQuetionLayout * layout in self.newestQuestionArr) {
+    
+    NSMutableArray * arr = [NSMutableArray array];
+    switch (_currentHomeContent) {
+        case HOME_CONTENT_RECOMMAND:
+            arr = self.recommandQuestionArr;
+            break;
+            
+        case HOME_CONTENT_NEWEST:
+            arr = self.newestQuestionArr;
+            break;
+            
+        case HOME_CONTENT_BOUNS:
+            arr = self.bonusQuestionArr;
+            break;
+            
+        default:
+            break;
+    }
+        
+    for (ZENewQuetionLayout * layout in arr) {
         if ([questionInfo isEqual:layout.questionInfo]) {
             ZENewQuetionLayout * newLayout = layout;
             newLayout.questionInfo.ISGOOD = YES;

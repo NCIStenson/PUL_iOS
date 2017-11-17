@@ -28,7 +28,7 @@
     
     UIView * _backImageView;//   上传图片背景view
     
-    UIView * _dashView;  //  添加图片的View
+//    UIView    * _dashView;  //  添加图片的View
     UIView * _rewardGoldView;  //  添加图片的View
     UIView * _anonymousAskView;  //  添加图片的View
     
@@ -100,7 +100,7 @@
     
     if(end.size.height > 0 ){
         [UIView animateWithDuration:0.29 animations:^{
-            _functionButtonView.frame = CGRectMake(0, SCREEN_HEIGHT - end.size.height - 35.0f, SCREEN_WIDTH, 30.0f);
+            _functionButtonView.frame = CGRectMake(0, SCREEN_HEIGHT - end.size.height - 40.0f, SCREEN_WIDTH, 40.0f);
         }];
     }
 }
@@ -110,9 +110,9 @@
 {
     [UIView animateWithDuration:0.29 animations:^{
         if(_backImageView.top == SCREEN_HEIGHT - 216 || _anonymousAskView.top == SCREEN_HEIGHT - 216 || _rewardGoldView.top == SCREEN_HEIGHT - 216){
-            _functionButtonView.frame = CGRectMake(0, SCREEN_HEIGHT - 250.0f, SCREEN_WIDTH, 30.0f);
+            _functionButtonView.frame = CGRectMake(0, SCREEN_HEIGHT - 256.0f, SCREEN_WIDTH, 40.0f);
         }else{
-            _functionButtonView.frame = CGRectMake(0, SCREEN_HEIGHT - 40.0f, SCREEN_WIDTH, 30.0f);
+            _functionButtonView.frame = CGRectMake(0, SCREEN_HEIGHT - 40.0f, SCREEN_WIDTH, 40.0f);
         }
     }];
 }
@@ -164,7 +164,8 @@
     
     [self drawDashLine:dashView2 lineLength:5 lineSpacing:2 lineColor:[UIColor lightGrayColor]];
 
-    _functionButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH, 30)];
+    _functionButtonView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH, 40)];
+    _functionButtonView.backgroundColor = MAIN_LINE_COLOR;
     [self addSubview:_functionButtonView];
     
     UIButton * downKeyboardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -179,17 +180,17 @@
     
     for (int i = 0 ; i < 3; i ++) {
         UIButton * cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        cameraBtn.frame = CGRectMake(SCREEN_WIDTH - 120.0f + 40 * i, 0, 30, 30);
-        if (i == 0) {
+        cameraBtn.frame = CGRectMake(20 + 50 * i, 5, 30, 30);
+        if (i == 1) {
             [cameraBtn setImage:[UIImage imageNamed:@"discuss_pv" color:MAIN_GREEN_COLOR] forState:UIControlStateNormal];
             [cameraBtn addTarget:self action:@selector(anonymousAsk) forControlEvents:UIControlEventTouchUpInside];
-        }else if (i == 1){
+        }else if (i == 2){
             [cameraBtn setTitleColor:MAIN_GREEN_COLOR forState:UIControlStateNormal];
             [cameraBtn setTitle:@"赏" forState:UIControlStateNormal];
             cameraBtn.titleLabel.font = [UIFont boldSystemFontOfSize:13];
             [cameraBtn addTarget:self action:@selector(rewardGold) forControlEvents:UIControlEventTouchUpInside];
             _rewardBtn = cameraBtn;
-        }else if (i == 2){
+        }else if (i == 0){
             [cameraBtn setImage:[UIImage imageNamed:@"camera_gray" color:MAIN_GREEN_COLOR] forState:UIControlStateNormal];
             [cameraBtn addTarget:self action:@selector(showCondition) forControlEvents:UIControlEventTouchUpInside];
         }
@@ -233,34 +234,39 @@
     _backImageView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216)];
     [self addSubview:_backImageView];
     _backImageView.hidden = YES;
+    _backImageView.backgroundColor = MAIN_LINE_COLOR;
     
-    _dashView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
-    [_backImageView addSubview:_dashView];
-    
-    [self drawDashLine:_dashView lineLength:5 lineSpacing:2 lineColor:[UIColor lightGrayColor]];
+//    _dashView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
+//    [_backImageView addSubview:_dashView];
+//
+//    [self drawDashLine:_dashView lineLength:5 lineSpacing:2 lineColor:[UIColor lightGrayColor]];
     
     for (int i = 0; i < self.choosedImageArr.count + 1; i ++) {
         UIButton * upImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        upImageBtn.frame = CGRectMake( 10 * (i + 1) + (SCREEN_WIDTH - 40)/3* i , 18 , ( SCREEN_WIDTH - 40)/3, 180);
+        upImageBtn.frame = CGRectMake( 10 * (i + 1) + (SCREEN_WIDTH - 40)/3* i , 18 , ( SCREEN_WIDTH - 40)/3, (SCREEN_WIDTH - 40)/3);
         upImageBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [_backImageView addSubview:upImageBtn];
         
         if (i == self.choosedImageArr.count && self.choosedImageArr.count < 4) {
-            [upImageBtn addTarget:self action:@selector(addImageBtnClick) forControlEvents:UIControlEventTouchUpInside];
-            [upImageBtn setImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
+            
+            upImageBtn.layer.borderColor = [MAIN_DEEPLINE_COLOR CGColor];
+            upImageBtn.layer.borderWidth = 1;
+            
+            [upImageBtn addTarget:self action:@selector(showCondition) forControlEvents:UIControlEventTouchUpInside];
+            [upImageBtn setImage:[UIImage imageNamed:@"home_btn_more"] forState:UIControlStateNormal];
         }else{
-            CGSize imageSize = [self getScaleImageSize:self.choosedImageArr[i] backgroundFrame:upImageBtn.frame];
             
             UIButton * deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             [_backImageView addSubview:deleteBtn];
             deleteBtn.frame = CGRectMake(0, 0, 30, 30);
             [deleteBtn setImage:[UIImage imageNamed:@"delete_photo.png" ] forState:UIControlStateNormal];
-            deleteBtn.center = CGPointMake(upImageBtn.frame.origin.x + (upImageBtn.frame.size.width - imageSize.width) / 2 + imageSize.width - 5, upImageBtn.frame.origin.y + (upImageBtn.frame.size.height - imageSize.height ) / 2 + 5);
+            deleteBtn.center = CGPointMake(upImageBtn.frame.origin.x +  upImageBtn.width - deleteBtn.width / 2, upImageBtn.top + deleteBtn.height / 2);
             [deleteBtn addTarget:self action:@selector(deleteSelectedPhoto:) forControlEvents:UIControlEventTouchUpInside];
             deleteBtn.tag = i;
             
             upImageBtn.tag = 100 + i;
             [upImageBtn addTarget:self action:@selector(goLookView:) forControlEvents:UIControlEventTouchUpInside];
+            upImageBtn.imageView.contentMode = UIViewContentModeScaleAspectFill;
             [upImageBtn setImage:self.choosedImageArr[i] forState:UIControlStateNormal];
         }
     }
@@ -451,7 +457,7 @@
     
     if (_anonymousAskView.frame.origin.y == SCREEN_HEIGHT) {
         [UIView animateWithDuration:0.29 animations:^{
-            _functionButtonView.top =  SCREEN_HEIGHT - 250;
+            _functionButtonView.top =  SCREEN_HEIGHT - 256;
             _anonymousAskView.frame = CGRectMake(0, SCREEN_HEIGHT - 216, SCREEN_WIDTH, 216);
         } completion:^(BOOL finished) {
             _rewardGoldView.hidden = YES;
@@ -482,7 +488,7 @@
 
     if (_rewardGoldView.frame.origin.y == SCREEN_HEIGHT) {
         [UIView animateWithDuration:0.29 animations:^{
-            _functionButtonView.top =  SCREEN_HEIGHT - 250;
+            _functionButtonView.top =  SCREEN_HEIGHT - 256;
             _rewardGoldView.frame = CGRectMake(0, SCREEN_HEIGHT - 216, SCREEN_WIDTH, 216);
         } completion:^(BOOL finished) {
             _anonymousAskView.hidden = YES;
@@ -541,7 +547,7 @@
     [self initImageView];
     _backImageView.hidden = NO;
     _backImageView.top = SCREEN_HEIGHT - 216;
-    _functionButtonView.top = SCREEN_HEIGHT  -250;
+    _functionButtonView.top =  SCREEN_HEIGHT - 256;
     [self bringSubviewToFront:_functionButtonView];
 }
 
@@ -650,7 +656,7 @@
     
     if (_backImageView.frame.origin.y == SCREEN_HEIGHT) {
         [UIView animateWithDuration:0.29 animations:^{
-            _functionButtonView.top =  SCREEN_HEIGHT - 250;
+            _functionButtonView.top =  SCREEN_HEIGHT - 256;
             _backImageView.frame = CGRectMake(0, SCREEN_HEIGHT - 216, SCREEN_WIDTH, 216);
         } completion:^(BOOL finished) {
             _anonymousAskView.hidden = YES;

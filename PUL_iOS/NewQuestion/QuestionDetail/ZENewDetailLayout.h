@@ -9,6 +9,9 @@
 #define kSingleImageHeight (SCREEN_WIDTH - 100) / 2
 #define kMultiImageHeight (SCREEN_WIDTH - 110)/3
 
+#define kReplyImageHeight kSingleImageHeight
+
+
 #define kContentMarginTop 10
 #define kMessageViewMarginContentHeigth 0
 #define kImageContentMarginTextContent 10

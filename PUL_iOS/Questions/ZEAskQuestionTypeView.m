@@ -27,10 +27,21 @@
 
 @implementation ZEAskQuestionTypeView
 
--(id)initWithFrame:(CGRect)frame
+-(id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor colorWithWhite:0 alpha:.5];
+        _currentSelectType = 0;
+        [self initView];
+    }
+    return self;
+}
+
+-(id)initWithFrame:(CGRect)frame withIsFullScreen:(BOOL)isFull
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _isFull = isFull;
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:.5];
         _currentSelectType = 0;
         [self initView];
@@ -72,10 +83,21 @@
     _typeTableView.showsVerticalScrollIndicator = NO;
     _typeTableView.showsHorizontalScrollIndicator = NO;
     
+    
+    if (_isFull) {
+        tapView.hidden = YES;
+        self.backgroundColor = [UIColor clearColor];
+//        self.userInteractionEnabled = NO;
+//        _typeTableView.userInteractionEnabled = YES;
+//        _collectionView.userInteractionEnabled = YES;
+        _typeTableView.frame = CGRectMake(0, 0, 100, SCREEN_HEIGHT - NAV_HEIGHT);
+        _collectionView.frame = CGRectMake(100, 0, SCREEN_WIDTH - 100, SCREEN_HEIGHT - NAV_HEIGHT);
+    }
     UIView * lineView = [UIView new];
     lineView.frame = CGRectMake(_typeTableView.width, _typeTableView.top, 1,_typeTableView.height);
     [self addSubview:lineView];
     lineView.backgroundColor = MAIN_DEEPLINE_COLOR;
+    
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     
@@ -311,7 +333,6 @@
     if ([_typeTableView isEqual:tableView]) {
         _currentSelectType = indexPath.row;
         [UIView animateWithDuration:0.29 animations:^{
-            _typeTableView.frame = CGRectMake(0, NAV_HEIGHT + 200, 100, SCREEN_HEIGHT - NAV_HEIGHT - 200);
             [_typeTableView reloadData];
             [_collectionView reloadData];
         }];

@@ -34,6 +34,7 @@ static ZEUSER_BASE_INFOM * userinfo = nil;
     quesInfoM.ISGOOD          = [[dic objectForKey:@"ISGOOD"] boolValue];
     quesInfoM.GOODNUMS          = [dic objectForKey:@"GOODNUMS"];
     quesInfoM.SYSCREATEDATE    = [dic objectForKey:@"SYSCREATEDATE"];
+    quesInfoM.SYSCREATORID    = [dic objectForKey:@"SYSCREATORID"];
     quesInfoM.ANSWERSUM        = [dic objectForKey:@"ANSWERSUM"];
     quesInfoM.NICKNAME         = [dic objectForKey:@"NICKNAME"];
     quesInfoM.BONUSPOINTS      = [dic objectForKey:@"BONUSPOINTS"];

@@ -20,7 +20,8 @@
 
 @property (nonatomic,weak) id <ZEAskQuestionTypeViewDelegate> delegate;
 
--(id)initWithFrame:(CGRect)frame;
+@property (nonatomic,assign) BOOL isFull;
+-(id)initWithFrame:(CGRect)frame withIsFullScreen:(BOOL)isFull;
 
 -(void)reloadTypeData;
 

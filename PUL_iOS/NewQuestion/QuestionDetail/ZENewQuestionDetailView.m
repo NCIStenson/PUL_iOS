@@ -7,7 +7,6 @@
 //
 
 #import "ZENewQuestionDetailView.h"
-
 #import "ZENewQuestionListCell.h"
 
 @implementation ZENewQuestionDetailView
@@ -18,6 +17,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _questionInfoModel = questionInfo;
+        _currentSelectOrder = 1;
         self.answerInfoArr = [NSMutableArray array];
         [self initView];
     }
@@ -79,12 +79,12 @@
     UIView * lineView = [UIView new];
     lineView.frame = CGRectMake(0, contentTableView.bottom, SCREEN_WIDTH, 1);
     [self addSubview:lineView];
-    lineView.backgroundColor =RGBA(217, 217, 217, 1);
+    lineView.backgroundColor = MAIN_DEEPLINE_COLOR;
 
     UIView * lineView1 = [UIView new];
     lineView1.frame = CGRectMake(SCREEN_WIDTH / 2 - 2, contentTableView.bottom + 6, 2, 25);
     [self addSubview:lineView1];
-    lineView1.backgroundColor =RGBA(217, 217, 217, 1);
+    lineView1.backgroundColor = MAIN_DEEPLINE_COLOR;
 }
 
 
@@ -145,7 +145,8 @@
     UILabel * commentLab = [UILabel new];
     commentLab.frame = CGRectMake(20, lineView.bottom, SCREEN_WIDTH - 40, 40);
     [headerView addSubview:commentLab];
-    commentLab.text = @"评论 66666";
+    
+    commentLab.text = [NSString stringWithFormat:@"评论 %@",_questionInfoModel.ANSWERSUM];
     commentLab.textColor = kTextColor;
     commentLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
     float width = [ZEUtil widthForString:commentLab.text font:commentLab.font maxSize:CGSizeMake(SCREEN_WIDTH, 30)];
@@ -157,16 +158,20 @@
     underlineView.center = CGPointMake(width / 2 + 20, commentLab.bottom - 2);
     [headerView addSubview:underlineView];
     
-    UIButton * orderBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    orderBtn.frame = CGRectMake(SCREEN_WIDTH - 80, commentLab.top, 60, 40);
-    [orderBtn setTitleColor:MAIN_SUBTITLE_COLOR forState:UIControlStateNormal];
-    [orderBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
-    orderBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
-    [headerView addSubview:orderBtn];
-    orderBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [orderBtn setTitle:@" 按热度" forState:UIControlStateNormal];
-    [orderBtn setImage:[UIImage imageNamed:@"center_name_logo.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
-    [orderBtn addTarget:self action:@selector(answerQuestion) forControlEvents:UIControlEventTouchUpInside];
+    _orderBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _orderBtn.frame = CGRectMake(SCREEN_WIDTH - 80, commentLab.top, 60, 40);
+    [_orderBtn setTitleColor:MAIN_SUBTITLE_COLOR forState:UIControlStateNormal];
+    [_orderBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
+    _orderBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
+    [headerView addSubview:_orderBtn];
+    _orderBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    if (_currentSelectOrder == 2) {
+        [_orderBtn setTitle:@" 按热度" forState:UIControlStateNormal];
+    }else{
+        [_orderBtn setTitle:@" 按时间" forState:UIControlStateNormal];
+    }
+    [_orderBtn setImage:[UIImage imageNamed:@"center_name_logo.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
+    [_orderBtn addTarget:self action:@selector(showOptionView:) forControlEvents:UIControlEventTouchUpInside];
     
     headerView.backgroundColor = [UIColor whiteColor];
     return headerView;
@@ -272,6 +277,39 @@
 }
 
 
+#pragma mark - 选择排序顺序
+
+-(void)showOptionView:(UIButton *)btn
+{
+    UIWindow * window=[[[UIApplication sharedApplication] delegate] window];
+    CGRect rect=[btn convertRect: btn.bounds toView:window];
+    
+    ZEShowOptionView * homeOptionView = [[ZEShowOptionView alloc]initWithFrame:CGRectZero];
+    homeOptionView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    homeOptionView.delegate =self;
+    homeOptionView.rect = rect;
+    [window addSubview:homeOptionView];
+
+}
+
+-(void)didSelectOptionWithIndex:(NSInteger)index
+{
+    
+    if(index == 0){
+        _currentSelectOrder = 2;
+        [_orderBtn setTitle:@" 按热度" forState:UIControlStateNormal];
+        if([self.delegate respondsToSelector:@selector(sendRequestWithOrder:)]){
+            [self.delegate sendRequestWithOrder:2];
+        }
+    }else{
+        _currentSelectOrder = 1;
+        [_orderBtn setTitle:@" 按时间" forState:UIControlStateNormal];
+        if([self.delegate respondsToSelector:@selector(sendRequestWithOrder:)]){
+            [self.delegate sendRequestWithOrder:1];
+        }
+    }    
+    
+}
 
 
 /*

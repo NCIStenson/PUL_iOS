@@ -27,15 +27,25 @@ static ZEAnswerInfoModel * ansertInfoM = nil;
     ansertInfoM.ISENABLED      = [dic objectForKey:@"ISENABLED"];
     ansertInfoM.ISGOOD      = [dic objectForKey:@"ISGOOD"];
     ansertInfoM.GOODNUMS       = [NSString stringWithFormat:@"%@",[dic objectForKey:@"GOODNUMS"]];
-    ansertInfoM.QACOUNT       = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QACOUNT"]];
+    ansertInfoM.QACOUNT       = [NSString stringWithFormat:@"%lld",[[dic objectForKey:@"QACOUNT"] longLongValue] ];
     ansertInfoM.ANSWERCOUNT       = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ANSWERCOUNT"]];
-    ansertInfoM.INFOCOUNT       = [NSString stringWithFormat:@"%@",[dic objectForKey:@"INFOCOUNT"]];
-    ansertInfoM.QUESTIONCOUNT       = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QUESTIONCOUNT"]];
+//    ansertInfoM.INFOCOUNT       = [NSString stringWithFormat:@"%@",[dic objectForKey:@"INFOCOUNT"]];
+//    ansertInfoM.QUESTIONCOUNT       = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QUESTIONCOUNT"]];
     ansertInfoM.SYSCREATEDATE  = [dic objectForKey:@"SYSCREATEDATE"];
     ansertInfoM.NICKNAME       = [dic objectForKey:@"NICKNAME"];
     ansertInfoM.HEADIMAGE        = [[[dic objectForKey:@"HEADIMAGE"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"] stringByReplacingOccurrencesOfString:@"," withString:@""];
     
     ansertInfoM.FILEURL        = [[dic objectForKey:@"FILEURL"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+   
+    ansertInfoM.EXPLAIN       = [dic objectForKey:@"EXPLAIN"];
+    ansertInfoM.SYSCREATORID       = [dic objectForKey:@"SYSCREATORID"];
+
+    if ([ZEUtil isNotNull:[dic objectForKey:@"DATALIST"]] && [[dic objectForKey:@"DATALIST"] length] > 0) {
+        NSDictionary * jsonDic = [ZEUtil dictionaryWithJsonString:[dic objectForKey:@"DATALIST"]];
+        ansertInfoM.DATALIST = [jsonDic objectForKey:@"datas"];
+    }else{
+        ansertInfoM.DATALIST = @[];
+    }
     
     NSArray * urlArr = [ansertInfoM.FILEURL componentsSeparatedByString:@","];
     NSMutableArray * imageUrlArr = [NSMutableArray arrayWithArray:urlArr];

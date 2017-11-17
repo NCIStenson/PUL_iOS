@@ -166,7 +166,6 @@
         upImageBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [_backImageView addSubview:upImageBtn];
         
-        
         if (i == self.choosedImageArr.count && self.choosedImageArr.count < 4) {
             
             upImageBtn.layer.borderColor = [MAIN_LINE_COLOR CGColor];
