@@ -48,6 +48,8 @@
  */
 -(void)showType;
 
+-(void)goSearchWithSearchStr:(NSString *)str;
+
 @end
 
 #import <UIKit/UIKit.h>
@@ -55,6 +57,8 @@
 @interface ZETypicalCaseView : UIView
 
 @property (nonatomic,weak) id <ZETypicalCaseViewDelegate> delegate;
+
+@property (nonatomic,strong) UITextField * questionSearchTF;
 
 -(id)initWithFrame:(CGRect)frame withEnterType:(ENTER_CASE_TYPE)type;
 

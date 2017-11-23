@@ -63,8 +63,6 @@
 }
 
 -(void)setData{
-    NSLog(@" ------  %@",_layout.questionInfo.GOODNUMS);
-    NSLog(@"ISGOOD ------  %d",_layout.questionInfo.ISGOOD);
     
     if ([_layout.questionInfo.ANSWERSUM integerValue] == 0) {
         [_answerButton setTitle:@" 回答" forState:UIControlStateNormal];
@@ -199,21 +197,65 @@
 
 -(void)initView
 {
-    _contentLab = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 40, 0)];
-    _contentLab.numberOfLines = 4;
+    _contentLab = [[UITextView alloc]initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 40, 0)];
     _contentLab.textColor = kTextColor;
-    _contentLab.font = [UIFont boldSystemFontOfSize:kTiltlFontSize];
+//    _contentLab.backgroundColor = MAIN_ARM_COLOR;
+    _contentLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
+    _contentLab.dataDetectorTypes = UIDataDetectorTypeAll;
+    _contentLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0);
+    _contentLab.delegate = self;
+    _contentLab.editable = NO;
+    _contentLab.scrollEnabled = NO;
     [self addSubview:_contentLab];
     
-    _seeAllExplainLab = [[UILabel alloc]initWithFrame:CGRectMake(20, 75, SCREEN_WIDTH - 40, 20)];
-    _seeAllExplainLab.text = @"查看全文";
-    _seeAllExplainLab.textColor = RGBA(36, 91, 131, 1);
-//    _seeAllExplainLab.backgroundColor =MAIN_ARM_COLOR;
-    _seeAllExplainLab.font = [UIFont boldSystemFontOfSize:kTiltlFontSize];
+    _seeAllExplainLab = [UIButton buttonWithType:UIButtonTypeCustom];
+    _seeAllExplainLab.frame= CGRectMake(20, 75, SCREEN_WIDTH - 40, 20);
+    _seeAllExplainLab.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_seeAllExplainLab setTitle:@"查看全文" forState:UIControlStateNormal];
+    [_seeAllExplainLab setTitleColor:RGBA(36, 91, 131, 1) forState:UIControlStateNormal];
+    _seeAllExplainLab.titleLabel.font = [UIFont boldSystemFontOfSize:kTiltlFontSize];
+    [_seeAllExplainLab addTarget:self action:@selector(goDetailVC) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_seeAllExplainLab];
     _seeAllExplainLab.hidden = YES;
     
 }
+-(void)goDetailVC
+{
+    if([_listCell.delegate respondsToSelector:@selector(goDetailVCWithQuestionInfo:)]){
+        [_listCell.delegate goDetailVCWithQuestionInfo:_layout.questionInfo];
+    }
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range
+ replacementText:(NSString *)text {
+    
+    if (textView.contentSize.height > kMaxExplainHeight) {
+        textView.text = [textView.text substringToIndex:[textView.text length]-1];
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction NS_AVAILABLE_IOS(10_0);{
+    
+    if([_listCell.delegate respondsToSelector:@selector(showWebVC:)] ){
+        [_listCell.delegate showWebVC:URL.absoluteString];
+    }
+    
+    return NO;
+}
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange NS_DEPRECATED_IOS(7_0, 10_0, "Use textView:shouldInteractWithURL:inRange:forInteractionType: instead")
+{
+    if([_listCell.delegate respondsToSelector:@selector(showWebVC:)] ){
+        [_listCell.delegate showWebVC:URL.absoluteString];
+    }
+    return NO;
+
+}
+
 
 @end
 
@@ -329,6 +371,7 @@
 
     _textContenView = [[ZEListCellTextContent alloc]init];
     _textContenView.listCell = self;
+    _textContenView.layout = layout;
     [self.contentView addSubview:_textContenView];
     _textContenView.top = _personalMessageView.bottom + kTextContentMarginPersonalMessage;
     _textContenView.size = CGSizeMake(SCREEN_WIDTH, layout.textHeight);
@@ -388,7 +431,7 @@
     _textContenView.contentLab.height = layout.textHeight;
     
     if(!layout.isShowMode){
-        _textContenView.contentLab.numberOfLines = 0;
+        _textContenView.contentLab.text = layout.questionInfo.QUESTIONEXPLAIN;
     }else{
         if (layout.textHeight > kMaxExplainHeight) {
             _textContenView.seeAllExplainLab.hidden =NO;
@@ -401,7 +444,6 @@
     }
     
     if (layout.typeStr.length >0) {
-        NSLog(@" ===  %@",layout.typeStr);
         _typeContentView.typeContentLab.text = layout.typeStr;
     }
     

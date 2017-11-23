@@ -9,7 +9,7 @@
 #import "ZEPersonalDynamicVC.h"
 #import "ZEQuestionBankWebVC.h"
 #import "ZENotiDetailVC.h"
-#import "ZEQuestionsDetailVC.h"
+#import "ZENewQuestionDetailVC.h"
 
 @interface ZEPersonalDynamicVC ()<ZEPersonalNotiViewDelegate>
 {
@@ -349,7 +349,7 @@
 
 -(void)didSelectTeamMessage:(ZETeamNotiCenModel *)notiModel
 {
-    if([notiModel.MESTYPE integerValue] == 5){
+    if([notiModel.MESTYPE integerValue] >= 5){
         [self clearPersonalNotiUnreadCount:notiModel];
         return;
     }
@@ -372,19 +372,20 @@
 -(void)didSelectQuestionMessage:(ZETeamNotiCenModel *)notiModel
 {
     previousSelectNotiModel = notiModel;
-    ZEQuestionsDetailVC * questionDetailVC = [[ZEQuestionsDetailVC alloc]init];
+    ZENewQuestionDetailVC * questionDetailVC = [[ZENewQuestionDetailVC alloc]init];
     questionDetailVC.enterDetailIsFromNoti = QUESTIONDETAIL_TYPE_NOTI;
     questionDetailVC.notiCenM = notiModel;
     [self.navigationController pushViewController:questionDetailVC animated:YES];
 }
 
--(void)didSelectWebViewWithIndex:(NSString *)urlpath;
+-(void)didSelectWebViewWithIndex:(ZETeamNotiCenModel *)notiModel;
 {
-    if (urlpath.length == 0) {
+    if (notiModel.URLPATH.length == 0) {
         return;
     }
     ZEQuestionBankWebVC * webVC = [[ZEQuestionBankWebVC alloc]init];
-    webVC.URLPATH = urlpath;
+    webVC.URLPATH = notiModel.URLPATH;
+    webVC.MESTYPE = notiModel.MESTYPE;
     [self.navigationController pushViewController:webVC animated:YES];
 }
 

@@ -23,9 +23,11 @@
  */
 -(void)giveAnswerPraise:(ZEAnswerInfoModel *)answerInfo;
 
+-(void)showDetailWebVC:(NSString *)urlStr;
+
 @end
 
-@interface ZEDetailCellReplyView : UIView
+@interface ZEDetailCellReplyView : UIView <UITextViewDelegate>
 
 @property (nonatomic,strong) UIView * contentBackgroundView;
 
@@ -55,14 +57,14 @@
 @end
 
 
-@interface ZENewQuetionDetailSingleAnswerView : UIView
+@interface ZENewQuetionDetailSingleAnswerView : UIView<UITextViewDelegate>
 
 @property (nonatomic,strong) UIImageView * headerImageView;
 @property (nonatomic,strong) UILabel * nameLab;
 @property (nonatomic,strong) UILabel * timeLab;
 
 @property (nonatomic,strong) ZENewDetailLayout * detailLayout;
-@property (nonatomic,strong) UILabel * contentLab;
+@property (nonatomic,strong) UITextView * contentLab;
 
 @property (nonatomic,weak) ZENewQuestionDetailCell * detailCell;
 

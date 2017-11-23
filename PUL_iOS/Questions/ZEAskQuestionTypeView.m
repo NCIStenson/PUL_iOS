@@ -37,11 +37,12 @@
     return self;
 }
 
--(id)initWithFrame:(CGRect)frame withIsFullScreen:(BOOL)isFull
-{
+
+-(id)initWithFrame:(CGRect)frame withMarginTop:(float)margin{
     self = [super initWithFrame:frame];
     if (self) {
-        _isFull = isFull;
+//        _isFull = isFull;
+        _marginTop = margin;
         self.backgroundColor = [UIColor colorWithWhite:0 alpha:.5];
         _currentSelectType = 0;
         [self initView];
@@ -65,7 +66,7 @@
     UICollectionViewFlowLayout *flowLayout=[[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
-    _collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(100, NAV_HEIGHT + 200, SCREEN_WIDTH - 100, SCREEN_HEIGHT - NAV_HEIGHT -200 ) collectionViewLayout:flowLayout];
+    _collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(100, _marginTop, SCREEN_WIDTH - 100, SCREEN_HEIGHT  -_marginTop ) collectionViewLayout:flowLayout];
     _collectionView.dataSource=self;
     _collectionView.delegate=self;
     _collectionView.backgroundColor = [UIColor whiteColor];
@@ -74,7 +75,7 @@
     //注册Cell，必须要有
     [self addSubview:_collectionView];
 
-    _typeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT + 200, 100, SCREEN_HEIGHT - NAV_HEIGHT - 200) style:UITableViewStylePlain];
+    _typeTableView = [[UITableView alloc]initWithFrame:CGRectMake(0,  _marginTop, 100, SCREEN_HEIGHT - _marginTop) style:UITableViewStylePlain];
     _typeTableView.delegate = self;
     _typeTableView.dataSource = self;
     _typeTableView.backgroundColor = MAIN_BACKGROUND_COLOR;
@@ -84,14 +85,14 @@
     _typeTableView.showsHorizontalScrollIndicator = NO;
     
     
-    if (_isFull) {
-        tapView.hidden = YES;
+    if (_marginTop == NAV_HEIGHT + 45) {
+        tapView.backgroundColor = [UIColor clearColor];
         self.backgroundColor = [UIColor clearColor];
 //        self.userInteractionEnabled = NO;
 //        _typeTableView.userInteractionEnabled = YES;
 //        _collectionView.userInteractionEnabled = YES;
-        _typeTableView.frame = CGRectMake(0, 0, 100, SCREEN_HEIGHT - NAV_HEIGHT);
-        _collectionView.frame = CGRectMake(100, 0, SCREEN_WIDTH - 100, SCREEN_HEIGHT - NAV_HEIGHT);
+//        _typeTableView.frame = CGRectMake(0, 0, 100, SCREEN_HEIGHT - NAV_HEIGHT);
+//        _collectionView.frame = CGRectMake(100, 0, SCREEN_WIDTH - 100, SCREEN_HEIGHT - NAV_HEIGHT);
     }
     UIView * lineView = [UIView new];
     lineView.frame = CGRectMake(_typeTableView.width, _typeTableView.top, 1,_typeTableView.height);

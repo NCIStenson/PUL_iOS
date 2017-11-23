@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
-#define kMaxTextLength 500
+#define kMaxTextLength 50000
 
 #define kInputViewMarginLeft    10.0f
 #define kInputViewMarginTop     NAV_HEIGHT
@@ -129,7 +129,7 @@
     _lengthLab.textColor = kTextColor;
     _lengthLab.text = [NSString stringWithFormat:@"0/%ld",(long)kMaxTextLength];
     _lengthLab.textAlignment = NSTextAlignmentRight;
-    [_questionExplainView addSubview:_lengthLab];
+//    [_questionExplainView addSubview:_lengthLab];
     
     _questionExplainView.contentSize = CGSizeMake(SCREEN_WIDTH, _lengthLab.bottom);
 }
@@ -147,7 +147,7 @@
         upImageBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [modelBackgroundView addSubview:upImageBtn];
         [upImageBtn addTarget:self action:@selector(showCondition) forControlEvents:UIControlEventTouchUpInside];
-        [upImageBtn setImage:[UIImage imageNamed:@"camera_gray"] forState:UIControlStateNormal];
+        [upImageBtn setImage:[UIImage imageNamed:@"icon_ask_image"] forState:UIControlStateNormal];
     }
 }
 
@@ -172,7 +172,7 @@
             upImageBtn.layer.borderWidth = 1;
             
             [upImageBtn addTarget:self action:@selector(showCondition) forControlEvents:UIControlEventTouchUpInside];
-            [upImageBtn setImage:[UIImage imageNamed:@"home_btn_more"] forState:UIControlStateNormal];
+            [upImageBtn setImage:[UIImage imageNamed:@"icon_add_image" color:MAIN_BLUE_COLOR] forState:UIControlStateNormal];
         }else{
             
             UIButton * deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -280,7 +280,7 @@
     if (textView.text.length > kMaxTextLength) {
         MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self animated:YES];
         hud3.mode = MBProgressHUDModeText;
-        hud3.detailsLabelText = @"最多显示500个字";
+        hud3.detailsLabelText = [NSString stringWithFormat:@"最多显示%d个字",kMaxTextLength];
         hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
         [hud3 hide:YES afterDelay:1.0f];
         

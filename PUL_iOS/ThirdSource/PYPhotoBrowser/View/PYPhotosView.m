@@ -366,6 +366,9 @@ static NSInteger _photosViewCount;
     // 调整图片位置
     for (int i = 0; i < photosCount; i++) {
         PYPhotoView *photoView = self.subviews[i];
+        if (!photoView) {
+            return;
+        }
         NSInteger col = i % maxCol;
         NSInteger row = i / maxCol;
         

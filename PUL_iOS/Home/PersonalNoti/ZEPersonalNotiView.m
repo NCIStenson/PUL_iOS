@@ -263,8 +263,8 @@
         [self initQuestionCellViewWithIndexpath:indexPath withCell:cell];
     }else if ([notiCenM.MESTYPE integerValue] == 4){
         [self initTeamCellViewWithIndexpath:indexPath withCell:cell withMestype:4];
-    }else if ([notiCenM.MESTYPE integerValue] == 5){
-        [self initTeamCellViewWithIndexpath:indexPath withCell:cell withMestype:5];
+    }else if ([notiCenM.MESTYPE integerValue] >= 5){
+        [self initTeamCellViewWithIndexpath:indexPath withCell:cell withMestype:[notiCenM.MESTYPE integerValue]];
     }
         
     return cell;
@@ -294,13 +294,15 @@
     
     UIImageView * headeImage = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 60, 60)];
     [cell.contentView addSubview:headeImage];
+    headeImage.clipsToBounds = YES;
+    headeImage.layer.cornerRadius = headeImage.height / 2;
     [headeImage setContentMode:UIViewContentModeScaleAspectFit];
     if(mestype == 1 || mestype == 4){
         [headeImage setImage:[UIImage imageNamed:@"xihz_td.png"]];
         if (fileUrl.length > 0) {
             [headeImage sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"xihz_td.png"]];
         }
-    }else if ( mestype == 5){
+    }else if ( mestype >= 5){
         [headeImage setImage:[UIImage imageNamed:@"xihz_td.png"]];
         if (fileUrl.length > 0 ) {
             [headeImage sd_setImageWithURL:ZENITH_IMAGEURL(fileUrl) placeholderImage:[UIImage imageNamed:@"xihz_td.png"]];
@@ -314,12 +316,14 @@
         nameLab.text = @"团队消息（已撤回）";
     }else if (mestype == 5){
         nameLab.text = @"在线考试";
+    }else{
+        nameLab.text = notiM.MESNAME;
     }
     nameLab.numberOfLines = 0;
     nameLab.textAlignment = NSTextAlignmentLeft;
-    nameLab.font = [UIFont systemFontOfSize:18];
+    nameLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
     [cell.contentView addSubview:nameLab];
-    nameLab.textColor = kTextColor;
+    nameLab.textColor = kSubTitleColor;
     
     YYLabel * dynamiLab = [[YYLabel alloc]initWithFrame:CGRectMake(100, 30, SCREEN_WIDTH - 120, 40)];
     dynamiLab.numberOfLines = 2;
@@ -331,7 +335,7 @@
     dynamiLab.textVerticalAlignment = YYTextVerticalAlignmentCenter;
     dynamiLab.lineBreakMode = NSLineBreakByTruncatingMiddle;
     dynamiLab.text = [NSString stringWithFormat:@"%@  |  %@",notiM.QUESTIONEXPLAIN,notiM.CREATORNAME];
-    if (mestype == 5){
+    if (mestype >= 5){
         dynamiLab.text = [NSString stringWithFormat:@"%@",notiM.QUESTIONEXPLAIN];
     }
     float explainHeight = [ZEUtil heightForString:dynamiLab.text font:dynamiLab.font andWidth:dynamiLab.width];
@@ -346,7 +350,7 @@
     receiptLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
     [cell.contentView addSubview:receiptLab];
     receiptLab.text = [ZEUtil compareCurrentTime:[NSString stringWithFormat:@"%@",notiM.SYSCREATEDATE]];
-    if (mestype == 5){
+    if (mestype >= 5){
         receiptLab.hidden = YES;
     }
 
@@ -412,11 +416,13 @@
     nameLab.text = notiM.TIPS;
     nameLab.numberOfLines = 1;
     nameLab.textAlignment = NSTextAlignmentLeft;
-    nameLab.font = [UIFont systemFontOfSize:18];
+    nameLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
+    nameLab.textColor = kSubTitleColor;
     [cell.contentView addSubview:nameLab];
     nameLab.textColor = kTextColor;
     
-    UILabel * dynamiLab = [[UILabel alloc]initWithFrame:CGRectMake(100, 30, SCREEN_WIDTH - 120, 40)];
+    YYLabel * dynamiLab = [[YYLabel alloc]initWithFrame:CGRectMake(100, 30, SCREEN_WIDTH - 120, 40)];
+    dynamiLab.textVerticalAlignment = YYTextVerticalAlignmentCenter;
     dynamiLab.numberOfLines = 2;
     dynamiLab.textAlignment = NSTextAlignmentLeft;
     dynamiLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
@@ -429,7 +435,7 @@
     if(explainHeight > 40){
         explainHeight = 40;
     }
-    dynamiLab.height = explainHeight;
+//    dynamiLab.height = explainHeight;
     
     UILabel * receiptLab = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 90,10,70,20.0f)];
     receiptLab.textAlignment = NSTextAlignmentRight;
@@ -521,9 +527,9 @@
         if ([self.delegate respondsToSelector:@selector(didSelectTeamMessage:)] ) {
             [self.delegate didSelectTeamMessage:notiModel];
         }
-    }else if ([notiModel.MESTYPE integerValue] == 5){
+    }else if ([notiModel.MESTYPE integerValue] >= 5){
         if ([self.delegate respondsToSelector:@selector(didSelectWebViewWithIndex:)]) {
-            [self.delegate didSelectWebViewWithIndex:notiModel.URLPATH];
+            [self.delegate didSelectWebViewWithIndex:notiModel];
         }
         if ([self.delegate respondsToSelector:@selector(didSelectTeamMessage:)] ) {
             [self.delegate didSelectTeamMessage:notiModel];

@@ -7,20 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZENewQuetionLayout.h"
+#import "ZENewQuestionListCell.h"
 
 @class ZEShowQuestionView;
 
 @protocol ZEShowQuestionViewDelegate <NSObject>
-
-/**
- *  @author Stenson, 16-08-04 09:08:55
- *
- *  进入问题详情页
- *
- *  @param indexPath 选择第几区第几个问题
- */
--(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
-                         withQuestionType:(ZEQuestionTypeModel *)typeModel;
 
 -(void)goSearch:(NSString *)str;
 
@@ -39,9 +31,25 @@
 
 -(void)deleteMyAnswer:(NSString *)questionSEQKEY;
 
+/**
+ 回答问题
+ 
+ @param questionInfo 问题详情
+ */
+-(void)answerQuestion:(ZEQuestionInfoModel *)questionInfo;
+
+/**
+ 点赞
+ 
+ @param questionInfo 问题详情
+ */
+-(void)giveQuestionPraise:(ZEQuestionInfoModel *)questionInfo;
+-(void)presentWebVCWithUrl:(NSString *)urlStr;
+-(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel;
+
 @end
 
-@interface ZEShowQuestionView : UIView
+@interface ZEShowQuestionView : UIView<UIScrollViewDelegate>
 
 @property (nonatomic,weak) id <ZEShowQuestionViewDelegate> delegate;
 @property (nonatomic,copy) NSString * searchStr;

@@ -73,7 +73,7 @@
     float textW = [contentStr widthForFont:[UIFont systemFontOfSize:kFontSize]];
     float textH = [contentStr heightForFont:[UIFont systemFontOfSize:kFontSize] width:kMaxWidth];
     if (textW > kMaxWidth) {
-        textH =[ZEUtil boundingRectWithSize:CGSizeMake(kMaxWidth, MAXFLOAT) WithStr:contentStr andFont:[UIFont systemFontOfSize:kFontSize] andLinespace:kLabel_LineSpace];
+        textH = [ZEUtil heightForString:contentStr font:[UIFont systemFontOfSize:kFontSize] andWidth:kMaxWidth];
     }
     if (textH < 21) {
         textH = 21;  // 如果 字体只有一行 设置高度为45

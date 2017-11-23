@@ -27,6 +27,7 @@
 #define V_KLB_CLASSICCASE_INFO            @"V_KLB_CLASSICCASE_INFO"             /***   经典案例视图   ***/
 #define V_KLB_CLASSICCASE_INFO            @"V_KLB_CLASSICCASE_INFO"             /***   经典案例视图   ***/
 #define KLB_EXPERT_DETAIL            @"KLB_EXPERT_DETAIL"             /***      ***/
+#define V_KLB_EXPERT_INFO            @"V_KLB_EXPERT_INFO"             /***      ***/
 #define V_KLB_CLASSICCASE_COMMENT            @"V_KLB_CLASSICCASE_COMMENT"             /***   经典案例评论表   ***/
 #define KLB_CLASSICCASE_COMMENT            @"KLB_CLASSICCASE_COMMENT"             /***   经典案例评论表   ***/
 #define KLB_CLASSICCASE_SCORE            @"KLB_CLASSICCASE_SCORE"             /***   经典案例评分表   ***/

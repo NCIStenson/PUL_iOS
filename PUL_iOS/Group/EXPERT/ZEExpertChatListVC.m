@@ -191,7 +191,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.selected = NO;
-    
+    self.navigationController.navigationBar.hidden = NO;
+
     ZEExpertChatVC *sendMessageCtl =[[ZEExpertChatVC alloc] init];
     JMSGConversation *conversation = [_conversationArr objectAtIndex:indexPath.row];
     sendMessageCtl.conversation = conversation;

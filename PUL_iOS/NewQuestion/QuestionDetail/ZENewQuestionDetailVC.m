@@ -10,7 +10,7 @@
 #import "ZENewAnswerQuestionVC.h"
 #import "ZEAskQuesViewController.h"
 #import "ZEChatVC.h"
-
+#import "ZESchoolWebVC.h"
 @interface ZENewQuestionDetailVC ()<ZENewQuestionDetailViewDelegate>
 {
     ZENewQuestionDetailView * _detailView;
@@ -59,7 +59,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-//    [self sendSearchAnswerRequest];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 -(void)initView{
@@ -528,6 +528,13 @@
 -(void)sendRequestWithOrder:(NSInteger)order
 {
     [self vcSendRequestWithOrder:[NSString stringWithFormat:@"%ld",(long)order]];
+}
+-(void)presentWebVCWithUrl:(NSString *)urlStr
+{
+    ZESchoolWebVC * webvc = [[ZESchoolWebVC alloc]init];
+    webvc.enterType = ENTER_WEBVC_QUESTION;
+    webvc.webURL = urlStr;
+    [self.navigationController pushViewController:webvc animated:YES];
 }
 
 

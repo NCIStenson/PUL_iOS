@@ -15,7 +15,10 @@
 #define MAIN_LINE_COLOR [UIColor colorWithRed:239/255.0 green:239/255.0 blue:239/255.0 alpha:1]
 #define MAIN_DEEPLINE_COLOR [UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1]
 
+#define MAIN_BLUE_COLOR [UIColor colorWithRed:36/255.0 green:91/255.0 blue:131/255.0 alpha:1]
+
 #define MAIN_ARM_COLOR [UIColor colorWithRed:(arc4random()%255)/255.0 green:(arc4random()%255)/255.0 blue:(arc4random()%255)/255.0 alpha:1]
+
 #define MAIN_SUBTITLE_COLOR      RGBA(127,127,127,1)
 #define MAIN_GREEN_COLOR      RGBA(40,165,101,1)
 #define MAIN_TITLEBLACK_COLOR [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1]

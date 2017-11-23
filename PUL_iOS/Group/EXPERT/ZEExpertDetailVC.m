@@ -29,7 +29,7 @@
 {
     UIImageView * expertPhotoImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, NAV_HEIGHT + 20, SCREEN_WIDTH *.4, SCREEN_WIDTH * .4 * 1.4)];
     [self.view addSubview:expertPhotoImageView];
-    [expertPhotoImageView sd_setImageWithURL:ZENITH_IMAGEURL(_expertModel.FILEURL) placeholderImage:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
+    [expertPhotoImageView sd_setImageWithURL:ZENITH_IMAGEURL(([_expertModel.FILEURL stringByReplacingOccurrencesOfString:@"," withString:@""])) placeholderImage:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
     expertPhotoImageView.contentMode = UIViewContentModeScaleAspectFill;
     expertPhotoImageView.clipsToBounds = YES;
     
@@ -113,7 +113,6 @@
             ZEExpertChatListVC * chatListVC = [[ZEExpertChatListVC alloc]init];
             [self.navigationController pushViewController:chatListVC animated:YES];
         }else{
-            
             JMSGConversation *conversation = [JMSGConversation singleConversationWithUsername:_expertModel.USERCODE];
             if (conversation == nil) {
                 [self showTips:@"获取会话" afterDelay:1.5];
@@ -124,6 +123,7 @@
                         NSLog(@"创建会话失败");
                         return ;
                     }
+                    self.navigationController.navigationBar.hidden = NO;
                     ZEExpertChatVC *conversationVC = [ZEExpertChatVC new];
                     conversationVC.expertModel = _expertModel;
                     conversationVC.conversation = (JMSGConversation *)resultObject;
@@ -131,6 +131,7 @@
                     
                 }];
             } else {
+                self.navigationController.navigationBar.hidden = NO;
                 ZEExpertChatVC *conversationVC = [ZEExpertChatVC new];
                 conversationVC.conversation = conversation;
                 conversationVC.expertModel = _expertModel;

@@ -118,6 +118,14 @@
         _contentLab.numberOfLines = 0;
 //        _subContentLab.text = model.MSG_CONTENT;
         _tipsLab.text = model.EXTRASPARAM;
+    }else{
+//        _textLab.text = @"能力学堂";
+        _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
+        _contentLab.text = model.MSG_TITLE;
+        _contentLab.height = 50;
+        _contentLab.numberOfLines = 0;
+        //        _subContentLab.text = model.MSG_CONTENT;
+        _tipsLab.text = model.EXTRASPARAM;
     }
 }
 

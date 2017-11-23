@@ -21,7 +21,9 @@
 @property (nonatomic,weak) id <ZEAskQuestionTypeViewDelegate> delegate;
 
 @property (nonatomic,assign) BOOL isFull;
--(id)initWithFrame:(CGRect)frame withIsFullScreen:(BOOL)isFull;
+@property (nonatomic,assign) CGFloat marginTop;
+
+-(id)initWithFrame:(CGRect)frame withMarginTop:(float)margin;
 
 -(void)reloadTypeData;
 

@@ -28,6 +28,13 @@
 #import "ZESinginVC.h"
 #import "ZEFindTeamVC.h"
 #import "SvUDIDTools.h"
+
+#import "ZETypicalCaseHomeVC.h"
+#import "ZEWorkStandardListVC.h"
+#import "ZEExpertListVC.h"
+#import "ZEWorkStandardListVC.h"
+#import "ZETypicalCaseHomeVC.h"
+
 @interface ZEPULHomeVC () <ZEPULHomeViewDelegate>
 {
     ZEPULHomeView * _PULHomeView ;
@@ -539,6 +546,9 @@
 //    return;
     
     ZEGroupVC *FishVC = [[ZEGroupVC alloc] init];
+//    ZETypicalCaseHomeVC *FishVC = [[ZETypicalCaseHomeVC alloc] init];
+//    ZEWorkStandardListVC *FishVC = [[ZEWorkStandardListVC alloc] init];
+//    ZEExpertListVC * FishVC = [[ZEExpertListVC alloc]init];
     [self.navigationController pushViewController:FishVC animated:YES];
 }
 -(void)goZYXGCP
@@ -560,9 +570,25 @@
     [self.navigationController pushViewController:FishVC animated:YES];
 }
 
--(void)goXWGF{
+-(void)goHYGF{
+    ZEWorkStandardListVC * workStandardListVC = [[ZEWorkStandardListVC alloc]init];
+    [self.navigationController pushViewController:workStandardListVC animated:YES];
+
+}
+-(void)goDXAL{
+    ZETypicalCaseHomeVC * caseHome = [[ZETypicalCaseHomeVC alloc]init];
+    [self.navigationController pushViewController:caseHome animated:YES];
+
     NSLog(@" ===  行为规范");
 }
+-(void)goZJJD{
+    NSLog(@" ===  行为规范");
+    ZEExpertListVC * expertListVC = [[ZEExpertListVC alloc]init];
+    [self.navigationController pushViewController:expertListVC animated:YES];
+    
+}
+
+
 
 -(void)goZXCS
 {

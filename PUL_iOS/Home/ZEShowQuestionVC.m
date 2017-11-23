@@ -8,12 +8,12 @@
 
 #import "ZEShowQuestionVC.h"
 #import "ZEShowQuestionView.h"
-
-#import "ZEQuestionsDetailVC.h"
+#import "ZEChatVC.h"
 
 #import "ZEAskQuestionTypeView.h"
 
 #import "ZEWithoutDataTipsView.h"
+
 
 @interface ZEShowQuestionVC ()<ZEShowQuestionViewDelegate,ZEAskQuestionTypeViewDelegate>
 {
@@ -386,16 +386,6 @@
 
 #pragma mark - ZEShowQuestionViewDelegate
 
--(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
-                         withQuestionType:(ZEQuestionTypeModel *)typeModel
-{
-    ZEQuestionsDetailVC * detailVC = [[ZEQuestionsDetailVC alloc]init];
-    detailVC.questionInfoModel = infoModel;
-    detailVC.questionTypeModel = typeModel;
-    [self.navigationController pushViewController:detailVC animated:YES];
-    detailVC.enterQuestionDetailType = _showQuestionListType;
-}
-
 -(void)goSearch:(NSString *)str
 {
     _currentPage = 0;
@@ -492,6 +482,86 @@
                                  [self showTips:@"回答删除失败，请稍后重试。"];
                              }];
 }
+
+#pragma mark -ZEShowQuestionVC
+
+-(void)presentWebVCWithUrl:(NSString *)urlStr
+{
+    ZESchoolWebVC * webvc = [[ZESchoolWebVC alloc]init];
+    webvc.enterType = ENTER_WEBVC_QUESTION;
+    webvc.webURL = urlStr;
+    [self.navigationController pushViewController:webvc animated:YES];
+}
+
+-(void)giveQuestionPraise:(ZEQuestionInfoModel *)questionInfo
+{
+    NSLog(@" ======= 点赞点赞点赞点赞 %@",questionInfo.SEQKEY);
+    NSDictionary * parametersDic = @{@"limit":@"20",
+                                     @"MASTERTABLE":KLB_ANSWER_GOOD,
+                                     @"DETAILTABLE":@"",
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_INSERT,
+                                     @"CLASSNAME":@"com.nci.klb.app.answer.AnswerGood",
+                                     };
+    NSDictionary * fieldsDic =@{@"USERCODE":[ZESettingLocalData getUSERCODE],
+                                @"QUESTIONID":questionInfo.SEQKEY,
+                                };
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_ANSWER_GOOD]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"questionGood"];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 //                                 button.enabled = YES;
+                                 //                                 [self sendSearchAnswerRequest];
+                             } fail:^(NSError *errorCode) {
+                                 //                                 button.enabled = YES;
+                             }];
+    
+}
+
+-(void)answerQuestion:(ZEQuestionInfoModel *)questionInfo
+{
+    NSLog(@" ======= 回答 %@ 的问题",questionInfo.NICKNAME);
+    if ([questionInfo.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]) {
+        [self showTips:@"您不能对自己的提问进行回答"];
+        return;
+    }
+    
+    if ([questionInfo.ISSOLVE boolValue]) {
+        [self showTips:@"该问题已有答案被采纳"];
+        return;
+    }
+    
+    
+    if (questionInfo.ISANSWER) {
+        ZEChatVC * chatVC = [[ZEChatVC alloc]init];
+        chatVC.questionInfo = questionInfo;
+        chatVC.enterChatVCType = 1;
+        [self.navigationController pushViewController:chatVC animated:YES];
+    }else{
+        ZENewAnswerQuestionVC * answerQuesVC = [[ZENewAnswerQuestionVC alloc]init];
+        answerQuesVC.questionSEQKEY = questionInfo.SEQKEY;
+        answerQuesVC.questionInfoM = questionInfo;
+        [self.navigationController pushViewController:answerQuesVC animated:YES];
+    }
+}
+
+-(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
+{
+    ZENewQuestionDetailVC * detailVC = [[ZENewQuestionDetailVC alloc]init];
+    detailVC.questionInfo = infoModel;
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

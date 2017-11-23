@@ -19,8 +19,9 @@
     NSInteger _currentPage;
     
     NSString * _currentWHERESQL;
-    NSString * sortOrderSQL;// 最热 最新排序
-    
+//    NSString * sortOrderSQL;// 最热 最新排序
+    NSString * orderStr;// 最热 最新排序
+
     NSString * questionTypeCode; //  选择的经典案例分类code
     NSString * questionTypeName; //  选择的经典案例分类Name
     
@@ -37,18 +38,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    sortOrderSQL = @"SYSCREATEDATE desc";
+    
     _currentPage = 0;
     self.automaticallyAdjustsScrollViewInsets = NO;
     _currentWHERESQL = @"";
-    if (_enterType == ENTER_CASE_TYPE_DEFAULT) {
+    if (_enterType == ENTER_CASE_TYPE_NEWEST || _enterType == ENTER_CASE_TYPE_RECOMMAND) {
+        
+        if (_enterType == ENTER_CASE_TYPE_NEWEST) {
+            orderStr = @"1";
+        }else{
+            orderStr = @"2";
+        }
+        
         self.title = @"典型案例";
-        [self sendRequestWithCurrentPage];
+        [self sendRequestWithOrder];
         
         questionTypeName = @"";
         questionTypeCode = @"";
-//        [self.rightBtn setTitle:@"分类" forState:UIControlStateNormal];
-//        [self.rightBtn addTarget:self action:@selector(initAskTypeView) forControlEvents:UIControlEventTouchUpInside];
+        [self.rightBtn setImage:[UIImage imageNamed:@"icon_question_searchType" tintColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+        [self.rightBtn addTarget:self action:@selector(initAskTypeView) forControlEvents:UIControlEventTouchUpInside];
     }else{
         self.title = @"我的收藏";
         [self myCollectRequest];
@@ -108,12 +116,63 @@
                              }];
 }
 
+-(void)sendRequestWithOrder
+{
+    NSDictionary * parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long)MAX_PAGE_COUNT],
+                                     @"MASTERTABLE":V_KLB_CLASSICCASE_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":[NSString stringWithFormat:@"%ld",(long)_currentPage * MAX_PAGE_COUNT],
+                                     @"METHOD":METHOD_SEARCH,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.classiccase.ClassicCase",
+                                     @"DETAILTABLE":@"",
+                                     @"orderstr":orderStr,
+                                     };
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_CLASSICCASE_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"searchOrder"];
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSArray * dataArr =  [ZEUtil getServerData:data withTabelName:V_KLB_CLASSICCASE_INFO];
+                                 if (dataArr.count > 0) {
+                                     if (_currentPage == 0) {
+                                         [caseView reloadFirstView:dataArr];
+                                     }else{
+                                         [caseView reloadMoreDataView:dataArr];
+                                     }
+                                     if (dataArr.count % MAX_PAGE_COUNT == 0) {
+                                         _currentPage += 1;
+                                     }
+                                 }else{
+                                     if (_currentPage > 0) {
+                                         [caseView loadNoMoreData];
+                                         return ;
+                                     }
+                                     [caseView reloadFirstView:dataArr];
+                                     [caseView headerEndRefreshing];
+                                     [caseView loadNoMoreData];
+                                 }
+                                 
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+
+
 -(void)sendRequestWithCurrentPage
 {
     NSDictionary * parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long)MAX_PAGE_COUNT],
                                      @"MASTERTABLE":V_KLB_CLASSICCASE_INFO,
                                      @"MENUAPP":@"EMARK_APP",
-                                     @"ORDERSQL":sortOrderSQL,
+                                     @"ORDERSQL":@"SYSCREATEDATE desc",
                                      @"WHERESQL":_currentWHERESQL,
                                      @"start":[NSString stringWithFormat:@"%ld",(long)_currentPage * MAX_PAGE_COUNT],
                                      @"METHOD":METHOD_SEARCH,
@@ -126,7 +185,7 @@
         parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long)MAX_PAGE_COUNT],
                           @"MASTERTABLE":V_KLB_CLASSICCASE_INFO,
                           @"MENUAPP":@"EMARK_APP",
-                          @"ORDERSQL":sortOrderSQL,
+                          @"ORDERSQL":@"SYSCREATEDATE desc",
                           @"WHERESQL":_currentWHERESQL,
                           @"start":[NSString stringWithFormat:@"%ld",(long)_currentPage * MAX_PAGE_COUNT],
                           @"METHOD":METHOD_SEARCH,
@@ -148,7 +207,7 @@
         parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long)MAX_PAGE_COUNT],
                           @"MASTERTABLE":V_KLB_CLASSICCASE_INFO,
                           @"MENUAPP":@"EMARK_APP",
-                          @"ORDERSQL":sortOrderSQL,
+                          @"ORDERSQL":@"SYSCREATEDATE desc",
                           @"WHERESQL":_currentWHERESQL,
                           @"start":[NSString stringWithFormat:@"%ld",(long)_currentPage * MAX_PAGE_COUNT],
                           @"METHOD":METHOD_SEARCH,
@@ -250,14 +309,14 @@
 -(void)initAskTypeView
 {
     if(_isShowTypicalTypeView){
-        self.title = questionTypeName;
+        self.title = @"典型案例";
         [askTypeView removeFromSuperview];
         askTypeView = nil;
         [self sendRequestWithCurrentPage];
     }else{
         self.title = @"技能分类";
-        
-        askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        [caseView.questionSearchTF resignFirstResponder];
+        askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) withMarginTop:NAV_HEIGHT + 45];
         askTypeView.delegate = self;
         
         [self.view addSubview:askTypeView];
@@ -287,7 +346,12 @@
 
     [askTypeView removeFromSuperview];
     askTypeView = nil;
-    
+    if (typeName.length == 0 && typeCode.length == 0 && fatherCode.length == 0) {
+        self.title = @"典型案例";
+        [caseView.questionSearchTF becomeFirstResponder];
+        return;
+    }
+
     if ([fatherCode integerValue] == -1) {
         totalTypeCode = typeCode;
         [self sendRequestWithCurrentPage];
@@ -308,20 +372,20 @@
 
 -(void)loadNewData
 {
-    if (_enterType == ENTER_CASE_TYPE_DEFAULT) {
-        _currentPage = 0;
-        [self sendRequestWithCurrentPage];
-    }else if (_enterType == ENTER_CASE_TYPE_SETTING){
+    if (_enterType == ENTER_CASE_TYPE_SETTING) {
         _currentPage = 0;
         [self myCollectRequest];
+    }else{
+        _currentPage = 0;
+        [self sendRequestWithCurrentPage];
     }
 }
 -(void)loadMoreData
 {
-    if (_enterType == ENTER_CASE_TYPE_DEFAULT) {
-        [self sendRequestWithCurrentPage];
-    }else if (_enterType == ENTER_CASE_TYPE_SETTING){
+    if (_enterType == ENTER_CASE_TYPE_SETTING){
         [self myCollectRequest];
+    }else{
+        [self sendRequestWithCurrentPage];
     }
 }
 
@@ -355,15 +419,23 @@
 
 -(void)sortConditon:(NSString *)condition
 {
-    sortOrderSQL = condition;
+    orderStr= condition;
     _currentPage = 0;
-    [self sendRequestWithCurrentPage];
+    [self sendRequestWithOrder];
 }
 
 -(void)showType
 {
     [self initAskTypeView];
 }
+
+-(void)goSearchWithSearchStr:(NSString *)str
+{
+    _currentPage = 0;
+    _currentWHERESQL = [NSString stringWithFormat:@"CASENAME like '%%%@%%'",str];
+    [self sendRequestWithCurrentPage];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

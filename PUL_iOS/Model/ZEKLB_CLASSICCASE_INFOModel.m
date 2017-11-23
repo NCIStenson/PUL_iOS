@@ -36,6 +36,7 @@ static ZEKLB_CLASSICCASE_INFOModel * model;
 
     model.FILETYPE              = [dic objectForKey:@"FILETYPE"];
     model.QUESTIONTYPECODE      = [dic objectForKey:@"QUESTIONTYPECODE"];
+    model.QUESTIONTYPENAME      = [dic objectForKey:@"QUESTIONTYPENAME"];
     model.SYSCREATEDATE         = [dic objectForKey:@"SYSCREATEDATE"];
     model.SEQKEY                = [dic objectForKey:@"SEQKEY"];
     

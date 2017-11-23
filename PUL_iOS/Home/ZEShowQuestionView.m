@@ -97,18 +97,25 @@
 }
 #pragma mark - Public Method
 
--(void)reloadContentViewWithArr:(NSArray *)arr{
-    [self.datasArr addObjectsFromArray:arr];
-    
-    [_contentTableView.mj_header endRefreshing];
-    if (arr.count % MAX_PAGE_COUNT == 0 || arr.count < MAX_PAGE_COUNT) {
-        [_contentTableView.mj_footer endRefreshingWithNoMoreData];
-    }else{
-        [_contentTableView.mj_footer endRefreshing];
+-(void)reloadContentViewWithArr:(NSArray *)dataArr{
+    NSMutableArray * arr = [NSMutableArray array];
+    for (int i = 0; i < dataArr.count ; i ++) {
+        ZEQuestionInfoModel * quesAnsDetail = [ZEQuestionInfoModel getDetailWithDic:dataArr[i]];
+        ZENewQuetionLayout * layout = [[ZENewQuetionLayout alloc]initWithModel:quesAnsDetail];
+        [arr addObject:layout];
     }
-
+    [self.datasArr addObjectsFromArray:arr];
+    [_contentTableView.mj_header endRefreshing];
+    [_contentTableView.mj_footer endRefreshing];
     [_contentTableView reloadData];
+    
+    if (dataArr.count % MAX_PAGE_COUNT == 0 && dataArr.count > 0 ) {
+        
+    }else{
+        [_contentTableView.mj_footer endRefreshingWithNoMoreData];
+    }
 }
+
 
 -(void)canLoadMoreData
 {
@@ -169,52 +176,6 @@
     return 0;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary * datasDic = _datasArr[indexPath.row];
-    
-    ZEQuestionInfoModel * quesInfoM = [ZEQuestionInfoModel getDetailWithDic:datasDic];
-    NSString * QUESTIONEXPLAINStr = [datasDic objectForKey:@"QUESTIONEXPLAIN"];
-    
-    if ([quesInfoM.BONUSPOINTS integerValue] > 0) {
-        if (quesInfoM.BONUSPOINTS.length == 1) {
-            QUESTIONEXPLAINStr = [NSString stringWithFormat:@"          %@",QUESTIONEXPLAINStr];
-        }else if (quesInfoM.BONUSPOINTS.length == 2){
-            QUESTIONEXPLAINStr = [NSString stringWithFormat:@"            %@",QUESTIONEXPLAINStr];
-        }else if (quesInfoM.BONUSPOINTS.length == 3){
-            QUESTIONEXPLAINStr = [NSString stringWithFormat:@"              %@",QUESTIONEXPLAINStr];
-        }
-    }
-    
-    float questionHeight =[ZEUtil heightForString:QUESTIONEXPLAINStr font:[UIFont boldSystemFontOfSize:kQuestionTitleFontSize] andWidth:SCREEN_WIDTH - 40];
-    
-    NSArray * typeCodeArr = [quesInfoM.QUESTIONTYPECODE componentsSeparatedByString:@","];
-    NSString * typeNameContent = @"";
-    
-    for (NSDictionary * dic in [[ZEQuestionTypeCache instance] getQuestionTypeCaches]) {
-        ZEQuestionTypeModel * questionTypeM = nil;
-        ZEQuestionTypeModel * typeM = [ZEQuestionTypeModel getDetailWithDic:dic];
-        for (int i = 0; i < typeCodeArr.count; i ++) {
-            if ([typeM.CODE isEqualToString:typeCodeArr[i]]) {
-                questionTypeM = typeM;
-                if (![ZEUtil isStrNotEmpty:typeNameContent]) {
-                    typeNameContent = questionTypeM.NAME;
-                }else{
-                    typeNameContent = [NSString stringWithFormat:@"%@,%@",typeNameContent,questionTypeM.NAME];
-                }
-                break;
-            }
-        }
-    }
-
-    float tagHeight = [ZEUtil heightForString:typeNameContent font:[UIFont systemFontOfSize:kSubTiltlFontSize] andWidth:SCREEN_WIDTH - 70];
-
-    if(quesInfoM.FILEURLARR.count > 0){
-        return questionHeight + kCellImgaeHeight + tagHeight + 70.0f;
-    }
-    
-    return questionHeight + tagHeight + 60.0f;
-}
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -228,225 +189,39 @@
     return sectionView;
 }
 
--(UITableViewCell * )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * cellID = @"cell";
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    
+    ZENewQuestionListCell * cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[ZENewQuestionListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    
-    while ([cell.contentView.subviews lastObject]) {
-        [[cell.contentView.subviews lastObject] removeFromSuperview];
-    }
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    [cell.contentView addSubview:[self createAnswerView:indexPath]];
+    cell.delegate = self;
+    [cell setLayout:self.datasArr[indexPath.row]];
     
     return cell;
 }
 
-#pragma mark - 回答问题
-
--(UIView *)createAnswerView:(NSIndexPath *)indexpath
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary * datasDic = _datasArr[indexpath.row];
+    ZENewQuetionLayout * layout = nil;
+    layout =  self.datasArr [indexPath.row];
+    return  layout.height;
     
-    UIView *  questionsView = [[UIView alloc]init];
-    
-    ZEQuestionInfoModel * quesInfoM = [ZEQuestionInfoModel getDetailWithDic:datasDic];
-    NSString * QUESTIONEXPLAINStr = quesInfoM.QUESTIONEXPLAIN;
-    if ([quesInfoM.BONUSPOINTS integerValue] > 0) {
-        if (quesInfoM.BONUSPOINTS.length == 1) {
-            QUESTIONEXPLAINStr = [NSString stringWithFormat:@"          %@",QUESTIONEXPLAINStr];
-        }else if (quesInfoM.BONUSPOINTS.length == 2){
-            QUESTIONEXPLAINStr = [NSString stringWithFormat:@"            %@",QUESTIONEXPLAINStr];
-        }else if (quesInfoM.BONUSPOINTS.length == 3){
-            QUESTIONEXPLAINStr = [NSString stringWithFormat:@"              %@",QUESTIONEXPLAINStr];
-        }
-        
-        UIImageView * bonusImage = [[UIImageView alloc]init];
-        [bonusImage setImage:[UIImage imageNamed:@"high_score_icon.png"]];
-        [questionsView addSubview:bonusImage];
-        bonusImage.left = 20.0f;
-        bonusImage.top = 8.0f;
-        bonusImage.width = 20.0f;
-        bonusImage.height = 20.0f;
-        
-        UILabel * bonusPointLab = [[UILabel alloc]init];
-        bonusPointLab.text = quesInfoM.BONUSPOINTS;
-        [bonusPointLab setTextColor:MAIN_GREEN_COLOR];
-        [questionsView addSubview:bonusPointLab];
-        bonusPointLab.left = 43.0f;
-        bonusPointLab.top = bonusImage.top;
-        bonusPointLab.width = 27.0f;
-        bonusPointLab.font = [UIFont boldSystemFontOfSize:kTiltlFontSize];
-        bonusPointLab.height = 20.0f;
-    }
-    
-    float questionHeight =[ZEUtil heightForString:QUESTIONEXPLAINStr font:[UIFont boldSystemFontOfSize:kQuestionTitleFontSize] andWidth:SCREEN_WIDTH - 40];
-    
-    UILabel * QUESTIONEXPLAIN = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH - 40, questionHeight)];
-    QUESTIONEXPLAIN.numberOfLines = 0;
-    QUESTIONEXPLAIN.text = QUESTIONEXPLAINStr;
-    QUESTIONEXPLAIN.font = [UIFont boldSystemFontOfSize:kQuestionTitleFontSize];
-    [questionsView addSubview:QUESTIONEXPLAIN];
-    
-    //  问题文字与用户信息之间间隔
-    float userY = questionHeight + 20.0f;
-    
-    NSMutableArray * urlsArr = [NSMutableArray array];
-    for (NSString * str in quesInfoM.FILEURLARR) {
-        [urlsArr addObject:[NSString stringWithFormat:@"%@/file/%@",Zenith_Server,str]];
-    }
+}
 
-    if (quesInfoM.FILEURLARR.count > 0) {
-        PYPhotosView *linePhotosView = [PYPhotosView photosViewWithThumbnailUrls:urlsArr originalUrls:urlsArr layoutType:PYPhotosViewLayoutTypeLine];
-        // 设置Frame
-        linePhotosView.py_y = userY;
-        linePhotosView.py_x = PYMargin;
-        linePhotosView.py_width = SCREEN_WIDTH - 40;
-        
-        // 3. 添加到指定视图中
-        [questionsView addSubview:linePhotosView];
+#pragma mark - 开始滑动时 下滑键盘
 
-        userY += kCellImgaeHeight + 10.0f;
-    }
-    
-#pragma mark - 标签
-    
-    NSArray * typeCodeArr = [quesInfoM.QUESTIONTYPECODE componentsSeparatedByString:@","];
-    NSString * typeNameContent = @"";
-    
-    for (NSDictionary * dic in [[ZEQuestionTypeCache instance] getQuestionTypeCaches]) {
-        ZEQuestionTypeModel * questionTypeM = nil;
-        ZEQuestionTypeModel * typeM = [ZEQuestionTypeModel getDetailWithDic:dic];
-        for (int i = 0; i < typeCodeArr.count; i ++) {
-            if ([typeM.CODE isEqualToString:typeCodeArr[i]]) {
-                questionTypeM = typeM;
-                if (![ZEUtil isStrNotEmpty:typeNameContent]) {
-                    typeNameContent = questionTypeM.NAME;
-                }else{
-                    typeNameContent = [NSString stringWithFormat:@"%@,%@",typeNameContent,questionTypeM.NAME];
-                }
-                break;
-            }
-        }
-    }
-    
-    UIImageView * circleImg = [[UIImageView alloc]initWithFrame:CGRectMake(20.0f, userY, 15, 15)];
-    circleImg.image = [UIImage imageNamed:@"answer_tag"];
-    [questionsView addSubview:circleImg];
-    
-    UILabel * circleLab = [[UILabel alloc]initWithFrame:CGRectMake(circleImg.frame.origin.x + 20,userY,SCREEN_WIDTH - 70,15.0f)];
-    circleLab.text = typeNameContent;
-    circleLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
-    circleLab.textColor = MAIN_SUBTITLE_COLOR;
-    [questionsView addSubview:circleLab];
-    circleLab.numberOfLines = 0;
-    [circleLab sizeToFit];
-    
-    if (circleLab.height == 0) {
-        circleLab.height = 15.0f;
-    }
-    
-    userY += circleLab.height + 5.0f;
-
-    UIView * messageLineView = [[UIView alloc]initWithFrame:CGRectMake(0, userY, SCREEN_WIDTH, 0.5)];
-    messageLineView.backgroundColor = MAIN_LINE_COLOR;
-    [questionsView addSubview:messageLineView];
-    
-    userY += 5.0f;
-    
-    UIImageView * userImg = [[UIImageView alloc]initWithFrame:CGRectMake(20, userY, 20, 20)];
-    [userImg sd_setImageWithURL:ZENITH_IMAGEURL(quesInfoM.HEADIMAGE) placeholderImage:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
-    [questionsView addSubview:userImg];
-    userImg.clipsToBounds = YES;
-    userImg.layer.cornerRadius = 10;
-    
-    UILabel * QUESTIONUSERNAME = [[UILabel alloc]initWithFrame:CGRectMake(45,userY,200.0f,20.0f)];
-    QUESTIONUSERNAME.text = quesInfoM.NICKNAME;
-    if(quesInfoM.ISANONYMITY){
-        [userImg setImage:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
-        QUESTIONUSERNAME.text = @"匿名提问";
-    }
-    QUESTIONUSERNAME.textColor = MAIN_SUBTITLE_COLOR;
-    QUESTIONUSERNAME.font = [UIFont systemFontOfSize:kQuestionTitleFontSize];
-    [questionsView addSubview:QUESTIONUSERNAME];
-    
-    UILabel * SYSCREATEDATE = [[UILabel alloc]initWithFrame:CGRectMake(QUESTIONUSERNAME.frame.origin.x + QUESTIONUSERNAME.frame.size.width + 5.0f,userY,100.0f,20.0f)];
-    SYSCREATEDATE.text = [ZEUtil compareCurrentTime:quesInfoM.SYSCREATEDATE];
-    SYSCREATEDATE.userInteractionEnabled = NO;
-    SYSCREATEDATE.textColor = MAIN_SUBTITLE_COLOR;
-    SYSCREATEDATE.font = [UIFont systemFontOfSize:12];
-    [questionsView addSubview:SYSCREATEDATE];
-    SYSCREATEDATE.userInteractionEnabled = YES;
-    
-    NSString * praiseNumLabText =[NSString stringWithFormat:@"%ld 回答",(long)[quesInfoM.ANSWERSUM integerValue]];
-    
-    float praiseNumWidth = [ZEUtil widthForString:praiseNumLabText font:[UIFont systemFontOfSize:kSubTiltlFontSize] maxSize:CGSizeMake(200, 20)];
-        
-    UILabel * praiseNumLab = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - praiseNumWidth - 20,userY,praiseNumWidth,20.0f)];
-    praiseNumLab.text = praiseNumLabText;
-    praiseNumLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
-    praiseNumLab.textColor = MAIN_SUBTITLE_COLOR;
-    [questionsView addSubview:praiseNumLab];
-    
-    
-    UIView * grayView = [[UIView alloc]initWithFrame:CGRectMake(0, userY + 25.0f, SCREEN_WIDTH, 5.0f)];
-    grayView.backgroundColor = MAIN_LINE_COLOR;
-    [questionsView addSubview:grayView];
-    
-    questionsView.frame = CGRectMake(0, 0, SCREEN_WIDTH, userY + 30.0f);
-    
-    if ([quesInfoM.INFOCOUNT integerValue] > 0 && ( _enterShowQuestionListType == QUESTION_LIST_MY_ANSWER || _enterShowQuestionListType == QUESTION_LIST_MY_QUESTION )) {
-        UILabel * badgeLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 20, 20.0f)];
-        badgeLab.backgroundColor = [UIColor redColor];
-        badgeLab.tag = 100;
-        badgeLab.center = CGPointMake(SCREEN_WIDTH - 20, (userY + 30.0f) / 2);
-        badgeLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-        badgeLab.textColor = [UIColor whiteColor];
-        badgeLab.textAlignment = NSTextAlignmentCenter;
-        [questionsView addSubview:badgeLab];
-        badgeLab.clipsToBounds = YES;
-        badgeLab.layer.cornerRadius = badgeLab.height / 2;
-        badgeLab.text = quesInfoM.INFOCOUNT;
-        if (badgeLab.text.length > 2){
-            badgeLab.width = 30.0f;
-            badgeLab.center = CGPointMake(SCREEN_WIDTH - 25,  (userY + 30.0f) / 2);
-        }
-        if ([quesInfoM.INFOCOUNT integerValue] > 99) {
-            badgeLab.text = @"99+";
-        }
-    }
-
-    if ([quesInfoM.ISSOLVE boolValue]) {
-        UIImageView * iconAccept = [[UIImageView alloc]init];
-        [questionsView addSubview:iconAccept];
-        iconAccept.frame = CGRectMake(SCREEN_WIDTH - 35, 0, 35, 35);
-        [iconAccept setImage:[UIImage imageNamed:@"ic_best_answer"]];
-    }
-    
-    return questionsView;
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    [_questionSearchTF resignFirstResponder];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary * datasDic = _datasArr[indexPath.row];
-    ZEQuestionInfoModel * quesInfoM = [ZEQuestionInfoModel getDetailWithDic:datasDic];
-    
-    ZEQuestionTypeModel * questionTypeM = nil;
-    for (NSDictionary * dic in [[ZEQuestionTypeCache instance] getQuestionTypeCaches]) {
-        ZEQuestionTypeModel * typeM = [ZEQuestionTypeModel getDetailWithDic:dic];
-        if ([typeM.SEQKEY isEqualToString:quesInfoM.QUESTIONTYPECODE]) {
-            questionTypeM = typeM;
-        }
-    }
-    
-    if ([self.delegate respondsToSelector:@selector(goQuestionDetailVCWithQuestionInfo:withQuestionType:)]) {
-        [self.delegate goQuestionDetailVCWithQuestionInfo:quesInfoM withQuestionType:questionTypeM];
+    ZENewQuetionLayout * layout = _datasArr[indexPath.row];
+    ZEQuestionInfoModel * quesInfoM = layout.questionInfo;
+    if ([self.delegate respondsToSelector:@selector(goQuestionDetailVCWithQuestionInfo:)]) {
+        [self.delegate goQuestionDetailVCWithQuestionInfo:layout.questionInfo];
     }
 }
 
@@ -472,8 +247,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary * datasDic = _datasArr[indexPath.row];
-    ZEQuestionInfoModel * quesInfoM = [ZEQuestionInfoModel getDetailWithDic:datasDic];
+    ZENewQuetionLayout * layout = _datasArr[indexPath.row];
+    ZEQuestionInfoModel * quesInfoM = layout.questionInfo;
 
     if(_enterShowQuestionListType == QUESTION_LIST_MY_QUESTION){
         if([self.delegate respondsToSelector:@selector(deleteMyQuestion:)]){
@@ -507,6 +282,50 @@
 
 
 #pragma mark - ZEQuestionsViewDelegate
+-(void)showWebVC:(NSString *)urlStr
+{
+    if ([self.delegate respondsToSelector:@selector(presentWebVCWithUrl:)]) {
+        [self.delegate presentWebVCWithUrl:urlStr];
+    }
+}
+
+-(void)goDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
+{
+    if ([self.delegate respondsToSelector:@selector(goQuestionDetailVCWithQuestionInfo:)]) {
+        [self.delegate goQuestionDetailVCWithQuestionInfo:infoModel];
+    }
+}
+
+-(void)giveQuestionPraise:(ZEQuestionInfoModel *)questionInfo
+{
+    NSInteger i = 0 ;
+    
+    NSMutableArray * arr = [NSMutableArray array];
+    arr = self.datasArr;
+    
+    for (ZENewQuetionLayout * layout in arr) {
+        if ([questionInfo isEqual:layout.questionInfo]) {
+            ZENewQuetionLayout * newLayout = layout;
+            newLayout.questionInfo.ISGOOD = YES;
+            newLayout.questionInfo.GOODNUMS = [NSString stringWithFormat:@"%ld",(long) [newLayout.questionInfo.GOODNUMS integerValue] + 1 ];
+            [self.datasArr replaceObjectAtIndex:i withObject:newLayout];
+            break;
+        }else{
+            i ++;
+        }
+    }
+    
+    if([self.delegate respondsToSelector:@selector(giveQuestionPraise:)]){
+        [self.delegate giveQuestionPraise:questionInfo];
+    }
+}
+
+-(void)answerQuestion:(ZEQuestionInfoModel *)questionInfo{
+    if([self.delegate respondsToSelector:@selector(answerQuestion:)]){
+        [self.delegate answerQuestion:questionInfo];
+    }
+}
+
 
 /*
  // Only override drawRect: if you perform custom drawing.

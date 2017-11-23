@@ -24,6 +24,10 @@
 @property (nonatomic,copy) NSString * USERCODE;
 @property (nonatomic,copy) NSString * USERNAME;
 
+@property (nonatomic,copy) NSString * SCORE;
+@property (nonatomic,copy) NSString * ISONLINE;
+@property (nonatomic,copy) NSString * CLICKCOUNT;
+
 @property (nonatomic,strong) NSArray * FILEURLARR;
 
 +(ZEExpertModel *)getDetailWithDic:(NSDictionary *)dic;

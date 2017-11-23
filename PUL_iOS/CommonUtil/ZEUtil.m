@@ -957,4 +957,20 @@
     return l+(int)ceilf((float)(a+b)/2.0);
 }
 
+// 判断链接的正则表达式
+
++ (NSRange)getRangeOfURL:(NSString *)string
+{
+    NSString *re = @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
+    
+    NSRange range = [string rangeOfString:re options:NSRegularExpressionSearch];
+    if (range.location != NSNotFound) {
+        return range;
+    }
+    else {
+        return NSMakeRange(0, 0);
+    }
+}
+
+
 @end

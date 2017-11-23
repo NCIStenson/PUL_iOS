@@ -11,7 +11,7 @@
 #define kInputViewWidth         SCREEN_WIDTH - 20.0f
 #define kInputViewHeight        120.0f
 
-#define kMaxTextLength 200
+#define kMaxTextLength 200000
 
 #define textViewStr @"试着将问题尽可能清晰的描述出来，这样回答者们才能更完整、更高质量的为您解答。"
 
@@ -142,7 +142,7 @@
         _lengthLab.text = [NSString stringWithFormat:@"0/%ld",(long)kMaxTextLength];
     }
     _lengthLab.textAlignment = NSTextAlignmentRight;
-    [self addSubview:_lengthLab];
+//    [self addSubview:_lengthLab];
     
     UIView * dashView= [[UIView alloc]initWithFrame:CGRectMake( 0, kInputViewHeight + NAV_HEIGHT + _lengthLab.height, SCREEN_WIDTH, 1)];
     [self addSubview:dashView];
@@ -182,23 +182,21 @@
         UIButton * cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         cameraBtn.frame = CGRectMake(20 + 50 * i, 5, 30, 30);
         if (i == 1) {
-            [cameraBtn setImage:[UIImage imageNamed:@"discuss_pv" color:MAIN_GREEN_COLOR] forState:UIControlStateNormal];
+            [cameraBtn setImage:[UIImage imageNamed:@"icon_ask_anonymous" ] forState:UIControlStateNormal];
             [cameraBtn addTarget:self action:@selector(anonymousAsk) forControlEvents:UIControlEventTouchUpInside];
         }else if (i == 2){
-            [cameraBtn setTitleColor:MAIN_GREEN_COLOR forState:UIControlStateNormal];
-            [cameraBtn setTitle:@"赏" forState:UIControlStateNormal];
-            cameraBtn.titleLabel.font = [UIFont boldSystemFontOfSize:13];
+            [cameraBtn setImage:[UIImage imageNamed:@"icon_ask_gold" ] forState:UIControlStateNormal];
             [cameraBtn addTarget:self action:@selector(rewardGold) forControlEvents:UIControlEventTouchUpInside];
             _rewardBtn = cameraBtn;
         }else if (i == 0){
-            [cameraBtn setImage:[UIImage imageNamed:@"camera_gray" color:MAIN_GREEN_COLOR] forState:UIControlStateNormal];
+            [cameraBtn setImage:[UIImage imageNamed:@"icon_ask_image" ] forState:UIControlStateNormal];
             [cameraBtn addTarget:self action:@selector(showCondition) forControlEvents:UIControlEventTouchUpInside];
         }
         [_functionButtonView addSubview:cameraBtn];
-        cameraBtn.clipsToBounds = YES;
-        cameraBtn.layer.cornerRadius = 15.0f;
-        cameraBtn.layer.borderWidth = 1.5;
-        cameraBtn.layer.borderColor = [MAIN_GREEN_COLOR CGColor];
+//        cameraBtn.clipsToBounds = YES;
+//        cameraBtn.layer.cornerRadius = 15.0f;
+//        cameraBtn.layer.borderWidth = 1.5;
+//        cameraBtn.layer.borderColor = [MAIN_GREEN_COLOR CGColor];
     }
     
     if ([ZEUtil isNotNull:self.QUESINFOM]) {
@@ -231,14 +229,17 @@
 
 -(void)initImageView
 {
+    if(_backImageView){
+        return;
+    }
+    
     _backImageView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 216)];
     [self addSubview:_backImageView];
     _backImageView.hidden = YES;
-    _backImageView.backgroundColor = MAIN_LINE_COLOR;
+    _backImageView.backgroundColor =  MAIN_LINE_COLOR;
     
 //    _dashView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
 //    [_backImageView addSubview:_dashView];
-//
 //    [self drawDashLine:_dashView lineLength:5 lineSpacing:2 lineColor:[UIColor lightGrayColor]];
     
     for (int i = 0; i < self.choosedImageArr.count + 1; i ++) {
@@ -252,8 +253,8 @@
             upImageBtn.layer.borderColor = [MAIN_DEEPLINE_COLOR CGColor];
             upImageBtn.layer.borderWidth = 1;
             
-            [upImageBtn addTarget:self action:@selector(showCondition) forControlEvents:UIControlEventTouchUpInside];
-            [upImageBtn setImage:[UIImage imageNamed:@"home_btn_more"] forState:UIControlStateNormal];
+            [upImageBtn addTarget:self action:@selector(addImageBtnClick) forControlEvents:UIControlEventTouchUpInside];
+            [upImageBtn setImage:[UIImage imageNamed:@"icon_add_image" color:MAIN_BLUE_COLOR] forState:UIControlStateNormal];
         }else{
             
             UIButton * deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -522,12 +523,12 @@
     btn.backgroundColor = MAIN_GREEN_COLOR;
     self.goldScore = scoreArr[btn.tag];
     
-    if([self.goldScore integerValue] == 0){
-        [_rewardBtn setTitle:@"赏" forState:UIControlStateNormal];
-    }else{
-        [ZEUtil shakeToShow:_rewardBtn];
-        [_rewardBtn setTitle:self.goldScore forState:UIControlStateNormal];
-    }
+//    if([self.goldScore integerValue] == 0){
+//        [_rewardBtn setTitle:@"赏" forState:UIControlStateNormal];
+//    }else{
+//        [ZEUtil shakeToShow:_rewardBtn];
+//        [_rewardBtn setTitle:self.goldScore forState:UIControlStateNormal];
+//    }
 }
 
 #pragma mark - Public Method
@@ -542,6 +543,7 @@
     for (UIView * view in _backImageView.subviews) {
         [view removeFromSuperview];
     }
+    [_backImageView removeFromSuperview];
     _backImageView = nil;
     
     [self initImageView];
@@ -559,7 +561,7 @@
     if([self.delegate respondsToSelector:@selector(changeAskQuestionTitle:)]){
         [self.delegate changeAskQuestionTitle:@"分类"];
     }
-    _askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    _askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) withMarginTop:NAV_HEIGHT + 200];
     _askTypeView.delegate = self;
     [self addSubview:_askTypeView];
     NSArray * typeArr = [[ZEQuestionTypeCache instance] getQuestionTypeCaches];
@@ -623,7 +625,7 @@
     if (textView.text.length > kMaxTextLength) {
         MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self animated:YES];
         hud3.mode = MBProgressHUDModeText;
-        hud3.detailsLabelText = @"最多显示200个字";
+        hud3.detailsLabelText = [NSString stringWithFormat:@"最多显示%d个字",kMaxTextLength];
         hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
         [hud3 hide:YES afterDelay:1.0f];
         

@@ -47,4 +47,13 @@
 
 /******* 发送 *******/
 -(void)didSelectSend:(NSString *)inputText;
+
+
+/**
+ *  @author Stenson, 16-08-04 09:08:55
+ *
+ *  进入问题链接
+ *
+ */
+-(void)presentWebVCWithUrl:(NSString *)urlStr;
 @end

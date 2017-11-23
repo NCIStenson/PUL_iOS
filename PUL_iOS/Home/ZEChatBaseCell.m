@@ -14,8 +14,6 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, 1);
-
         [self setupUI];
     }
     return self;
@@ -71,14 +69,38 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     
     self = [super initWithFrame:frame];
-    
-    _contentLab = [UILabel new];
-    _contentLab.origin = CGPointMake(kContentMarginLeft, kContentMarginTop);
-    _contentLab.numberOfLines = 0;
-    _contentLab.font = [UIFont systemFontOfSize:kFontSize];
-    [self addSubview:_contentLab];
-    
+    if (self) {
+        _contentLab = [[UITextView alloc]initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 40, 0)];
+        _contentLab.backgroundColor = [UIColor clearColor];
+        _contentLab.textColor = kTextColor;
+        _contentLab.origin = CGPointMake(kContentMarginLeft, kContentMarginTop);
+        _contentLab.font = [UIFont systemFontOfSize:kFontSize];
+        _contentLab.dataDetectorTypes = UIDataDetectorTypeAll;
+        _contentLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0);
+        _contentLab.delegate = self;
+        _contentLab.editable = NO;
+        _contentLab.scrollEnabled = NO;
+        [self addSubview:_contentLab];
+
+    }
     return self;
+}
+
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction NS_AVAILABLE_IOS(10_0);{
+    
+    if([_cell .delegate respondsToSelector:@selector(showWebVC:)] ){
+        [_cell.delegate showWebVC:URL.absoluteString];
+    }
+    
+    return NO;
+}
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange NS_DEPRECATED_IOS(7_0, 10_0, "Use textView:shouldInteractWithURL:inRange:forInteractionType: instead")
+{
+    if([_cell.delegate respondsToSelector:@selector(showWebVC:)] ){
+        [_cell.delegate showWebVC:URL.absoluteString];
+    }
+    return NO;
 }
 
 -(void)setContent:(id)infoM withLayout:(ZEChatLayout *)layout
@@ -93,13 +115,12 @@
     float textW = [textContentStr widthForFont:[UIFont systemFontOfSize:kFontSize]];
     float textH = [textContentStr heightForFont:[UIFont systemFontOfSize:kFontSize] width:kMaxWidth];
     if(textW >= kMaxWidth){
-        textH =[ZEUtil boundingRectWithSize:CGSizeMake(kMaxWidth, MAXFLOAT) WithStr:textContentStr andFont:[UIFont systemFontOfSize:kFontSize] andLinespace:kLabel_LineSpace];
+        textH = [ZEUtil heightForString:textContentStr font:_contentLab.font andWidth:kMaxWidth];
         _contentLab.size = CGSizeMake( kMaxWidth , textH );
     }else{
         _contentLab.size = CGSizeMake( textW ,textH );
     }
-    _contentLab.attributedText = [ZEUtil getAttributedStringWithString:textContentStr lineSpace:kLabel_LineSpace];
-//    _contentLab.textVerticalAlignment = YYTextVerticalAlignmentTop;
+    _contentLab.text = textContentStr;
     if (textH < 21) {
         textH = 21;
     }
@@ -111,7 +132,7 @@
     }
 
     [self.headImageView setImageWithURL:ZENITH_IMAGEURL(layout.headImageUrl) placeholder:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
-
+    
     if ([infoM isKindOfClass:[ZEQuestionInfoModel class]]) {
         if ([[ZESettingLocalData getUSERCODE] isEqual:((ZEQuestionInfoModel *)infoM).QUESTIONUSERCODE]) {
             self.headImageView.right = SCREEN_WIDTH - kRightHeadImageMarginRight;
@@ -129,7 +150,6 @@
             _contentLab.right = SCREEN_WIDTH - kContentMarginLeft;
         }
     }
-    
 }
 -(void)setChatContent:(ZEQuesAnsDetail *)infoM withLayout:(ZEChatLayout *)layout
 {
@@ -143,7 +163,7 @@
     }else{
         _contentLab.size = CGSizeMake( textW ,textH );
     }
-    _contentLab.attributedText = [ZEUtil getAttributedStringWithString:textContentStr lineSpace:kLabel_LineSpace];
+    _contentLab.text = textContentStr;
 
     if (textH < 21) {
         textH = 21;
@@ -154,7 +174,6 @@
         self.bubbleView.size = CGSizeMake( textW + 25 ,textH + 20 );
     }
     [self.headImageView setImageWithURL:ZENITH_IMAGEURL(layout.headImageUrl) placeholder:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
-    NSLog(@"   ===  %@",infoM.SYSUPDATORID);
     if ([[ZESettingLocalData getUSERCODE] isEqualToString:infoM.SYSCREATORID]) {
         self.headImageView.right = SCREEN_WIDTH - kRightHeadImageMarginRight;
         self.bubbleView.image = [[UIImage imageNamed:@"bubble_right" color:MAIN_NAV_COLOR_A(0.7)] stretchableImageWithLeftCapWidth:5 topCapHeight:20];
@@ -235,7 +254,6 @@
     }
     return self;
 }
-
 - (void)setLayout:(ZEChatLayout *)layout withContentType:(NSString *)typeStr
 {
     for (UIView * view in self.contentView.subviews) {
@@ -262,12 +280,12 @@
 }
 
 -(void)setUI:(ZEChatLayout *)layout{
-    _contentTextView = [ZEChatTextView new];
+    _contentTextView = [[ZEChatTextView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, layout.height)];
     _contentTextView.hidden = YES;
+    _contentTextView.cell= self;
     [self.contentView addSubview:_contentTextView];
     
-    _contentImageView = [ZEChatImageView new];
-//    _contentImageView.backgroundColor = MAIN_ARM_COLOR;
+    _contentImageView = [[ZEChatImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, layout.height)];
     _contentImageView.origin = CGPointMake(0, 0);
     _contentImageView.size = CGSizeMake(SCREEN_WIDTH, layout.height);
     _contentImageView.hidden = YES;

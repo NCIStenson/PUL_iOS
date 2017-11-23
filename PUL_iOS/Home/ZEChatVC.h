@@ -7,6 +7,7 @@
 //
 
 #import "ZESettingRootVC.h"
+#import "ZESchoolWebVC.h"
 
 @interface ZEChatVC : ZESettingRootVC
 

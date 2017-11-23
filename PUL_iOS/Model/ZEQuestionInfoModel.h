@@ -42,6 +42,8 @@
 
 +(ZEQuestionInfoModel *)getDetailWithDic:(NSDictionary *)dic;
 
+-(void)setValue:(id)value forUndefinedKey:(NSString *)key;
+
 @end
 
 @interface ZEQuesAnsDetail : NSObject

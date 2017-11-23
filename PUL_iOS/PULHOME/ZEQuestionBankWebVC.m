@@ -132,6 +132,7 @@
                                      @"start":@"0",
                                      @"METHOD":method,
                                      @"URLPATH":self.URLPATH,
+                                     @"MESTYPE":self.MESTYPE,
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
                                      @"CLASSNAME":className,

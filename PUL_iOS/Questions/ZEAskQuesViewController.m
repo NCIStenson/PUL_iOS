@@ -335,10 +335,12 @@
     }else if ([ZEUtil isEmpty:askView.inputView.text]){
         [self showAlertView:@"不能发表空白问题" isBack:NO];
         return;
-    }else if (askView.inputView.text.length > 200){
-        [self showAlertView:@"请输入不多于200字的问题描述" isBack:NO];
-        return;
-    }else{
+    }
+//    else if (askView.inputView.text.length > kMaxTextLength){
+//        [self showAlertView:[NSString stringWithFormat:@"请输入不多于%d字的问题描述",kMaxTextLength] isBack:NO];
+//        return;
+//    }
+    else{
         if (_enterType == ENTER_GROUP_TYPE_CHANGE) {
             UIAlertController * alertCont= [UIAlertController alertControllerWithTitle:@"是否确定修改问题" message:@"" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

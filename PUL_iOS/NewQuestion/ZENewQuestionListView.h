@@ -55,6 +55,13 @@
  */
 -(void)goQuestionDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel;
 
+/**
+ *  @author Stenson, 16-08-04 09:08:55
+ *
+ *  进入问题链接
+ *
+ */
+-(void)presentWebVCWithUrl:(NSString *)urlStr;
 
 /**
  进入问题搜索界面

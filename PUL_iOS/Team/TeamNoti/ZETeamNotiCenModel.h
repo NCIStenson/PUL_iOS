@@ -18,6 +18,7 @@
 @property (nonatomic,copy) NSString * ISRECEIPT;
 @property (nonatomic,copy) NSString * RECEIPTCOUNT;
 @property (nonatomic,copy) NSString * MRSTYLE;
+@property (nonatomic,copy) NSString * MESNAME;
 @property (nonatomic,copy) NSString * SYSCREATEDATE;
 @property (nonatomic,copy) NSString * USERNAME;
 @property (nonatomic,copy) NSString * CREATORNAME;

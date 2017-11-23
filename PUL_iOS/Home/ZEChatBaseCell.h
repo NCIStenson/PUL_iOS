@@ -34,6 +34,8 @@
 
 - (void)contentImageClick:(NSString *)contentImageURL;
 
+-(void)showWebVC:(NSString *)urlStr;
+
 @end
 
 
@@ -49,8 +51,8 @@
 
 @interface ZEChatTextView : ZEChatBaseView
 
-@property (nonatomic, strong) UILabel *contentLab;              // 容器
-
+@property (nonatomic, strong) UITextView *contentLab;              // 容器
+@property (nonatomic,weak) ZEChatBaseCell * cell;
 -(void)setContent:(id)infoM withLayout:(ZEChatLayout *)layout;
 @end
 

@@ -17,6 +17,7 @@
 #import "ZEAskQuesViewController.h"
 
 #import "ZENewSearchQuestionVC.h"
+#import "ZESchoolWebVC.h"
 @interface ZENewQuestionListVC ()<ZENewQuestionListViewDelegate>
 {
     ZENewQuestionListView * _questionListView;
@@ -291,15 +292,6 @@
         return;
     }
     
-    //    for (NSDictionary * dic in _datasArr) {
-    //        ZEAnswerInfoModel * answerInfo = [ZEAnswerInfoModel getDetailWithDic:dic];
-    //        if ([answerInfo.ANSWERUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]) {
-    //            [self acceptTheAnswerWithQuestionInfo:_questionInfoModel
-    //                                   withAnswerInfo:answerInfo];
-    //            return;
-    //        }
-    //    }
-    
     if ([questionInfo.ISSOLVE boolValue]) {
         [self showTips:@"该问题已有答案被采纳"];
         return;
@@ -381,6 +373,14 @@
     ZEAskQuesViewController * askQues = [[ZEAskQuesViewController alloc]init];
     askQues.enterType = ENTER_GROUP_TYPE_TABBAR;
     [self presentViewController:askQues animated:YES completion:nil];
+}
+
+-(void)presentWebVCWithUrl:(NSString *)urlStr
+{
+    ZESchoolWebVC * webvc = [[ZESchoolWebVC alloc]init];
+    webvc.enterType = ENTER_WEBVC_QUESTION;
+    webvc.webURL = urlStr;
+    [self.navigationController pushViewController:webvc animated:YES];
 }
 
 -(void)goSearchView

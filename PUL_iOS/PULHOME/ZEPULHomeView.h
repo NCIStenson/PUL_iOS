@@ -39,6 +39,11 @@
  */
 -(void)goZYQ;
 
+-(void)goZJJD;
+-(void)goDXAL;
+-(void)goHYGF;
+
+
 /**
  跳转专业圈
  */

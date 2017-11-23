@@ -89,7 +89,7 @@
         ZEQuestionTypeModel * questionTypeM = nil;
         ZEQuestionTypeModel * typeM = [ZEQuestionTypeModel getDetailWithDic:dic];
         for (int i = 0; i < typeCodeArr.count; i ++) {
-            if ([typeM.CODE isEqualToString:typeCodeArr[i]]) {
+              if ([typeM.CODE isEqualToString:typeCodeArr[i]]) {
                 questionTypeM = typeM;
                 if (![ZEUtil isStrNotEmpty:typeNameContent]) {
                     typeNameContent = questionTypeM.NAME;

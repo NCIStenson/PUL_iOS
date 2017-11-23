@@ -7,7 +7,6 @@
 //
 
 #import "ZENewQuestionDetailView.h"
-#import "ZENewQuestionListCell.h"
 
 @implementation ZENewQuestionDetailView
 
@@ -135,6 +134,7 @@
 //    headerView.backgroundColor = [UIColor cyanColor];
     
     ZENewQuestionListCell * cellView = [[ZENewQuestionListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    cellView.delegate = self;
     [cellView setLayout:layout];
     [headerView addSubview:cellView];
 
@@ -159,9 +159,8 @@
     [headerView addSubview:underlineView];
     
     _orderBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _orderBtn.frame = CGRectMake(SCREEN_WIDTH - 80, commentLab.top, 60, 40);
-    [_orderBtn setTitleColor:MAIN_SUBTITLE_COLOR forState:UIControlStateNormal];
-    [_orderBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
+    _orderBtn.frame = CGRectMake(SCREEN_WIDTH - 80, commentLab.top, 70, 40);
+    [_orderBtn setTitleColor:MAIN_BLUE_COLOR forState:UIControlStateNormal];
     _orderBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
     [headerView addSubview:_orderBtn];
     _orderBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -170,7 +169,7 @@
     }else{
         [_orderBtn setTitle:@" 按时间" forState:UIControlStateNormal];
     }
-    [_orderBtn setImage:[UIImage imageNamed:@"center_name_logo.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
+    [_orderBtn setImage:[UIImage imageNamed:@"icon_order" color:MAIN_BLUE_COLOR] forState:UIControlStateNormal];
     [_orderBtn addTarget:self action:@selector(showOptionView:) forControlEvents:UIControlEventTouchUpInside];
     
     headerView.backgroundColor = [UIColor whiteColor];
@@ -248,6 +247,18 @@
 }
 
 #pragma mark - ZENewQuestionDetailViewDelegate
+-(void)showWebVC:(NSString *)urlStr
+{
+    if ([self.delegate respondsToSelector:@selector(presentWebVCWithUrl:)]) {
+        [self.delegate presentWebVCWithUrl:urlStr];
+    }
+}
+-(void)showDetailWebVC:(NSString *)urlStr
+{
+    if ([self.delegate respondsToSelector:@selector(presentWebVCWithUrl:)]) {
+        [self.delegate presentWebVCWithUrl:urlStr];
+    }
+}
 
 -(void)answerQuestion{
     if ([self.delegate respondsToSelector:@selector(answerQuestion)]) {

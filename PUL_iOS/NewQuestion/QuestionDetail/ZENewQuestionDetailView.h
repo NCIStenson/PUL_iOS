@@ -10,6 +10,7 @@
 #import "ZEWithoutDataTipsView.h"
 #import "ZENewQuestionDetailCell.h"
 #import "ZEShowOptionView.h"
+#import "ZENewQuestionListCell.h"
 
 @class ZENewQuestionDetailView;
 
@@ -31,6 +32,14 @@
  */
 -(void)giveQuestionPraise;
 
+/**
+ *  @author Stenson, 16-08-04 09:08:55
+ *
+ *  进入问题链接
+ *
+ */
+-(void)presentWebVCWithUrl:(NSString *)urlStr;
+
 -(void)acceptBestAnswer:(ZEAnswerInfoModel *)answerInfo;
 
 -(void)enterAnswerDetailView:(ZEAnswerInfoModel *)answerInfo;
@@ -39,7 +48,7 @@
 
 @end
 
-@interface ZENewQuestionDetailView : UIView<UITableViewDelegate,UITableViewDataSource,ZENewQuestionDetailCellDelegate,ZEShowOptionViewDelegate>
+@interface ZENewQuestionDetailView : UIView<UITableViewDelegate,UITableViewDataSource,ZENewQuestionDetailCellDelegate,ZEShowOptionViewDelegate,ZENewQuestionListCellDelegate>
 {
     ZEWithoutDataTipsView *tipsView;
     UITableView * contentTableView;

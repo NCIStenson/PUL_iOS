@@ -8,7 +8,9 @@
 
 #import "ZESettingRootVC.h"
 #import "ZEShowQuestionView.h"
-
+#import "ZESchoolWebVC.h"
+#import "ZENewQuestionDetailVC.h"
+#import "ZENewAnswerQuestionVC.h"
 #import "ZEExpertModel.h"
 
 @interface ZEShowQuestionVC : ZESettingRootVC

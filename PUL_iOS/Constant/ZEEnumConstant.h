@@ -46,7 +46,8 @@ typedef enum : NSUInteger {
 } ENTER_GROUP_TYPE;
 
 typedef enum : NSUInteger {
-    ENTER_CASE_TYPE_DEFAULT,
+    ENTER_CASE_TYPE_RECOMMAND,
+    ENTER_CASE_TYPE_NEWEST,
     ENTER_CASE_TYPE_SETTING,
 } ENTER_CASE_TYPE;
 
@@ -81,7 +82,8 @@ typedef enum : NSUInteger {
     ENTER_WEBVC_WORK_STANDARD, // 关于知道
     ENTER_WEBVC_MY_PRACTICE,
     ENTER_WEBVC_SYSTEMNOTI,
-} ENTER_WEBVC;   // 进入团队问题搜索页面
+    ENTER_WEBVC_QUESTION,
+} ENTER_WEBVC;   // 进入网页展示界面
 
 typedef enum : NSUInteger {
     ENTER_WKWEBVC_PRACTICE, // 练习管理

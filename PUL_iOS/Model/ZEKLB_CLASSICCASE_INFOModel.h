@@ -20,6 +20,7 @@
 @property (nonatomic,copy) NSString * FILETYPE;
 @property (nonatomic,copy) NSString * FILEURL;
 @property (nonatomic,copy) NSString * QUESTIONTYPECODE;
+@property (nonatomic,copy) NSString * QUESTIONTYPENAME;
 @property (nonatomic,copy) NSString * SEQKEY;
 @property (nonatomic,copy) NSString * SYSCREATEDATE;
 @property (nonatomic,copy) NSString * H5URL;

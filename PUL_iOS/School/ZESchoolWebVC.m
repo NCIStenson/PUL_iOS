@@ -52,6 +52,8 @@
         self.title = @"我的练习";
     }else if (_enterType == ENTER_WEBVC_SYSTEMNOTI){
         self.title = @"系统通知";
+    }else{
+        self.title = @"知道问答";
     }
     
     [self initWebView];
@@ -66,11 +68,11 @@
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-//    [webView loadRequest:[NSURL URLWithString:nil]];
-//    [webView removeFromSuperview];
-//    webView = nil;
-//    webView.delegate = nil;
-//    [webView stopLoading];
+    [webView loadRequest:[NSURL URLWithString:nil]];
+    [webView removeFromSuperview];
+    webView = nil;
+    webView.delegate = nil;
+    [webView stopLoading];
 }
 
 
@@ -123,6 +125,10 @@
             [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webURL]]];
         }else if (self.htmlStr.length > 0){
             [webView loadHTMLString:self.htmlStr baseURL:nil];
+        }
+    }else{
+        if(self.webURL.length > 0){
+            [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.webURL]]];
         }
     }
 }

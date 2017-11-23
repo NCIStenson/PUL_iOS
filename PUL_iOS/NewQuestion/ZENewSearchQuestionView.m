@@ -326,7 +326,7 @@
         [self.delegate hiddenWithoutTipsView];
     }
     
-    _askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)  withIsFullScreen:YES];
+    _askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)  withMarginTop:NAV_HEIGHT + 45];
     _askTypeView.delegate = self;
     [self addSubview:_askTypeView];
     NSArray * typeArr = [[ZEQuestionTypeCache instance] getQuestionTypeCaches];

@@ -678,7 +678,7 @@
 -(void)goMoreCaseAnswerView
 {
     ZETypicalCaseVC * caseVC = [[ZETypicalCaseVC alloc]init];
-    caseVC.enterType = ENTER_CASE_TYPE_DEFAULT;
+    caseVC.enterType = ENTER_CASE_TYPE_NEWEST;
     [self.navigationController pushViewController:caseVC animated:YES];
 }
 -(void)goMoreExpertAnswerView

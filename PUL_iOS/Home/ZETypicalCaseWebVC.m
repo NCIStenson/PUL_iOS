@@ -66,6 +66,7 @@
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
+    NSLog(@" ===== %@",error);
     [self showTips:@"文件格式不支持"];
 }
 

@@ -166,4 +166,6 @@
 #pragma mark - 输入字符长度 一个汉字 = 两个英文字符
 +(NSInteger)sinaCountWord:(NSString *)s;
 
+#pragma mark - 正则表达式判断链接位置
++ (NSRange)getRangeOfURL:(NSString *)string;
 @end

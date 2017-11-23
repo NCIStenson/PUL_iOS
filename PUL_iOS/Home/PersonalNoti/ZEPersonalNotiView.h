@@ -17,7 +17,7 @@
 
 -(void)didSelectQuestionMessage:(ZETeamNotiCenModel *)notiModel;
 
--(void)didSelectWebViewWithIndex:(NSString *)urlpath;
+-(void)didSelectWebViewWithIndex:(ZETeamNotiCenModel *)notiModel;
 
 /**
  *  刷新界面

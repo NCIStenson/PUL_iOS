@@ -384,6 +384,21 @@
          专家在线 专业圈
          */
         [button addTarget:self action:@selector(goZYQ) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"ZJJD"]){
+        /**
+         专家在线 专业圈
+         */
+        [button addTarget:self action:@selector(goZJJD) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"HYGF"]){
+        /**
+         专家在线 专业圈
+         */
+        [button addTarget:self action:@selector(goHYGF) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"DXAL"]){
+        /**
+         专家在线 专业圈
+         */
+        [button addTarget:self action:@selector(goDXAL) forControlEvents:UIControlEventTouchUpInside];
     }else{
         [button addTarget:self action:@selector(goWebVC:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -554,6 +569,41 @@
         [self.delegate goZYXGCP];
     }
 }
+
+-(void)goZJJD
+{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(goZJJD)]) {
+        [self.delegate goZJJD];
+    }
+}
+
+-(void)goDXAL
+{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(goDXAL)]) {
+        [self.delegate goDXAL];
+    }
+}
+
+-(void)goHYGF
+{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(goHYGF)]) {
+        [self.delegate goHYGF];
+    }
+}
+
+
 /**
  岗位体系
  */

@@ -9,7 +9,7 @@
 #define kNavViewMarginLeft 0.0f
 #define kNavViewMarginTop NAV_HEIGHT
 #define kNavViewWidth SCREEN_WIDTH
-#define kNavViewHeight 30.0f
+#define kNavViewHeight 85.0f
 
 #define kContentViewMarginLeft  0.0f
 #define kContentViewMarginTop   NAV_HEIGHT + kNavViewHeight
@@ -20,7 +20,7 @@
 #import "ZETypicalCaseView.h"
 
 #import "ZEKLB_CLASSICCASE_INFOModel.h"
-@interface ZETypicalCaseView ()<UITableViewDelegate,UITableViewDataSource>
+@interface ZETypicalCaseView ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     UIButton * optionBtn;
     UIButton * newestBtn;
@@ -62,28 +62,24 @@
         return;
     }
     UIView * navView = [[UIView alloc]initWithFrame:CGRectMake(kNavViewMarginLeft, kNavViewMarginTop, kNavViewWidth, kNavViewHeight)];
-    navView.backgroundColor = MAIN_LINE_COLOR;
+    navView.top = 0;
     [self addSubview:navView];
     [ZEUtil addGradientLayer:navView];
+    navView.top = NAV_HEIGHT;
     
-    UILabel * screenLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 30, kNavViewHeight)];
-    screenLab.text = @"筛选";
-    screenLab.font = [UIFont systemFontOfSize:12];
-    [navView addSubview:screenLab];
+    UIView * searchView = [UIView new];
+    searchView.frame = CGRectMake(30 , 5, SCREEN_WIDTH - 60, 35);
+    [navView addSubview:searchView];
+    [searchView addSubview:[self searchTextfieldView]];
     
-    optionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [optionBtn setTitle:@"全部" forState:UIControlStateNormal];
-    [optionBtn setImage:[UIImage imageNamed:@"icon_up.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
-    [optionBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
-    [optionBtn setFrame:CGRectMake(45, 0, 40, kNavViewHeight)];
-    optionBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [optionBtn addTarget:self action:@selector(showOptions) forControlEvents:UIControlEventTouchUpInside];
-    [navView addSubview:optionBtn];
+    UIView * orederView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, kNavViewHeight - 45)];
+    orederView.backgroundColor = [UIColor whiteColor];
+    [navView addSubview:orederView];
     
     newestBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [newestBtn setTitle:@"按最新" forState:UIControlStateNormal];
     [newestBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
-    [newestBtn setFrame:CGRectMake(SCREEN_WIDTH - 90, 0, 40, kNavViewHeight)];
+    [newestBtn setFrame:CGRectMake(20, 45, 80, orederView.height)];
     newestBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     [newestBtn addTarget:self action:@selector(sortCondition:) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:newestBtn];
@@ -91,16 +87,40 @@
     hotestBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [hotestBtn setTitle:@"按最热" forState:UIControlStateNormal];
     [hotestBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [hotestBtn setFrame:CGRectMake(SCREEN_WIDTH - 45, 0, 40, kNavViewHeight)];
+    [hotestBtn setFrame:CGRectMake(120, 45, 80, orederView.height)];
     hotestBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     [hotestBtn addTarget:self action:@selector(sortCondition:) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:hotestBtn];
 }
 
+-(UIView *)searchTextfieldView
+{
+    UIView * searchTFView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 60, 30)];
+    searchTFView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5 ];
+    
+    UIImageView * searchTFImg = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 18, 18)];
+    searchTFImg.image = [UIImage imageNamed:@"search_icon"];
+    [searchTFView addSubview:searchTFImg];
+    
+    _questionSearchTF =[[UITextField alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 50, 30)];
+    [searchTFView addSubview:_questionSearchTF];
+    _questionSearchTF.placeholder = @"关键词筛选";
+    [_questionSearchTF setReturnKeyType:UIReturnKeySearch];
+    _questionSearchTF.font = [UIFont systemFontOfSize:14];
+    _questionSearchTF.leftViewMode = UITextFieldViewModeAlways;
+    _questionSearchTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 25, 30)];
+    _questionSearchTF.delegate=self;
+    searchTFView.clipsToBounds = YES;
+    searchTFView.layer.cornerRadius = 5;
+    
+    return searchTFView;
+}
+
+
 -(void)initContentView
 {
     _contentView = [[UITableView alloc]initWithFrame:CGRectMake(kContentViewMarginLeft, kContentViewMarginTop, kContentViewWidth, kContentViewHeight) style:UITableViewStylePlain];
-
+    _contentView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _contentView.delegate = self;
     _contentView.dataSource = self;
     [self addSubview:_contentView];
@@ -130,7 +150,6 @@
         
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hiddenOptionView)];
         [_optionView addGestureRecognizer:tap];
-        
         
         UIView * navView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kNavViewWidth, kNavViewHeight)];
         navView.backgroundColor = [UIColor whiteColor];
@@ -195,12 +214,12 @@
         return;
     }
     _currentBtn = btn;
-    NSString *  sortOrderSQL = @"SYSCREATEDATE desc";
+    NSString *  sortOrderSQL = @"1";
     if ([btn isEqual:newestBtn]) {
         [newestBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
         [hotestBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }else if ([btn isEqual:hotestBtn]){
-        sortOrderSQL = @"CLICKCOUNT desc";
+        sortOrderSQL = @"2";
         [newestBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [hotestBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
     }
@@ -251,7 +270,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80.0f;
+    return 100.0f;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -274,47 +293,51 @@
 {
     ZEKLB_CLASSICCASE_INFOModel * infoModel = [ZEKLB_CLASSICCASE_INFOModel getDetailWithDic:self.classicalCaseArr[indexPath.row]];
     
-    UIImageView * contentImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 100, 70)];
+    [ZEUtil addLineLayerMarginLeft:0 marginTop:0 width:SCREEN_WIDTH height:5 superView:cellView];
+    
+    UIImageView * contentImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 100, 70)];
     [cellView addSubview:contentImageView];
     if ([ZEUtil isStrNotEmpty:infoModel.FILEURL]) {
         [contentImageView sd_setImageWithURL:ZENITH_IMAGEURL(infoModel.FILEURL) placeholderImage:ZENITH_PLACEHODLER_IMAGE];
     }
-    UILabel * contentLab = [[UILabel alloc]initWithFrame:CGRectMake(115, 5, SCREEN_WIDTH - 120, 40.0f)];
+    UILabel * contentLab = [[UILabel alloc]initWithFrame:CGRectMake(115, contentImageView.top, SCREEN_WIDTH - 180, 40.0f)];
     contentLab.text = infoModel.CASENAME;
+    contentLab.textColor = kTextColor;
     contentLab.numberOfLines = 2;
-    contentLab.font = [UIFont systemFontOfSize:12];
+    contentLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
     [cellView addSubview:contentLab];
     
     NSString * praiseNumLabText =[NSString stringWithFormat:@"%ld",(long)[infoModel.CLICKCOUNT integerValue]];
     
     float praiseNumWidth = [ZEUtil widthForString:praiseNumLabText font:[UIFont boldSystemFontOfSize:10] maxSize:CGSizeMake(200, 20)];
 
-    UILabel * commentLab = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - praiseNumWidth - 20,60,praiseNumWidth,20.0f)];
+    UILabel * commentLab = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - praiseNumWidth - 20,contentImageView.top + 5,praiseNumWidth,20.0f)];
     commentLab.text  = praiseNumLabText;
     commentLab.font = [UIFont boldSystemFontOfSize:10];
     commentLab.textColor = MAIN_SUBTITLE_COLOR;
     [cellView addSubview:commentLab];
     
-    UIImageView * commentImg = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - praiseNumWidth - 45.0f, 60.0f, 20, 15)];
+    UIImageView * commentImg = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - praiseNumWidth - 45.0f, commentLab.top + 1, 20, 15)];
     commentImg.image = [UIImage imageNamed:@"discuss_pv.png"];
     commentImg.contentMode = UIViewContentModeScaleAspectFit;
     [cellView addSubview:commentImg];
 
-    // 圈组分类最右边
-    float circleTypeR = SCREEN_WIDTH - praiseNumWidth - 30;
-    
-    float circleWidth = [ZEUtil widthForString:infoModel.CASESCORE font:[UIFont systemFontOfSize:10.0f] maxSize:CGSizeMake(200, 20)];
-    
-    UIImageView * circleImg = [[UIImageView alloc]initWithFrame:CGRectMake(circleTypeR - circleWidth - 50.0f, 60.0f, 15, 15)];
-    circleImg.image = [UIImage imageNamed:@"coursecell_list_score.png"];
-    [cellView addSubview:circleImg];
-    
-    UILabel * circleLab = [[UILabel alloc]initWithFrame:CGRectMake(circleImg.frame.origin.x + 20,58.0f,circleWidth,20.0f)];
-    circleLab.text = infoModel.CASESCORE;
-    circleLab.font = [UIFont systemFontOfSize:10.0f];
+    UILabel * circleLab = [[UILabel alloc]initWithFrame:CGRectMake(115,80,SCREEN_WIDTH - 120,20)];
+    circleLab.text = [NSString stringWithFormat:@"简介：%@",infoModel.CASEEXPLAIN];
+    circleLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
     circleLab.textColor = MAIN_SUBTITLE_COLOR;
     [cellView addSubview:circleLab];
     
+    UIImageView * typeImg = [[UIImageView alloc]initWithFrame:CGRectMake(115, 60, 15, 15)];
+    typeImg.image = [UIImage imageNamed:@"answer_tag"];
+    [cellView addSubview:typeImg];
+    
+    UILabel * _typeContentLab = [[UILabel alloc]initWithFrame:CGRectMake(typeImg.right + 10,58,SCREEN_WIDTH - 160,20)];
+    _typeContentLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
+    _typeContentLab.text = infoModel.QUESTIONTYPENAME;
+    _typeContentLab.textColor = MAIN_SUBTITLE_COLOR;
+    _typeContentLab.numberOfLines = 0;
+    [cellView addSubview:_typeContentLab];
 }
 
 #pragma mark - UITableViewDelegate
@@ -324,6 +347,11 @@
     if ([self.delegate respondsToSelector:@selector(goTypicalCaseDetailVC:)]) {
         [self.delegate goTypicalCaseDetailVC:self.classicalCaseArr[indexPath.row]];
     }
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [_questionSearchTF resignFirstResponder];
 }
 
 #pragma mark - ZETypicalCaseViewDelegate
@@ -347,6 +375,22 @@
     }
 }
 
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [_questionSearchTF resignFirstResponder];
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    if(textField.text.length > 0){
+        if([self.delegate respondsToSelector:@selector(goSearchWithSearchStr:)]){
+            [self.delegate goSearchWithSearchStr:textField.text];
+        }
+    }
+    
+    return YES;
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

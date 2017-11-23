@@ -29,6 +29,10 @@
  */
 -(void)giveQuestionPraise:(ZEQuestionInfoModel *)questionInfo;
 
+-(void)goDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel;
+
+-(void)showWebVC:(NSString *)urlStr;
+
 @end
 
 #pragma mark - 处理问题方式  回答 点赞
@@ -67,12 +71,12 @@
 @end
 
 #pragma mark - 问题文本
-@interface ZEListCellTextContent:UIView
+@interface ZEListCellTextContent:UIView<UITextViewDelegate>
 
-@property (nonatomic,strong) UILabel * contentLab;
+@property (nonatomic,strong) UITextView * contentLab;
+@property (nonatomic,strong) UIButton * seeAllExplainLab;
 
-@property (nonatomic,strong) UILabel * seeAllExplainLab;
-
+@property (nonatomic,strong) ZENewQuetionLayout *layout;
 @property (nonatomic,weak) ZENewQuestionListCell * listCell;
 
 @end
@@ -92,8 +96,6 @@
 @end
 
 @interface ZENewQuestionListCell : UITableViewCell
-
--(id)initQuestionDetailHeaderView;
 
 @property (nonatomic,weak) id <ZENewQuestionListCellDelegate> delegate;
 

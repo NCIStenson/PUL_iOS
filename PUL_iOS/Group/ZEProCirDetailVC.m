@@ -11,7 +11,8 @@
 
 #import "ZEProCirDynamicVC.h"
 
-#import "ZETypicalCaseVC.h"
+//#import "ZETypicalCaseVC.h"
+#import "ZETypicalCaseHomeVC.h"
 #import "ZETypicalCaseDetailVC.h"
 
 #import "ZEExpertListVC.h"
@@ -359,8 +360,8 @@
 
 -(void)goMoreCaseVC
 {
-    ZETypicalCaseVC * caseVC = [[ZETypicalCaseVC alloc]init];
-    caseVC.enterType = ENTER_CASE_TYPE_DEFAULT;
+    ZETypicalCaseHomeVC * caseVC = [[ZETypicalCaseHomeVC alloc]init];
+//    caseVC.enterType = ENTER_CASE_TYPE_DEFAULT;
     [self.navigationController pushViewController:caseVC animated:YES];
 }
 

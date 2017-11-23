@@ -134,7 +134,7 @@
     _typeBtn.contentMode = UIViewContentModeScaleAspectFit;
     _typeBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:_typeBtn];
-    [_typeBtn setImage:[UIImage imageNamed:@"logo"] forState:UIControlStateNormal];
+    [_typeBtn setImage:[UIImage imageNamed:@"icon_ask"] forState:UIControlStateNormal];
     [_typeBtn addTarget:self action:@selector(plusBtnDidClick) forControlEvents:UIControlEventTouchUpInside];
 
 }
@@ -149,8 +149,6 @@
  */
 -(void)reloadFirstView:(NSArray *)dataArr withHomeContent:(HOME_CONTENT)content_page;
 {
-    UITableView * contentTableView;
-    
     switch (content_page) {
         case HOME_CONTENT_RECOMMAND:
             self.recommandQuestionArr = [NSMutableArray array];
@@ -165,11 +163,13 @@
             break;
     }
     
-    ZE_weakify(self);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        ZE_strongify(weakSelf);
+//    ZE_weakify(self);
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        ZE_strongify(weakSelf);
         NSMutableArray * arr = [NSMutableArray array];
         for (int i = 0; i < dataArr.count ; i ++) {
+//            ZEQuestionInfoModel * quesAnsDetail = [ZEQuestionInfoModel new];
+//            [quesAnsDetail setValuesForKeysWithDictionary:dataArr[i]];
             ZEQuestionInfoModel * quesAnsDetail = [ZEQuestionInfoModel getDetailWithDic:dataArr[i]];
             ZENewQuetionLayout * layout = [[ZENewQuetionLayout alloc]initWithModel:quesAnsDetail];
             [arr addObject:layout];
@@ -188,9 +188,9 @@
                 break;
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            _currentHomeContent = content_page;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+    
+//            _currentHomeContent = content_page;
             
             UITableView * contentTableView;
             contentTableView = (UITableView *)[_contentScrollView viewWithTag:100 + content_page];
@@ -200,9 +200,9 @@
             
             [contentTableView.mj_header endRefreshingWithCompletionBlock:nil];
             [contentTableView reloadData];
-        });
-        
-    });
+//        });
+//
+//    });
 
 }
 /**
@@ -213,7 +213,7 @@
 
 -(void)reloadContentViewWithArr:(NSArray *)dataArr withHomeContent:(HOME_CONTENT)content_page;
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSMutableArray * arr = [NSMutableArray array];
         for (int i = 0; i < dataArr.count ; i ++) {
             ZEQuestionInfoModel * quesAnsDetail = [ZEQuestionInfoModel getDetailWithDic:dataArr[i]];
@@ -234,8 +234,8 @@
                 break;
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
+//        dispatch_async(dispatch_get_main_queue(), ^{
+    
             _currentHomeContent = content_page;
             
             UITableView * contentTableView;
@@ -252,9 +252,9 @@
                 [contentTableView.mj_footer endRefreshingWithNoMoreData];
             }
             
-        });
-        
-    });
+//        });
+//
+//    });
 
     
 }
@@ -417,6 +417,19 @@
     }
 }
 
+-(void)goDetailVCWithQuestionInfo:(ZEQuestionInfoModel *)infoModel
+{
+    if ([self.delegate respondsToSelector:@selector(goQuestionDetailVCWithQuestionInfo:)]) {
+        [self.delegate goQuestionDetailVCWithQuestionInfo:infoModel];
+    }
+}
+
+-(void)showWebVC:(NSString *)urlStr
+{
+    if ([self.delegate respondsToSelector:@selector(presentWebVCWithUrl:)]) {
+        [self.delegate presentWebVCWithUrl:urlStr];
+    }
+}
 
 
 #pragma mark - ZENewQuestionListCellDelegate
@@ -461,7 +474,23 @@
             ZENewQuetionLayout * newLayout = layout;
             newLayout.questionInfo.ISGOOD = YES;
             newLayout.questionInfo.GOODNUMS = [NSString stringWithFormat:@"%ld",(long) [newLayout.questionInfo.GOODNUMS integerValue] + 1 ];
-            [self.newestQuestionArr replaceObjectAtIndex:i withObject:newLayout];
+            switch (_currentHomeContent) {
+                case HOME_CONTENT_RECOMMAND:
+                    [self.recommandQuestionArr replaceObjectAtIndex:i withObject:newLayout];
+                    break;
+                    
+                case HOME_CONTENT_NEWEST:
+                    [self.newestQuestionArr replaceObjectAtIndex:i withObject:newLayout];
+                    break;
+                    
+                case HOME_CONTENT_BOUNS:
+                    [self.bonusQuestionArr replaceObjectAtIndex:i withObject:newLayout];
+                    break;
+                    
+                default:
+                    break;
+            }
+
             break;
         }else{
             i ++;

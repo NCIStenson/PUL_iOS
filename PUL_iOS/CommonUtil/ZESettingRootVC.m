@@ -99,7 +99,7 @@
 - (void)initNavBar
 {
     _navBar = [[UIView alloc] initWithFrame:CGRectMake(kNavBarMarginLeft, kNavBarMarginTop, kNavBarWidth, kNavBarHeight)];
-    _navBar.backgroundColor = MAIN_NAV_COLOR;
+//    _navBar.backgroundColor = MAIN_NAV_COLOR;
     _navBar.clipsToBounds = YES;
     
     [ZEUtil addGradientLayer:_navBar];
@@ -139,10 +139,10 @@
     
     [_navBar addSubview:_titleLabel];
     
-    line = [CALayer layer];
-    line.frame = CGRectMake(0, kNavBarHeight - 0.5f, kNavBarWidth, 0.5f);
-    line.backgroundColor = [[UIColor lightGrayColor] CGColor];
-    [_navBar.layer addSublayer:line];
+//    line = [CALayer layer];
+//    line.frame = CGRectMake(0, kNavBarHeight - 0.5f, kNavBarWidth, 0.5f);
+//    line.backgroundColor = [[UIColor lightGrayColor] CGColor];
+//    [_navBar.layer addSublayer:line];
     
     
     [self.view addSubview:_navBar];

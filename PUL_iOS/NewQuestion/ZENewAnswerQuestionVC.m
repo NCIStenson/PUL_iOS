@@ -186,10 +186,11 @@
     }else if ([ZEUtil isEmpty:_answerQuesView.inputView.text]){
         [self showTips:@"不能回复空白答案"];
         return;
-    }else if (_answerQuesView.inputView.text.length > 500){
-        [self showTips:@"您输入的内容已超过500个字"];
-        return;
     }
+//    else if (_answerQuesView.inputView.text.length > 500){
+//        [self showTips:@"您输入的内容已超过500个字"];
+//        return;
+//    }
     else{
         UIAlertController * alertCont= [UIAlertController alertControllerWithTitle:@"是否确定提交问题答案" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

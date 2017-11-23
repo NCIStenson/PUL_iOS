@@ -31,6 +31,10 @@ static ZEExpertModel * expertM = nil;
     expertM.STATUS = [dic objectForKey:@"STATUS"];
     expertM.USERCODE = [dic objectForKey:@"USERCODE"];
     expertM.USERNAME = [dic objectForKey:@"USERNAME"];
+    
+    expertM.SCORE = [NSString stringWithFormat:@"%@",[dic objectForKey:@"SCORE"]];
+    expertM.ISONLINE = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ISONLINE"]];
+    expertM.CLICKCOUNT = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CLICKCOUNT"]];
 //    expertM.DESCRIBE = [dic objectForKey:@"DESCRIBE"];
 //    quesInfoM.INFOCOUNT        =  [NSString stringWithFormat:@"%@",[dic objectForKey:@"INFOCOUNT"]];
 //    quesInfoM.ISANONYMITY      = [[dic objectForKey:@"ISANONYMITY"] boolValue];

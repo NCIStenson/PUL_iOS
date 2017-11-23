@@ -120,12 +120,6 @@
         
         [self initChatView];
 
-//        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyboardHide)];
-//        //设置成NO表示当前控件响应后会传播到其他控件上，默认为YES。
-//        tapGestureRecognizer.cancelsTouchesInView = NO;
-//        //将触摸事件添加到当前view
-//        [self addGestureRecognizer:tapGestureRecognizer];
-
         _isShowedKeyboard = NO;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -392,6 +386,14 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self endEditing:YES];
+}
+
+
+-(void)showWebVC:(NSString *)urlStr
+{
+    if ([self.delegate respondsToSelector:@selector(presentWebVCWithUrl:)]) {
+        [self.delegate presentWebVCWithUrl:urlStr];
+    }
 }
 
 /*

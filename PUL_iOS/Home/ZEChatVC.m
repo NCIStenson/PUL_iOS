@@ -22,9 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-
     self.automaticallyAdjustsScrollViewInsets = NO;
-
     if([_questionInfo.QUESTIONUSERCODE isEqualToString:[ZESettingLocalData getUSERCODE]]){
         if([_questionInfo.ISSOLVE boolValue]){
             [self.rightBtn setTitle:@"已采纳" forState:UIControlStateNormal];
@@ -377,8 +375,13 @@
                              }];
 }
 
-
-
+-(void)presentWebVCWithUrl:(NSString *)urlStr
+{
+    ZESchoolWebVC * webvc = [[ZESchoolWebVC alloc]init];
+    webvc.enterType = ENTER_WEBVC_QUESTION;
+    webvc.webURL = urlStr;
+    [self.navigationController pushViewController:webvc animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

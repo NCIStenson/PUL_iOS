@@ -41,16 +41,19 @@
  */
 -(void)sortConditon:(NSString *)condition;
 
+-(void)goSearchWithSearchStr:(NSString *)str;
+
+
 @end
 
 @interface ZEWorkStandardListView : UIView
 
 @property (nonatomic,weak) id <ZEWorkStandardListViewDelegate> delegate;
-
+@property (nonatomic,strong) UITextField * questionSearchTF;
 -(id)initWithFrame:(CGRect)frame;
 
 
--(void)reloadNavView:(NSString *)str;
+//-(void)reloadNavView:(NSString *)str;
 
 -(void)reloadFirstView:(NSArray *)arrData;
 -(void)reloadMoreDataView:(NSArray *)arrData;

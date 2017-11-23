@@ -11,6 +11,8 @@
 #import "ZEAskQuestionTypeView.h"
 #import "ZESchoolWebVC.h"
 #import "ZESearchWorkStandardVC.h"
+#import "ZEWorkStandardDetailVC.h"
+
 @interface ZEWorkStandardListVC ()<ZEWorkStandardListViewDelegate,ZEAskQuestionTypeViewDelegate>
 {
     ZEWorkStandardListView * workStandardListView;
@@ -40,7 +42,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     _currentWHERESQL = @"";
 
-    [self.rightBtn setImage:[UIImage imageNamed:@"icon_search" color:[UIColor whiteColor]] forState:UIControlStateNormal];
+    [self.rightBtn setImage:[UIImage imageNamed:@"icon_question_searchType" color:[UIColor whiteColor]] forState:UIControlStateNormal];
     
     self.title = @"行业规范";
     
@@ -57,9 +59,7 @@
 }
 
 -(void)rightBtnClick{
-    ZESearchWorkStandardVC * searchVC = [[ZESearchWorkStandardVC alloc]init];
-    
-    [self.navigationController pushViewController:searchVC animated:YES];
+    [self initAskTypeView];
 }
 
 -(void)cacheQuestionType
@@ -163,8 +163,8 @@
         [self sendRequestWithCurrentPage];
     }else{
         self.title = @"技能分类";
-        
-        askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        [workStandardListView.questionSearchTF resignFirstResponder];
+        askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) withMarginTop:NAV_HEIGHT + 45.0f];
         askTypeView.delegate = self;
         
         [self.view addSubview:askTypeView];
@@ -191,9 +191,12 @@
     self.title = @"行业规范";
 
     _currentPage = 0;
-    
     [askTypeView removeFromSuperview];
     askTypeView = nil;
+    if (typeName.length == 0 && typeCode.length == 0 && fatherCode.length == 0) {
+        [workStandardListView.questionSearchTF becomeFirstResponder];
+        return;
+    }
     if ([fatherCode integerValue] > 0) {
         _currentWHERESQL = [NSString stringWithFormat:@"QUESTIONTYPECODE like '%%%@%%'",questionTypeCode];
     }else{
@@ -201,7 +204,7 @@
     }    
     [self sendRequestWithCurrentPage];
     
-    [workStandardListView reloadNavView:questionTypeName];
+//    [workStandardListView reloadNavView:questionTypeName];
 }
 
 #pragma mark - ZETypicalworkStandardListViewDelegate
@@ -218,14 +221,21 @@
 
 -(void)goWorkStandardDetail:(id)obj
 {
-    NSString * fileURL = [ obj objectForKey:@"FILEURL" ];
+    NSString * fileURL = [[obj objectForKey:@"FILEURL"] stringByReplacingOccurrencesOfString:@"," withString:@""];
+    NSArray * FILETYPEArr=  [[ obj objectForKey:@"FILETYPE" ] componentsSeparatedByString:@","];;
     NSString * seqkey = [ obj objectForKey:@"SEQKEY" ];
     
-    ZESchoolWebVC * webVC = [[ZESchoolWebVC alloc]init];
-    webVC.enterType = ENTER_WEBVC_WORK_STANDARD;
-    webVC.webURL = ZENITH_IMAGE_FILESTR([fileURL stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]);
-    webVC.workStandardSeqkey = seqkey;
-    [self.navigationController pushViewController:webVC animated:YES];
+    if (FILETYPEArr.count == 1) {
+        ZESchoolWebVC * webVC = [[ZESchoolWebVC alloc]init];
+        webVC.enterType = ENTER_WEBVC_WORK_STANDARD;
+        webVC.webURL = ZENITH_IMAGE_FILESTR([fileURL stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]);
+        webVC.workStandardSeqkey = seqkey;
+        [self.navigationController pushViewController:webVC animated:YES];
+    }else{
+        ZEWorkStandardDetailVC * detailVC = [[ZEWorkStandardDetailVC alloc]init];
+        detailVC.workStandardDetailDic = obj;
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }    
 }
 -(void)showType
 {
@@ -237,6 +247,14 @@
     _currentPage = 0;
     [self sendRequestWithCurrentPage];
 }
+
+-(void)goSearchWithSearchStr:(NSString *)str
+{
+    _currentPage = 0;
+    _currentWHERESQL = [NSString stringWithFormat:@"STANDARDNAME like '%%%@%%'",str];
+    [self sendRequestWithCurrentPage];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -13,7 +13,10 @@
 @property (nonatomic,assign) ENTER_QUESTIONBANK_TYPE enterType;
 
 @property (nonatomic,copy) NSString * functionCode;
+
+// 个人消息列表请求需要
 @property (nonatomic,copy) NSString * URLPATH;
+@property (nonatomic,copy) NSString * MESTYPE;
 
 @property (nonatomic,copy) NSString * bankID;
 

@@ -46,14 +46,30 @@
     for (int i = 0; i < _detailLayout.answerInfo.DATALIST.count; i ++) {
         ZEAnswerInfoModel * replyInfoM = [ZEAnswerInfoModel getDetailWithDic:_detailLayout.answerInfo.DATALIST[i]];
 
-        UILabel * textLab= [[UILabel alloc]init];
+//        UILabel * textLab= [[UILabel alloc]init];
+//        textLab.frame = CGRectMake(8,marginTop + 8, SCREEN_WIDTH - 90 - 16, 20);
+//        textLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
+//        textLab.textColor = RGBA(217, 217, 217, 1);
+//        textLab.numberOfLines = 0;
+//        [_contentBackgroundView addSubview:textLab];
+
+        UITextView * textLab = [[UITextView alloc]initWithFrame:CGRectZero];
+        textLab.textColor = MAIN_DEEPLINE_COLOR;
+        textLab.backgroundColor = [UIColor clearColor];
         textLab.frame = CGRectMake(8,marginTop + 8, SCREEN_WIDTH - 90 - 16, 20);
         textLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-        textLab.textColor = RGBA(217, 217, 217, 1);
-        textLab.numberOfLines = 0;
+        textLab.dataDetectorTypes = UIDataDetectorTypeAll;
+        textLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0);
+        textLab.delegate = self;
+        textLab.editable = NO;
+        textLab.scrollEnabled = NO;
         [_contentBackgroundView addSubview:textLab];
 
         if (replyInfoM.EXPLAIN.length > 0) {
+
+            if (detailLayout.questionInfo.ISANONYMITY) {
+                detailLayout.questionInfo.NICKNAME = @"匿名用户";
+            }
             
             if ([replyInfoM.SYSCREATORID isEqualToString:_detailLayout.questionInfo.SYSCREATORID]) {
                 textLab.text = [NSString stringWithFormat:@"%@：%@",detailLayout.questionInfo.NICKNAME,replyInfoM.EXPLAIN];
@@ -87,7 +103,8 @@
             }
             textLab.height = [textLab.text heightForFont:textLab.font width:textLab.width];
 
-            PYPhotosView * _linePhotosView = [PYPhotosView photosViewWithThumbnailUrls:@[@"https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3648440179,2890406292&fm=173&s=69C0D30F46C211FD6720358A0300A095&w=602&h=476&img.JPEG"] originalUrls:@[@"https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3648440179,2890406292&fm=173&s=69C0D30F46C211FD6720358A0300A095&w=602&h=476&img.JPEG"]];
+            NSString * imageFileStr =[ZEUtil changeURLStrFormat:[NSString stringWithFormat:@"%@/file/%@",Zenith_Server,[replyInfoM.FILEURL stringByReplacingOccurrencesOfString:@"," withString:@""]]];
+            PYPhotosView * _linePhotosView = [PYPhotosView photosViewWithThumbnailUrls:@[imageFileStr] originalUrls:@[imageFileStr]];
             // 设置Frame
             
             // 3. 添加到指定视图中
@@ -99,7 +116,6 @@
             _linePhotosView.contentSize = CGSizeMake(_linePhotosView.width, _linePhotosView.height);
             _linePhotosView.photoWidth = kReplyImageHeight;
             _linePhotosView.photoHeight = kReplyImageHeight;
-            _linePhotosView.backgroundColor = MAIN_ARM_COLOR;
             
             marginTop = marginTop + textLab.height;
             marginTop = marginTop + _linePhotosView.height;
@@ -137,6 +153,21 @@
     }
     
     return attrStr;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction NS_AVAILABLE_IOS(10_0);{
+    
+    if([_detailCell.delegate respondsToSelector:@selector(showDetailWebVC:)] ){
+        [_detailCell.delegate showDetailWebVC:URL.absoluteString];
+    }
+    return NO;
+}
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange NS_DEPRECATED_IOS(7_0, 10_0, "Use textView:shouldInteractWithURL:inRange:forInteractionType: instead")
+{
+    if([_detailCell.delegate respondsToSelector:@selector(showDetailWebVC:)] ){
+        [_detailCell.delegate showDetailWebVC:URL.absoluteString];
+    }
+    return NO;
 }
 
 @end
@@ -315,13 +346,24 @@
     _nameLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
     [self addSubview:_nameLab];
     
-    _contentLab = [UILabel new];
+//    _contentLab = [UILabel new];
+//    _contentLab.frame = CGRectMake(_headerImageView.right + 10, _nameLab.bottom, SCREEN_WIDTH - 200, 20);
+//    _contentLab.width = SCREEN_WIDTH - _contentLab.left - 20;
+//    [self addSubview:_contentLab];
+//    _contentLab.textColor = kTextColor;
+//    _contentLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
+    
+    _contentLab = [[UITextView alloc]initWithFrame:CGRectZero];
+    _contentLab.textColor = kTextColor;
     _contentLab.frame = CGRectMake(_headerImageView.right + 10, _nameLab.bottom, SCREEN_WIDTH - 200, 20);
     _contentLab.width = SCREEN_WIDTH - _contentLab.left - 20;
-    [self addSubview:_contentLab];
-    _contentLab.textColor = kTextColor;
     _contentLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-    _contentLab.numberOfLines = 0;
+    _contentLab.dataDetectorTypes = UIDataDetectorTypeAll;
+    _contentLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0);
+    _contentLab.delegate = self;
+    _contentLab.editable = NO;
+    _contentLab.scrollEnabled = NO;
+    [self addSubview:_contentLab];
 }
 
 -(void)setDetailLayout:(ZENewDetailLayout *)detailLayout
@@ -333,6 +375,23 @@
     
     _nameLab.text = detailLayout.answerInfo.NICKNAME;
     [_headerImageView sd_setImageWithURL:ZENITH_IMAGEURL(detailLayout.answerInfo.HEADIMAGE) placeholderImage:ZENITH_PLACEHODLER_USERHEAD_IMAGE];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction NS_AVAILABLE_IOS(10_0);{
+    
+    if([_detailCell.delegate respondsToSelector:@selector(showDetailWebVC:)] ){
+        [_detailCell.delegate showDetailWebVC:URL.absoluteString];
+    }
+    
+    return NO;
+}
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange NS_DEPRECATED_IOS(7_0, 10_0, "Use textView:shouldInteractWithURL:inRange:forInteractionType: instead")
+{
+    if([_detailCell.delegate respondsToSelector:@selector(showDetailWebVC:)] ){
+        [_detailCell.delegate showDetailWebVC:URL.absoluteString];
+    }
+    return NO;
+    
 }
 
 
@@ -369,7 +428,7 @@
 
 -(void)setUI:(ZENewDetailLayout *)layout{
     _answerView = [ZENewQuetionDetailSingleAnswerView new];
-    
+    _answerView.detailCell = self;
     _answerView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 40);
     [self.contentView addSubview:_answerView];
     _answerView.detailLayout = layout;

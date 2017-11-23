@@ -8,20 +8,20 @@
 #define kNavViewMarginLeft 0.0f
 #define kNavViewMarginTop NAV_HEIGHT
 #define kNavViewWidth SCREEN_WIDTH
-#define kNavViewHeight 30.0f
+#define kNavViewHeight 85.0f
 
 #define kContentViewMarginLeft  0.0f
 #define kContentViewMarginTop   NAV_HEIGHT + kNavViewHeight
 #define kContentViewWidth       SCREEN_WIDTH
 #define kContentViewHeight      SCREEN_HEIGHT - ( NAV_HEIGHT + kNavViewHeight )
 
-#define kWorkStandardCellHeight 60
+#define kWorkStandardCellHeight 80
 
 #import "ZEWorkStandardListView.h"
 #import "ZEWorkStandardListCell.h"
 
 #import "ZEKLB_CLASSICCASE_INFOModel.h"
-@interface ZEWorkStandardListView ()<UITableViewDelegate,UITableViewDataSource>
+@interface ZEWorkStandardListView ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     UIButton * optionBtn;
     UIButton * newestBtn;
@@ -56,44 +56,74 @@
 -(void)initNavView
 {
     UIView * navView = [[UIView alloc]initWithFrame:CGRectMake(kNavViewMarginLeft, kNavViewMarginTop, kNavViewWidth, kNavViewHeight)];
-    navView.backgroundColor = MAIN_LINE_COLOR;
+    navView.top = 0;
     [self addSubview:navView];
-
-    UILabel * screenLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 30, kNavViewHeight)];
-    screenLab.text = @"筛选";
-    screenLab.font = [UIFont systemFontOfSize:12];
-    [navView addSubview:screenLab];
+    [ZEUtil addGradientLayer:navView];
+    navView.top = NAV_HEIGHT;
     
-    optionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [optionBtn setTitle:@"全部" forState:UIControlStateNormal];
-    [optionBtn setImage:[UIImage imageNamed:@"icon_up.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
-    [optionBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
-    [optionBtn setFrame:CGRectMake(45, 0, 40, kNavViewHeight)];
-    optionBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [optionBtn addTarget:self action:@selector(showOptions) forControlEvents:UIControlEventTouchUpInside];
-    [navView addSubview:optionBtn];
+    UIView * searchView = [UIView new];
+    searchView.frame = CGRectMake(30 , 5, SCREEN_WIDTH - 60, 35);
+    [navView addSubview:searchView];
+    [searchView addSubview:[self searchTextfieldView]];
+    
+    UIView * orederView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, kNavViewHeight - 45)];
+    orederView.backgroundColor = [UIColor whiteColor];
+    [navView addSubview:orederView];
+    
+    [ZEUtil addLineLayerMarginLeft:0 marginTop:0 width:SCREEN_WIDTH height:5 superView:orederView];
     
     newestBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [newestBtn setTitle:@"按最新" forState:UIControlStateNormal];
+    [newestBtn setTitle:@"最新" forState:UIControlStateNormal];
     [newestBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
-    [newestBtn setFrame:CGRectMake(SCREEN_WIDTH - 90, 0, 40, kNavViewHeight)];
-    newestBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [newestBtn setFrame:CGRectMake(20, 5, 80, orederView.height)];
+    newestBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
     [newestBtn addTarget:self action:@selector(sortCondition:) forControlEvents:UIControlEventTouchUpInside];
-    [navView addSubview:newestBtn];
-    
+    [orederView addSubview:newestBtn];
+//    [newestBtn setImage:[UIImage imageNamed:@"icon_case_order"] forState:UIControlStateNormal];
+//    [newestBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
+//    [newestBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
+
     hotestBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [hotestBtn setTitle:@"按最热" forState:UIControlStateNormal];
+    [hotestBtn setTitle:@"最热" forState:UIControlStateNormal];
     [hotestBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [hotestBtn setFrame:CGRectMake(SCREEN_WIDTH - 45, 0, 40, kNavViewHeight)];
-    hotestBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [hotestBtn setFrame:CGRectMake(120, 5, 80, orederView.height)];
+    hotestBtn.titleLabel.font = [UIFont systemFontOfSize:kTiltlFontSize];
     [hotestBtn addTarget:self action:@selector(sortCondition:) forControlEvents:UIControlEventTouchUpInside];
-    [navView addSubview:hotestBtn];
+    [orederView addSubview:hotestBtn];
+//    [hotestBtn setImage:[UIImage imageNamed:@"icon_case_order"] forState:UIControlStateNormal];
+//    [hotestBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 40, 0, 0)];
+//    [hotestBtn setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
+
 }
+
+-(UIView *)searchTextfieldView
+{
+    UIView * searchTFView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 60, 30)];
+    searchTFView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.5 ];
+    
+    UIImageView * searchTFImg = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, 18, 18)];
+    searchTFImg.image = [UIImage imageNamed:@"search_icon"];
+    [searchTFView addSubview:searchTFImg];
+    
+    _questionSearchTF =[[UITextField alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 50, 30)];
+    [searchTFView addSubview:_questionSearchTF];
+    _questionSearchTF.placeholder = @"关键词筛选";
+    [_questionSearchTF setReturnKeyType:UIReturnKeySearch];
+    _questionSearchTF.font = [UIFont systemFontOfSize:14];
+    _questionSearchTF.leftViewMode = UITextFieldViewModeAlways;
+    _questionSearchTF.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 25, 30)];
+    _questionSearchTF.delegate=self;
+    searchTFView.clipsToBounds = YES;
+    searchTFView.layer.cornerRadius = 5;
+    
+    return searchTFView;
+}
+
 
 -(void)initContentView
 {
     _contentView = [[UITableView alloc]initWithFrame:CGRectMake(kContentViewMarginLeft, kContentViewMarginTop, kContentViewWidth, kContentViewHeight) style:UITableViewStylePlain];
-    
+    _contentView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _contentView.delegate = self;
     _contentView.dataSource = self;
     [self addSubview:_contentView];
@@ -208,6 +238,25 @@
         [self.delegate goWorkStandardDetail:self.workStandardArr[indexPath.row]];
     }
 }
+
+#pragma mark - UITextFieldDelegate
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [_questionSearchTF resignFirstResponder];
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    if(textField.text.length > 0){
+        if([self.delegate respondsToSelector:@selector(goSearchWithSearchStr:)]){
+            [self.delegate goSearchWithSearchStr:textField.text];
+        }
+    }
+    
+    return YES;
+}
+
 
 #pragma mark - ZETypicalCaseViewDelegate
 
