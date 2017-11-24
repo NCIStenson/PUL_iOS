@@ -70,11 +70,11 @@
     [caseNameLab sizeToFit];
     
     UILabel * levelLab = [[UILabel alloc]initWithFrame:CGRectMake(caseNameLab.right + 5,caseNameLab.top , commentImg.left - caseNameLab.right - 10, caseNameLab.height)];
-    levelLab.text = @"国家级专家顾问";
+    levelLab.text = expertModel.GRADENAME;
     [levelLab setTextColor:kTextColor];
     levelLab.textAlignment = NSTextAlignmentCenter;
     levelLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-//    [detailView addSubview:levelLab];
+    [detailView addSubview:levelLab];
     
     UILabel * questionNumsLab = [[UILabel alloc]initWithFrame:CGRectMake(caseNameLab.left, caseNameLab.bottom + 10, SCREEN_WIDTH - 100, 25)];
 //    if([ZEUtil isStrNotEmpty:expertModel.GOODFIELD]){
@@ -347,6 +347,7 @@
     if ([_currentBtn isEqual:btn]) {
         return;
     }
+    self.teamsDataArr = [NSMutableArray array];
     _currentBtn = btn;
     NSString *  sortOrderSQL = @"1";
     if ([btn isEqual:levelBtn]) {

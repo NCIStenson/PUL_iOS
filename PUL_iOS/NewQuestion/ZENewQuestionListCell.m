@@ -37,14 +37,14 @@
         UIButton * answerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         answerBtn.frame = CGRectMake(SCREEN_WIDTH / 2 * i, 0, SCREEN_WIDTH / 2, 35);
         [answerBtn setTitleColor:MAIN_SUBTITLE_COLOR forState:UIControlStateNormal];
-        [answerBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
+//        [answerBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
         answerBtn.titleLabel.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
         [self addSubview:answerBtn];
         answerBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
         if (i == 0) {
             [answerBtn setTitle:@" 回答" forState:UIControlStateNormal];
-            [answerBtn setImage:[UIImage imageNamed:@"center_name_logo.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
+            [answerBtn setImage:[UIImage imageNamed:@"center_name_logo.png"] forState:UIControlStateNormal];
             [answerBtn addTarget:self action:@selector(answerQuestion) forControlEvents:UIControlEventTouchUpInside];
             _answerButton = answerBtn;
         }else{
@@ -79,8 +79,14 @@
     
     if (_layout.questionInfo.ISGOOD) {
         _praiseButton.enabled = NO;
+        [_praiseButton setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
         [_praiseButton setImage:[UIImage imageNamed:@"qb_praiseBtn_hand.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
     }
+    if (_layout.questionInfo.ISANSWER) {
+        [_answerButton setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
+        [_answerButton setImage:[UIImage imageNamed:@"center_name_logo.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
+    }
+
     
 }
 
@@ -97,6 +103,7 @@
     NSInteger googNums = [_layout.questionInfo.GOODNUMS integerValue];
     googNums +=1;
    
+    [_praiseButton setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
     [_praiseButton setTitle:[NSString stringWithFormat:@" %ld",(long)googNums] forState:UIControlStateNormal];
     [_praiseButton setImage:[UIImage imageNamed:@"qb_praiseBtn_hand.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
 

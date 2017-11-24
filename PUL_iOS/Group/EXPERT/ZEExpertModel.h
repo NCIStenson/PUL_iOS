@@ -25,6 +25,8 @@
 @property (nonatomic,copy) NSString * USERNAME;
 
 @property (nonatomic,copy) NSString * SCORE;
+@property (nonatomic,copy) NSString * GRAD;
+@property (nonatomic,copy) NSString * GRADENAME;
 @property (nonatomic,copy) NSString * ISONLINE;
 @property (nonatomic,copy) NSString * CLICKCOUNT;
 

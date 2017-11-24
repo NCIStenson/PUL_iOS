@@ -11,7 +11,7 @@
 #define kInputViewWidth         SCREEN_WIDTH - 20.0f
 #define kInputViewHeight        120.0f
 
-#define kMaxTextLength 200000
+#define kMaxTextLength 2000
 
 #define textViewStr @"试着将问题尽可能清晰的描述出来，这样回答者们才能更完整、更高质量的为您解答。"
 
@@ -629,7 +629,7 @@
         hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
         [hud3 hide:YES afterDelay:1.0f];
         
-        textView.text = [textView.text substringToIndex:200];
+        textView.text = [textView.text substringToIndex:kMaxTextLength];
         _lengthLab.text = [NSString stringWithFormat:@"%ld/%ld",(long)textView.text.length,(long)kMaxTextLength];
     }
 }

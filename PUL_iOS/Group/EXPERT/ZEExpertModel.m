@@ -24,7 +24,7 @@ static ZEExpertModel * expertM = nil;
     expertM.EXPERTFRADE = [dic objectForKey:@"EXPERTFRADE"];
     expertM.EXPERTID = [dic objectForKey:@"EXPERTID"];
     expertM.EXPERTTYPE = [dic objectForKey:@"EXPERTTYPE"];
-    expertM.FILEURL = [[dic objectForKey:@"FILEURL"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
+    expertM.FILEURL = [[[dic objectForKey:@"FILEURL"] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"] stringByReplacingOccurrencesOfString:@"," withString:@""];
     expertM.GOODFIELD = [dic objectForKey:@"GOODFIELD"];
     expertM.PROCIRCLECODE = [dic objectForKey:@"PROCIRCLECODE"];
     expertM.PROFESSIONAL = [dic objectForKey:@"PROFESSIONAL"];
@@ -33,6 +33,8 @@ static ZEExpertModel * expertM = nil;
     expertM.USERNAME = [dic objectForKey:@"USERNAME"];
     
     expertM.SCORE = [NSString stringWithFormat:@"%@",[dic objectForKey:@"SCORE"]];
+    expertM.GRAD     = [dic objectForKey:@"GRAD"];
+    expertM.GRADENAME = [dic objectForKey:@"GRADENAME"];
     expertM.ISONLINE = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ISONLINE"]];
     expertM.CLICKCOUNT = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CLICKCOUNT"]];
 //    expertM.DESCRIBE = [dic objectForKey:@"DESCRIBE"];

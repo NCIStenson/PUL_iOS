@@ -93,14 +93,14 @@
     }else if ([model.MES_TYPE integerValue] == 2){
         _textLab.text = @"团队";
         _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
-        _contentLab.text = model.MSG_TITLE;
-        _subContentLab.text = model.MSG_CONTENT;
+        _subContentLab.text = model.MSG_TITLE;
+        _contentLab.text = model.MSG_CONTENT;
         _tipsLab.text = @"立即查看";
     }else if ([model.MES_TYPE integerValue] == 1){
         _textLab.text = @"问答";
         _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
-        _contentLab.text = model.MSG_TITLE;
-        _subContentLab.text = model.MSG_CONTENT;
+        _subContentLab.text = model.MSG_TITLE;
+        _contentLab.text = model.MSG_CONTENT;
         _tipsLab.text = model.EXTRASPARAM;
     }else if ([model.MES_TYPE integerValue] == 5){
         _textLab.text = @"在线考试";

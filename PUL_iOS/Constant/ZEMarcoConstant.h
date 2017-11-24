@@ -70,7 +70,7 @@
 #define NAV_HEIGHT (IPHONEX ? 88.0f : 64.0f)
 #define STATUS_HEIGHT (IPHONEX ? 44.0f : 20.0f)
 #define TAB_BAR_HEIGHT (IPHONEX ? 83.0f : 49.0f)
-#define MAX_PAGE_COUNT 1
+#define MAX_PAGE_COUNT 20
 
 #define Zenith_Server [[[NSBundle mainBundle] infoDictionary] objectForKey:@"ZenithServerAddress"]
 

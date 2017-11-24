@@ -10,7 +10,7 @@
 
 //  正式测试版本    http://114.55.55.205:8888/emarkspg_nbsjzd
 
-//  Juan 机器版     http://192.168.1.189:8080/emark_learn
+//  Juan 机器版     http://192.168.1.190:8080/emark_learn
 
 #import <UIKit/UIKit.h>
 #import "JPUSHService.h"

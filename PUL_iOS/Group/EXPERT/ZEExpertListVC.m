@@ -42,13 +42,13 @@
     [self.rightBtn setImage:[UIImage imageNamed:@"icon_question_searchType" color:[UIColor whiteColor]] forState:UIControlStateNormal];
 
     [self initView];
+    [self sendRequestWithCurrentPage];
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     self.tabBarController.tabBar.hidden = YES;
-    [self sendRequestWithCurrentPage];
 }
 
 -(void)initView{

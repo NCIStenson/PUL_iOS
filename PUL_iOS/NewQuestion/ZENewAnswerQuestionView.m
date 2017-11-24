@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
-#define kMaxTextLength 50000
+#define kMaxTextLength 2000
 
 #define kInputViewMarginLeft    10.0f
 #define kInputViewMarginTop     NAV_HEIGHT
@@ -284,7 +284,7 @@
         hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
         [hud3 hide:YES afterDelay:1.0f];
         
-        textView.text = [textView.text substringToIndex:500];
+        textView.text = [textView.text substringToIndex:kMaxTextLength];
         _lengthLab.text = [NSString stringWithFormat:@"%ld/%ld",(long)textView.text.length,(long)kMaxTextLength];
     }
 }
