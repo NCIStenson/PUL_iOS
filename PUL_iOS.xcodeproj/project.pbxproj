@@ -3859,7 +3859,7 @@
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 armv7s armv7";
 				WARNING_CFLAGS = "";
-				ZENITH_BUNDLEID = "com.zenithElec.PUL-testServer";
+				ZENITH_BUNDLEID = com.zenithElec.PUL;
 				ZENITH_SERVER = "http://114.55.55.205:8080/emarkspg_nbsjzd";
 			};
 			name = ToTestServer;

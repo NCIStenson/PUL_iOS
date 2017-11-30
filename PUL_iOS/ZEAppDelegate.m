@@ -18,7 +18,7 @@
 #import "ZETeamNotiCenVC.h"
 
 #import "ZETeamChatRoomVC.h"
-
+#import "ZEExpertChatVC.h"
 @interface ZEAppDelegate ()
 
 @end
@@ -161,6 +161,23 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [JPUSHService handleRemoteNotification:userInfo];
     }
     UIApplicationState state = [UIApplication sharedApplication].applicationState;
+    NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+
+    if (state == UIApplicationStateActive) {
+        UIViewController * vc = [ZEUtil getCurrentVC];
+        if (![vc isKindOfClass:[ZEExpertChatVC class]]) {
+            [MBProgressHUD hideHUDForView:vc.view animated:YES];
+            MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:vc.view animated:YES];
+            hud3.mode = MBProgressHUDModeText;
+            hud3.labelText = alert;
+            [hud3 hide:YES afterDelay:2];
+            hud3.yOffset = SCREEN_HEIGHT / 2 - 80;
+        }
+    }else if (state == UIApplicationStateBackground ||state == UIApplicationStateInactive){
+        [self showVCWithIndex:2];
+    }
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+
     BOOL result = (state == UIApplicationStateBackground);
     if (result) {
         completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
@@ -183,7 +200,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
         
     NSString *alert = [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
-    NSString *apnsType = [userInfo objectForKey:@"_j_type"];
+
     if (application.applicationState == UIApplicationStateActive) {
         UIViewController * vc = [ZEUtil getCurrentVC];
         [MBProgressHUD hideHUDForView:vc.view animated:YES];

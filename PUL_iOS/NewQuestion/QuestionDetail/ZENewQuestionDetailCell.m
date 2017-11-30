@@ -14,7 +14,6 @@
 {
     self = [super initWithFrame:rect];
     if(self){
-//        self.backgroundColor = MAIN_ARM_COLOR;
         [self initView];
     }
     
@@ -45,21 +44,13 @@
     float marginTop = 0;
     for (int i = 0; i < _detailLayout.answerInfo.DATALIST.count; i ++) {
         ZEAnswerInfoModel * replyInfoM = [ZEAnswerInfoModel getDetailWithDic:_detailLayout.answerInfo.DATALIST[i]];
-
-//        UILabel * textLab= [[UILabel alloc]init];
-//        textLab.frame = CGRectMake(8,marginTop + 8, SCREEN_WIDTH - 90 - 16, 20);
-//        textLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
-//        textLab.textColor = RGBA(217, 217, 217, 1);
-//        textLab.numberOfLines = 0;
-//        [_contentBackgroundView addSubview:textLab];
-
         UITextView * textLab = [[UITextView alloc]initWithFrame:CGRectZero];
         textLab.textColor = MAIN_DEEPLINE_COLOR;
         textLab.backgroundColor = [UIColor clearColor];
         textLab.frame = CGRectMake(8,marginTop + 8, SCREEN_WIDTH - 90 - 16, 20);
         textLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
         textLab.dataDetectorTypes = UIDataDetectorTypeAll;
-        textLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0);
+        textLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, -4);
         textLab.delegate = self;
         textLab.editable = NO;
         textLab.scrollEnabled = NO;
@@ -84,24 +75,33 @@
                                                                            withStr:textLab.text];
 
             }
-            
-            textLab.height = [textLab.text heightForFont:textLab.font width:textLab.width];
+            float textH = [ZEUtil boundingRectWithSize:CGSizeMake(textLab.width, MAXFLOAT) WithStr:textLab.text andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
+
+            textLab.height = textH;
             
             marginTop += textLab.height;
 
         }else if (replyInfoM.FILEURL.length > 0){
-            if ([replyInfoM.SYSCREATORID isEqualToString:_questionInfoModel.SYSCREATORID]) {
+            if (detailLayout.questionInfo.ISANONYMITY) {
+                detailLayout.questionInfo.NICKNAME = @"匿名用户";
+            }
+            if ([replyInfoM.SYSCREATORID isEqualToString:_detailLayout.questionInfo.SYSCREATORID]) {
                 textLab.text = [NSString stringWithFormat:@"%@：",detailLayout.questionInfo.NICKNAME];
                 textLab.attributedText = [self getAttributedStringWithQuestionName:detailLayout.questionInfo.NICKNAME
                                                                     withAnswerName:@""
                                                                            withStr:textLab.text];
             }else if([replyInfoM.SYSCREATORID isEqualToString:detailLayout.answerInfo.SYSCREATORID]){
                 textLab.text = [NSString stringWithFormat:@"%@回复%@：",detailLayout.answerInfo.NICKNAME,detailLayout.questionInfo.NICKNAME];
+                
                 textLab.attributedText = [self getAttributedStringWithQuestionName:detailLayout.questionInfo.NICKNAME
                                                                     withAnswerName:detailLayout.answerInfo.NICKNAME
                                                                            withStr:textLab.text];
+                
             }
-            textLab.height = [textLab.text heightForFont:textLab.font width:textLab.width];
+            
+            float textH = [ZEUtil boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 90 - 16, MAXFLOAT) WithStr:textLab.text andFont:[UIFont systemFontOfSize:kSubTiltlFontSize] andLinespace:kLabel_LineSpace];
+            
+            textLab.height = textH;
 
             NSString * imageFileStr =[ZEUtil changeURLStrFormat:[NSString stringWithFormat:@"%@/file/%@",Zenith_Server,[replyInfoM.FILEURL stringByReplacingOccurrencesOfString:@"," withString:@""]]];
             PYPhotosView * _linePhotosView = [PYPhotosView photosViewWithThumbnailUrls:@[imageFileStr] originalUrls:@[imageFileStr]];
@@ -139,8 +139,15 @@
     if (questionUsername.length == 0 || str.length == 0) {
         return nil;
     }
-    
-    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc]initWithString:str];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = kLabel_LineSpace;// 字体的行间距
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:kTiltlFontSize],
+                                 NSKernAttributeName:@-.5f,
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+
+    NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc]initWithString:str attributes:attributes];
     
     //添加文字颜色
     if (answerName.length > 0) {
@@ -359,7 +366,7 @@
     _contentLab.width = SCREEN_WIDTH - _contentLab.left - 20;
     _contentLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
     _contentLab.dataDetectorTypes = UIDataDetectorTypeAll;
-    _contentLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0);
+    _contentLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, -4);
     _contentLab.delegate = self;
     _contentLab.editable = NO;
     _contentLab.scrollEnabled = NO;
@@ -371,7 +378,18 @@
     _detailLayout = detailLayout;
     
     _contentLab.height = detailLayout.textHeight;
-    _contentLab.text = detailLayout.answerInfo.ANSWEREXPLAIN;
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = kLabel_LineSpace;// 字体的行间距
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:kTiltlFontSize],
+                                 NSKernAttributeName:@-.5f,
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    
+    _contentLab.attributedText = [[NSAttributedString alloc] initWithString:detailLayout.answerInfo.ANSWEREXPLAIN attributes:attributes];
+
+//    _contentLab.text = detailLayout.answerInfo.ANSWEREXPLAIN;
     
     _nameLab.text = detailLayout.answerInfo.NICKNAME;
     [_headerImageView sd_setImageWithURL:ZENITH_IMAGEURL(detailLayout.answerInfo.HEADIMAGE) placeholderImage:ZENITH_PLACEHODLER_USERHEAD_IMAGE];

@@ -6,7 +6,6 @@
 //  Copyright © 2016年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
-
 #import "ZEChatBaseCell.h"
 
 @implementation ZEChatBaseView
@@ -74,14 +73,13 @@
         _contentLab.backgroundColor = [UIColor clearColor];
         _contentLab.textColor = kTextColor;
         _contentLab.origin = CGPointMake(kContentMarginLeft, kContentMarginTop);
-        _contentLab.font = [UIFont systemFontOfSize:kFontSize];
+        _contentLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
         _contentLab.dataDetectorTypes = UIDataDetectorTypeAll;
-        _contentLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0);
+        _contentLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, -4);
         _contentLab.delegate = self;
         _contentLab.editable = NO;
         _contentLab.scrollEnabled = NO;
         [self addSubview:_contentLab];
-
     }
     return self;
 }
@@ -112,15 +110,24 @@
         textContentStr = ((ZEAnswerInfoModel *)infoM).ANSWEREXPLAIN;
     }
     
-    float textW = [textContentStr widthForFont:[UIFont systemFontOfSize:kFontSize]];
-    float textH = [textContentStr heightForFont:[UIFont systemFontOfSize:kFontSize] width:kMaxWidth];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = kLabel_LineSpace;// 字体的行间距
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:kTiltlFontSize],
+                                 NSKernAttributeName:@-.5f,
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    
+    _contentLab.attributedText = [[NSAttributedString alloc] initWithString:textContentStr attributes:attributes];
+    float textW = [textContentStr widthForFont:[UIFont systemFontOfSize:kTiltlFontSize]];
+    float textH = [textContentStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:kMaxWidth];
     if(textW >= kMaxWidth){
-        textH = [ZEUtil heightForString:textContentStr font:_contentLab.font andWidth:kMaxWidth];
+        textH = [ZEUtil boundingRectWithSize:CGSizeMake(kMaxWidth, MAXFLOAT) WithStr:textContentStr andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
         _contentLab.size = CGSizeMake( kMaxWidth , textH );
     }else{
-        _contentLab.size = CGSizeMake( textW ,textH );
+        _contentLab.size = CGSizeMake( textW + 2,textH );
     }
-    _contentLab.text = textContentStr;
+
     if (textH < 21) {
         textH = 21;
     }
@@ -155,15 +162,23 @@
 {
     NSString * textContentStr = infoM.EXPLAIN;
     
-    float textW = [textContentStr widthForFont:[UIFont systemFontOfSize:kFontSize]];
-    float textH = [textContentStr heightForFont:[UIFont systemFontOfSize:kFontSize] width:kMaxWidth];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = kLabel_LineSpace;// 字体的行间距
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:kTiltlFontSize],
+                                 NSKernAttributeName:@-.5f,
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    
+    _contentLab.attributedText = [[NSAttributedString alloc] initWithString:textContentStr attributes:attributes];
+    float textW = [textContentStr widthForFont:[UIFont systemFontOfSize:kTiltlFontSize]];
+    float textH = [textContentStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:kMaxWidth];
     if(textW >= kMaxWidth){
-        textH =[ZEUtil boundingRectWithSize:CGSizeMake(kMaxWidth, MAXFLOAT) WithStr:textContentStr andFont:[UIFont systemFontOfSize:kFontSize] andLinespace:kLabel_LineSpace];
+        textH = [ZEUtil boundingRectWithSize:CGSizeMake(kMaxWidth, MAXFLOAT) WithStr:textContentStr andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
         _contentLab.size = CGSizeMake( kMaxWidth , textH );
     }else{
-        _contentLab.size = CGSizeMake( textW ,textH );
+        _contentLab.size = CGSizeMake( textW + 2,textH );
     }
-    _contentLab.text = textContentStr;
 
     if (textH < 21) {
         textH = 21;

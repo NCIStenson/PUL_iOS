@@ -85,9 +85,7 @@
     if (_layout.questionInfo.ISANSWER) {
         [_answerButton setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
         [_answerButton setImage:[UIImage imageNamed:@"center_name_logo.png" color:MAIN_NAV_COLOR] forState:UIControlStateNormal];
-    }
-
-    
+    }    
 }
 
 -(void)answerQuestion
@@ -206,17 +204,16 @@
 {
     _contentLab = [[UITextView alloc]initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH - 40, 0)];
     _contentLab.textColor = kTextColor;
-//    _contentLab.backgroundColor = MAIN_ARM_COLOR;
     _contentLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
     _contentLab.dataDetectorTypes = UIDataDetectorTypeAll;
-    _contentLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, 0);
+    _contentLab.textContainerInset = UIEdgeInsetsMake(0, -4, 0, -4);
     _contentLab.delegate = self;
     _contentLab.editable = NO;
     _contentLab.scrollEnabled = NO;
     [self addSubview:_contentLab];
     
     _seeAllExplainLab = [UIButton buttonWithType:UIButtonTypeCustom];
-    _seeAllExplainLab.frame= CGRectMake(20, 75, SCREEN_WIDTH - 40, 20);
+    _seeAllExplainLab.frame= CGRectMake(20, kMaxExplainHeight + 5, SCREEN_WIDTH - 40, 20);
     _seeAllExplainLab.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_seeAllExplainLab setTitle:@"查看全文" forState:UIControlStateNormal];
     [_seeAllExplainLab setTitleColor:RGBA(36, 91, 131, 1) forState:UIControlStateNormal];
@@ -434,11 +431,30 @@
 {
     [_personalMessageView setData:layout.questionInfo];
     
-    _textContenView.contentLab.text = layout.questionInfo.QUESTIONEXPLAIN;
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = kLabel_LineSpace;// 字体的行间距
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:kTiltlFontSize],
+                                 NSKernAttributeName:@-.5f,
+                                 NSParagraphStyleAttributeName:paragraphStyle
+                                 };
+    
+    _textContenView.contentLab.attributedText = [[NSAttributedString alloc] initWithString:layout.questionInfo.QUESTIONEXPLAIN attributes:attributes];
+
     _textContenView.contentLab.height = layout.textHeight;
     
     if(!layout.isShowMode){
-        _textContenView.contentLab.text = layout.questionInfo.QUESTIONEXPLAIN;
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.lineSpacing = kLabel_LineSpace;// 字体的行间距
+        NSDictionary *attributes = @{
+                                     NSFontAttributeName:[UIFont systemFontOfSize:kTiltlFontSize],
+                                     NSKernAttributeName:@-.5f,
+                                     NSParagraphStyleAttributeName:paragraphStyle
+                                     };
+        
+        _textContenView.contentLab.attributedText = [[NSAttributedString alloc] initWithString:layout.questionInfo.QUESTIONEXPLAIN attributes:attributes];
+
+//        _textContenView.contentLab.text = layout.questionInfo.QUESTIONEXPLAIN;
     }else{
         if (layout.textHeight > kMaxExplainHeight) {
             _textContenView.seeAllExplainLab.hidden =NO;

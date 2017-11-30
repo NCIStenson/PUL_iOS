@@ -8,6 +8,8 @@
 #define ZE_weakify(var)   __weak typeof(var) weakSelf = var
 #define ZE_strongify(var) __strong typeof(var) strongSelf = var
 
+#define kMaxTextLength 1000
+
 #import "ZEChatView.h"
 
 @implementation ZEChatInputView
@@ -49,7 +51,8 @@
     _inputField.layer.cornerRadius = 5.0f;
     _inputField.leftViewMode = UITextFieldViewModeAlways;
     _inputField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 8, 0)];
-    
+    [_inputField addTarget:self action:@selector(textFieldTextChange:) forControlEvents:UIControlEventEditingChanged];
+
     UIButton * sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     sendBtn.frame = CGRectMake(SCREEN_WIDTH - 70, 5.0f, 60, 30);
     [self addSubview:sendBtn];
@@ -62,6 +65,21 @@
     sendBtn.layer.borderColor = [MAIN_GREEN_COLOR CGColor];
     sendBtn.layer.borderWidth = 1.5;
 }
+
+
+-(void)textFieldTextChange:(UITextField *)textField
+{
+    if (textField.text.length > kMaxTextLength) {
+        MBProgressHUD *hud3 = [MBProgressHUD showHUDAddedTo:self animated:YES];
+        hud3.mode = MBProgressHUDModeText;
+        hud3.detailsLabelText = [NSString stringWithFormat:@"最多显示%d个字",kMaxTextLength];
+        hud3.detailsLabelFont = [UIFont systemFontOfSize:14];
+        [hud3 hide:YES afterDelay:1.0f];
+        
+        textField.text = [textField.text substringToIndex:kMaxTextLength];
+    }
+}
+
 
 -(void)showCondition
 {
@@ -162,7 +180,6 @@
     _isShowedKeyboard = YES;
     //获取键盘的高度
 //    CGRect begin = [[[aNotification userInfo] objectForKey:@"UIKeyboardFrameBeginUserInfoKey"] CGRectValue];
-    
     CGRect end = [[[aNotification userInfo] objectForKey:@"UIKeyboardFrameEndUserInfoKey"] CGRectValue];
     
     if(end.size.height > 0 ){

@@ -562,8 +562,8 @@
 +(UIViewController *)getCurrentVC
 {
     UIViewController *result = nil;
-    
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    //app默认windowLevel是UIWindowLevelNormal，如果不是，找到UIWindowLevelNormal的
     if (window.windowLevel != UIWindowLevelNormal)
     {
         NSArray *windows = [[UIApplication sharedApplication] windows];
@@ -576,17 +576,32 @@
             }
         }
     }
+    id  nextResponder = nil;
+    UIViewController *appRootVC=window.rootViewController;
+    //    如果是present上来的appRootVC.presentedViewController 不为nil
+    if (appRootVC.presentedViewController) {
+        nextResponder = appRootVC.presentedViewController;
+    }else{
+        
+        NSLog(@"===%@",[window subviews]);
+        UIView *frontView = [[window subviews] objectAtIndex:0];
+        nextResponder = [frontView nextResponder];
+    }
     
-    UIView *frontView = [[window subviews] objectAtIndex:0];
-    id nextResponder = [frontView nextResponder];
-    
-    if ([nextResponder isKindOfClass:[UIViewController class]])
+    if ([nextResponder isKindOfClass:[UITabBarController class]]){
+        UITabBarController * tabbar = (UITabBarController *)nextResponder;
+        UINavigationController * nav = (UINavigationController *)tabbar.viewControllers[tabbar.selectedIndex];
+        //        UINavigationController * nav = tabbar.selectedViewController ; 上下两种写法都行
+        result=nav.childViewControllers.lastObject;
+        
+    }else if ([nextResponder isKindOfClass:[UINavigationController class]]){
+        UIViewController * nav = (UIViewController *)nextResponder;
+        result = nav.childViewControllers.lastObject;
+    }else{
         result = nextResponder;
-    else
-        result = window.rootViewController;
-    
+    }
     return result;
-}
+  }
 #pragma mark - 毛玻璃效果
 +(UIImage *)boxblurImage:(UIImage *)image withBlurNumber:(CGFloat)blur
 {
@@ -673,7 +688,7 @@
     paragraphStyle.lineSpacing = lineSpace; // 调整行间距
     NSRange range = NSMakeRange(0, [string length]);
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:range];
-    [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kFontSize] range:range];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:kTiltlFontSize] range:range];
     return attributedString;
 }
 
@@ -685,7 +700,7 @@
 
     NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
     [style setLineSpacing:space];
-    NSDictionary *attribute = @{NSFontAttributeName:font,NSParagraphStyleAttributeName:style};
+    NSDictionary *attribute = @{NSFontAttributeName:font,NSParagraphStyleAttributeName:style,                                 NSKernAttributeName:@-.5f,};
     CGSize retSize = [string boundingRectWithSize:size
                                           options:
                       NSStringDrawingTruncatesLastVisibleLine |
@@ -695,6 +710,26 @@
                                           context:nil].size;
     
     return retSize.height;
+}
+
++(float)boundingWidthWithSize:(CGSize)size WithStr:(NSString*)string andFont:(UIFont *)font andLinespace:(CGFloat)space
+{
+    if(string.length == 0){
+        return 0;
+    }
+    
+    NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc]init];
+    [style setLineSpacing:space];
+    NSDictionary *attribute = @{NSFontAttributeName:font,NSParagraphStyleAttributeName:style,                                 NSKernAttributeName:@-.5f,};
+    CGSize retSize = [string boundingRectWithSize:size
+                                          options:
+                      NSStringDrawingTruncatesLastVisibleLine |
+                      NSStringDrawingUsesLineFragmentOrigin |
+                      NSStringDrawingUsesFontLeading
+                                       attributes:attribute
+                                          context:nil].size;
+    
+    return retSize.width;
 }
 
 //  动画效果

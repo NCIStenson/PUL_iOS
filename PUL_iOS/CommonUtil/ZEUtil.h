@@ -131,7 +131,7 @@
 
 +(NSAttributedString *)getAttributedStringWithString:(NSString *)string lineSpace:(CGFloat)lineSpace;
 +(float)boundingRectWithSize:(CGSize)size WithStr:(NSString*)string andFont:(UIFont *)font andLinespace:(CGFloat)space;
-
++(float)boundingWidthWithSize:(CGSize)size WithStr:(NSString*)string andFont:(UIFont *)font andLinespace:(CGFloat)space;
 //  动画效果
 +(void)shakeToShow:(UIView*)aView;
 

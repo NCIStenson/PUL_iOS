@@ -63,7 +63,7 @@
 #define kSubTiltlFontSize 12.0f
 
 //追问界面字体大小
-#define kFontSize 16.0f
+//#define kFontSize 16.0f
 //追问界面行间距
 #define kLabel_LineSpace 3.0f
 

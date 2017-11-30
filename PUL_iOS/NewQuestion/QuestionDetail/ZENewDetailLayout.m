@@ -77,8 +77,9 @@
             }else if([replyInfoModel.SYSCREATORID isEqualToString:_answerInfo.SYSCREATORID]){
                 explainStr = [NSString stringWithFormat:@"%@回复%@ ：%@",_answerInfo.NICKNAME,_questionInfo.NICKNAME,replyInfoModel.EXPLAIN];
             }
-            
-            float textH = [explainStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 90 - 16];
+            float textH = [ZEUtil boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 90 - 16, MAXFLOAT) WithStr:explainStr andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
+
+//            float textH = [explainStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 90 - 16];
             _replayHeight += textH;
         }else if(replyInfoModel.FILEURL.length > 0){
             NSString * explainStr = @"";
@@ -87,7 +88,9 @@
             }else if([replyInfoModel.SYSCREATORID isEqualToString:_answerInfo.SYSCREATORID]){
                 explainStr = [NSString stringWithFormat:@"%@回复%@ ：%@",_answerInfo.NICKNAME,_questionInfo.NICKNAME,replyInfoModel.EXPLAIN];
             }
-            float textH = [explainStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 90 - 16];
+            float textH = [ZEUtil boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 90 - 16, MAXFLOAT) WithStr:explainStr   andFont:[UIFont systemFontOfSize:kSubTiltlFontSize] andLinespace:kLabel_LineSpace];
+
+//            float textH = [explainStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 90 - 16];
 
             _replayHeight += kReplyImageHeight ;
             _replayHeight += textH ;

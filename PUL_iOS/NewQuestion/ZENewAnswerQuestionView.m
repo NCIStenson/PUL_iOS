@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
-#define kMaxTextLength 2000
+#define kMaxTextLength 1000
 
 #define kInputViewMarginLeft    10.0f
 #define kInputViewMarginTop     NAV_HEIGHT

@@ -70,10 +70,10 @@
 
 - (void)layoutQuestionExplain {
     
-    float textH = [_questionInfo.QUESTIONEXPLAIN heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 40];
-    
+    float textH = [ZEUtil boundingRectWithSize:CGSizeMake(SCREEN_WIDTH - 40, MAXFLOAT) WithStr:_questionInfo.QUESTIONEXPLAIN andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
+
     if (self.isShowMode && textH > kMaxExplainHeight) {
-        _textHeight += 75;
+        _textHeight += 85;
     }else{
         _textHeight = textH;
     }

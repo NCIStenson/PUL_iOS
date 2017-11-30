@@ -458,24 +458,8 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PUL_iOS/Home/PersonalNoti/ZESystemNotiVC.m"
-            timestampString = "525595549.567408"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "-createContentCellView:withCellView:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "PUL_iOS/PULHOME/ZEQuestionBankWebVC.m"
-            timestampString = "533205569.503131"
+            timestampString = "533628116.304421"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "257"
@@ -571,11 +555,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/ZEAppDelegate.m"
-            timestampString = "533028843.581771"
+            timestampString = "533628116.310244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
             landmarkName = "-application:didReceiveRemoteNotification:"
             landmarkType = "7">
          </BreakpointContent>
@@ -587,7 +571,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/Home/PersonalNoti/ZEPersonalDynamicVC.m"
-            timestampString = "533205569.503696"
+            timestampString = "533628116.310596"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "232"
@@ -763,7 +747,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/Home/ZEHomeVC.m"
-            timestampString = "533205569.50433"
+            timestampString = "533628116.313093"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "362"
@@ -779,7 +763,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/Group/EXPERT/ZEExpertDetailVC.m"
-            timestampString = "533205569.504501"
+            timestampString = "533628116.313655"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "79"
@@ -827,7 +811,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/Home/ZETypicalCaseVC.m"
-            timestampString = "533205569.505558"
+            timestampString = "533628116.31487"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "436"
@@ -874,28 +858,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PUL_iOS/Home/ZEChatVC.m"
-            timestampString = "533205569.505873"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "-sendSearchAnswerRequestWithoutOPERATETYPE"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "PUL_iOS/Home/ZEChatBaseCell.m"
-            timestampString = "533205569.506029"
+            timestampString = "533628116.315422"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "-headClicked"
             landmarkType = "7">
          </BreakpointContent>
@@ -907,7 +875,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/Model/ZEQuestionInfoModel.m"
-            timestampString = "533205569.506173"
+            timestampString = "533628116.316406"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "119"
@@ -922,40 +890,8 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PUL_iOS/NewQuestion/ZENewQuestionListView.m"
-            timestampString = "533205569.506298"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
-            landmarkName = "-reloadContentViewWithArr:withHomeContent:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PUL_iOS/Team/ZETeamChatRoomVC.m"
-            timestampString = "533110183.147215"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "-viewWillAppear:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "PUL_iOS/Home/ZETypicalCaseWebVC.m"
-            timestampString = "533205569.506509"
+            timestampString = "533628116.316788"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "31"
@@ -971,12 +907,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/Home/ZETypicalCaseWebVC.m"
-            timestampString = "533205569.506648"
+            timestampString = "533628116.317136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "-viewDidLoad"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PUL_iOS/ZEAppDelegate.m"
+            timestampString = "533628116.317377"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
+            landmarkName = "-jpushNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PUL_iOS/ZEAppDelegate.m"
+            timestampString = "533628116.317658"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
+            landmarkName = "-jpushNotificationCenter:willPresentNotification:withCompletionHandler:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PUL_iOS/Team/ZETeamChatRoomVC.m"
+            timestampString = "533549894.049008"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "-viewWillAppear:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

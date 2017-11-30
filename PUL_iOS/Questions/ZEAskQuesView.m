@@ -11,7 +11,7 @@
 #define kInputViewWidth         SCREEN_WIDTH - 20.0f
 #define kInputViewHeight        120.0f
 
-#define kMaxTextLength 2000
+#define kMaxTextLength 1000
 
 #define textViewStr @"试着将问题尽可能清晰的描述出来，这样回答者们才能更完整、更高质量的为您解答。"
 

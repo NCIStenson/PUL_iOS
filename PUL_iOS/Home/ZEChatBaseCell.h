@@ -6,8 +6,6 @@
 //  Copyright © 2016年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
-#define kFontSize 16.0f
-
 #define kMaxWidth SCREEN_WIDTH * 0.7
 
 #define kLeftHeadImageMarginLeft 10

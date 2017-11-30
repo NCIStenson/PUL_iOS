@@ -5,6 +5,7 @@
 //  Created by Stenson on 17/5/4.
 //  Copyright © 2017年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
+#define kFontSize 16.0f
 
 #define kCellTopMargin 5.0f
 #define kCellBottomMargin 5.0f

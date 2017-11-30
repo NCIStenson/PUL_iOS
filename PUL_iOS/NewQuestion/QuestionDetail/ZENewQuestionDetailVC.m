@@ -50,8 +50,8 @@
         [self enterFromNotiSendRequest];
     }
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSearchAnswerRequestWithoutOperateType) name:kNOTI_BACK_QUEANSVIEW object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSearchAnswerRequestWithoutOperateType) name:kNOTI_ANSWER_SUCCESS object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(sendSearchAnswerRequestWithoutOperateType) name:kNOTI_BACK_QUEANSVIEW object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(answerSuccess) name:kNOTI_ANSWER_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeQuestionInfoBack) name:kNOTI_CHANGE_ASK_SUCCESS object:nil];
 
 }
@@ -173,7 +173,7 @@
                        showAlertView:NO
                              success:^(id data) {
                                  _datasArr = [ZEUtil getServerData:data withTabelName:V_KLB_ANSWER_INFO];
-                                 NSLog(@"  coutn ===  %d",_datasArr.count);
+
                                  [_detailView reloadViewWithData:_datasArr];
                              } fail:^(NSError *errorCode) {
                                  
@@ -296,6 +296,11 @@
                              } fail:^(NSError *errorCode) {
                                  
                              }];
+}
+
+-(void)answerSuccess{
+    _questionInfo.ISANSWER = YES;
+    [self sendSearchAnswerRequestWithoutOperateType];
 }
 
 #pragma mark - ZENewQuestionListViewDelegate
