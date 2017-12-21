@@ -85,4 +85,6 @@
 
 -(void)endRefreshingWithHomeContent:(HOME_CONTENT)content_page;
 
+-(void)selectItem:(UISegmentedControl*)segControl;
+
 @end

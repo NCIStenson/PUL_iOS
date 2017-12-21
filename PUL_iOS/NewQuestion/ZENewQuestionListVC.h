@@ -7,7 +7,12 @@
 //
 
 #import "ZESettingRootVC.h"
+#import "ZEDistrictManagerModel.h"
+
 
 @interface ZENewQuestionListVC : ZESettingRootVC
+
+@property (nonatomic,strong) ZEDistrictManagerModel * managerCourseModel;
+@property (nonatomic,assign) ENTER_NEWQUESLIST_TYPE enterType;
 
 @end

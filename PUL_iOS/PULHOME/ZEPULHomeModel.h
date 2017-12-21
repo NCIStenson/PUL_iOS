@@ -45,6 +45,9 @@
 @property (nonatomic,copy) NSArray * module_list;  // 团队创建日期
 @property (nonatomic,copy) NSString * right_rate;  // 团队创建日期
 @property (nonatomic,copy) NSString * time_pass; // 团队所属分类code
+@property (nonatomic,copy) NSString * module_id; // 团队所属分类code
+@property (nonatomic,copy) NSString * module_code; // 团队所属分类code
+@property (nonatomic,copy) NSString * module_name; // 团队所属分类code
 
 +(ZEPULHomeQuestionBankModel *)getDetailWithDic:(NSDictionary *)dic;
 

@@ -34,7 +34,10 @@
 #import "ZEExpertListVC.h"
 #import "ZEWorkStandardListVC.h"
 #import "ZETypicalCaseHomeVC.h"
-
+#import "ZEDistrictManagerHomeVC.h"
+#import "ZESkillListVC.h"
+#import "ZEManagerPracticeBankVC.h"
+#import "ZESkillListVC.h"
 @interface ZEPULHomeVC () <ZEPULHomeViewDelegate>
 {
     ZEPULHomeView * _PULHomeView ;
@@ -563,6 +566,13 @@
 {
     NSLog(@" ===  岗位体系");
 }
+
+-(void)goXXKJ
+{
+    ZEDistrictManagerHomeVC* bankVC = [[ZEDistrictManagerHomeVC alloc]init];
+    [self.navigationController pushViewController:bankVC animated:YES];
+}
+
 -(void)goZJZX
 {
     NSLog(@" === 专家在线");
@@ -588,7 +598,21 @@
     
 }
 
+-(void)goLXTK
+{
+    ZEManagerPracticeBankVC* bankVC = [[ZEManagerPracticeBankVC alloc]init];
+    [self.navigationController pushViewController:bankVC animated:YES];
+}
 
+-(void)goJNBG
+{
+//    ZEDistrictManagerHomeVC* bankVC = [[ZEDistrictManagerHomeVC alloc]init];
+//    [self.navigationController pushViewController:bankVC animated:YES];
+    ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];
+    bankVC.enterType = ENTER_QUESTIONBANK_TYPE_ONLINEEXAM;
+    [self.navigationController pushViewController:bankVC animated:YES];
+
+}
 
 -(void)goZXCS
 {
@@ -600,9 +624,12 @@
 
 -(void)goJNQD
 {
-    ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];
-    bankVC.enterType = ENTER_QUESTIONBANK_TYPE_SKILLLIST;
-    [self.navigationController pushViewController:bankVC animated:YES];
+//    ZEQuestionBankWebVC * bankVC = [[ZEQuestionBankWebVC alloc]init];
+//    bankVC.enterType = ENTER_QUESTIONBANK_TYPE_SKILLLIST;
+//    [self.navigationController pushViewController:bankVC animated:YES];
+    
+    ZESkillListVC *FishVC = [[ZESkillListVC alloc] init];
+    [self.navigationController pushViewController:FishVC animated:YES];
 }
 
 -(void)goMoreFunction

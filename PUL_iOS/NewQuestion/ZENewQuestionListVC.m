@@ -42,9 +42,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendHomeDataRequest) name:kNOTI_ACCEPT_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendHomeDataRequest) name:kNOTI_ANSWER_SUCCESS object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendHomeDataRequest) name:kNOTI_CHANGE_ASK_SUCCESS object:nil];
-
     
     [self sendNewestQuestionsRequest];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -59,6 +59,12 @@
 //    _questionListView.backgroundColor = MAIN_ARM_COLOR;
     _questionListView.delegate = self;
     [self.view addSubview:_questionListView];
+    if(_enterType == ENTER_NEWQUESLIST_TYPE_COURSEHOME || _enterType == ENTER_NEWQUESLIST_TYPE_COURSEDETAIL){
+        UISegmentedControl * segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"最新", @"推荐", @"悬赏"]];
+        segmentedControl.selectedSegmentIndex = 1;
+
+        [_questionListView selectItem:segmentedControl];
+    }
 }
 
 #pragma mark - Request
@@ -77,25 +83,38 @@
 
 -(void)sendNewestQuestionsRequest
 {
+    NSString * actionFlag = @"";
+
     NSString * WHERESQL = [NSString stringWithFormat:@"ISLOSE = 0 and ISSOLVE = 0"];
-    NSDictionary * parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long) MAX_PAGE_COUNT],
-                                     @"MASTERTABLE":V_KLB_QUESTION_INFO,
-                                     @"MENUAPP":@"EMARK_APP",
-                                     @"ORDERSQL":@"SYSCREATEDATE desc",
-                                     @"WHERESQL":WHERESQL,
-                                     @"start":[NSString stringWithFormat:@"%ld",(long)_currentNewestPage * MAX_PAGE_COUNT],
-                                     @"METHOD":@"search",
-                                     @"MASTERFIELD":@"SEQKEY",
-                                     @"DETAILFIELD":@"",
-                                     @"CLASSNAME":@"com.nci.klb.app.question.QuestionPoints",
-                                     @"DETAILTABLE":@"",};
+    NSMutableDictionary * parametersDic = [NSMutableDictionary dictionaryWithDictionary: @{
+                                                                                           @"limit":[NSString stringWithFormat:@"%ld",(long) MAX_PAGE_COUNT],
+                                                                                           @"MASTERTABLE":V_KLB_QUESTION_INFO,
+                                                                                           @"MENUAPP":@"EMARK_APP",
+                                                                                           @"ORDERSQL":@"SYSCREATEDATE desc",
+                                                                                           @"WHERESQL":WHERESQL,
+                                                                                           @"start":[NSString stringWithFormat:@"%ld",(long)_currentNewestPage * MAX_PAGE_COUNT],
+                                                                                           @"METHOD":@"search",
+                                                                                           @"MASTERFIELD":@"SEQKEY",
+                                                                                           @"DETAILFIELD":@"",
+                                                                                           @"DETAILTABLE":@"",
+                                                                                           @"CLASSNAME":@"com.nci.klb.app.question.QuestionPoints",
+                                                                                           }];
+    if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEHOME) {
+        actionFlag = @"qusetionpostype";
+        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+    }else if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEDETAIL) {
+        actionFlag = @"qusetionAbility";
+        [parametersDic setObject:_managerCourseModel.ABILITYCODE forKey:@"abilitycode"];
+        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+    }
     
+
     NSDictionary * fieldsDic =@{};
     
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_QUESTION_INFO]
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
-                                                                       withActionFlag:nil];
+                                                                       withActionFlag:actionFlag];
     
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
@@ -135,11 +154,13 @@
  */
 -(void)sendRecommandQuestionsRequest:(NSString *)searchStr
 {
+    NSString * actionFlag = @"";
+
     NSString * WHERESQL = [NSString stringWithFormat:@"ISLOSE = 0 and ISSOLVE = 0 and QUESTIONEXPLAIN like '%%%@%%'",searchStr];
     if (![ZEUtil isStrNotEmpty:searchStr]) {
         WHERESQL = [NSString stringWithFormat:@"ISLOSE = 0 and ISSOLVE = 0 and QUESTIONEXPLAIN like '%%'"];
     }
-    NSDictionary * parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long) MAX_PAGE_COUNT],
+    NSMutableDictionary * parametersDic = [NSMutableDictionary dictionaryWithDictionary: @{@"limit":[NSString stringWithFormat:@"%ld",(long) MAX_PAGE_COUNT],
                                      @"MASTERTABLE":V_KLB_QUESTION_INFO,
                                      @"MENUAPP":@"EMARK_APP",
                                      @"ORDERSQL":@" SYSCREATEDATE,ANSWERSUM desc ",
@@ -149,14 +170,22 @@
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
                                      @"CLASSNAME":@"com.nci.klb.app.question.QuestionPoints",
-                                     @"DETAILTABLE":@"",};
-    
+                                     @"DETAILTABLE":@"",}];
+    if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEHOME) {
+        actionFlag = @"qusetionpostype";
+        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+    }else if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEDETAIL) {
+        actionFlag = @"qusetionAbility";
+        [parametersDic setObject:_managerCourseModel.ABILITYCODE forKey:@"abilitycode"];
+        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+    }
+
     NSDictionary * fieldsDic =@{};
     
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_QUESTION_INFO]
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
-                                                                       withActionFlag:nil];
+                                                                       withActionFlag:actionFlag];
     
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
@@ -194,11 +223,12 @@
  */
 -(void)sendBounsQuestionsRequest:(NSString *)searchStr
 {
+    NSString * actionFlag = @"";
     NSString * WHERESQL = [NSString stringWithFormat:@"ISLOSE = 0 and BONUSPOINTS IS NOT NULL and BONUSPOINTS != 0 and QUESTIONEXPLAIN like '%%%@%%'",searchStr];
     if (![ZEUtil isStrNotEmpty:searchStr]) {
         WHERESQL = [NSString stringWithFormat:@"ISLOSE = 0 and BONUSPOINTS IS NOT NULL and ISSOLVE = 0 and BONUSPOINTS != 0 and QUESTIONEXPLAIN like '%%'"];
     }
-    NSDictionary * parametersDic = @{@"limit":[NSString stringWithFormat:@"%ld",(long) MAX_PAGE_COUNT],
+    NSMutableDictionary * parametersDic = [NSMutableDictionary dictionaryWithDictionary: @{@"limit":[NSString stringWithFormat:@"%ld",(long) MAX_PAGE_COUNT],
                                      @"MASTERTABLE":V_KLB_QUESTION_INFO,
                                      @"MENUAPP":@"EMARK_APP",
                                      @"ORDERSQL":@"SYSCREATEDATE desc",
@@ -208,14 +238,22 @@
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
                                      @"CLASSNAME":@"com.nci.klb.app.question.QuestionPoints",
-                                     @"DETAILTABLE":@"",};
-    
+                                     @"DETAILTABLE":@"",}];
+    if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEHOME) {
+        actionFlag = @"qusetionpostype";
+        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+    }else if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEDETAIL) {
+        actionFlag = @"qusetionAbility";
+        [parametersDic setObject:_managerCourseModel.ABILITYCODE forKey:@"abilitycode"];
+        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+    }
+
     NSDictionary * fieldsDic =@{};
     
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_QUESTION_INFO]
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
-                                                                       withActionFlag:nil];
+                                                                       withActionFlag:actionFlag];
     
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO

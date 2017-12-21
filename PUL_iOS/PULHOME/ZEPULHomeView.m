@@ -399,15 +399,25 @@
          专家在线 专业圈
          */
         [button addTarget:self action:@selector(goDXAL) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"xxkj"]){
+        /**
+         职业性格测评
+         */
+        [button addTarget:self action:@selector(goXXKJ) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"lxtk"]){
+        /**
+         职业性格测评
+         */
+        [button addTarget:self action:@selector(goLXTK) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"jnqd"]){
+        /**
+         职业性格测评
+         */
+        [button addTarget:self action:@selector(goJNQD) forControlEvents:UIControlEventTouchUpInside];
     }else{
         [button addTarget:self action:@selector(goWebVC:) forControlEvents:UIControlEventTouchUpInside];
     }
-//    else if ([functionCode isEqualToString:@"zyxgcp"]){
-//        /**
-//         职业性格测评
-//         */
-//        [button addTarget:self action:@selector(goZYXGCP) forControlEvents:UIControlEventTouchUpInside];
-//    }else if ([functionCode isEqualToString:@"gwtx"]){
+//    else if ([functionCode isEqualToString:@"gwtx"]){
 //        /**
 //         岗位体系
 //         */
@@ -603,6 +613,26 @@
     }
 }
 
+-(void)goXXKJ
+{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(goXXKJ)]) {
+        [self.delegate goXXKJ];
+    }
+}
+-(void)goLXTK
+{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(goLXTK)]) {
+        [self.delegate goLXTK];
+    }
+}
 
 /**
  岗位体系
@@ -669,6 +699,15 @@
     }
     if ([self.delegate respondsToSelector:@selector(goJNQD)]) {
         [self.delegate goJNQD];
+    }
+}
+-(void)goJNBG{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(goJNBG)]) {
+        [self.delegate goJNBG];
     }
 }
 

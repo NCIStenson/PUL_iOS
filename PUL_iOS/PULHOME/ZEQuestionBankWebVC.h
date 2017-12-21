@@ -14,6 +14,8 @@
 
 @property (nonatomic,copy) NSString * functionCode;
 
+@property (nonatomic,copy) NSString * needLoadRequestUrl;
+
 // 个人消息列表请求需要
 @property (nonatomic,copy) NSString * URLPATH;
 @property (nonatomic,copy) NSString * MESTYPE;

@@ -37,26 +37,6 @@
     
     self.navBar.hidden =YES;
     
-//    if (_showQuestionListType == QUESTION_LIST_NEW) {
-//        self.title = @"搜索";
-//    }else if(_showQuestionListType == QUESTION_LIST_TYPE){
-//        self.title = _QUESTIONTYPENAME;
-//        [self initAskTypeView];
-//    }else if(_showQuestionListType == QUESTION_LIST_MY_QUESTION){
-//        self.title = @"我的问题";
-//    }else if(_showQuestionListType == QUESTION_LIST_MY_ANSWER){
-//        self.title = @"我的回答";
-//    }else if (_showQuestionListType == QUESTION_LIST_EXPERT){
-//        self.title = @"专家解答";
-//    }else if (_showQuestionListType == QUESTION_LIST_CASE){
-//        self.title = @"典型案例";
-//    }
-//    if(_showQuestionListType != QUESTION_LIST_TYPE){
-//        [self createWhereSQL:_currentInputStr];
-//    }
-//    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadNewData) name:kNOTI_CHANGE_ASK_SUCCESS object:nil];;
-    
     [self initView];
 }
 

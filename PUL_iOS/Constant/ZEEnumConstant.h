@@ -57,6 +57,11 @@ typedef enum : NSUInteger {
     ENTER_TEAMNOTI_TYPE_RECEIPT_Y, // 需要回执页面
 } ENTER_TEAMNOTI_TYPE;
 
+typedef enum : NSUInteger {
+    ENTER_NEWQUESLIST_TYPE_DEFAULT, // 创建团队
+    ENTER_NEWQUESLIST_TYPE_COURSEHOME, // 课件首页进入
+    ENTER_NEWQUESLIST_TYPE_COURSEDETAIL, // 课件详情进入
+} ENTER_NEWQUESLIST_TYPE;   // 进入问题列表页面
 
 typedef enum : NSUInteger {
     ENTER_TEAM_CREATE, // 创建团队
@@ -168,7 +173,8 @@ typedef enum : NSUInteger{
     ENTER_QUESTIONBANK_TYPE_MYCOLL,  /**** 我的收藏 ****/
     ENTER_QUESTIONBANK_TYPE_RECORD,  /**** 练习记录 ****/
     ENTER_QUESTIONBANK_TYPE_NOTE,  /**** 我的笔记 ****/
-    
+    ENTER_QUESTIONBANK_TYPE_STANDARD,  /****** 实操规范 *****/
+
     ENTER_QUESTIONBANK_TYPE_ABISCHOOL, /****** 能力学堂 *****/
     ENTER_QUESTIONBANK_TYPE_STAFFDEV,  /****** 员工发展 *****/
     ENTER_QUESTIONBANK_TYPE_ONLINEEXAM,  /****** 在线测试 *****/

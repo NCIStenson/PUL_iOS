@@ -80,6 +80,12 @@
  */
 -(void)goJNQD;
 
+-(void)goXXKJ;
+
+-(void)goLXTK;
+
+-(void)goJNBG;
+
 
 /**
  根据functionCode 跳转 指定网页界面

@@ -285,8 +285,9 @@
 
 -(void)selectItem:(UISegmentedControl*)segControl
 {
+    self.segmentedControl.selectedSegmentIndex = segControl.selectedSegmentIndex;
     _contentScrollView.contentOffset = CGPointMake(SCREEN_WIDTH * segControl.selectedSegmentIndex, 0);
-    
+
     _currentHomeContent = segControl.selectedSegmentIndex;
     UITableView * contentView = (UITableView *)[_contentScrollView viewWithTag:100 + _currentHomeContent];
     [contentView reloadData];
@@ -328,16 +329,32 @@
     switch (_currentHomeContent) {
         case HOME_CONTENT_RECOMMAND:
             [cell setLayout:self.recommandQuestionArr[indexPath.row]];
+            if (indexPath.row == self.recommandQuestionArr.count - 1) {
+                ZENewQuetionLayout * lay = self.recommandQuestionArr[indexPath.row];
+                [ZEUtil addLineLayerMarginLeft:0 marginTop:lay.height - 2 width:SCREEN_WIDTH height:2 superView:cell.contentView];
+            }
+
             break;
         case HOME_CONTENT_NEWEST:
             [cell setLayout:self.newestQuestionArr[indexPath.row]];
+            
+            if (indexPath.row == self.newestQuestionArr.count - 1) {
+                ZENewQuetionLayout * lay = self.newestQuestionArr[indexPath.row];
+                [ZEUtil addLineLayerMarginLeft:0 marginTop:lay.height - 2 width:SCREEN_WIDTH height:2 superView:cell.contentView];
+            }
+
             break;
         case HOME_CONTENT_BOUNS:
             [cell setLayout:self.bonusQuestionArr[indexPath.row]];
+            if (indexPath.row == self.bonusQuestionArr.count - 1) {
+                ZENewQuetionLayout * lay = self.bonusQuestionArr[indexPath.row];
+                [ZEUtil addLineLayerMarginLeft:0 marginTop:lay.height - 2 width:SCREEN_WIDTH height:2 superView:cell.contentView];
+            }
             break;
         default:
             break;
     }
+    
 
     return cell;
 }

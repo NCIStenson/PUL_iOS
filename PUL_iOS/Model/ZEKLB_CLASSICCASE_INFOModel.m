@@ -29,8 +29,8 @@ static ZEKLB_CLASSICCASE_INFOModel * model;
     
     NSArray * urlArr = [model.FILEURL componentsSeparatedByString:@","];
     NSMutableArray * imageUrlArr = [NSMutableArray arrayWithArray:urlArr];
-    [imageUrlArr removeObjectAtIndex:0];
     if (imageUrlArr.count > 0) {
+        [imageUrlArr removeObjectAtIndex:0];
         model.FILEURL = imageUrlArr[0];
     }
 

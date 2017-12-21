@@ -93,13 +93,20 @@
 #define HOME_MY_MESSAGE @"com.nci.klb.app.homePage.MessageList"          /***   我的动态消息列表  ***/
 #define QUESTION_BANK @"com.nci.klb.app.exam.QuestionBank"          /***   题库列表  ***/
 
+#define DISTRICTMANAGER_CLASS @"com.nci.klb.app.scene.KlbCoursewareManage" /*****   台区经理   *****/
+#define DISTRICTMANAGER_ABILITY_CLASS @"com.nci.klb.app.scene.KlbAbilityManage" /*****   台区经理   *****/
+
 #define V_KLB_FUNCTION_USER_LIST              @"V_KLB_FUNCTION_USER_LIST"               /***   我的功能列表   ***/
 #define KLB_FUNCTION_USER_LIST              @"KLB_FUNCTION_USER_LIST"               /***   我的功能列表   ***/
 #define KLB_FUNCTION_LIST              @"KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
 
 #define KLB_DYNAMIC_HOME_INFO              @"KLB_DYNAMIC_HOME_INFO"               /***   首页动态列表     ***/
 
-//#define KLB_DYNAMIC_HOME_INFO              @"KLB_DYNAMIC_HOME_INFO"               /***   题库列表     ***/
+#define V_KLB_COURSEWARE_INFO              @"V_KLB_COURSEWARE_INFO"               /***   台区经理   ***/
+#define V_KLB_ABILITY_TYPE              @"V_KLB_ABILITY_TYPE"               /***   学习课件首页   ***/
+#define KLB_COURSEWARE_COLLECT             @"KLB_COURSEWARE_COLLECT"               /***   学习课件收藏   ***/
+#define KLB_COURSEWARE_CONTENT             @"KLB_COURSEWARE_CONTENT"               /***   学习课件评论   ***/
+#define V_KLB_COURSEWARE_CONTENT             @"V_KLB_COURSEWARE_CONTENT"               /***   学习课件评论   ***/
 
 
 #endif /* ZEServerTableMessage_h */

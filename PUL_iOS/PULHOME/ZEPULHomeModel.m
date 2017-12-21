@@ -50,7 +50,10 @@ static ZEPULHomeQuestionBankModel * bankModel = nil;
     bankModel.module_list = [[dic objectForKey:@"module_list"] objectForKey:@"DATAS"];
     bankModel.right_rate = [dic objectForKey:@"right_rate"];
     bankModel.time_pass = [dic objectForKey:@"time_pass"];
-    
+    bankModel.module_id = [dic objectForKey:@"module_id"];
+    bankModel.module_name = [dic objectForKey:@"module_name"];
+    bankModel.module_code = [dic objectForKey:@"module_code"];
+
     return bankModel;
 }
 
