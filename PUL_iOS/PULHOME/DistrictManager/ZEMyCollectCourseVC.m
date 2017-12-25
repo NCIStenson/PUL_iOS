@@ -86,7 +86,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    return 95;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -119,8 +119,17 @@
     }
     
     [cell initUIWithDic:self.myCollectArr[indexPath.row]];
-
+    cell.lineLayer.hidden = YES;
     
+    UILabel *_tipsLab = [UILabel new];
+    _tipsLab.frame = CGRectMake(0, 70, SCREEN_WIDTH, 25);
+    [cell.contentView addSubview:_tipsLab];
+    _tipsLab.text = @"立即查看";
+    _tipsLab.backgroundColor = RGBA(244, 248, 251, 1);
+    _tipsLab.textColor = kSubTitleColor;
+    _tipsLab.textAlignment = NSTextAlignmentCenter;
+    _tipsLab.font = [UIFont systemFontOfSize:14];
+
     return cell;
 
 }

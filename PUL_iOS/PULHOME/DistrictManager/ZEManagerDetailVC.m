@@ -270,7 +270,7 @@
                                      @"METHOD":METHOD_INSERT,
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
-                                     @"CLASSNAME":BASIC_CLASS_NAME,
+                                     @"CLASSNAME":DISTRICTMANAGER_CLASS,
                                      @"DETAILTABLE":@"",};
     
     NSDictionary * fieldsDic =@{@"COURSEID":_detailManagerModel.SEQKEY,
@@ -280,15 +280,20 @@
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_COURSEWARE_CONTENT]
                                                                            withFields:@[fieldsDic]
                                                                        withPARAMETERS:parametersDic
-                                                                       withActionFlag:nil];
+                                                                       withActionFlag:@"contentcount"];
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
-                                 [self showTips:@"发表成功"];
-                                 [detailView publishCommentSuccess];
-                                 
-                                 _currentPage = 0;
-                                 [self sendRequestWithCurrentPage];
+                                 NSArray * arr = [ZEUtil getEXCEPTIONDATA:data];
+                                 if(arr.count > 0){
+                                     NSDictionary * failReason = arr[0];
+                                     [self showTips:[NSString stringWithFormat:@"%@\n",[failReason objectForKey:@"reason"]] afterDelay:1.5];
+                                 }else{
+                                     [self showTips:@"发表成功"];
+                                     [detailView publishCommentSuccess];
+                                     _currentPage = 0;
+                                     [self sendRequestWithCurrentPage];
+                                 }
                              } fail:^(NSError *errorCode) {
                                  
                              }];

@@ -11,5 +11,6 @@
 @interface ZETypicalCaseWebVC : ZESettingRootVC
 
 @property (nonatomic,copy)NSString * filePath;
+@property (nonatomic, strong) UIProgressView *progressView;
 
 @end

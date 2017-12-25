@@ -50,13 +50,14 @@
     
     UILabel * circleLab = [[UILabel alloc]initWithFrame:CGRectMake(contentLab.left,contentLab.bottom + 15,contentLab.width,contentLab.height - 5)];
     circleLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
-    circleLab.textColor = MAIN_BLUE_COLOR;
+    circleLab.textColor = MAIN_SUBTITLE_COLOR;
+    circleLab.text = managerModel.TYPENAME;
     [self.contentView addSubview:circleLab];
-    NSDictionary *attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
-    if (managerModel.TYPENAME.length > 0) {
-        NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:managerModel.TYPENAME attributes:attribtDic];
-        circleLab.attributedText = attribtStr;
-    }
+//    NSDictionary *attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
+//    if (managerModel.TYPENAME.length > 0) {
+//        NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:managerModel.TYPENAME attributes:attribtDic];
+//        circleLab.attributedText = attribtStr;
+//    }
     [circleLab sizeToFit];
     
     NSString * commentLabText =[NSString stringWithFormat:@"%ld",(long)[managerModel.COMMENTCOUNT integerValue]];
@@ -99,7 +100,10 @@
     [self.contentView addSubview:pageLab];
     [pageLab sizeToFit];
     
-    [ZEUtil addLineLayerMarginLeft:20 marginTop:69 width:SCREEN_WIDTH - 40 height:1 superView:self.contentView];
+    self.lineLayer = [UIView new];
+    _lineLayer.frame = CGRectMake(20, 69, SCREEN_WIDTH - 40 , 1);
+    _lineLayer.backgroundColor = MAIN_LINE_COLOR;
+    [self.contentView addSubview:_lineLayer];
 
 }
 

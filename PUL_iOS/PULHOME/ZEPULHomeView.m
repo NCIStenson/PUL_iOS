@@ -470,6 +470,10 @@
         if ([self.delegate respondsToSelector:@selector(didSelectWebViewWithIndex:)]) {
             [self.delegate didSelectWebViewWithIndex:model.URLPATH];
         }
+    }else if ([model.MES_TYPE integerValue] == 8){
+        if ([self.delegate respondsToSelector:@selector(goDistrictManagerHome)]) {
+            [self.delegate goDistrictManagerHome];
+        }
     }
 }
 

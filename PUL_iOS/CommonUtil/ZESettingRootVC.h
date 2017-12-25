@@ -31,6 +31,7 @@
  *  开始加载HUD
  */
 - (void)progressBegin:(NSString *)labelText;
+-(void)progressHidden;
 /**
  *  结束加载HUD 1s后消失
  */

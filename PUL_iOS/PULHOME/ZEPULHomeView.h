@@ -126,6 +126,8 @@
 
 -(void)ignoreHomeDynamic:(ZEPULHomeModel *)model;
 
+-(void)goDistrictManagerHome;
+
 @end
 
 @interface ZEPULHomeView : UIView

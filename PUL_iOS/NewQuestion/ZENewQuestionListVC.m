@@ -51,7 +51,7 @@
 {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
-}
+}   
 
 -(void)initView
 {
@@ -62,7 +62,8 @@
     if(_enterType == ENTER_NEWQUESLIST_TYPE_COURSEHOME || _enterType == ENTER_NEWQUESLIST_TYPE_COURSEDETAIL){
         UISegmentedControl * segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"最新", @"推荐", @"悬赏"]];
         segmentedControl.selectedSegmentIndex = 1;
-
+        segmentedControl.frame = CGRectMake(0, 0, 0, 0  );
+        
         [_questionListView selectItem:segmentedControl];
     }
 }

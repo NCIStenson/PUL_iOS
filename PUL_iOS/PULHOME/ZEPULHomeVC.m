@@ -668,6 +668,12 @@
     [self.navigationController pushViewController:showQuestionsList animated:YES];
 }
 
+-(void)goDistrictManagerHome
+{
+    ZEDistrictManagerHomeVC* bankVC = [[ZEDistrictManagerHomeVC alloc]init];
+    [self.navigationController pushViewController:bankVC animated:YES];
+}
+
 -(void)ignoreHomeDynamic:(ZEPULHomeModel *)model
 {
     [self ignoreHomeDynamicWithSeqkey:model.SEQKEY];

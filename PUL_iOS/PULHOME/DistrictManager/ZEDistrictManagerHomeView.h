@@ -63,6 +63,8 @@ typedef enum : NSUInteger {
     NSMutableArray * allDataArr;
     NSMutableArray * allDetailDataArr;
     NSMutableArray * allRecommondDataArr;
+    
+    NSMutableArray * allTotalCountArr;
 }
 
 @property (nonatomic,weak)  id <ZEDistrictManagerHomeViewDelegate> delegate;
@@ -72,6 +74,8 @@ typedef enum : NSUInteger {
 -(void)reloadDataWithArr:(NSArray *)arr;
 
 -(void)reloadSectionWithIndex:(NSInteger)index withArr:(NSArray *)arr;
+
+-(void)reloadFirstRecommandDataWithArr:(NSArray *)arr;
 
 -(void)reloadRecommandDataWithArr:(NSArray *)arr;
 

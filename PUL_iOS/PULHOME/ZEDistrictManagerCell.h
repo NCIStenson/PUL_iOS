@@ -10,6 +10,8 @@
 
 @interface ZEDistrictManagerCell : UITableViewCell
 
+@property (nonatomic,strong) UIView * lineLayer;
+
 -(void)initUIWithDic:(NSDictionary *)dic;
 
 @end

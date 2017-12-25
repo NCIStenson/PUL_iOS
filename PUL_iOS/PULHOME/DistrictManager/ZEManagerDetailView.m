@@ -17,7 +17,7 @@
 #define kInputViewMarginLeft  0.0f
 #define kInputViewMarginTop   SCREEN_HEIGHT - kInputViewHeight
 #define kInputViewWidth       SCREEN_WIDTH
-#define kInputViewHeight      40.0f
+#define kInputViewHeight      50.0f
 
 #import "ZEManagerDetailView.h"
 #import "ZEKLB_CLASSICCASE_INFOModel.h"
@@ -183,36 +183,37 @@
 -(void)initInputView
 {
     inputView = [[UIView alloc]initWithFrame:CGRectMake(kInputViewMarginLeft, kInputViewMarginTop, kInputViewWidth, kInputViewHeight)];
-    inputView.backgroundColor = MAIN_LINE_COLOR;
+    inputView.backgroundColor = [UIColor whiteColor ];
     [self addSubview:inputView];
     inputView.hidden = YES;
     
-    UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0.5f)];
-    lineView.backgroundColor = MAIN_NAV_COLOR;
-    [inputView addSubview:lineView];
+//    UIView * lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0.5f)];
+//    lineView.backgroundColor = MAIN_NAV_COLOR;
+//    [inputView addSubview:lineView];
     
-    inputField = [[UITextField alloc]initWithFrame:CGRectMake(20, 5.0f, SCREEN_WIDTH - 100.0f, 30.0f)];
+    inputField = [[UITextField alloc]initWithFrame:CGRectMake(30, 10.0f, SCREEN_WIDTH - 60.0f, 30.0f)];
     inputField.placeholder = @"我也来说一句";
     inputField.delegate = self;
     inputField.font = [UIFont systemFontOfSize:12];
     [inputView addSubview:inputField];
-    inputField.layer.borderColor = [MAIN_NAV_COLOR CGColor];
-    inputField.layer.borderWidth = 0.5f;
+    inputField.backgroundColor = MAIN_LINE_COLOR;
     inputField.layer.cornerRadius = 5.0f;
     inputField.leftViewMode = UITextFieldViewModeAlways;
     inputField.leftView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 8, 0)];
     
-    UIButton * sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    sendBtn.frame = CGRectMake(SCREEN_WIDTH - 70, 5.0f, 60, 30);
+    sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    sendBtn.frame = CGRectMake(SCREEN_WIDTH - 70, 10.0f, 60, 30);
     [inputView addSubview:sendBtn];
     [sendBtn addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
     [sendBtn setTitle:@"发送" forState:UIControlStateNormal];
-    [sendBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
+//    [sendBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
     sendBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     sendBtn.clipsToBounds = YES;
-    sendBtn.layer.cornerRadius =10;
+    sendBtn.layer.cornerRadius = 5;
     sendBtn.layer.borderColor = [MAIN_NAV_COLOR_A(0.5) CGColor];
     sendBtn.layer.borderWidth = 1;
+    sendBtn.hidden = YES;
+    sendBtn.backgroundColor = MAIN_NAV_COLOR;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -226,6 +227,9 @@
         [self addGestureRecognizer:tap];
     }
     
+    sendBtn.hidden = NO;
+    inputField.left = 20;
+    inputField.width = SCREEN_WIDTH - 100;
     //获取键盘的高度
     CGRect begin = [[[aNotification userInfo] objectForKey:@"UIKeyboardFrameBeginUserInfoKey"] CGRectValue];
     
@@ -249,7 +253,10 @@
 {
     [self removeGestureRecognizer:tap];
     tap = nil;
-    
+    sendBtn.hidden = YES;
+    inputField.left = 30;
+    inputField.width = SCREEN_WIDTH - 60;
+
     [UIView animateWithDuration:0.29 animations:^{
         inputView.frame = CGRectMake(kInputViewMarginLeft, kInputViewMarginTop, kInputViewWidth, kInputViewHeight);
     }];
@@ -331,6 +338,12 @@
     [commonView addSubview:detailBtn];
     [detailBtn addTarget:self action:@selector(courseClick) forControlEvents:UIControlEventTouchUpInside];
     
+    UIImageView * playImageView = [UIImageView new];
+    playImageView.frame = CGRectMake(0, 0, 50, 50);
+    playImageView.center = detailBtn.center;
+    [playImageView setImage:[UIImage imageNamed:@"ic_vedio_play"]];
+    [commonView addSubview:playImageView];
+    
     if (detailManagerModel.FORMATPHOTOURL.length > 0) {
         [detailBtn sd_setImageWithURL:ZENITH_IMAGEURL(detailManagerModel.FORMATPHOTOURL) forState:UIControlStateNormal placeholderImage:ZENITH_PLACEHODLER_IMAGE];
     }
@@ -411,7 +424,7 @@
     segCont.selectedSegmentIndex = _currentDetailType;
     
     if (_currentDetailType == MANAGERDETAIL_TYPE_COMMENT) {
-        _contentView.frame = CGRectMake(kContentViewMarginLeft, kContentViewMarginTop, kContentViewWidth, kContentViewHeight + 30.f);
+        _contentView.frame = CGRectMake(kContentViewMarginLeft, kContentViewMarginTop, kContentViewWidth, kContentViewHeight + 20.f);
         inputView.hidden = NO;
         tabbarView.hidden = YES;
         _contentView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -496,18 +509,6 @@
     timeLab.numberOfLines = 0;
     timeLab.font = [UIFont systemFontOfSize:10];
     [cellView addSubview:timeLab];
-    
-    //    UIButton * replyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    //    replyBtn.frame = CGRectMake(SCREEN_WIDTH - 50,timeLab.frame.origin.y , 40, 20);
-    //    [cellView addSubview:replyBtn];
-    //    [replyBtn setTitle:@"回复" forState:UIControlStateNormal];
-    //    [replyBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
-    //    replyBtn.titleLabel.font = [UIFont systemFontOfSize:10];
-    //    replyBtn.clipsToBounds = YES;
-    //    replyBtn.layer.cornerRadius =10;
-    //    replyBtn.layer.borderColor = [MAIN_NAV_COLOR_A(0.5) CGColor];
-    //    replyBtn.layer.borderWidth = 1;
-    //    [replyBtn addTarget:self action:@selector(replyCurrentPeople:) forControlEvents:UIControlEventTouchUpInside];
     
     UIView * replyLineView = [[UIView alloc]initWithFrame:CGRectMake(85.0f, timeLab.frame.origin.y + 25.0f, SCREEN_WIDTH - 85.0f, 1.0f)];
     replyLineView.backgroundColor = MAIN_LINE_COLOR;

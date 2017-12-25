@@ -35,6 +35,7 @@
         allDataArr = [NSMutableArray array];
         allDetailDataArr = [NSMutableArray array];
         allRecommondDataArr = [NSMutableArray array];
+        allTotalCountArr= [NSMutableArray array];
         [self initNavView];
         [self initContentView];
     }
@@ -120,6 +121,8 @@
         _currentSortType = SORT_RECOMMAND;
         [hotestBtn setTitleColor:MAIN_NAV_COLOR forState:UIControlStateNormal];
         [allBtn setTitleColor:kTextColor forState:UIControlStateNormal];
+        
+        allRecommondDataArr = [NSMutableArray array];
         if ([self.delegate respondsToSelector:@selector(goRecommondViewRequest)]) {
             [self.delegate goRecommondViewRequest];
         }
@@ -237,6 +240,7 @@
         NSDictionary * detailDic = [ZEUtil dictionaryWithJsonString:managerM.DATALIST];
         NSArray * detailArr = [detailDic objectForKey:@"datas"];
         if(detailArr.count > 0){
+            [allTotalCountArr addObject:[detailDic objectForKey:@"totalCount"]];
             [allDetailDataArr addObject:detailArr];
         }
     }
@@ -244,6 +248,16 @@
     if (_currentSortType == SORT_ALL) {
         [_contentView.mj_header endRefreshing];
         [_contentView reloadData];
+    }
+}
+
+-(void)reloadFirstRecommandDataWithArr:(NSArray *)arr
+{
+    allRecommondDataArr = [NSMutableArray arrayWithArray:arr];
+    if (_currentSortType == SORT_RECOMMAND) {
+        [_contentView.mj_header endRefreshing];
+        [_contentView reloadData];
+        [_contentView.mj_footer endRefreshing];
     }
 }
 
@@ -266,10 +280,15 @@
 {
     NSMutableArray * orArr = [NSMutableArray arrayWithArray:allDetailDataArr[index]];
     [orArr addObjectsFromArray:arr];
-    
     [allDetailDataArr replaceObjectAtIndex:index withObject:orArr];
-    [_contentView reloadSection:index withRowAnimation:UITableViewRowAnimationAutomatic];
     
+    NSInteger totalCount = [allTotalCountArr[index] integerValue];
+    NSArray * currentCountArr = allDetailDataArr[index];
+    if ( currentCountArr.count == totalCount ) {
+        [_contentView reloadData];
+    }else{
+        [_contentView reloadSection:index withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -312,6 +331,12 @@
     if(_currentSortType == SORT_RECOMMAND){
         return 0.1;
     }
+    NSInteger totalCount = [allTotalCountArr[section] integerValue];
+    NSArray * arr = allDetailDataArr[section];
+    if ( arr.count == totalCount ) {
+        return 0.1;
+    }
+
     return 25;
 }
 
@@ -357,6 +382,12 @@
     if (_currentSortType == SORT_RECOMMAND) {
         return footerView;
     }
+    
+    NSInteger totalCount = [allTotalCountArr[section] integerValue];
+    NSArray * arr = allDetailDataArr[section];
+    if ( arr.count == totalCount ) {
+        return footerView;
+    }
 
     footerView.backgroundColor = [UIColor whiteColor];
     UIButton* titleLab = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -392,13 +423,19 @@
 //        ZEDistrictManagerModel * managerM = [ZEDistrictManagerModel getDetailWithDic:allDataArr[indexPath.section]];
 //        NSDictionary * detailDic = [ZEUtil dictionaryWithJsonString:managerM.DATALIST];
 //        NSArray * detailArr = [detailDic objectForKey:@"datas"];
-        
-        [cell initUIWithDic:allDetailDataArr[indexPath.section][indexPath.row]];
+        if (allDetailDataArr.count > 0) {
+            [cell initUIWithDic:allDetailDataArr[indexPath.section][indexPath.row]];
+        }
     }else if (_currentSortType == SORT_RECOMMAND){
         if (indexPath.row == 0) {
-            [ZEUtil addLineLayerMarginLeft:0 marginTop:0 width:SCREEN_WIDTH height:3 superView:cell.contentView];
+            UIView * lineLayer = [UIView new];
+            lineLayer.frame = CGRectMake(0, 0, SCREEN_WIDTH, 3);
+            lineLayer.backgroundColor = MAIN_LINE_COLOR;
+            [cell.contentView addSubview:lineLayer];
         }
-        [cell initUIWithDic:allRecommondDataArr[indexPath.row]];
+        if (allRecommondDataArr.count > 0) {
+            [cell initUIWithDic:allRecommondDataArr[indexPath.row]];
+        }
     }
     
     return cell;

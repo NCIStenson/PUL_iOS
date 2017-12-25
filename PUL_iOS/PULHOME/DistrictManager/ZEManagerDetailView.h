@@ -50,6 +50,7 @@ typedef enum : NSUInteger {
     UIView * inputView;
     
     UITextField * inputField;
+    UIButton * sendBtn;
     
     UITapGestureRecognizer * tap;
     

@@ -73,7 +73,7 @@
                                  NSArray * arr =[ZEUtil getServerData:data withTabelName:V_KLB_ABILITY_TYPE];
                                  if (arr.count > 0) {
                                      for (int i = 0; i < arr.count;i ++) {
-                                         [_currentPageArr addObject:@"1"];
+                                         [_currentPageArr addObject:@"0"];
                                      }
                                      [managerHomeView reloadDataWithArr:arr];
                                  }
@@ -83,6 +83,7 @@
 }
 
 -(void)getRecommondListRequest:(NSUInteger)index{
+    [self progressBegin:@"数据加载中"];
     NSInteger MAX_PAGE_COUN = MAX_PAGE_COUNT;
     NSDictionary * parametersDic = @{@"MASTERTABLE":V_KLB_COURSEWARE_INFO,
                                      @"MENUAPP":@"EMARK_APP",
@@ -106,29 +107,35 @@
     [ZEUserServer getDataWithJsonDic:packageDic
                        showAlertView:NO
                              success:^(id data) {
+                                 [self progressHidden];
                                  NSArray * arr =[ZEUtil getServerData:data withTabelName:V_KLB_COURSEWARE_INFO];
                                  if (arr.count > 0) {
-                                     _currentRecommondPage += 1;
-                                     [managerHomeView reloadRecommandDataWithArr:arr];
+                                     if (_currentRecommondPage == 0) {
+                                         [managerHomeView reloadFirstRecommandDataWithArr:arr];
+                                         _currentRecommondPage += 1;
+                                     }else{
+                                         [managerHomeView reloadRecommandDataWithArr:arr];
+                                     }
                                  }else{
                                      [managerHomeView endFooterRefreshingWithNoMoreData];
                                  }
                              } fail:^(NSError *errorCode) {
-                                 
+                                 [self progressHidden];
                              }];
 }
 
 -(void)loadMoreDataSendRequestWithCurrentPage:(NSInteger)pageNum
                              withSectionIndex:(NSInteger)index
                               withCurrentCode:(NSString *)codeStr
+                                withStartPage:(NSInteger)startPage
 {
     [self progressBegin:@"数据加载中..."];
     NSDictionary * parametersDic = @{@"MASTERTABLE":V_KLB_COURSEWARE_INFO,
                                      @"MENUAPP":@"EMARK_APP",
                                      @"ORDERSQL":@"",
                                      @"WHERESQL":@"",
-                                     @"start":[NSString stringWithFormat:@"%ld",pageNum * MAX_PAGE_COUNT],
-                                     @"limit":[NSString stringWithFormat:@"%d",MAX_PAGE_COUNT],
+                                     @"start":[NSString stringWithFormat:@"%ld" , (long)(startPage + pageNum * 10)],
+                                     @"limit":@"10",
                                      @"METHOD":METHOD_SEARCH,
                                      @"DETAILTABLE":@"",
                                      @"MASTERFIELD":@"SEQKEY",
@@ -136,8 +143,6 @@
                                      @"CLASSNAME":DISTRICTMANAGER_CLASS,
                                      @"abilitytype":codeStr,
                                      };
-    
-//    NSDictionary * fieldsDic = @{  @"ABILITYTYPE":codeStr, };
     
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_COURSEWARE_INFO]
                                                                            withFields:nil
@@ -148,8 +153,10 @@
                              success:^(id data) {
                                  [self progressEnd:@""];
                                  NSArray * arr =[ZEUtil getServerData:data withTabelName:V_KLB_COURSEWARE_INFO];
-                                 NSInteger newPageNum = pageNum + 1;
-                                 [_currentPageArr replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%d",newPageNum]];
+                                 if(arr.count %10 == 0){
+                                     NSInteger newPageNum = pageNum + 1;
+                                     [_currentPageArr replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%ld",(long)newPageNum]];
+                                 }
                                  if (arr.count > 0) {
                                      [managerHomeView reloadSectionWithIndex:index withArr:arr];
                                  }
@@ -162,7 +169,7 @@
 {
     NSMutableArray * arr = [NSMutableArray array];
     for (int i = 0; i < _currentPageArr.count;i ++) {
-        [arr addObject:@"1"];
+        [arr addObject:@"0"];
     }
     _currentPageArr = [NSMutableArray arrayWithArray:arr];
     _currentRecommondPage = 0;
@@ -173,6 +180,7 @@
 
 -(void)goRecommondViewRequest
 {
+    _currentRecommondPage = 0;
     [self getRecommondListRequest:ORDER_BY_DATE];
 }
 
@@ -200,16 +208,20 @@
 {    
     NSInteger _currentPage = [_currentPageArr[index] integerValue];
     NSString * codeStr = [dic objectForKey:@"ABILITYTYPE"];
-    
+    ZEDistrictManagerModel * managerM = [ZEDistrictManagerModel getDetailWithDic:dic];
+    NSDictionary * detailDic = [ZEUtil dictionaryWithJsonString:managerM.DATALIST];
+    NSArray * detailArr = [detailDic objectForKey:@"datas"];
+
     [self loadMoreDataSendRequestWithCurrentPage:_currentPage
                                 withSectionIndex:index
-                                 withCurrentCode:codeStr];
+                                 withCurrentCode:codeStr
+                                   withStartPage:detailArr.count];
 }
 
 -(void)reloadRequest{
     NSMutableArray * arr = [NSMutableArray array];
     for (int i = 0; i < _currentPageArr.count;i ++) {
-        [arr addObject:@"1"];
+        [arr addObject:@"0"];
     }
     _currentPageArr = [NSMutableArray arrayWithArray:arr];
     

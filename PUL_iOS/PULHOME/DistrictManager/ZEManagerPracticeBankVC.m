@@ -24,13 +24,13 @@
     [self initView];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.title = @"题库练习";
+    [self getBankRequest];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
-    [self getBankRequest];
 }
 
 

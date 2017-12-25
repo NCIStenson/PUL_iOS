@@ -22,6 +22,10 @@ static ZEUSER_BASE_INFOM * userinfo = nil;
     if([ZEUtil isNotNull:[dic objectForKey:@"SEQKEY"]]){
         quesInfoM.SEQKEY           = [dic objectForKey:@"SEQKEY"];
     }
+    if([ZEUtil isNotNull:[dic objectForKey:@"QUESTIONTYPENAME"]]){
+        quesInfoM.QUESTIONTYPENAME           = [dic objectForKey:@"QUESTIONTYPENAME"];
+    }
+
     if([ZEUtil isNotNull:[dic objectForKey:@"QUESTIONTYPECODE"]]){
         quesInfoM.QUESTIONTYPECODE = [dic objectForKey:@"QUESTIONTYPECODE"];
     }

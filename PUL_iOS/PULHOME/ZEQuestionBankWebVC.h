@@ -10,6 +10,8 @@
 
 @interface ZEQuestionBankWebVC : ZESettingRootVC
 
+@property (nonatomic, strong) UIProgressView *progressView;
+
 @property (nonatomic,assign) ENTER_QUESTIONBANK_TYPE enterType;
 
 @property (nonatomic,copy) NSString * functionCode;

@@ -118,6 +118,12 @@
         _contentLab.numberOfLines = 0;
 //        _subContentLab.text = model.MSG_CONTENT;
         _tipsLab.text = model.EXTRASPARAM;
+    }else if ([model.MES_TYPE integerValue] == 8){
+        _textLab.text = @"学习课件";
+        _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];
+        _subContentLab.text = model.MSG_TITLE;
+        _contentLab.text = model.MSG_CONTENT;
+        _tipsLab.text = model.EXTRASPARAM;
     }else{
 //        _textLab.text = @"能力学堂";
         _timeLab.text = [ZEUtil compareCurrentTime:model.SYSCREATEDATE];

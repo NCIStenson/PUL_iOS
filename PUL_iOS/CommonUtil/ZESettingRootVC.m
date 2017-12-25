@@ -64,6 +64,12 @@
 //    hud.labelText = @"正在加载数据";
 }
 
+-(void)progressHidden
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+}
+
 - (void)showTips:(NSString *)labelText {
 
     [MBProgressHUD hideHUDForView:self.view animated:YES];
