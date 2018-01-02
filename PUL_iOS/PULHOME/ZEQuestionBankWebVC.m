@@ -60,6 +60,12 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+}
+
 -(void)loadWebView{
     self.navBar.hidden = YES;
     
@@ -114,7 +120,7 @@
 {
 //    ZEAppDelegate *appDelegate = (ZEAppDelegate *)  [UIApplication sharedApplication].delegate;
 //    appDelegate.allowRotation = NO;
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
     // 强制归正
     if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
         SEL selector = NSSelectorFromString(@"setOrientation:");
@@ -132,11 +138,6 @@
     return self.isCanSideBack;
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    self.tabBarController.tabBar.hidden = YES;
-}
 - (void)viewDidDisappear:(BOOL)animated {
     
     [super viewDidDisappear:animated];

@@ -61,8 +61,10 @@
 
                                  NSString * targetStr = [dic objectForKey:@"target"];
                                  NSDictionary * resultDic =  [ZEUtil dictionaryWithJsonString:targetStr];
-                                 NSLog(@" ====  %@",resultDic);
-                                 [bankView reloadContentView:[resultDic objectForKey:@"data"]];
+                                 NSLog(@" ====  %@",data);
+                                 
+                                 NSArray * cellDataArr = [ZEUtil getServerData:data withTabelName:KLB_FUNCTION_LIST];
+                                 [bankView reloadContentView:[resultDic objectForKey:@"data"] withCellDataArr:cellDataArr];
 //nslo
 //                                 bankView.bankModel = [ZEPULHomeQuestionBankModel getDetailWithDic:resultDic];
                                  
@@ -119,7 +121,7 @@
             bankVC.enterType = ENTER_QUESTIONBANK_TYPE_MYCOLL;
             break;
         case 107:
-            bankVC.enterType = ENTER_QUESTIONBANK_TYPE_MYRECORD;
+            bankVC.enterType = ENTER_QUESTIONBANK_TYPE_RECORD;
             break;
         case 108:
             bankVC.enterType = ENTER_QUESTIONBANK_TYPE_NOTE;

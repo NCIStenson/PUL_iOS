@@ -100,14 +100,14 @@
                                                                                            @"DETAILTABLE":@"",
                                                                                            @"CLASSNAME":@"com.nci.klb.app.question.QuestionPoints",
                                                                                            }];
-    if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEHOME) {
-        actionFlag = @"qusetionpostype";
-        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
-    }else if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEDETAIL) {
-        actionFlag = @"qusetionAbility";
-        [parametersDic setObject:_managerCourseModel.ABILITYCODE forKey:@"abilitycode"];
-        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
-    }
+//    if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEHOME) {
+//        actionFlag = @"qusetionpostype";
+//        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+//    }else if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEDETAIL) {
+//        actionFlag = @"qusetionAbility";
+//        [parametersDic setObject:_managerCourseModel.ABILITYCODE forKey:@"abilitycode"];
+//        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+//    }
     
 
     NSDictionary * fieldsDic =@{};
@@ -240,14 +240,14 @@
                                      @"DETAILFIELD":@"",
                                      @"CLASSNAME":@"com.nci.klb.app.question.QuestionPoints",
                                      @"DETAILTABLE":@"",}];
-    if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEHOME) {
-        actionFlag = @"qusetionpostype";
-        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
-    }else if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEDETAIL) {
-        actionFlag = @"qusetionAbility";
-        [parametersDic setObject:_managerCourseModel.ABILITYCODE forKey:@"abilitycode"];
-        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
-    }
+//    if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEHOME) {
+//        actionFlag = @"qusetionpostype";
+//        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+//    }else if (_enterType == ENTER_NEWQUESLIST_TYPE_COURSEDETAIL) {
+//        actionFlag = @"qusetionAbility";
+//        [parametersDic setObject:_managerCourseModel.ABILITYCODE forKey:@"abilitycode"];
+//        [parametersDic setObject:DISTRICTMANAGER_CLASS forKey:@"CLASSNAME"];
+//    }
 
     NSDictionary * fieldsDic =@{};
     

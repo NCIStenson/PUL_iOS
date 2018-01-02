@@ -33,10 +33,11 @@ typedef enum : NSUInteger {
     ZEManageCircle * _circle;
     
     NSMutableArray * banksDataArr;
+    NSMutableArray * _cellDataArr;
 }
 
 @property (nonatomic,weak) id <ZEManagerPracticeBankViewDelegate> delegate;
 
--(void)reloadContentView:(NSArray *)dataArr;
+-(void)reloadContentView:(NSArray *)dataArr withCellDataArr:(NSArray *)cellDataArr;
 
 @end

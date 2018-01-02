@@ -135,9 +135,10 @@
 
 #pragma mark - PublicMethod 
 
--(void)reloadContentView:(NSArray *)dataArr
+-(void)reloadContentView:(NSArray *)dataArr withCellDataArr:(NSArray *)cellDataArr
 {
     banksDataArr = [NSMutableArray arrayWithArray:dataArr];
+    _cellDataArr = [NSMutableArray arrayWithArray:cellDataArr];
     
     [self initView];
     [self initTabBar];
@@ -148,7 +149,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return _cellDataArr.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -384,42 +385,50 @@
     [arrowImageView setImage:[UIImage imageNamed:@"icon_manager_arrow"]];
     arrowImageView.contentMode = UIViewContentModeScaleAspectFit;
     
-    switch (indexpath.row) {
-        case 0:
-            contentLab.text = @"每日激战，争榜首";
-            subContentLab.text = @"今日已有3人参战";
-            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_dailyPra"]];
-            break;
-        case 1:
-            contentLab.text = @"章节练习";
-            subContentLab.text = @"今日已有3人参战";
-            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_chapter"]];
+    NSDictionary * dic = _cellDataArr[indexpath.row];
+    
+    contentLab.text = [dic objectForKey:@"FUNCTIONNAME"];
+    subContentLab.text = [dic objectForKey:@"ACTIONURL"];
+    NSString * fileURL = [dic objectForKey:@"FUNCTIONURL"];
+    [iconImageView sd_setImageWithURL:ZENITH_IMAGEURL([[fileURL stringByReplacingOccurrencesOfString:@"," withString:@""] stringByReplacingOccurrencesOfString:@"/" withString:@"\\"]) placeholderImage:ZENITH_PLACEHODLER_IMAGE];
 
-            break;
-        case 2:
-            contentLab.text = @"模拟考试";
-            subContentLab.text = @"来战一场,看看自己的实力";
-            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_test"]];
-            break;
-        case 3:
-            contentLab.text = @"随机练习";
-            subContentLab.text = @"来战一场,看看自己的实力";
-            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_arcdom"]];
-            break;
-        case 4:
-            contentLab.text = @"难题攻克";
-            subContentLab.text = @"来战一场,看看自己的实力";
-            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_diff"]];
-            break;
-        case 5:
-            contentLab.text = @"实操规范";
-            subContentLab.text = @"来战一场,看看自己的实力";
-            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_stand"]];
-            break;
-            
-        default:
-            break;
-    }
+    
+//    switch (indexpath.row) {
+//        case 0:
+//            contentLab.text = @"每日激战，争榜首";
+//            subContentLab.text = @"今日已有3人参战";
+//            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_dailyPra"]];
+//            break;
+//        case 1:
+//            contentLab.text = @"章节练习";
+//            subContentLab.text = @"今日已有3人参战";
+//            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_chapter"]];
+//
+//            break;
+//        case 2:
+//            contentLab.text = @"模拟考试";
+//            subContentLab.text = @"来战一场,看看自己的实力";
+//            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_test"]];
+//            break;
+//        case 3:
+//            contentLab.text = @"随机练习";
+//            subContentLab.text = @"来战一场,看看自己的实力";
+//            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_arcdom"]];
+//            break;
+//        case 4:
+//            contentLab.text = @"难题攻克";
+//            subContentLab.text = @"来战一场,看看自己的实力";
+//            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_diff"]];
+//            break;
+//        case 5:
+//            contentLab.text = @"实操规范";
+//            subContentLab.text = @"来战一场,看看自己的实力";
+//            [iconImageView setImage:[UIImage imageNamed:@"icon_manager_stand"]];
+//            break;
+//
+//        default:
+//            break;
+//    }
 
 }
 
@@ -450,11 +459,34 @@
         default:
             break;
     }
+    NSDictionary * functionDic = _cellDataArr[indexPath.row];
+    NSString * functionCode = [functionDic objectForKey:@"FUNCTIONCODE"];
     
-    if ([self.delegate respondsToSelector:@selector(goManagerBank:withIndex:)]) {
-        [self.delegate goManagerBank:dic withIndex:indexPath.row];
+    if ([functionCode isEqualToString:@"emc1"]) {
+        if ([self.delegate respondsToSelector:@selector(goManagerBank:withIndex:)]) {
+            [self.delegate goManagerBank:dic withIndex:0];
+        }
+    }else if ([functionCode isEqualToString:@"emc2"]) {
+        if ([self.delegate respondsToSelector:@selector(goManagerBank:withIndex:)]) {
+            [self.delegate goManagerBank:dic withIndex:1];
+        }
+    }else if ([functionCode isEqualToString:@"emc3"]) {
+        if ([self.delegate respondsToSelector:@selector(goManagerBank:withIndex:)]) {
+            [self.delegate goManagerBank:dic withIndex:2];
+        }
+    }else if ([functionCode isEqualToString:@"emc4"]) {
+        if ([self.delegate respondsToSelector:@selector(goManagerBank:withIndex:)]) {
+            [self.delegate goManagerBank:dic withIndex:3];
+        }
+    }else if ([functionCode isEqualToString:@"emc5"]) {
+        if ([self.delegate respondsToSelector:@selector(goManagerBank:withIndex:)]) {
+            [self.delegate goManagerBank:dic withIndex:4];
+        }
+    }else if ([functionCode isEqualToString:@"emc6"]) {
+        if ([self.delegate respondsToSelector:@selector(goManagerBank:withIndex:)]) {
+            [self.delegate goManagerBank:dic withIndex:5];
+        }
     }
-
 }
 
 -(void)goQuestionBankWebView:(UIButton *)btn
