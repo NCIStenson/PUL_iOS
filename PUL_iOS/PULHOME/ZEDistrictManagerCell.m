@@ -50,6 +50,7 @@
     
     UILabel * circleLab = [[UILabel alloc]initWithFrame:CGRectMake(contentLab.left,contentLab.bottom + 15,contentLab.width,contentLab.height - 5)];
     circleLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
+    circleLab.numberOfLines = 2;
     circleLab.textColor = MAIN_SUBTITLE_COLOR;
     circleLab.text = managerModel.TYPENAME;
     [self.contentView addSubview:circleLab];
@@ -99,6 +100,8 @@
     pageLab.textColor = MAIN_SUBTITLE_COLOR;
     [self.contentView addSubview:pageLab];
     [pageLab sizeToFit];
+
+    circleLab.width = pageLab.left - circleLab.left;
     
     self.lineLayer = [UIView new];
     _lineLayer.frame = CGRectMake(20, 69, SCREEN_WIDTH - 40 , 1);

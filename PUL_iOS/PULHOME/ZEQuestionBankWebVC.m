@@ -64,6 +64,7 @@
 {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    self.tabBarController.tabBar.hidden =YES;
 }
 
 -(void)loadWebView{
@@ -88,14 +89,15 @@
 }
 
 -(void)initProgressView{
-    self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 20, [[UIScreen mainScreen] bounds].size.width, 2)];
-    self.progressView.backgroundColor = [UIColor blueColor];
-    //设置进度条的高度，下面这句代码表示进度条的宽度变为原来的1倍，高度变为原来的1.5倍.
-    self.progressView.transform = CGAffineTransformMakeScale(1.0f, 1.5f);
-    [self.view addSubview:self.progressView];
-    
-    [wkWebView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
-
+    if(!self.progressView){
+        self.progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 20, [[UIScreen mainScreen] bounds].size.width, 2)];
+        self.progressView.backgroundColor = [UIColor blueColor];
+        //设置进度条的高度，下面这句代码表示进度条的宽度变为原来的1倍，高度变为原来的1.5倍.
+        self.progressView.transform = CGAffineTransformMakeScale(1.0f, 1.5f);
+        [self.view addSubview:self.progressView];
+        
+        [wkWebView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
+    }
 }
 
 #pragma - mark  视频进入全屏
@@ -162,20 +164,26 @@
         return;
     }
     
-    NSDictionary * parametersDic = @{@"limit":@"-1",
+    NSLog(@" === %@",self.MESTYPE);
+    
+    NSMutableDictionary * parametersDic = [NSMutableDictionary dictionaryWithDictionary:@{@"limit":@"-1",
                                      @"MASTERTABLE":KLB_FUNCTION_LIST,
                                      @"MENUAPP":@"EMARK_APP",
                                      @"ORDERSQL":@"",
                                      @"WHERESQL":@"",
                                      @"start":@"0",
                                      @"METHOD":method,
-                                     @"URLPATH":self.URLPATH,
-                                     @"MESTYPE":self.MESTYPE,
                                      @"MASTERFIELD":@"SEQKEY",
                                      @"DETAILFIELD":@"",
                                      @"CLASSNAME":className,
-                                     @"DETAILTABLE":@"",};
-    
+                                     @"DETAILTABLE":@"",}];
+    if (self.URLPATH.length > 0) {
+        [parametersDic setObject:self.URLPATH forKey:@"URLPATH"];
+    }
+    if (self.MESTYPE.length > 0) {
+        [parametersDic setObject:self.MESTYPE forKey:@"MESTYPE"];
+    }
+
     NSDictionary * fieldsDic =@{};
     
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_FUNCTION_LIST]

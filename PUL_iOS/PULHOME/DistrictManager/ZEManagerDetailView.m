@@ -617,8 +617,7 @@
 -(void)replyCurrentPeople:(UIButton *)btn
 {
     [inputField becomeFirstResponder];
-    inputField.placeholder = [NSString stringWithFormat:@"回复：%@",@"一二三"];
-    
+    inputField.placeholder = [NSString stringWithFormat:@"回复：%@",@""];
 }
 
 #pragma mark - UITextFieldDelegate

@@ -81,28 +81,29 @@
 
 -(void)layoutTypeHeight
 {
-//    NSArray * typeCodeArr = [_questionInfo.QUESTIONTYPECODE componentsSeparatedByString:@","];
-//
-//    NSString * typeNameContent = @"";
-//
-//    for (NSDictionary * dic in [[ZEQuestionTypeCache instance] getQuestionTypeCaches]) {
-//        ZEQuestionTypeModel * questionTypeM = nil;
-//        ZEQuestionTypeModel * typeM = [ZEQuestionTypeModel getDetailWithDic:dic];
-//        for (int i = 0; i < typeCodeArr.count; i ++) {
-//              if ([typeM.CODE isEqualToString:typeCodeArr[i]]) {
-//                questionTypeM = typeM;
-//                if (![ZEUtil isStrNotEmpty:typeNameContent]) {
-//                    typeNameContent = questionTypeM.NAME;
-//                }else{
-//                    typeNameContent = [NSString stringWithFormat:@"%@,%@",typeNameContent,questionTypeM.NAME];
-//                }
-//                break;
-//            }
-//        }
-//    }
-    
-    _typeStr = _questionInfo.QUESTIONTYPENAME;
+    if(_questionInfo.QUESTIONTYPENAME.length == 0){
+        NSArray * typeCodeArr = [_questionInfo.QUESTIONTYPECODE componentsSeparatedByString:@","];
+        NSString * typeNameContent = @"";
+        
+        for (NSDictionary * dic in [[ZEQuestionTypeCache instance] getQuestionTypeCaches]) {
+            ZEQuestionTypeModel * questionTypeM = nil;
+            ZEQuestionTypeModel * typeM = [ZEQuestionTypeModel getDetailWithDic:dic];
+            for (int i = 0; i < typeCodeArr.count; i ++) {
+                if ([typeM.CODE isEqualToString:typeCodeArr[i]]) {
+                    questionTypeM = typeM;
+                    if (![ZEUtil isStrNotEmpty:typeNameContent]) {
+                        typeNameContent = questionTypeM.NAME;
+                    }else{
+                        typeNameContent = [NSString stringWithFormat:@"%@,%@",typeNameContent,questionTypeM.NAME];
+                    }
+                    break;
+                }
+            }
+        }
+        _typeStr = typeNameContent;
+    }else{
+        _typeStr = _questionInfo.QUESTIONTYPENAME;
+    }
 }
-
 
 @end
