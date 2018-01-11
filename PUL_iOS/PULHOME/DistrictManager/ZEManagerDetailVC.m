@@ -306,10 +306,11 @@
         [self playCourswareVideo:[ZENITH_IMAGEURL(_detailManagerModel.FORMATFILEURL) absoluteString]];
     }else if([_detailManagerModel.FILETYPE isEqualToString:@".jpg"] | [_detailManagerModel.FILETYPE isEqualToString:@".png"]){
         [self playCourswareImagePath:[ZENITH_IMAGEURL(_detailManagerModel.FORMATFILEURL) absoluteString] ];
+    }else if (_detailManagerModel.H5URL.length > 0){
+        [self loadFile:[NSString stringWithFormat:@"http://%@",_detailManagerModel.H5URL]];
     }else{
         [self loadFile:[ZENITH_IMAGEURL(_detailManagerModel.FORMATFILEURL) absoluteString]];
     }
-
 }
 
 
@@ -330,7 +331,6 @@
     [self presentViewController:playView animated:YES completion:^{
         [playView play:nil];
     }];
-    
 }
 
 -(void)playLocalVideoWithPath:(NSString *)videoPath

@@ -19,6 +19,7 @@
 
 @property (nonatomic,copy) NSString * SEQKEY;
 @property (nonatomic,copy) NSString * FORMATFILEURL;
+@property (nonatomic,copy) NSString * H5URL;
 @property (nonatomic,copy) NSString * ISCOLLECT;
 @property (nonatomic,copy) NSString * ABILITYCODE;
 @property (nonatomic,copy) NSString * COURSENAME;
