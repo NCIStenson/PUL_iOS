@@ -923,7 +923,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/PULHOME/DistrictManager/ZEDistrictManagerHomeVC.m"
-            timestampString = "537156986.8896509"
+            timestampString = "539244042.870397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "160"
@@ -1009,22 +1009,6 @@
             startingLineNumber = "410"
             endingLineNumber = "410"
             landmarkName = "-getUrl:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "PUL_iOS/PULHOME/ZEPULHomeVC.m"
-            timestampString = "536814690.210132"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "620"
-            endingLineNumber = "620"
-            landmarkName = "-goZXCS"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

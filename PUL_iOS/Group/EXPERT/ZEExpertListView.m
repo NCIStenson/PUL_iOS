@@ -167,6 +167,7 @@
     UIView * searchView = [UIView new];
     searchView.frame = CGRectMake(30 , 5, SCREEN_WIDTH - 60, 35);
     [navView addSubview:searchView];
+//    searchView.backgroundColor = MAIN_ARM_COLOR;
     [searchView addSubview:[self searchTextfieldView]];
     
     UIView * orederView = [[UIView alloc]initWithFrame:CGRectMake(0, 45, SCREEN_WIDTH, kNavViewHeight - 45)];
@@ -242,6 +243,11 @@
 
 }
 #pragma mark - Public Method
+
+-(void)initDataArr
+{
+    self.teamsDataArr = [NSMutableArray array];
+}
 
 -(void)reloadExpertListViw:(NSArray *)dataArr;
 {

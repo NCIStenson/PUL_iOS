@@ -176,6 +176,7 @@
 //    }else{
 //        _currentWhereSql = [NSString stringWithFormat:@"PROCIRCLECODE like '%%%@%%' ",typeCode];
 //    }
+    [_expertListView initDataArr];
     _currentProCircleCode = typeCode;
     [self sendRequestWithCurrentPage];
     
