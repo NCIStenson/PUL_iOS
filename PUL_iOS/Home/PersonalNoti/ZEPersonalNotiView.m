@@ -314,8 +314,6 @@
     nameLab.text = @"团队消息";
     if(mestype == 4){
         nameLab.text = @"团队消息（已撤回）";
-    }else if (mestype == 5){
-        nameLab.text = @"在线考试";
     }else if (mestype == 1){
         nameLab.text = @"团队消息";
     }else{

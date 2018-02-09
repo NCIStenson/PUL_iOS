@@ -14,5 +14,6 @@
 @property (nonatomic,assign) ENTER_PERSONALNOTICENTER_TYPE enterPerNotiType;
 
 @property (nonatomic,assign) NSInteger notiCount;
+@property (nonatomic,assign) NSInteger systemNotiCount;
 
 @end

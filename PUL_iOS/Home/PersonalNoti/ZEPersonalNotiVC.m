@@ -27,6 +27,7 @@
     ZESystemNotiVC * systemNotiVC;
     
     UILabel* notiUnreadTipsLab;
+    UILabel* systemNotiUnreadTipsLab;
     UILabel* chatUnreadTipsLab;
     
     UIScrollView * _labelScrollView;
@@ -88,6 +89,19 @@
     }else{
         notiUnreadTipsLab.hidden = YES;
     }
+    
+    if (_systemNotiCount > 0) {
+        systemNotiUnreadTipsLab.hidden = NO;
+        if (_systemNotiCount > 99) {
+            systemNotiUnreadTipsLab.width = 35;
+            [systemNotiUnreadTipsLab setText:@"99+"];
+        }else{
+            systemNotiUnreadTipsLab.width = 25;
+            [systemNotiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_systemNotiCount]];
+        }
+    }else{
+        systemNotiUnreadTipsLab.hidden = YES;
+    }
 
     [self isHaveUnresdMessage];
 }
@@ -132,14 +146,17 @@
                                      //                                     NSString * TEAMINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"TEAMINFOCOUNT"]];
                                      
                                      NSInteger chatUnresadCount = [[JMSGConversation getAllUnreadCount] integerValue];
-                                     NSString * PERINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"PERINFOCOUNT"]];
-                                     if ([PERINFOCOUNT integerValue]  + chatUnresadCount> 0 ) {
+                                     NSString * PERINFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"QUESTIONCOUNT"]];  //  个人消息总数
+                                     NSString * INFOCOUNT = [NSString stringWithFormat:@"%@" ,[arr[0] objectForKey:@"INFOCOUNT"]];  //  系统消息总数
+                                     _notiCount = [PERINFOCOUNT integerValue];
+                                     _systemNotiCount = [INFOCOUNT integerValue];
+
+                                     if (_notiCount + _systemNotiCount + chatUnresadCount> 0 ) {
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
-                                         item.badgeValue= [NSString stringWithFormat:@"%ld",(long)([PERINFOCOUNT integerValue] + chatUnresadCount)] ;
-                                         if ([PERINFOCOUNT integerValue] + chatUnresadCount > 99) {
+                                         item.badgeValue= [NSString stringWithFormat:@"%ld",(long)(_notiCount +  _systemNotiCount + chatUnresadCount)]   ;
+                                         if (_notiCount + _systemNotiCount + chatUnresadCount > 99) {
                                              item.badgeValue= @"99+";
                                          }
-                                         _notiCount = [PERINFOCOUNT integerValue];
                                          if (_notiCount > 0) {
                                              notiUnreadTipsLab.hidden = NO;
                                              if (_notiCount > 99) {
@@ -152,7 +169,20 @@
                                          }else if(_notiCount <= 0) {
                                              notiUnreadTipsLab.hidden = YES;
                                          }
+                                         if (_systemNotiCount > 0) {
+                                             systemNotiUnreadTipsLab.hidden = NO;
+                                             if (_systemNotiCount > 99) {
+                                                 systemNotiUnreadTipsLab.width = 35;
+                                                 [systemNotiUnreadTipsLab setText:@"99+"];
+                                             }else{
+                                                 systemNotiUnreadTipsLab.width = 25;
+                                                 [systemNotiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_systemNotiCount]];
+                                             }
+                                         }else if(_systemNotiCount <= 0) {
+                                             systemNotiUnreadTipsLab.hidden = YES;
+                                         }
                                      }else{
+                                         systemNotiUnreadTipsLab.hidden = YES;
                                          notiUnreadTipsLab.hidden = YES;
                                          UITabBarItem * item=[self.tabBarController.tabBar.items objectAtIndex:2];
                                          item.badgeValue= nil;
@@ -165,19 +195,20 @@
 
 -(void)reduceUnreadCount:(NSNotification *)noti
 {
-    _notiCount -= 1;
-    if (_notiCount > 0) {
-        notiUnreadTipsLab.hidden = NO;
-        if (_notiCount > 99) {
-            notiUnreadTipsLab.width = 35;
-            [notiUnreadTipsLab setText:@"99+"];
-        }else{
-            notiUnreadTipsLab.width = 25;
-            [notiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_notiCount]];
-        }
-    }else{
-        notiUnreadTipsLab.hidden = YES;
-    }
+    [self isHaveUnresdMessage];
+//    _notiCount -= 1;
+//    if (_notiCount > 0) {
+//        notiUnreadTipsLab.hidden = NO;
+//        if (_notiCount > 99) {
+//            notiUnreadTipsLab.width = 35;
+//            [notiUnreadTipsLab setText:@"99+"];
+//        }else{
+//            notiUnreadTipsLab.width = 25;
+//            [notiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_notiCount]];
+//        }
+//    }else{
+//        notiUnreadTipsLab.hidden = YES;
+//    }
 }
 
 -(void)initView{
@@ -310,6 +341,23 @@
             [notiUnreadTipsLab setFont:[UIFont systemFontOfSize:notiUnreadTipsLab.font.pointSize - 3]];
             notiUnreadTipsLab.textColor = [UIColor whiteColor];
             notiUnreadTipsLab.textAlignment = NSTextAlignmentCenter;
+        }
+        if(i == 1){
+            systemNotiUnreadTipsLab = [[UILabel alloc]init];
+            [_labelScrollView addSubview:systemNotiUnreadTipsLab];
+            systemNotiUnreadTipsLab.backgroundColor = [UIColor redColor];
+            systemNotiUnreadTipsLab.top = 5;
+            systemNotiUnreadTipsLab.height = 20;
+            systemNotiUnreadTipsLab.width = 20;
+            systemNotiUnreadTipsLab.clipsToBounds = YES;
+            systemNotiUnreadTipsLab.layer.cornerRadius = 10;
+            systemNotiUnreadTipsLab.left = labelContentBtn.centerX + 18;
+            [systemNotiUnreadTipsLab setText:[NSString stringWithFormat:@"%ld",(long)_systemNotiCount]];
+            [systemNotiUnreadTipsLab adjustsFontSizeToFitWidth];
+            [systemNotiUnreadTipsLab setFont:[UIFont systemFontOfSize:chatUnreadTipsLab.font.pointSize - 3]];
+            systemNotiUnreadTipsLab.textColor = [UIColor whiteColor];
+            systemNotiUnreadTipsLab.textAlignment = NSTextAlignmentCenter;
+            systemNotiUnreadTipsLab.hidden = YES;
         }
         if (i == 2 ) {
             chatUnreadTipsLab = [[UILabel alloc]init];
