@@ -1641,10 +1641,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9899CC491EA893CD00A1446F /* JavaScriptCore.framework in Frameworks */,
 				98E0C2C41FA95D1D0090DC55 /* JMUICommon.framework in Frameworks */,
 				98E0C2C31FA95D1D0090DC55 /* JMUIChattingKit.framework in Frameworks */,
 				9828A7321EA9DB2300611327 /* WebKit.framework in Frameworks */,
-				9899CC491EA893CD00A1446F /* JavaScriptCore.framework in Frameworks */,
 				1697F7B14FD1C027EFB7CA1E /* libPods-PUL_iOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3263,9 +3263,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				988E66041F4ECA9700894EF1 /* icon_addTeam@3x.png in Resources */,
 				988BB10E1FE397D20037934B /* icon_manager_dailyPra@2x.png in Resources */,
 				986334681F3DB77200E03F6C /* difficult problem@2x.png in Resources */,
+				988E66041F4ECA9700894EF1 /* icon_addTeam@3x.png in Resources */,
 				980379591F09DE4E0085FAD9 /* yy_pointer.png in Resources */,
 				980379671F09DE4E0085FAD9 /* 互换@3x.png in Resources */,
 				988BB12D1FE7AB850037934B /* icon_skill_level2@3x.png in Resources */,

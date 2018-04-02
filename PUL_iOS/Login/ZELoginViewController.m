@@ -290,7 +290,11 @@
                                      
                                      if([ZEUtil isStrNotEmpty:[userinfoDic objectForKey:@"FILEURL"]]){
                                          NSArray * headUrlArr = [[userinfoDic objectForKey:@"FILEURL"] componentsSeparatedByString:@","];
-                                         [ZESettingLocalData changeUSERHHEADURL:headUrlArr[1]];
+                                         if (headUrlArr.count > 1) {
+                                             [ZESettingLocalData changeUSERHHEADURL:headUrlArr[1]];
+                                         }else{
+                                             [ZESettingLocalData changeUSERHHEADURL:headUrlArr[0]];
+                                         }
                                      }
                                  }
                                  [self goHome];

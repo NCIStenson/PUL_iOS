@@ -22,10 +22,10 @@ static ZEDistrictManagerModel * managerM = nil;
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key{
 
     if([key isEqualToString:@"FILEURL"]){
-        self.FORMATFILEURL = [value stringByReplacingOccurrencesOfString:@"," withString:@""];
+        self.FORMATFILEURL = [[value stringByReplacingOccurrencesOfString:@"," withString:@""] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
     }
     if([key isEqualToString:@"PHOTOURL"]){
-        self.FORMATPHOTOURL = [value stringByReplacingOccurrencesOfString:@"," withString:@""];
+        self.FORMATPHOTOURL = [[value stringByReplacingOccurrencesOfString:@"," withString:@""] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
     }
 //
 }

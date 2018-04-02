@@ -26,9 +26,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = _detailManagerModel.COURSENAME;
     self.automaticallyAdjustsScrollViewInsets = NO;
-
+    self.title = _detailManagerModel.COURSENAME;
     if([_detailManagerModel.ISCOLLECT boolValue]){
         [self.rightBtn setImage:[UIImage imageNamed:@"detail_nav_star_pressed" color:RGBA(226, 136, 53, 1)] forState:UIControlStateNormal];
         [self.rightBtn addTarget:self action:@selector(cancelCollect) forControlEvents:UIControlEventTouchUpInside];
@@ -36,9 +35,8 @@
         [self.rightBtn setImage:[UIImage imageNamed:@"detail_nav_star" color:[UIColor whiteColor]] forState:UIControlStateNormal];
         [self.rightBtn addTarget:self action:@selector(didCollect) forControlEvents:UIControlEventTouchUpInside];
     }
-
+    
     [self addCLickCount];
-
     [self initUI];
 }
 
@@ -82,7 +80,6 @@
                              }];
     
 }
-
 
 -(void)getAboutCourseList
 {
@@ -321,6 +318,7 @@
             }
         }
     }else{
+        NSLog(@" ===   %@",[ZENITH_IMAGEURL(_detailManagerModel.FORMATFILEURL) absoluteString]);
         [self loadFile:[ZENITH_IMAGEURL(_detailManagerModel.FORMATFILEURL) absoluteString]];
     }
 }

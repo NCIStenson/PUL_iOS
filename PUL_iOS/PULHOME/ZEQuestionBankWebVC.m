@@ -9,7 +9,10 @@
 #import "ZEQuestionBankWebVC.h"
 #import "ZEAppDelegate.h"
 #import <WebKit/WebKit.h>
-
+#import "ZEManagerDetailVC.h"
+#import "ZEMyCollectCourseVC.h"
+#import "ZEManagerPracticeBankVC.h"
+#import "ZENewQuestionListVC.h"
 @interface ZEQuestionBankWebVC ()<WKNavigationDelegate,UIGestureRecognizerDelegate,WKScriptMessageHandler>
 {
     WKWebView * wkWebView;
@@ -258,7 +261,14 @@
                                      NSLog(@"targetURL >>>  %@",targetURL);
                                      self.navBar.hidden = YES;
                                      
-                                     wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20)];
+                                     WKWebViewConfiguration * config = [[WKWebViewConfiguration alloc]init];
+                                     config.userContentController = [[WKUserContentController alloc]init];
+                                     [config.userContentController addScriptMessageHandler:self name:@"goCourseDetail"];
+                                     [config.userContentController addScriptMessageHandler:self name:@"goMyCollectCourse"];
+                                     [config.userContentController addScriptMessageHandler:self name:@"openQuestionBankActivity"];
+                                     [config.userContentController addScriptMessageHandler:self name:@"openDynamicActivity"];
+
+                                     wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20)  configuration:config];
                                      wkWebView.top = 20;
                                      wkWebView.height = SCREEN_HEIGHT - 20;
                                      UIView * statusBackgroundView = [UIView new];
@@ -275,6 +285,7 @@
                                      webUrl = targetURL;
                                      
                                      [wkWebView loadRequest:reuqest];
+                                     
                                  }
                              } fail:^(NSError *errorCode) {
                                  
@@ -489,6 +500,11 @@
     if([navigationAction.request.URL.absoluteString containsString:@"javasscriptss:back"]){
         [self.navigationController popViewControllerAnimated:YES];
     }
+    // 跳转我的收藏页面
+    if([navigationAction.request.URL.absoluteString containsString:@"javasscriptss:goMyCollectCourse"]){
+        [self goMyCollectCourse];
+    }
+
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
@@ -508,7 +524,48 @@
             }];
         }
     }
+    if ([message.name isEqualToString:@"goCourseDetail"]) {
+        NSDictionary *dic = [ZEUtil dictionaryWithJsonString:message.body];
+        
+        ZEManagerDetailVC * detailVC = [[ZEManagerDetailVC alloc]init];
+        detailVC.detailManagerModel = [ZEDistrictManagerModel getDetailWithDic:dic];
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }
+    
+    // 我的收藏
+    if ([message.name isEqualToString:@"goMyCollectCourse"]) {
+        [self goMyCollectCourse];
+    }
+    
+    // 课程首页
+    if ([message.name isEqualToString:@"openQuestionBankActivity"]) {
+        [self goManagerPractice];
+    }
+    
+    // 课程讨论区
+    if ([message.name isEqualToString:@"openDynamicActivity"]) {
+        [self goNewQuestionListVC];
+    }
 }
+
+-(void)goMyCollectCourse
+{
+    ZEMyCollectCourseVC * collectCourseVC = [[ZEMyCollectCourseVC alloc]init];
+    [self.navigationController pushViewController:collectCourseVC animated:YES];
+}
+
+-(void)goManagerPractice
+{
+    ZEManagerPracticeBankVC * bankVC = [[ZEManagerPracticeBankVC alloc]init];
+    [self.navigationController pushViewController:bankVC animated:YES];
+}
+-(void)goNewQuestionListVC
+{
+    ZENewQuestionListVC * questionListVC = [[ZENewQuestionListVC alloc]init];
+    questionListVC.enterType = ENTER_NEWQUESLIST_TYPE_COURSEHOME;
+    [self.navigationController pushViewController:questionListVC animated:YES];
+}
+
 
 
 -(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error
@@ -516,7 +573,6 @@
     self.navBar.hidden = NO;
     wkWebView.hidden = YES;
 }
-
 
 - (void)deleteWebCache {
     
@@ -588,7 +644,6 @@
     //防止progressView被网页挡住
     [self.view bringSubviewToFront:self.progressView];
 }
-
 //加载完成
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     NSLog(@"加载完成");
