@@ -59,8 +59,11 @@
 
 - (void)layoutAnswerExplain {
     
-    float textH = [_answerInfo.ANSWEREXPLAIN heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 90];
+    NSLog(@" [======   %@",_answerInfo.ANSWEREXPLAIN);
     
+//    float textH = [_answerInfo.ANSWEREXPLAIN heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:SCREEN_WIDTH - 90];
+    float textH = [ZEUtil boundingRectWithSize:CGSizeMake(SCREEN_WIDTH-90, MAXFLOAT) WithStr:_answerInfo.ANSWEREXPLAIN andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
+
     _textHeight = textH;
 }
 

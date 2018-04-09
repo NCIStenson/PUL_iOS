@@ -65,9 +65,9 @@
  
     NSArray * FILEURLArr = [FILEURL componentsSeparatedByString:@","];
     _detailArr = [NSMutableArray arrayWithArray:FILEURLArr];
-    if (_detailArr.count > 1) {
-        [_detailArr removeFirstObject];
-    }
+//    if (_detailArr.count > 1) {
+//        [_detailArr removeFirstObject];
+//    }
     return _detailArr.count;
 }
 
@@ -193,9 +193,9 @@
     typeImageView.contentMode = UIViewContentModeScaleAspectFit;
     [cellView addSubview:typeImageView];
     
-    if ([FIELTYPEArr[indexpath.row] isEqualToString:@"word"] ) {
+    if ([FIELTYPEArr[indexpath.row] isEqualToString:@".doc"] || [FIELTYPEArr[indexpath.row] isEqualToString:@".docx"] ) {
         [typeImageView setImage:[UIImage imageNamed:@"icon_circle_word"] ];
-    }else if ([FIELTYPEArr[indexpath.row] isEqualToString:@"excel"]) {
+    }else if ([FIELTYPEArr[indexpath.row] isEqualToString:@".xls"]) {
         [typeImageView setImage:[UIImage imageNamed:@"icon_circle_excel"] ];
     }else{
         [typeImageView setImage:[UIImage imageNamed:@"icon_circle_pdf"] ];

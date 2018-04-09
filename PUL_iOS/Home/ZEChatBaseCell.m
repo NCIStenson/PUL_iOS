@@ -121,8 +121,8 @@
     _contentLab.attributedText = [[NSAttributedString alloc] initWithString:textContentStr attributes:attributes];
     float textW = [textContentStr widthForFont:[UIFont systemFontOfSize:kTiltlFontSize]];
     float textH = [textContentStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:kMaxWidth];
+    textH = [ZEUtil boundingRectWithSize:CGSizeMake(kMaxWidth, MAXFLOAT) WithStr:textContentStr andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
     if(textW >= kMaxWidth){
-        textH = [ZEUtil boundingRectWithSize:CGSizeMake(kMaxWidth, MAXFLOAT) WithStr:textContentStr andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
         _contentLab.size = CGSizeMake( kMaxWidth , textH );
     }else{
         _contentLab.size = CGSizeMake( textW + 2,textH );
@@ -172,9 +172,9 @@
     
     _contentLab.attributedText = [[NSAttributedString alloc] initWithString:textContentStr attributes:attributes];
     float textW = [textContentStr widthForFont:[UIFont systemFontOfSize:kTiltlFontSize]];
-    float textH = [textContentStr heightForFont:[UIFont systemFontOfSize:kTiltlFontSize] width:kMaxWidth];
+    float textH = [ZEUtil boundingRectWithSize:CGSizeMake(kMaxWidth, MAXFLOAT) WithStr:textContentStr andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
+
     if(textW >= kMaxWidth){
-        textH = [ZEUtil boundingRectWithSize:CGSizeMake(kMaxWidth, MAXFLOAT) WithStr:textContentStr andFont:[UIFont systemFontOfSize:kTiltlFontSize] andLinespace:kLabel_LineSpace];
         _contentLab.size = CGSizeMake( kMaxWidth , textH );
     }else{
         _contentLab.size = CGSizeMake( textW + 2,textH );

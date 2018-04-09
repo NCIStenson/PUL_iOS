@@ -326,9 +326,10 @@
         [self.delegate hiddenWithoutTipsView];
     }
     
-    _askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)  withMarginTop:NAV_HEIGHT + 45];
+    _askTypeView = [[ZEAskQuestionTypeView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)  withMarginTop:NAV_HEIGHT];
     _askTypeView.delegate = self;
     [self addSubview:_askTypeView];
+    _askTypeView.backgroundColor = [UIColor clearColor];
     NSArray * typeArr = [[ZEQuestionTypeCache instance] getQuestionTypeCaches];
     if (typeArr.count > 0) {
         [_askTypeView reloadTypeData];

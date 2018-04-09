@@ -386,7 +386,7 @@
                                  NSKernAttributeName:@-.5f,
                                  NSParagraphStyleAttributeName:paragraphStyle
                                  };
-    
+
     _contentLab.attributedText = [[NSAttributedString alloc] initWithString:detailLayout.answerInfo.ANSWEREXPLAIN attributes:attributes];
 
 //    _contentLab.text = detailLayout.answerInfo.ANSWEREXPLAIN;
