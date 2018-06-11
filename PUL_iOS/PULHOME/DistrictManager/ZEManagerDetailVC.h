@@ -14,5 +14,6 @@
 @property (nonatomic,strong) ZEDistrictManagerModel * detailManagerModel;
 
 @property (nonatomic,strong) NSString * detailModelSeqkey;
+@property (nonatomic,strong) NSString * abilityCode;
 
 @end

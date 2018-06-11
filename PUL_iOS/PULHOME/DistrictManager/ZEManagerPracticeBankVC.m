@@ -59,16 +59,16 @@
                                  [self progressEnd:@""];
                                  NSDictionary * dic = [ZEUtil getCOMMANDDATA:data];
 
-                                 NSString * targetStr = [dic objectForKey:@"target"];
+                                 NSString * targetStr = [dic objectForKey:@"xdd"];
                                  NSDictionary * resultDic =  [ZEUtil dictionaryWithJsonString:targetStr];
                                  NSLog(@" ====  %@",data);
                                  
                                  NSArray * cellDataArr = [ZEUtil getServerData:data withTabelName:KLB_FUNCTION_LIST];
                                  [bankView reloadContentView:[resultDic objectForKey:@"data"] withCellDataArr:cellDataArr];
-//nslo
 //                                 bankView.bankModel = [ZEPULHomeQuestionBankModel getDetailWithDic:resultDic];
                                  
                              } fail:^(NSError *errorCode) {
+                                 NSLog(@" ====  %@",errorCode);
                                  [self progressEnd:@"加载失败，请重新进入页面"];
                              }];
 

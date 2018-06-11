@@ -6,9 +6,11 @@
 //  Copyright © 2017年 Hangzhou Zenith Electronic Technology Co., Ltd. All rights reserved.
 //
 
+
 #import "ZEManageCircle.h"
 
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
+#define CIRCLE_BLUE_COLOR RGBA(75, 175, 217, 1)
 
 static CGFloat endPointMargin = -5.0f;
 
@@ -94,6 +96,32 @@ static CGFloat endPointMargin = -5.0f;
     [_progressLayer removeAllAnimations];
     numberLab.text = [NSString  stringWithFormat:@"%.0f%%",_progress * 100];
     numberLab.font = [UIFont systemFontOfSize:20];
+    if(progress < .8){
+        numberLab.textColor = CIRCLE_BLUE_COLOR;
+        _progressLayer.strokeColor  = [CIRCLE_BLUE_COLOR CGColor];
+    }else{
+        numberLab.textColor = MAIN_NAV_COLOR;
+        _progressLayer.strokeColor  = [MAIN_NAV_COLOR CGColor];
+    }
+}
+
+-(void)setScore:(float)score
+{
+    _score = score;
+    
+    _progressLayer.strokeEnd = _score/100;
+    [_progressLayer removeAllAnimations];
+    numberLab.text = [NSString  stringWithFormat:@"%.0f分",_score];
+    numberLab.font = [UIFont systemFontOfSize:20];
+    
+    if(_score < 80){
+        numberLab.textColor = CIRCLE_BLUE_COLOR;
+        _progressLayer.strokeColor  = [CIRCLE_BLUE_COLOR CGColor];
+    }else{
+        numberLab.textColor = MAIN_NAV_COLOR;
+        _progressLayer.strokeColor  = [MAIN_NAV_COLOR CGColor];
+    }
+    
 }
 
 @end

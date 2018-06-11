@@ -292,6 +292,8 @@
 		981A222F1DD1A097002821BC /* ZEKLB_CLASSICCASE_INFOModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 981A222E1DD1A097002821BC /* ZEKLB_CLASSICCASE_INFOModel.m */; };
 		981A22321DD31491002821BC /* ZEScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 981A22311DD31491002821BC /* ZEScoreView.m */; };
 		981A22741DD5BC34002821BC /* ZETypicalCaseWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 981A22731DD5BC34002821BC /* ZETypicalCaseWebVC.m */; };
+		981AC3EC20BFBA4D00FA00A9 /* HcdProcessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 981AC3E820BFBA4D00FA00A9 /* HcdProcessView.m */; };
+		981AC3ED20BFBA4D00FA00A9 /* charging_pic_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 981AC3EA20BFBA4D00FA00A9 /* charging_pic_bg.png */; };
 		982089E21E6FAD6C00379D5E /* ZECreateTeamVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 982089E11E6FAD6C00379D5E /* ZECreateTeamVC.m */; };
 		982089E51E6FAD8A00379D5E /* ZECreateTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = 982089E41E6FAD8A00379D5E /* ZECreateTeamView.m */; };
 		982089E81E6FAE7700379D5E /* ZEFindTeamVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 982089E71E6FAE7700379D5E /* ZEFindTeamVC.m */; };
@@ -383,6 +385,19 @@
 		984A32A31DAC8E8A00B9F53B /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 984A32A01DAC8E8A00B9F53B /* DACircularProgressView.m */; };
 		984A32A41DAC8E8A00B9F53B /* DALabeledCircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 984A32A21DAC8E8A00B9F53B /* DALabeledCircularProgressView.m */; };
 		984A32A71DAF756100B9F53B /* ZEProCirDynamicVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 984A32A61DAF756100B9F53B /* ZEProCirDynamicVC.m */; };
+		984F93B520BC065400DD0027 /* AliyunImageSource.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 984F93B420BC065300DD0027 /* AliyunImageSource.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		984F93B620BC067000DD0027 /* AliyunImageSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 984F93B420BC065300DD0027 /* AliyunImageSource.bundle */; };
+		984F93B720BC0AB100DD0027 /* AliyunLanguageSource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 98594F7A20BBDFC3000C77F1 /* AliyunLanguageSource.bundle */; };
+		98594F7D20BBDFC4000C77F1 /* AliyunPlayerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98594F7720BBDFC3000C77F1 /* AliyunPlayerSDK.framework */; };
+		98594F7E20BBDFC4000C77F1 /* AliyunPlayerSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 98594F7720BBDFC3000C77F1 /* AliyunPlayerSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		98594F7F20BBDFC4000C77F1 /* AliyunVodPlayerViewSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98594F7820BBDFC3000C77F1 /* AliyunVodPlayerViewSDK.framework */; };
+		98594F8020BBDFC4000C77F1 /* AliyunVodPlayerViewSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 98594F7820BBDFC3000C77F1 /* AliyunVodPlayerViewSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		98594F8220BBDFC4000C77F1 /* AliyunLanguageSource.bundle in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 98594F7A20BBDFC3000C77F1 /* AliyunLanguageSource.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		98594F8320BBDFC4000C77F1 /* AliyunVodPlayerSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98594F7B20BBDFC4000C77F1 /* AliyunVodPlayerSDK.framework */; };
+		98594F8420BBDFC4000C77F1 /* AliyunVodPlayerSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 98594F7B20BBDFC4000C77F1 /* AliyunVodPlayerSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		98594F8520BBDFC4000C77F1 /* AliThirdparty.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98594F7C20BBDFC4000C77F1 /* AliThirdparty.framework */; };
+		98594F8620BBDFC4000C77F1 /* AliThirdparty.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 98594F7C20BBDFC4000C77F1 /* AliThirdparty.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		98594F8B20BBE7C3000C77F1 /* AliyunPlayerMediaUIDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98594F8A20BBE7C3000C77F1 /* AliyunPlayerMediaUIDemoViewController.m */; };
 		985A9AF61F4C08B600D0E3B5 /* type.png in Resources */ = {isa = PBXBuildFile; fileRef = 985A9AF51F4C08B600D0E3B5 /* type.png */; };
 		985A9AFB1F4C0AF800D0E3B5 /* type@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 985A9AF71F4C0AF800D0E3B5 /* type@2x.png */; };
 		985A9AFC1F4C0AF800D0E3B5 /* type@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 985A9AF81F4C0AF800D0E3B5 /* type@3x.png */; };
@@ -606,6 +621,11 @@
 		98C041F71FBEB7740071EB25 /* icon_add_image@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98C041F51FBEB7730071EB25 /* icon_add_image@3x.png */; };
 		98C042051FBEDBB70071EB25 /* ZETypicalCaseHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C042021FBEDBB60071EB25 /* ZETypicalCaseHomeVC.m */; };
 		98C042061FBEDBB70071EB25 /* ZETypicalCaseHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C042031FBEDBB70071EB25 /* ZETypicalCaseHomeView.m */; };
+		98C36CA620B69E8E00542761 /* ZEQZHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C36CA520B69E8E00542761 /* ZEQZHomeVC.m */; };
+		98C36CA920B69EA700542761 /* ZEQZHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C36CA820B69EA700542761 /* ZEQZHomeView.m */; };
+		98C36CAC20B81D2C00542761 /* ZEQZDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C36CAB20B81D2C00542761 /* ZEQZDetailVC.m */; };
+		98C36CAF20B81D4600542761 /* ZEQZDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C36CAE20B81D4600542761 /* ZEQZDetailView.m */; };
+		98C36CB520B97A1A00542761 /* ZEQZWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C36CB420B97A1A00542761 /* ZEQZWebVC.m */; };
 		98C8971A1F98A502006C77A8 /* without_tips_cry.png in Resources */ = {isa = PBXBuildFile; fileRef = 98C897171F98A501006C77A8 /* without_tips_cry.png */; };
 		98C8971B1F98A502006C77A8 /* without_tips_laugh.png in Resources */ = {isa = PBXBuildFile; fileRef = 98C897181F98A501006C77A8 /* without_tips_laugh.png */; };
 		98C8971C1F98A502006C77A8 /* without_tips.png in Resources */ = {isa = PBXBuildFile; fileRef = 98C897191F98A502006C77A8 /* without_tips.png */; };
@@ -665,6 +685,7 @@
 		98E889681FE10E0000F0E145 /* icon_manager_goPrac@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98E889661FE10E0000F0E145 /* icon_manager_goPrac@3x.png */; };
 		98E889691FE10E0000F0E145 /* icon_manager_goPrac@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98E889671FE10E0000F0E145 /* icon_manager_goPrac@2x.png */; };
 		98E889721FE2081E00F0E145 /* ZEManagerWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E889711FE2081E00F0E145 /* ZEManagerWebVC.m */; };
+		98EA946C20BBD66B004BDF6A /* ZEPlayVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EA946B20BBD66B004BDF6A /* ZEPlayVideoVC.m */; };
 		98EC3EE71FB57241003B53E5 /* ZENewQuestionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EC3EE61FB57241003B53E5 /* ZENewQuestionDetailVC.m */; };
 		98EC3EEA1FB5725E003B53E5 /* ZENewQuestionDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EC3EE91FB5725E003B53E5 /* ZENewQuestionDetailView.m */; };
 		98EC3EED1FB57283003B53E5 /* ZENewQuestionDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98EC3EEC1FB57283003B53E5 /* ZENewQuestionDetailCell.m */; };
@@ -713,6 +734,35 @@
 			remoteInfo = NewCentury;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		98EA947820BBD895004BDF6A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				98594F8620BBDFC4000C77F1 /* AliThirdparty.framework in Embed Frameworks */,
+				98594F8020BBDFC4000C77F1 /* AliyunVodPlayerViewSDK.framework in Embed Frameworks */,
+				98594F7E20BBDFC4000C77F1 /* AliyunPlayerSDK.framework in Embed Frameworks */,
+				98594F8420BBDFC4000C77F1 /* AliyunVodPlayerSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98EA947920BBD895004BDF6A /* Embed PlugIns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				984F93B520BC065400DD0027 /* AliyunImageSource.bundle in Embed PlugIns */,
+				98594F8220BBDFC4000C77F1 /* AliyunLanguageSource.bundle in Embed PlugIns */,
+			);
+			name = "Embed PlugIns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4F1B9A6806FFAD33EFC978B9 /* libPods-PUL_iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PUL_iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1020,6 +1070,9 @@
 		981A22311DD31491002821BC /* ZEScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEScoreView.m; path = Home/ZEScoreView.m; sourceTree = "<group>"; };
 		981A22721DD5BC34002821BC /* ZETypicalCaseWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZETypicalCaseWebVC.h; path = Home/ZETypicalCaseWebVC.h; sourceTree = "<group>"; };
 		981A22731DD5BC34002821BC /* ZETypicalCaseWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZETypicalCaseWebVC.m; path = Home/ZETypicalCaseWebVC.m; sourceTree = "<group>"; };
+		981AC3E820BFBA4D00FA00A9 /* HcdProcessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcdProcessView.m; sourceTree = "<group>"; };
+		981AC3EA20BFBA4D00FA00A9 /* charging_pic_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = charging_pic_bg.png; sourceTree = "<group>"; };
+		981AC3EB20BFBA4D00FA00A9 /* HcdProcessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcdProcessView.h; sourceTree = "<group>"; };
 		982089E01E6FAD6C00379D5E /* ZECreateTeamVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZECreateTeamVC.h; path = Team/ZECreateTeamVC.h; sourceTree = "<group>"; };
 		982089E11E6FAD6C00379D5E /* ZECreateTeamVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZECreateTeamVC.m; path = Team/ZECreateTeamVC.m; sourceTree = "<group>"; };
 		982089E31E6FAD8A00379D5E /* ZECreateTeamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZECreateTeamView.h; path = Team/ZECreateTeamView.h; sourceTree = "<group>"; };
@@ -1171,6 +1224,7 @@
 		984A32A21DAC8E8A00B9F53B /* DALabeledCircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DALabeledCircularProgressView.m; sourceTree = "<group>"; };
 		984A32A51DAF756100B9F53B /* ZEProCirDynamicVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZEProCirDynamicVC.h; path = Group/ZEProCirDynamicVC.h; sourceTree = "<group>"; };
 		984A32A61DAF756100B9F53B /* ZEProCirDynamicVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZEProCirDynamicVC.m; path = Group/ZEProCirDynamicVC.m; sourceTree = "<group>"; };
+		984F93B420BC065300DD0027 /* AliyunImageSource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AliyunImageSource.bundle; path = PUL_iOS/ThirdSource/Aliyun/AliyunImageSource.bundle; sourceTree = "<group>"; };
 		985069081E7FC41D005F30A6 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		9850690A1E7FC426005F30A6 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		9850690C1E7FC42E005F30A6 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -1182,6 +1236,13 @@
 		985069181E7FC45B005F30A6 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		9850691A1E7FC463005F30A6 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		9850691C1E7FC46B005F30A6 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		98594F7720BBDFC3000C77F1 /* AliyunPlayerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AliyunPlayerSDK.framework; path = PUL_iOS/ThirdSource/Aliyun/AliyunPlayerSDK.framework; sourceTree = "<group>"; };
+		98594F7820BBDFC3000C77F1 /* AliyunVodPlayerViewSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AliyunVodPlayerViewSDK.framework; path = PUL_iOS/ThirdSource/Aliyun/AliyunVodPlayerViewSDK.framework; sourceTree = "<group>"; };
+		98594F7A20BBDFC3000C77F1 /* AliyunLanguageSource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AliyunLanguageSource.bundle; path = PUL_iOS/ThirdSource/Aliyun/AliyunLanguageSource.bundle; sourceTree = "<group>"; };
+		98594F7B20BBDFC4000C77F1 /* AliyunVodPlayerSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AliyunVodPlayerSDK.framework; path = PUL_iOS/ThirdSource/Aliyun/AliyunVodPlayerSDK.framework; sourceTree = "<group>"; };
+		98594F7C20BBDFC4000C77F1 /* AliThirdparty.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AliThirdparty.framework; path = PUL_iOS/ThirdSource/Aliyun/AliThirdparty.framework; sourceTree = "<group>"; };
+		98594F8920BBE7C2000C77F1 /* AliyunPlayerMediaUIDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AliyunPlayerMediaUIDemoViewController.h; path = CommonUtil/AliyunPlayerMediaUIDemoViewController.h; sourceTree = "<group>"; };
+		98594F8A20BBE7C3000C77F1 /* AliyunPlayerMediaUIDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AliyunPlayerMediaUIDemoViewController.m; path = CommonUtil/AliyunPlayerMediaUIDemoViewController.m; sourceTree = "<group>"; };
 		985A9AF51F4C08B600D0E3B5 /* type.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = type.png; sourceTree = "<group>"; };
 		985A9AF71F4C0AF800D0E3B5 /* type@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "type@2x.png"; sourceTree = "<group>"; };
 		985A9AF81F4C0AF800D0E3B5 /* type@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "type@3x.png"; sourceTree = "<group>"; };
@@ -1483,6 +1544,16 @@
 		98C042021FBEDBB60071EB25 /* ZETypicalCaseHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZETypicalCaseHomeVC.m; path = Home/ZETypicalCaseHomeVC.m; sourceTree = "<group>"; };
 		98C042031FBEDBB70071EB25 /* ZETypicalCaseHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZETypicalCaseHomeView.m; path = Home/ZETypicalCaseHomeView.m; sourceTree = "<group>"; };
 		98C042041FBEDBB70071EB25 /* ZETypicalCaseHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZETypicalCaseHomeVC.h; path = Home/ZETypicalCaseHomeVC.h; sourceTree = "<group>"; };
+		98C36CA420B69E8E00542761 /* ZEQZHomeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZEQZHomeVC.h; path = Home/ZEQZHomeVC.h; sourceTree = "<group>"; };
+		98C36CA520B69E8E00542761 /* ZEQZHomeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZEQZHomeVC.m; path = Home/ZEQZHomeVC.m; sourceTree = "<group>"; };
+		98C36CA720B69EA700542761 /* ZEQZHomeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZEQZHomeView.h; path = Home/ZEQZHomeView.h; sourceTree = "<group>"; };
+		98C36CA820B69EA700542761 /* ZEQZHomeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZEQZHomeView.m; path = Home/ZEQZHomeView.m; sourceTree = "<group>"; };
+		98C36CAA20B81D2C00542761 /* ZEQZDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZEQZDetailVC.h; sourceTree = "<group>"; };
+		98C36CAB20B81D2C00542761 /* ZEQZDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZEQZDetailVC.m; sourceTree = "<group>"; };
+		98C36CAD20B81D4600542761 /* ZEQZDetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZEQZDetailView.h; sourceTree = "<group>"; };
+		98C36CAE20B81D4600542761 /* ZEQZDetailView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZEQZDetailView.m; sourceTree = "<group>"; };
+		98C36CB320B97A1A00542761 /* ZEQZWebVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZEQZWebVC.h; sourceTree = "<group>"; };
+		98C36CB420B97A1A00542761 /* ZEQZWebVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZEQZWebVC.m; sourceTree = "<group>"; };
 		98C897171F98A501006C77A8 /* without_tips_cry.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = without_tips_cry.png; sourceTree = "<group>"; };
 		98C897181F98A501006C77A8 /* without_tips_laugh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = without_tips_laugh.png; sourceTree = "<group>"; };
 		98C897191F98A502006C77A8 /* without_tips.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = without_tips.png; sourceTree = "<group>"; };
@@ -1574,6 +1645,8 @@
 		98E889671FE10E0000F0E145 /* icon_manager_goPrac@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_manager_goPrac@2x.png"; sourceTree = "<group>"; };
 		98E889701FE2081E00F0E145 /* ZEManagerWebVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZEManagerWebVC.h; path = DistrictManager/ZEManagerWebVC.h; sourceTree = "<group>"; };
 		98E889711FE2081E00F0E145 /* ZEManagerWebVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZEManagerWebVC.m; path = DistrictManager/ZEManagerWebVC.m; sourceTree = "<group>"; };
+		98EA946A20BBD66B004BDF6A /* ZEPlayVideoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZEPlayVideoVC.h; path = CommonUtil/ZEPlayVideoVC.h; sourceTree = "<group>"; };
+		98EA946B20BBD66B004BDF6A /* ZEPlayVideoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZEPlayVideoVC.m; path = CommonUtil/ZEPlayVideoVC.m; sourceTree = "<group>"; };
 		98EC3EE51FB57241003B53E5 /* ZENewQuestionDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewQuestionDetailVC.h; path = NewQuestion/QuestionDetail/ZENewQuestionDetailVC.h; sourceTree = "<group>"; };
 		98EC3EE61FB57241003B53E5 /* ZENewQuestionDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZENewQuestionDetailVC.m; path = NewQuestion/QuestionDetail/ZENewQuestionDetailVC.m; sourceTree = "<group>"; };
 		98EC3EE81FB5725E003B53E5 /* ZENewQuestionDetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZENewQuestionDetailView.h; path = NewQuestion/QuestionDetail/ZENewQuestionDetailView.h; sourceTree = "<group>"; };
@@ -1643,7 +1716,11 @@
 			files = (
 				9899CC491EA893CD00A1446F /* JavaScriptCore.framework in Frameworks */,
 				98E0C2C41FA95D1D0090DC55 /* JMUICommon.framework in Frameworks */,
+				98594F8320BBDFC4000C77F1 /* AliyunVodPlayerSDK.framework in Frameworks */,
+				98594F7D20BBDFC4000C77F1 /* AliyunPlayerSDK.framework in Frameworks */,
 				98E0C2C31FA95D1D0090DC55 /* JMUIChattingKit.framework in Frameworks */,
+				98594F7F20BBDFC4000C77F1 /* AliyunVodPlayerViewSDK.framework in Frameworks */,
+				98594F8520BBDFC4000C77F1 /* AliThirdparty.framework in Frameworks */,
 				9828A7321EA9DB2300611327 /* WebKit.framework in Frameworks */,
 				1697F7B14FD1C027EFB7CA1E /* libPods-PUL_iOS.a in Frameworks */,
 			);
@@ -2073,15 +2150,16 @@
 		980379941F0B69CB0085FAD9 /* PULHOME */ = {
 			isa = PBXGroup;
 			children = (
+				98C36CA320B69E1600542761 /* QZHome */,
 				98E889281FDFC14400F0E145 /* SkillList */,
 				98E889181FDA5F8C00F0E145 /* DistrictManager  */,
 				98C041F31FBEB5EF0071EB25 /* ClassicCase */,
 				986334331F3DABFB00E03F6C /* Model */,
+				9863342C1F398D1700E03F6C /* PULHomeDynamicCell */,
 				980379951F0B69F30085FAD9 /* ZEPULHomeVC.h */,
 				980379961F0B69F30085FAD9 /* ZEPULHomeVC.m */,
 				980379981F0B6A0C0085FAD9 /* ZEPULHomeView.h */,
 				980379991F0B6A0C0085FAD9 /* ZEPULHomeView.m */,
-				9863342C1F398D1700E03F6C /* PULHomeDynamicCell */,
 				9803799B1F0DE7960085FAD9 /* ZEQuestionBasicCell.h */,
 				9803799C1F0DE7960085FAD9 /* ZEQuestionBasicCell.m */,
 				9803799E1F0DE8A90085FAD9 /* ZEQuestionLayout.h */,
@@ -2097,6 +2175,24 @@
 				987CDF9C1F66553600ED68A3 /* ZEWithoutDataTipsView.m */,
 			);
 			path = PULHOME;
+			sourceTree = "<group>";
+		};
+		981AC3E720BFBA4D00FA00A9 /* HcdProcessView */ = {
+			isa = PBXGroup;
+			children = (
+				981AC3E820BFBA4D00FA00A9 /* HcdProcessView.m */,
+				981AC3E920BFBA4D00FA00A9 /* Resource */,
+				981AC3EB20BFBA4D00FA00A9 /* HcdProcessView.h */,
+			);
+			path = HcdProcessView;
+			sourceTree = "<group>";
+		};
+		981AC3E920BFBA4D00FA00A9 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				981AC3EA20BFBA4D00FA00A9 /* charging_pic_bg.png */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		98253DEF1E2DB9BB005C3E10 /* Tabbar */ = {
@@ -2235,6 +2331,8 @@
 		982ED3851D420AC900F87343 /* ThirdSource */ = {
 			isa = PBXGroup;
 			children = (
+				981AC3E720BFBA4D00FA00A9 /* HcdProcessView */,
+				98EA946D20BBD7E0004BDF6A /* Aliyun */,
 				98E0C2BC1FA95D1D0090DC55 /* Chat */,
 				986333CF1F33080F00E03F6C /* SDMajletManager */,
 				98B13C2C1E6E9996006C783B /* CustomViews */,
@@ -2682,6 +2780,12 @@
 		989B2C3A1C4DE7A900F14EFA = {
 			isa = PBXGroup;
 			children = (
+				984F93B420BC065300DD0027 /* AliyunImageSource.bundle */,
+				98594F7C20BBDFC4000C77F1 /* AliThirdparty.framework */,
+				98594F7A20BBDFC3000C77F1 /* AliyunLanguageSource.bundle */,
+				98594F7720BBDFC3000C77F1 /* AliyunPlayerSDK.framework */,
+				98594F7B20BBDFC4000C77F1 /* AliyunVodPlayerSDK.framework */,
+				98594F7820BBDFC3000C77F1 /* AliyunVodPlayerViewSDK.framework */,
 				989B2C451C4DE7AA00F14EFA /* PUL_iOS */,
 				989B2C5F1C4DE7AA00F14EFA /* PUL_iOSTests */,
 				989B2C6A1C4DE7AA00F14EFA /* PUL_iOSUITests */,
@@ -2878,6 +2982,24 @@
 			name = ClassicCase;
 			sourceTree = "<group>";
 		};
+		98C36CA320B69E1600542761 /* QZHome */ = {
+			isa = PBXGroup;
+			children = (
+				98C36CA420B69E8E00542761 /* ZEQZHomeVC.h */,
+				98C36CA520B69E8E00542761 /* ZEQZHomeVC.m */,
+				98C36CA720B69EA700542761 /* ZEQZHomeView.h */,
+				98C36CA820B69EA700542761 /* ZEQZHomeView.m */,
+				98C36CAA20B81D2C00542761 /* ZEQZDetailVC.h */,
+				98C36CAB20B81D2C00542761 /* ZEQZDetailVC.m */,
+				98C36CAD20B81D4600542761 /* ZEQZDetailView.h */,
+				98C36CAE20B81D4600542761 /* ZEQZDetailView.m */,
+				98C36CB320B97A1A00542761 /* ZEQZWebVC.h */,
+				98C36CB420B97A1A00542761 /* ZEQZWebVC.m */,
+			);
+			name = QZHome;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		98D584591E9C88BE004588EE /* CellView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2931,6 +3053,8 @@
 		98DB7C4A1C4F4F360046D405 /* CommonUtil */ = {
 			isa = PBXGroup;
 			children = (
+				98594F8920BBE7C2000C77F1 /* AliyunPlayerMediaUIDemoViewController.h */,
+				98594F8A20BBE7C3000C77F1 /* AliyunPlayerMediaUIDemoViewController.m */,
 				980AFC161FA07BB6007B2C6D /* ZEInputTextView.h */,
 				980AFC151FA07BB5007B2C6D /* ZEInputTextView.m */,
 				988122951DAA199A00DBEB82 /* SvUDIDTools.h */,
@@ -2945,6 +3069,8 @@
 				98DB7C521C4F52050046D405 /* UIImage+ZEImage.m */,
 				9831B0381E6015E200729BA8 /* ZEButton.h */,
 				9831B0391E6015E200729BA8 /* ZEButton.m */,
+				98EA946A20BBD66B004BDF6A /* ZEPlayVideoVC.h */,
+				98EA946B20BBD66B004BDF6A /* ZEPlayVideoVC.m */,
 			);
 			name = CommonUtil;
 			sourceTree = "<group>";
@@ -3050,6 +3176,14 @@
 				98E889371FE0D78300F0E145 /* icon_manager_tabbar_study@3x.png */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		98EA946D20BBD7E0004BDF6A /* Aliyun */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Aliyun;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		98EC3EE41FB571F9003B53E5 /* QuestionDetail */ = {
@@ -3159,6 +3293,8 @@
 				AE1A9FA34EEF3CC439175FE7 /* [CP] Embed Pods Frameworks */,
 				091D465A37D5E66BEDB5E08B /* [CP] Copy Pods Resources */,
 				989B2C411C4DE7AA00F14EFA /* Resources */,
+				98EA947820BBD895004BDF6A /* Embed Frameworks */,
+				98EA947920BBD895004BDF6A /* Embed PlugIns */,
 			);
 			buildRules = (
 			);
@@ -3263,6 +3399,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				984F93B720BC0AB100DD0027 /* AliyunLanguageSource.bundle in Resources */,
+				984F93B620BC067000DD0027 /* AliyunImageSource.bundle in Resources */,
 				988BB10E1FE397D20037934B /* icon_manager_dailyPra@2x.png in Resources */,
 				986334681F3DB77200E03F6C /* difficult problem@2x.png in Resources */,
 				988E66041F4ECA9700894EF1 /* icon_addTeam@3x.png in Resources */,
@@ -3441,6 +3579,7 @@
 				9803796A1F09DE4E0085FAD9 /* 城市@2x.png in Resources */,
 				980378BD1F09DE4D0085FAD9 /* xxhz_back@3x.png in Resources */,
 				983D47D71DCC2B1100D61BC9 /* video_volume_bg@2x.png in Resources */,
+				981AC3ED20BFBA4D00FA00A9 /* charging_pic_bg.png in Resources */,
 				988E65F31F4D5AB500894EF1 /* icon_setting_personal data@2x.png in Resources */,
 				98E8893B1FE0D78400F0E145 /* icon_manager_coll@2x.png in Resources */,
 				980379271F09DE4E0085FAD9 /* icon_team_receipt@2x.png in Resources */,
@@ -3826,6 +3965,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				984A329C1DAC88CE00B9F53B /* PYPhotosView.m in Sources */,
+				98EA946C20BBD66B004BDF6A /* ZEPlayVideoVC.m in Sources */,
 				980AFC171FA07BB6007B2C6D /* ZEInputTextView.m in Sources */,
 				98D6895B1FB2D34C00BFE46E /* ZENewQuestionListView.m in Sources */,
 				98FEF2931EC4402300A0CB17 /* ZEPersonalDynamicVC.m in Sources */,
@@ -3847,6 +3987,7 @@
 				98E889211FDE50DF00F0E145 /* ZEDistrictManagerCell.m in Sources */,
 				9814755B1E7A7CCB0019DA79 /* ZESearchTeamQuestionVC.m in Sources */,
 				989B2C4B1C4DE7AA00F14EFA /* ZEAppDelegate.m in Sources */,
+				98C36CAC20B81D2C00542761 /* ZEQZDetailVC.m in Sources */,
 				982300031E70F14800DD02B1 /* ZEQueryNumberView.m in Sources */,
 				982300001E70F12C00DD02B1 /* ZEQueryNumberVC.m in Sources */,
 				98FEF2651EBAF66C00A0CB17 /* ZETeamNotiCenView.m in Sources */,
@@ -3863,6 +4004,7 @@
 				982ED37C1D4209F200F87343 /* ZEGroupVC.m in Sources */,
 				987257581D59A7F6005C4AB9 /* ZEPackageServerData.m in Sources */,
 				984A32911DAC88CE00B9F53B /* UIView+PYExtension.m in Sources */,
+				98C36CAF20B81D4600542761 /* ZEQZDetailView.m in Sources */,
 				982300131E76BFEB00DD02B1 /* ZETeamQuestionVC.m in Sources */,
 				98D42BB81DC70DCD003A3812 /* ZETypicalCaseView.m in Sources */,
 				9863DE491D657DA100410475 /* ZEQuestionTypeCache.m in Sources */,
@@ -3898,6 +4040,8 @@
 				984A32A41DAC8E8A00B9F53B /* DALabeledCircularProgressView.m in Sources */,
 				98FEF28D1EC2A4F700A0CB17 /* ZEPersonalNotiVC.m in Sources */,
 				9872544F1D587CD7005C4AB9 /* ZELoginViewController.m in Sources */,
+				98C36CA920B69EA700542761 /* ZEQZHomeView.m in Sources */,
+				98594F8B20BBE7C3000C77F1 /* AliyunPlayerMediaUIDemoViewController.m in Sources */,
 				988BB13A1FEB86900037934B /* ZECourseSearchVC.m in Sources */,
 				98FEF27B1EBC0F0B00A0CB17 /* ZESendNotiView.m in Sources */,
 				9831B03A1E6015E200729BA8 /* ZEButton.m in Sources */,
@@ -3934,6 +4078,7 @@
 				988BB0F21FE264AD0037934B /* ZEMyCollectCourseVC.m in Sources */,
 				98C042051FBEDBB70071EB25 /* ZETypicalCaseHomeVC.m in Sources */,
 				981A22741DD5BC34002821BC /* ZETypicalCaseWebVC.m in Sources */,
+				98C36CB520B97A1A00542761 /* ZEQZWebVC.m in Sources */,
 				982ED3731D42095400F87343 /* ZEHomeVC.m in Sources */,
 				98E8891E1FDA60BD00F0E145 /* ZEDistrictManagerHomeView.m in Sources */,
 				981475561E7930280019DA79 /* ZETeamDynamicCell.m in Sources */,
@@ -3983,6 +4128,7 @@
 				98E485F81D99085100AA0278 /* ZETeamCircleVC.m in Sources */,
 				984A32931DAC88CE00B9F53B /* PYPhotosPreviewController.m in Sources */,
 				98D689611FB2D3E200BFE46E /* ZENewQuetionLayout.m in Sources */,
+				981AC3EC20BFBA4D00FA00A9 /* HcdProcessView.m in Sources */,
 				98C041DC1FBD25130071EB25 /* ZEShowOptionView.m in Sources */,
 				984492CC1E5D5D270066AFD1 /* ZEHomeLayout.m in Sources */,
 				980379A31F0E20440085FAD9 /* ZEPULWebVC.m in Sources */,
@@ -4023,6 +4169,7 @@
 				98253E121E2DC446005C3E10 /* UIImage+Image.m in Sources */,
 				984A32A31DAC8E8A00B9F53B /* DACircularProgressView.m in Sources */,
 				98F471981D5434CF0016CD5A /* ZEAnswerQuestionsVC.m in Sources */,
+				98C36CA620B69E8E00542761 /* ZEQZHomeVC.m in Sources */,
 				988BB1341FE7AF7A0037934B /* ZESkillDetailVC.m in Sources */,
 				988C10721E8A8CF7006795F0 /* ZEExpertListVC.m in Sources */,
 			);
@@ -4140,6 +4287,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Chat",
+					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Aliyun",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/PUL_iOS/PrefixHeader.pch";
@@ -4259,6 +4407,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Chat",
+					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Aliyun",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/PUL_iOS/PrefixHeader.pch";
@@ -4280,7 +4429,7 @@
 				VALID_ARCHS = "arm64 armv7s armv7";
 				WARNING_CFLAGS = "";
 				ZENITH_BUNDLEID = "com.zenithElec.PUL-person";
-				ZENITH_SERVER = "http://192.168.1.189:8080/emark_learn";
+				ZENITH_SERVER = "http://192.168.10.155:8899/emarkspg_sx";
 			};
 			name = ToPersonalServer;
 		};
@@ -4427,6 +4576,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Chat",
+					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Aliyun",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/PUL_iOS/PrefixHeader.pch";
@@ -4467,6 +4617,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Chat",
+					"$(PROJECT_DIR)/PUL_iOS/ThirdSource/Aliyun",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(PROJECT_DIR)/PUL_iOS/PrefixHeader.pch";

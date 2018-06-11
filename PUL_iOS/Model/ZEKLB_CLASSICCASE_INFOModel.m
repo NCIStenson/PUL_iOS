@@ -33,7 +33,6 @@ static ZEKLB_CLASSICCASE_INFOModel * model;
         [imageUrlArr removeObjectAtIndex:0];
         model.FILEURL = imageUrlArr[0];
     }
-
     model.FILETYPE              = [dic objectForKey:@"FILETYPE"];
     model.QUESTIONTYPECODE      = [dic objectForKey:@"QUESTIONTYPECODE"];
     model.QUESTIONTYPENAME      = [dic objectForKey:@"QUESTIONTYPENAME"];

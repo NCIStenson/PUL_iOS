@@ -99,6 +99,8 @@
 #define V_KLB_FUNCTION_USER_LIST              @"V_KLB_FUNCTION_USER_LIST"               /***   我的功能列表   ***/
 #define KLB_FUNCTION_USER_LIST              @"KLB_FUNCTION_USER_LIST"               /***   我的功能列表   ***/
 #define KLB_FUNCTION_LIST              @"KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
+#define KLB_FUNCTION_LIST              @"V_KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
+#define KLB_FUNCTION_LIST              @"V_KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
 
 #define KLB_DYNAMIC_HOME_INFO              @"KLB_DYNAMIC_HOME_INFO"               /***   首页动态列表     ***/
 
@@ -108,5 +110,6 @@
 #define KLB_COURSEWARE_CONTENT             @"KLB_COURSEWARE_CONTENT"               /***   学习课件评论   ***/
 #define V_KLB_COURSEWARE_CONTENT             @"V_KLB_COURSEWARE_CONTENT"               /***   学习课件评论   ***/
 
+#define KLB_COURSE_OPERATE_INFO             @"KLB_COURSE_OPERATE_INFO"               /***   视频播放记录   ***/
 
 #endif /* ZEServerTableMessage_h */

@@ -195,7 +195,8 @@
         bannerBtn.contentMode = UIViewContentModeScaleAspectFit;
         bannerBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [bannerScrollView addSubview:bannerBtn];
-        bannerBtn.backgroundColor = MAIN_ARM_COLOR;
+        NSLog(@" =====  %@",infoModel.FILEURL);
+//        bannerBtn.backgroundColor = MAIN_ARM_COLOR;
         [bannerBtn addTarget:self action:@selector(bannerBtnDidClick:) forControlEvents:UIControlEventTouchUpInside];
         if ([ZEUtil isStrNotEmpty:infoModel.FILEURL]) {
             [bannerBtn sd_setBackgroundImageWithURL:ZENITH_IMAGEURL(infoModel.FILEURL)   forState:UIControlStateNormal placeholderImage:ZENITH_PLACEHODLER_IMAGE];

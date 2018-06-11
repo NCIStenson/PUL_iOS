@@ -15,4 +15,5 @@
 
 @property (assign,nonatomic) CGFloat lineWidth;
 
+@property (assign,nonatomic) float score;
 @end

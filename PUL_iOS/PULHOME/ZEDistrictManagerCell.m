@@ -36,29 +36,32 @@
     }
     
     if ([managerModel.ISCOLLECT boolValue]) {
-        UIImageView * collectImageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 35, 10, 15, 15)];
+        UIImageView * collectImageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 25, 12, 15, 15)];
         [self.contentView addSubview:collectImageView];
         [collectImageView setImage:[UIImage imageNamed:@"icon_manager_collect.png"]];
         collectImageView.contentMode = UIViewContentModeScaleAspectFit;
     }
 
-    UILabel * contentLab = [[UILabel alloc]initWithFrame:CGRectMake(contentImageView.right + 10, 10, SCREEN_WIDTH - 120, 20.0f)];
+    UILabel * contentLab = [[UILabel alloc]initWithFrame:CGRectMake(contentImageView.right + 10, 10, SCREEN_WIDTH - 210, 20.0f)];
     contentLab.text = managerModel.COURSENAME;
     contentLab.textColor = kTextColor;
+    
     contentLab.font = [UIFont systemFontOfSize:kTiltlFontSize];
     [self.contentView addSubview:contentLab];
     
+    UILabel * playtimeLab = [UILabel new];
+    playtimeLab.frame = CGRectMake(contentLab.right + 5, contentLab.top, 95, contentLab.height);
+    playtimeLab.text = [NSString stringWithFormat:@"学习进度：%.0f%%",[managerModel.PLAYTIME floatValue] * 100];
+    playtimeLab.textColor = kSubTitleColor;
+    playtimeLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
+    [self.contentView addSubview:playtimeLab];
+    
     UILabel * circleLab = [[UILabel alloc]initWithFrame:CGRectMake(contentLab.left,contentLab.bottom + 15,contentLab.width,contentLab.height - 5)];
     circleLab.font = [UIFont systemFontOfSize:kSubTiltlFontSize];
-    circleLab.numberOfLines = 2;
+    circleLab.numberOfLines = 1;
     circleLab.textColor = MAIN_SUBTITLE_COLOR;
     circleLab.text = managerModel.TYPENAME;
     [self.contentView addSubview:circleLab];
-//    NSDictionary *attribtDic = @{NSUnderlineStyleAttributeName: [NSNumber numberWithInteger:NSUnderlineStyleSingle]};
-//    if (managerModel.TYPENAME.length > 0) {
-//        NSMutableAttributedString *attribtStr = [[NSMutableAttributedString alloc]initWithString:managerModel.TYPENAME attributes:attribtDic];
-//        circleLab.attributedText = attribtStr;
-//    }
     [circleLab sizeToFit];
     
     NSString * commentLabText =[NSString stringWithFormat:@"%ld",(long)[managerModel.COMMENTCOUNT integerValue]];

@@ -14,11 +14,15 @@
 #import "ZETypicalCaseWebVC.h"
 #import "ZEQuestionBankWebVC.h"
 #import "ZENewQuestionListVC.h"
+
+#import "AliyunPlayerMediaUIDemoViewController.h"
+
 @interface ZEManagerDetailVC ()
 {
     ZEManagerDetailView *detailView;
     NSInteger _currentPage;
 }
+
 @end
 
 @implementation ZEManagerDetailVC
@@ -35,6 +39,9 @@
         [self.rightBtn setImage:[UIImage imageNamed:@"detail_nav_star" color:[UIColor whiteColor]] forState:UIControlStateNormal];
         [self.rightBtn addTarget:self action:@selector(didCollect) forControlEvents:UIControlEventTouchUpInside];
     }
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(savePlayRecord:) name:kSAVE_PLAY_RECORD object:nil];
     
     [self addCLickCount];
     [self initUI];
@@ -318,7 +325,6 @@
             }
         }
     }else{
-        NSLog(@" ===   %@",[ZENITH_IMAGEURL(_detailManagerModel.FORMATFILEURL) absoluteString]);
         [self loadFile:[ZENITH_IMAGEURL(_detailManagerModel.FORMATFILEURL) absoluteString]];
     }
 }
@@ -337,9 +343,10 @@
 -(void)playCourswareVideo:(NSString *)filepath
 {
     NSURL * urlStr = [NSURL URLWithString:filepath];
-    JRPlayerViewController * playView = [[JRPlayerViewController alloc]initWithHTTPLiveStreamingMediaURL:urlStr];
-    [self presentViewController:playView animated:YES completion:^{
-        [playView play:nil];
+    
+    AliyunPlayerMediaUIDemoViewController * playVideo = [[AliyunPlayerMediaUIDemoViewController alloc]initWithHTTPLiveStreamingMediaURL:urlStr withTitle:_detailManagerModel.COURSENAME withPlayProgress:_detailManagerModel.PLAYTIME];
+    [self presentViewController:playVideo animated:YES completion:^{
+        
     }];
 }
 
@@ -434,6 +441,45 @@
                              } fail:^(NSError *errorCode) {
                                  
                              }];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:kSAVE_PLAY_RECORD object:nil];
+}
+
+-(void)savePlayRecord:(NSNotification *)noti{    
+    NSDictionary * parametersDic = @{@"limit":@"20",
+                                     @"MASTERTABLE":KLB_COURSE_OPERATE_INFO,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":METHOD_INSERT,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.exam.CourseOperateInfo",
+                                     @"DETAILTABLE":@"",};
+    
+    NSMutableDictionary * fieldsDic = [NSMutableDictionary dictionaryWithDictionary:noti.object];
+    
+    [fieldsDic setObject:_detailManagerModel.SEQKEY forKey:@"coursecode"];
+    [fieldsDic setObject:_detailManagerModel.COURSENAME forKey:@"coursename"];
+    [fieldsDic setObject:[ZESettingLocalData getUSERCODE] forKey:@"psnnum"];
+    if([ZEUtil isStrNotEmpty:_abilityCode]){
+        [fieldsDic setObject:_abilityCode forKey:@"ABILITYTYPECODE"];
+    }
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_COURSE_OPERATE_INFO]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:@"courseSave"];    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 
+                             } fail:^(NSError *errorCode) {
+                             }];    
 }
 
 

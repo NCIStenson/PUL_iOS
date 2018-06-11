@@ -159,7 +159,6 @@
     detailLab.width = detailLab.width + 10;
     detailLab.center = CGPointMake(SCREEN_WIDTH / 2, lineView.centerY);
 
-    
     headerView.backgroundColor = [UIColor whiteColor];
     return headerView;
 }
@@ -200,7 +199,6 @@
     }else{
         [typeImageView setImage:[UIImage imageNamed:@"icon_circle_pdf"] ];
     }
-
     
     UILabel * workStandardName = [UILabel new];
     workStandardName.frame = CGRectMake(70, 0, SCREEN_WIDTH - 90, 44);

@@ -42,6 +42,7 @@
 -(void)goZJJD;
 -(void)goDXAL;
 -(void)goHYGF;
+-(void)goJNXX;
 
 
 /**

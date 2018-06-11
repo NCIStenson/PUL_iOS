@@ -38,6 +38,7 @@
 #import "ZESkillListVC.h"
 #import "ZEManagerPracticeBankVC.h"
 #import "ZESkillListVC.h"
+#import "ZEQZHomeVC.h"
 @interface ZEPULHomeVC () <ZEPULHomeViewDelegate>
 {
     ZEPULHomeView * _PULHomeView ;
@@ -565,6 +566,12 @@
     [self.navigationController pushViewController:workStandardListVC animated:YES];
 
 }
+
+-(void)goJNXX{
+    ZEQZHomeVC * workStandardListVC = [[ZEQZHomeVC alloc]init];
+    [self.navigationController pushViewController:workStandardListVC animated:YES];
+}
+
 -(void)goDXAL{
     ZETypicalCaseHomeVC * caseHome = [[ZETypicalCaseHomeVC alloc]init];
     [self.navigationController pushViewController:caseHome animated:YES];

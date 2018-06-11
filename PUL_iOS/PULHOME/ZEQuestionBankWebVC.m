@@ -469,6 +469,7 @@
                              success:^(id data) {
                                  NSDictionary * dic = [ZEUtil getCOMMANDDATA:data];
                                  NSString * targetURL = [dic objectForKey:@"target"];
+                                 targetURL =  [NSString stringWithFormat:@"http://%@",targetURL];
                                  if (targetURL.length > 0 &&  [ZEUtil isNotNull:targetURL]  ) {
                                      NSLog(@"targetURL >>>  %@",targetURL);
                                      self.navBar.hidden = YES;
@@ -491,6 +492,104 @@
                                  
                              }];
 }
+
+// 获取衢州项目网页链接
+-(void)getQZUrlWithEnterType:(ENTER_QUESTIONBANK_TYPE)type
+{
+    NSString * actionFlag = @"";
+    switch (type) {
+        case ENTER_QUESTIONBANK_TYPE_EXAM:
+            actionFlag = @"chapterPractice";
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_RANDOM:
+            actionFlag = @"randomPractice";
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_TEST:
+            actionFlag = @"mockExam";
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_DIFFCULT:
+            actionFlag = @"problemTake";
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_DAILY:
+            actionFlag = @"dailyPractice";
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_MYERROR:
+            actionFlag = @"errorSubject";
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_MYCOLL:
+            actionFlag = @"myCollect";
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_RECORD:
+            actionFlag = @"exerciseRecord";
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_NOTE:
+            actionFlag = @"myNotes";
+            break;
+            
+        case ENTER_QUESTIONBANK_TYPE_STANDARD:
+            actionFlag = @"PracticalNorm";
+            break;
+            
+        default:
+            break;
+    }
+    NSDictionary * parametersDic = @{@"limit":@"-1",
+                                     @"MASTERTABLE":KLB_FUNCTION_LIST,
+                                     @"MENUAPP":@"EMARK_APP",
+                                     @"ORDERSQL":@"",
+                                     @"WHERESQL":@"",
+                                     @"start":@"0",
+                                     @"METHOD":actionFlag,
+                                     @"MASTERFIELD":@"SEQKEY",
+                                     @"DETAILFIELD":@"",
+                                     @"CLASSNAME":@"com.nci.klb.app.exam.QuestionBankQuery",
+                                     @"DETAILTABLE":@"",
+                                     @"module_id":self.bankID};
+    
+    NSDictionary * fieldsDic =@{};
+    
+    NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[KLB_FUNCTION_LIST]
+                                                                           withFields:@[fieldsDic]
+                                                                       withPARAMETERS:parametersDic
+                                                                       withActionFlag:nil];
+    
+    [ZEUserServer getDataWithJsonDic:packageDic
+                       showAlertView:NO
+                             success:^(id data) {
+                                 NSDictionary * dic = [ZEUtil getCOMMANDDATA:data];
+                                 NSString * targetURL = [dic objectForKey:@"target"];
+                                 targetURL =  [NSString stringWithFormat:@"http://%@",targetURL];
+                                 if (targetURL.length > 0 &&  [ZEUtil isNotNull:targetURL]  ) {
+                                     NSLog(@"targetURL >>>  %@",targetURL);
+                                     self.navBar.hidden = YES;
+                                     
+                                     wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0,20, SCREEN_WIDTH, SCREEN_HEIGHT - 20)];
+                                     wkWebView.top = 20;
+                                     wkWebView.height = SCREEN_HEIGHT - 20;
+                                     
+                                     UIView * statusBackgroundView = [UIView new];
+                                     statusBackgroundView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 20);
+                                     [self.view addSubview:statusBackgroundView];
+                                     [ZEUtil addGradientLayer:statusBackgroundView];
+                                     
+                                     [self.view addSubview:wkWebView];
+                                     [self initProgressView];
+                                     wkWebView.navigationDelegate = self;
+                                     [wkWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:targetURL]]];
+                                 }
+                             } fail:^(NSError *errorCode) {
+                                 
+                             }];
+}
+
 
 
 

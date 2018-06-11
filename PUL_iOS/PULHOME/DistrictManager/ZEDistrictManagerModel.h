@@ -23,6 +23,7 @@
 @property (nonatomic,copy) NSString * ISCOLLECT;
 @property (nonatomic,copy) NSString * ABILITYCODE;
 @property (nonatomic,copy) NSString * COURSENAME;
+@property (nonatomic,copy) NSString * PLAYTIME;
 @property (nonatomic,copy) NSString * FILETYPE;
 @property (nonatomic,copy) NSString * COMMENTCOUNT;
 @property (nonatomic,copy) NSString * ISTHEORY;

@@ -172,9 +172,7 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView * bgView = [UIView new];
-    
+{    
     NSDictionary * dic;
     switch (_currentContentType) {
         case CONTENT_TYPE_BASE:

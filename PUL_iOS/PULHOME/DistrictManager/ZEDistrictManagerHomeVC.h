@@ -14,4 +14,7 @@
 {
     ZEDistrictManagerHomeView * managerHomeView;
 }
+
+@property(nonatomic,strong) NSString * abilityCode;
+
 @end

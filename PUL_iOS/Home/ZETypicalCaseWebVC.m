@@ -13,6 +13,11 @@
 {
     WKWebView  * web;
 }
+
+@property (nonatomic,copy) NSString * pagebegintime;  // 进入页面的时间
+@property (nonatomic,copy) NSString * pageendtime;  // 退出页面的时间
+@property (nonatomic,copy) NSString * playtime;   // 播放进度
+
 @end
 
 @implementation ZETypicalCaseWebVC
@@ -20,9 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     self.title = nil;
-    
+    _pagebegintime = [self getNowTimeTimestamp3];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     web = [[WKWebView alloc]initWithFrame:CGRectMake(0,NAV_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT - NAV_HEIGHT)];
@@ -94,6 +98,47 @@
     hud3.labelText = @"加载完成";
     [hud3 hide:YES afterDelay:1.0f];
 }
+
+-(void)leftBtnClick{
+    
+    _pageendtime = [self getNowTimeTimestamp3];
+    _playtime = @"1.0";
+    
+    NSDictionary * uploadDataDic = @{@"pagebegintime":_pagebegintime,
+                                     @"pageendtime":_pageendtime,
+                                     @"playtime":_playtime,
+                                     };
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSAVE_PLAY_RECORD object:uploadDataDic];;
+    [self.navigationController popViewControllerAnimated:YES];
+
+}
+
+
+-(NSString *)getNowTimeTimestamp3{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss SSS"]; // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+    
+    //设置时区,这个对于时间的处理有时很重要
+    
+    NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    
+    [formatter setTimeZone:timeZone];
+    
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]*1000];
+    
+    return timeSp;
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

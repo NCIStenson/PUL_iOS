@@ -48,7 +48,7 @@
 
 #pragma mark - sendRequest
 -(void)sendRequestWithOrderIndex:(ORDER_BY_TYPE)index{
-    NSDictionary * parametersDic = @{@"MASTERTABLE":V_KLB_ABILITY_TYPE,
+    NSMutableDictionary * parametersDic = [NSMutableDictionary dictionaryWithDictionary: @{@"MASTERTABLE":V_KLB_ABILITY_TYPE,
                                      @"MENUAPP":@"EMARK_APP",
                                      @"ORDERSQL":@"",
                                      @"WHERESQL":@"",
@@ -60,7 +60,13 @@
                                      @"DETAILFIELD":@"",
                                      @"CLASSNAME":DISTRICTMANAGER_CLASS,
                                      @"orderstr":[NSString stringWithFormat:@"%ld",(long)index],
-                                     };
+                                     }];
+    
+    
+    
+    if ([ZEUtil isNotNull:_abilityCode]) {
+        [parametersDic setObject:[NSString stringWithFormat:@"abilitytype = '%@'",_abilityCode] forKey:@"WHERESQL"];
+    }
     
     
     NSDictionary * packageDic = [ZEPackageServerData getCommonServerDataWithTableName:@[V_KLB_ABILITY_TYPE]
@@ -188,6 +194,7 @@
 {
     ZEManagerDetailVC * detailVC = [[ZEManagerDetailVC alloc]init];
     detailVC.detailManagerModel = [ZEDistrictManagerModel getDetailWithDic:obj];
+    detailVC.abilityCode = _abilityCode;
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 

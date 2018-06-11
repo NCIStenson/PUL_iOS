@@ -299,7 +299,7 @@
                                  }
                                  [self goHome];
                              } fail:^(NSError *errorCode) {
-                                 NSLog(@">>  %@",errorCode);
+                                 NSLog(@" errorCode >>  %@",errorCode);
                              }];
     
 }

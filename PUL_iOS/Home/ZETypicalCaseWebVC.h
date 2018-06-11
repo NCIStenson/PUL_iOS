@@ -13,4 +13,6 @@
 @property (nonatomic,copy)NSString * filePath;
 @property (nonatomic, strong) UIProgressView *progressView;
 
+@property (nonatomic,copy) NSString * abilityCode;
+
 @end

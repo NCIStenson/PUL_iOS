@@ -187,6 +187,7 @@ typedef enum : NSUInteger{
     ENTER_QUESTIONBANK_TYPE_MYAWARDS,  /****** 我的荣誉 *****/
     
     ENTER_PERSONALNOTICENTER_EXAM,  /****** 个人消息中在线考试跳转链接 *****/
+    ENTER_QUESTIONBANK_TYPE_TKLL,/*****  题库浏览 *******/
 
 } ENTER_QUESTIONBANK_TYPE;
 

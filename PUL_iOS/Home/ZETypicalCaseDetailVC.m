@@ -440,7 +440,6 @@ NSDictionary * fieldsDic =@{@"CASECODE":[self.classicalCaseDetailDic objectForKe
     NSURL * urlStr = [NSURL URLWithString:filepath];
     JRPlayerViewController * playView = [[JRPlayerViewController alloc]initWithHTTPLiveStreamingMediaURL:urlStr];
     [self presentViewController:playView animated:YES completion:^{
-        [playView play:nil];
     }];
     
 }

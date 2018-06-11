@@ -414,6 +414,11 @@
          职业性格测评
          */
         [button addTarget:self action:@selector(goJNQD) forControlEvents:UIControlEventTouchUpInside];
+    }else if ([functionCode isEqualToString:@"jnxx"]){
+        /**
+         职业性格测评
+         */
+        [button addTarget:self action:@selector(goJNXX) forControlEvents:UIControlEventTouchUpInside];
     }else{
         [button addTarget:self action:@selector(goWebVC:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -542,6 +547,22 @@
 }
 
 #pragma mark - 自定义功能区页面跳转
+
+
+
+/**
+ 跳转专业圈
+ */
+-(void)goJNXX
+{
+    if (_viewIsEditing) {
+        [self downTheKeyboard];
+        return;
+    }
+    if ([self.delegate respondsToSelector:@selector(goJNXX)]) {
+        [self.delegate goJNXX];
+    }
+}
 
 /**
  跳转专业圈

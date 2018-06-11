@@ -115,6 +115,8 @@
 
 #define kNOTI_PERSONAL_WITHOUTDYNAMIC @"NOTI_PERSONAL_WITHOUTDYNAMIC" // 一条个人动态都没有时 发送通知
 
+#define kSAVE_PLAY_RECORD @"kSAVE_PLAY_RECORD" // 存储播放记录
+
 #define kRelogin @"kRelogin"
 #define kVerifyLogin @"kVerifyLogin"
 #endif /* ZEMarcoConstant_h */

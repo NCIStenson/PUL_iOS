@@ -121,7 +121,7 @@ static ZEServerEngine *serverEngine = nil;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    manager.requestSerializer.timeoutInterval = 10.f;
+    manager.requestSerializer.timeoutInterval = 30.f;
 
     NSData *cookiesdata = [ZESettingLocalData getCookie];
     if([cookiesdata length]) {
