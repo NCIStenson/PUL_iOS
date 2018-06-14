@@ -15,6 +15,7 @@ static NSString * kUSERPASSWORD     = @"kUSERPASSWORD";
 static NSString * kUSERCODE         = @"kUSERCODE";
 static NSString * kISEXPERT         = @"kISEXPERT";
 static NSString * kUSERINFODic      = @"kUSERINFODic";
+static NSString * kQUESTIONBANKINDEX       = @"kQUESTIONBANKINDEX";
 
 @implementation ZESettingLocalData
 
@@ -215,6 +216,24 @@ static NSString * kUSERINFODic      = @"kUSERINFODic";
     [ZESettingLocalData deleteUSERPASSWORD];
     [ZESettingLocalData deleteUSERCODE];
     [ZESettingLocalData deleteUSERINFODic];
+    [ZESettingLocalData deleteQUESTIONBANKINDEX];
+}
+
+#pragma mark - QUESTIONBANKIndex
+
++(void)setQUESTIONBANKINDEX:(NSInteger)index;
+{
+    [self Set:kQUESTIONBANKINDEX value:[NSString stringWithFormat:@"%ld",(long)index]];
+}
+
++(NSInteger)getQUESTIONBANKINDEX
+{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:kQUESTIONBANKINDEX] integerValue];
+}
+
++(void)deleteQUESTIONBANKINDEX
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kQUESTIONBANKINDEX];
 }
 
 

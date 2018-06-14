@@ -90,6 +90,14 @@
 +(void)changeUSERHHEADURL:(NSString *)headUrl;
 +(NSString *)getUSERHHEADURL;
 
+#pragma mark - QUESTIONBANKIndex
+
++(void)setQUESTIONBANKINDEX:(NSInteger)index;
+
++(NSInteger)getQUESTIONBANKINDEX;
+
++(void)deleteQUESTIONBANKINDEX;
+
 /********  用户主键 **********/
 +(NSString *)getUSERSEQKEY;
 

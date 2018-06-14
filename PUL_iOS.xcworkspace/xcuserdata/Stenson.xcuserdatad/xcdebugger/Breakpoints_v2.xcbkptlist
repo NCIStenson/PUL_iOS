@@ -891,11 +891,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/PULHOME/ZEQuestionBankWebVC.m"
-            timestampString = "549100218.830726"
+            timestampString = "550668080.63369"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "673"
-            endingLineNumber = "673"
+            startingLineNumber = "572"
+            endingLineNumber = "572"
             landmarkName = "-webView:didFailNavigation:withError:"
             landmarkType = "7">
          </BreakpointContent>
@@ -907,11 +907,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PUL_iOS/PULHOME/DistrictManager/ZEManagerDetailVC.m"
-            timestampString = "549543698.941637"
+            timestampString = "550575033.463464"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "502"
-            endingLineNumber = "502">
+            startingLineNumber = "503"
+            endingLineNumber = "503">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1032,22 +1032,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "PUL_iOS/PULHOME/ZEQuestionBankWebVC.m"
-            timestampString = "549100218.8314691"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "462"
-            endingLineNumber = "462"
-            landmarkName = "-getUrlWithEnterType:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "PUL_iOS/CommonUtil/AliyunPlayerMediaUIDemoViewController.m"
             timestampString = "549543698.94199"
             startingColumnNumber = "9223372036854775807"
@@ -1135,6 +1119,38 @@
             startingLineNumber = "284"
             endingLineNumber = "284"
             landmarkName = "-getTKLLUrlWithEnterType"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PUL_iOS/PULHOME/DistrictManager/ZEDistrictManagerHomeVC.m"
+            timestampString = "550666485.6618921"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "-loadMoreDataSendRequestWithCurrentPage:withSectionIndex:withCurrentCode:withStartPage:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PUL_iOS/PULHOME/DistrictManager/ZEDistrictManagerHomeVC.m"
+            timestampString = "550666485.661943"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "-loadMoreDataSendRequestWithCurrentPage:withSectionIndex:withCurrentCode:withStartPage:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -29,7 +29,7 @@
 
 @protocol ZEChangeQuestionBankViewDelegate <NSObject>
 
--(void)finshChooseBank:(NSDictionary * )dic;
+-(void)finshChooseBank:(NSDictionary * )dic withIndex:(NSInteger)index;
 
 @end
 

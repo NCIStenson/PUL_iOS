@@ -282,7 +282,8 @@
     _numLab.text = [NSString stringWithFormat:@"刷题数     %lld",[_bankModel.done_num longLongValue]];
     _circle.progress = [_bankModel.right_rate floatValue] / 100;
     if (_bankModel.module_list.count > 0) {
-        NSDictionary * dic = _bankModel.module_list[0];
+        NSInteger index = [ZESettingLocalData getQUESTIONBANKINDEX];
+        NSDictionary * dic = _bankModel.module_list[index];
         changeBankLab.text = [dic objectForKey:@"MODULE_NAME"];
         self.bankID = [dic objectForKey:@"MODULE_ID"];
     }
@@ -320,10 +321,12 @@
 
 #pragma mark - 完成选择题库
 
--(void)finshChooseBank:(NSDictionary *)dic
+-(void)finshChooseBank:(NSDictionary *)dic withIndex:(NSInteger)index
 {
     self.bankID = [dic objectForKey:@"MODULE_ID"];
     changeBankLab.text = [dic objectForKey:@"MODULE_NAME"];
+    
+    [ZESettingLocalData setQUESTIONBANKINDEX:index];
 }
 
 /*
@@ -445,8 +448,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.delegate respondsToSelector:@selector(finshChooseBank:)]) {
-        [self.delegate finshChooseBank:self.banksArr[indexPath.row]];
+    if ([self.delegate respondsToSelector:@selector(finshChooseBank:withIndex:)]) {
+        [self.delegate finshChooseBank:self.banksArr[indexPath.row] withIndex:indexPath.row];
     }
     
     [self removeAllSubviews];

@@ -99,8 +99,7 @@
 #define V_KLB_FUNCTION_USER_LIST              @"V_KLB_FUNCTION_USER_LIST"               /***   我的功能列表   ***/
 #define KLB_FUNCTION_USER_LIST              @"KLB_FUNCTION_USER_LIST"               /***   我的功能列表   ***/
 #define KLB_FUNCTION_LIST              @"KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
-#define KLB_FUNCTION_LIST              @"V_KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
-#define KLB_FUNCTION_LIST              @"V_KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
+#define V_KLB_FUNCTION_LIST              @"V_KLB_FUNCTION_LIST"               /***   功能选择列表     ***/
 
 #define KLB_DYNAMIC_HOME_INFO              @"KLB_DYNAMIC_HOME_INFO"               /***   首页动态列表     ***/
 
