@@ -122,22 +122,58 @@
                              success:^(id data) {
                                  if ([[ZEUtil getServerData:data withTabelName:SNOW_APP_VERSION] count] > 0) {
                                      NSDictionary * dic = [ZEUtil getServerData:data withTabelName:SNOW_APP_VERSION][0];
-                                     NSString* localVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-                                     if ([localVersion floatValue] < [[dic objectForKey:@"VERSIONNAME"] floatValue]) {
-                                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"经检测当前版本不是最新版本，点击确定跳转更新。" preferredStyle:UIAlertControllerStyleAlert];
-                                         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[dic objectForKey:@"FILEURL"]]];
-                                         }];
-                                         [alertController addAction:okAction];
-                                         [self presentViewController:alertController animated:YES completion:nil];
-                                         
+                                     NSString * version = dic[@"VERSIONNAME"];
+                                     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                                     // app版本
+                                     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+                                     
+                                     NSArray * serverVersionArr = [version componentsSeparatedByString:@"."];
+                                     NSArray * appVersionArr = [app_Version componentsSeparatedByString:@"."];
+                                     
+                                     NSInteger bigServerVersion = 0;
+                                     NSInteger smallServerVersion = 0;
+                                     NSInteger bigAppVersison = 0;
+                                     NSInteger smallAppVersison = 0;
+                                     
+                                     if (serverVersionArr.count > 0) {
+                                         bigServerVersion = [serverVersionArr[0] integerValue];
                                      }
-                                 }
+                                     
+                                     if (appVersionArr.count > 0) {
+                                         bigAppVersison = [appVersionArr[0] integerValue];
+                                     }
+                                     
+                                     if(serverVersionArr.count > 1){
+                                         smallServerVersion = [serverVersionArr[1] integerValue];
+                                     }
+                                     
+                                     if (appVersionArr.count > 1) {
+                                         smallAppVersison = [appVersionArr[1] integerValue];
+                                     }
+                                     
+                                     if (bigServerVersion > bigAppVersison) {
+                                         [self showUpdateAlertView:[NSURL URLWithString:[dic objectForKey:@"FILEURL"]] ];
+                                     }else if (bigServerVersion == bigAppVersison){
+                                         if (smallServerVersion > smallAppVersison) {
+                                             [self showUpdateAlertView:[NSURL URLWithString:[dic objectForKey:@"FILEURL"]] ];
+                                         }
+                                     }
+                                                                      }
                              } fail:^(NSError *errorCode) {
                                  
                              }];
     
 }
+
+-(void)showUpdateAlertView:(NSURL *)downloadUrl{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"经检测当前版本不是最新版本，点击确定跳转更新。" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[UIApplication sharedApplication] openURL:downloadUrl];
+    }];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
 -(void)storeSystemInfo
 {
     NSDictionary * parametersDic = @{@"MASTERTABLE":SNOW_MOBILE_DEVICE,

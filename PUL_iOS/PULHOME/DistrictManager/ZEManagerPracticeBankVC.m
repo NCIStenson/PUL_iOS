@@ -59,7 +59,7 @@
                                  [self progressEnd:@""];
                                  NSDictionary * dic = [ZEUtil getCOMMANDDATA:data];
 
-                                 NSString * targetStr = [dic objectForKey:@"xdd"];
+                                 NSString * targetStr = [dic objectForKey:@"target"];
                                  NSDictionary * resultDic =  [ZEUtil dictionaryWithJsonString:targetStr];
                                  NSLog(@" ====  %@",data);
                                  
